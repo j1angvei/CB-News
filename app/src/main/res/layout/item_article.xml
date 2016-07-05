@@ -6,9 +6,9 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        style="@style/CBTheme.CardView.Inside"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/card_margin_horz">
 
         <TextView
             android:id="@+id/tv_article_title"

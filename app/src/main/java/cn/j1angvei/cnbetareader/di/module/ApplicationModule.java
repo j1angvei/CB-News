@@ -63,7 +63,7 @@ public class ApplicationModule {
     OkHttpClient provideOkhttpClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(new AddHeaderInterceptor())
-                .addInterceptor(new LoggingInterceptor())
+//                .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new JsonpInterceptor())
                 .build();
     }

@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.newslist.latestnews;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -22,7 +23,6 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.base.BaseAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.util.DateUtil;
-import cn.j1angvei.cnbetareader.util.Navigator;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -31,10 +31,10 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.ViewHolder> implements BaseAdapter<Article> {
 
     private List<Article> mArticles;
-    private Activity parentActivity;
+    private Activity mActivity;
 
     public ArticlesRvAdapter(Activity activity) {
-        parentActivity = activity;
+        mActivity = activity;
         mArticles = new ArrayList<>();
     }
 
@@ -47,25 +47,20 @@ public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Article article = mArticles.get(position);
+        final Article article = mArticles.get(position);
         holder.tvTitle.setText(Html.fromHtml(article.getTitle()).toString());
         holder.tvSummary.setText(Html.fromHtml(article.getSummary()).toString());
-//        //regex to remove string after '@'
-//        holder.tvSource.setText(article.getSource().replaceAll("@.*$", ""));
         holder.tvViewer.setText(article.getCounterNum());
         holder.tvComments.setText(article.getCommentNum());
-        //set time depending user locale
         Date date = article.getTime();
         holder.tvTime.setText(DateUtil.toShortDatePlusTime(date, context));
-        //set thumb image
         Glide.with(context).load(article.getThumb())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.ivThumb);
-        //set listener to article content
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Navigator.toContent(holder.getAdapterPosition(), gatherNewsIds(), parentActivity);
+            public void onClick(View view) {
+                Snackbar.make(holder.itemView, "hei hei" + article.getId(), Snackbar.LENGTH_SHORT).show();
             }
         });
     }

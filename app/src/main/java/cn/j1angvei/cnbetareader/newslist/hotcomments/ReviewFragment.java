@@ -30,7 +30,7 @@ public class ReviewFragment extends BaseFragment implements ReviewContract.View 
     RecyclerView mRecyclerView;
 
     @Inject
-    ReviewRxAdapter mAdapter;
+    ReviewRvAdapter mAdapter;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject

@@ -2,7 +2,7 @@ package cn.j1angvei.cnbetareader.newslist.hotcomments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +21,11 @@ import cn.j1angvei.cnbetareader.bean.Review;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class ReviewRxAdapter extends RecyclerView.Adapter<ReviewRxAdapter.ViewHolder> implements BaseAdapter<Review> {
+public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHolder> implements BaseAdapter<Review> {
     private List<Review> mReviews;
     private Activity mActivity;
 
-    public ReviewRxAdapter(Activity activity) {
+    public ReviewRvAdapter(Activity activity) {
         mActivity = activity;
         mReviews = new ArrayList<>();
     }
@@ -37,17 +37,17 @@ public class ReviewRxAdapter extends RecyclerView.Adapter<ReviewRxAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Review review = mReviews.get(position);
+        final Review review = mReviews.get(position);
         holder.tvComment.setText(review.getComment());
         String phLocation = context.getResources().getString(R.string.ph_review_location);
         holder.tvLocation.setText(String.format(phLocation, review.getLocation()));
         holder.tvTitle.setText(review.getTitle());
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //                Navigator.toNewsContent(holder.getAdapterPosition(), gatherNewsIds(), parentActivity);
+                Snackbar.make(holder.itemView, "ha ha" + review.getArticleId(), Snackbar.LENGTH_LONG).show();
             }
         });
     }

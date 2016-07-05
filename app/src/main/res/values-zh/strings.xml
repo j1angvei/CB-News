@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">cnBeta阅读器</string>
+    <string name="app_name">cnBeta资讯</string>
     <string name="ph_review_location">来自 %1$s 的 匿名用户 评论于</string>
+    <string name="nav_bookmarks">我的收藏</string>
+    <string name="nav_exit">退出</string>
+    <string name="nav_explore">探索更多</string>
+    <string name="nav_latest_news">最新资讯</string>
+    <string name="nav_my_topics">我的主题</string>
+    <string name="nav_past_headlines">往期头条</string>
+    <string name="nav_quick_entry">快捷入口</string>
+    <string name="nav_settings">设置</string>
+    <string name="nav_top_comments">热门评论</string>
 </resources>
