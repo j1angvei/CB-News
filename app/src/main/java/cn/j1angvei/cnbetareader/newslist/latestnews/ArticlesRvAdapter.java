@@ -65,7 +65,7 @@ public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Navigator.toNewsContent(holder.getAdapterPosition(), gatherNewsIds(), parentActivity);
+                Navigator.toContent(holder.getAdapterPosition(), gatherNewsIds(), parentActivity);
             }
         });
     }

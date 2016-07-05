@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.newslist.latestnews;
+package cn.j1angvei.cnbetareader.newslist.hotcomments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,32 +16,32 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.base.BaseActivity;
 import cn.j1angvei.cnbetareader.base.BaseFragment;
-import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 
 /**
- * Created by Wayne on 2016/7/4.
+ * Created by Wayne on 2016/7/5.
  */
-public class ArticlesFragment extends BaseFragment implements ArticlesContract.View {
-    private static final String ARTICLE_TYPE = "ArticlesFragment.news_type";
+public class ReviewFragment extends BaseFragment implements ReviewContract.View {
+    private static final String REVIEW_TYPE = "ReviewFragment.review_type";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     @Inject
-    ArticlesRvAdapter mAdapter;
+    ReviewRxAdapter mAdapter;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    ArticlesPresenter mPresenter;
+    ReviewPresenter mPresenter;
 
-    private String mArticleType;
+    private String mReviewType;
 
-    public static ArticlesFragment newInstance(String newsType) {
-        ArticlesFragment fragment = new ArticlesFragment();
+    public static ReviewFragment newInstance(String reviewType) {
+        ReviewFragment fragment = new ReviewFragment();
         Bundle args = new Bundle();
-        args.putString(ARTICLE_TYPE, newsType);
+        args.putString(REVIEW_TYPE, reviewType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mArticleType = getArguments().getString(ARTICLE_TYPE);
+        mReviewType = getArguments().getString(REVIEW_TYPE);
         ((BaseActivity) getActivity()).getActivityComponent().fragmentComponent(new FragmentModule()).inject(this);
     }
 
@@ -63,7 +63,7 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.retrieveLatestNews();
+                mPresenter.retrieveLatestReviews();
             }
         });
         return view;
@@ -73,7 +73,7 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        mPresenter.retrieveLatestNews();
+        mPresenter.retrieveLatestReviews();
     }
 
     @Override
@@ -84,18 +84,18 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
     }
 
     @Override
-    public void addNews(Article article) {
-        mAdapter.add(article);
+    public void addReviews(Review review) {
+        mAdapter.add(review);
     }
 
     @Override
-    public void clearNews() {
+    public void clearReviews() {
         mAdapter.clear();
     }
 
     @Override
     public String getSourceType() {
-        return mArticleType;
+        return mReviewType;
     }
 
     @Override

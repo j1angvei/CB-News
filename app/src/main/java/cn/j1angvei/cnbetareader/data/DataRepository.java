@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
 import rx.Observable;
@@ -19,12 +20,13 @@ import rx.functions.Action1;
  * Created by Wayne on 2016/6/16.
  */
 @Singleton
-public class DataRepository implements DataSource {
+public class DataRepository implements Repository {
     private LocalDataSource mLocalDataSource;
     private RemoteDataSource mRemoteDataSource;
 
     private Map<String, List<Article>> mNewsMap;
     private Map<String, Content> mContentMap;
+    private Map<String, Review> mReviewMap;
 
     @Inject
     public DataRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
@@ -40,20 +42,14 @@ public class DataRepository implements DataSource {
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {
-                        addArticleToMemory(type, article);
+                        List<Article> articleList = mNewsMap.get(type);
+                        if (articleList == null) {
+                            articleList = new ArrayList<>();
+                            mNewsMap.put(type, articleList);
+                        }
+                        articleList.add(article);
                     }
                 });
-    }
-
-
-    private void addArticleToMemory(String type, Article item) {
-
-        List<Article> articleList = mNewsMap.get(type);
-        if (articleList == null) {
-            articleList = new ArrayList<>();
-            mNewsMap.put(type, articleList);
-        }
-        articleList.add(item);
     }
 
     @Override
@@ -67,9 +63,27 @@ public class DataRepository implements DataSource {
                 });
     }
 
-    private void initDataContainer() {
+    @Override
+    public Observable<Review> getReviewsFromSource(String type, int page) {
+        return mRemoteDataSource.getReviewsFromSource(type, page)
+                .doOnNext(new Action1<Review>() {
+                    @Override
+                    public void call(Review review) {
+                        mReviewMap.put(review.getCommentId(), review);
+                    }
+                });
+    }
+
+    @Override
+    public void initDataContainer() {
         mNewsMap = new HashMap<>();
         mContentMap = new HashMap<>();
+        mReviewMap = new HashMap<>();
+    }
+
+    @Override
+    public void toMemory(String source, Object item) {
+
     }
 
 }

@@ -9,12 +9,14 @@
     </style>
 
     <style name="CBTheme" parent="AppTheme"/>
+    <!--TextView style-->
+    <style name="CBTheme.TextView"/>
 
     <style name="CBTheme.TextView.Articles" parent="CBTheme"/>
 
     <style name="CBTheme.TextView.Articles.Title">
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
     <style name="CBTheme.TextView.Articles.Summary">
@@ -27,4 +29,37 @@
         <item name="android:textSize">@dimen/text_size_extra_small</item>
     </style>
 
+    <style name="CBTheme.TextView.Review" parent="CBTheme"/>
+
+    <style name="CBTheme.TextView.Review.Comment">
+        <item name="android:background">@drawable/bg_review_comment</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="CBTheme.TextView.Review.Location">
+        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
+        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="CBTheme.TextView.Review.Title">
+        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
+        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    <!--CardView style-->
+    <style name="CBTheme.CardView">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_marginBottom">@dimen/card_margin_vert</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
+        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
+    </style>
+
+    <style name="CBTheme.CardView.Inside">
+        <item name="android:padding">@dimen/card_margin_horz</item>
+    </style>
 </resources>

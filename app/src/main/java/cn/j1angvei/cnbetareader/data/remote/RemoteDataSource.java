@@ -8,7 +8,10 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.RawReview;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.DataSource;
+import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import cn.j1angvei.cnbetareader.util.BeanConverter;
 import cn.j1angvei.cnbetareader.util.JsonpGenerator;
@@ -48,7 +51,6 @@ public class RemoteDataSource implements DataSource {
                         return Observable.from(articles);
                     }
                 });
-
     }
 
     @Override
@@ -64,7 +66,25 @@ public class RemoteDataSource implements DataSource {
                 }
                 return content;
             }
-
         });
+    }
+
+    @Override
+    public Observable<Review> getReviewsFromSource(String type, int page) {
+        String callback = JsonpGenerator.getParameter();
+        long timeStamp = JsonpGenerator.getInitTime() + page;
+        return mCnbetaApi.getReviews(callback, type, page, timeStamp)
+                .flatMap(new Func1<ExposedResponse<RawReview>, Observable<RawReview>>() {
+                    @Override
+                    public Observable<RawReview> call(ExposedResponse<RawReview> rawReviewExposedResponse) {
+                        return Observable.from(rawReviewExposedResponse.getResult());
+                    }
+                })
+                .map(new Func1<RawReview, Review>() {
+                    @Override
+                    public Review call(RawReview rawReview) {
+                        return mConverter.toReview(rawReview);
+                    }
+                });
     }
 }

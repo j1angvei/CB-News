@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.DataSource;
 import rx.Observable;
 
@@ -25,6 +26,11 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public Observable<Content> getContentFromSource(String sid) {
+        return null;
+    }
+
+    @Override
+    public Observable<Review> getReviewsFromSource(String type, int page) {
         return null;
     }
 }

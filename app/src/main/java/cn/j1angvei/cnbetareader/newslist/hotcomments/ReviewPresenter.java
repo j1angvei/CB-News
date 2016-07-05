@@ -1,8 +1,8 @@
-package cn.j1angvei.cnbetareader.newslist.latestnews;
+package cn.j1angvei.cnbetareader.newslist.hotcomments;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.DataRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import rx.Subscriber;
@@ -10,33 +10,33 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Wayne on 2016/7/4.
+ * Created by Wayne on 2016/7/5.
  */
 @PerFragment
-public class ArticlesPresenter implements ArticlesContract.Presenter {
+public class ReviewPresenter implements ReviewContract.Presenter {
     private int mPage = 1;
-    private ArticlesContract.View mView;
+    private ReviewContract.View mView;
     private DataRepository mRepository;
 
     @Inject
-    public ArticlesPresenter(DataRepository repository) {
+    public ReviewPresenter(DataRepository repository) {
         mRepository = repository;
     }
 
     @Override
-    public void retrieveLatestNews() {
+    public void retrieveLatestReviews() {
         mPage = 1;
-        mView.clearNews();
-        retrieveMoreNews();
+        mView.clearReviews();
+        retrieveMoreReviews();
     }
 
     @Override
-    public void retrieveMoreNews() {
+    public void retrieveMoreReviews() {
         mView.showLoading();
-        mRepository.getArticleFromSource(mView.getSourceType(), mPage++)
+        mRepository.getReviewsFromSource(mView.getSourceType(), mPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Article>() {
+                .subscribe(new Subscriber<Review>() {
                     @Override
                     public void onCompleted() {
                         mView.hideLoading();
@@ -48,14 +48,14 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Article article) {
-                        mView.addNews(article);
+                    public void onNext(Review review) {
+                        mView.addReviews(review);
                     }
                 });
     }
 
     @Override
-    public void setView(ArticlesContract.View view) {
+    public void setView(ReviewContract.View view) {
         mView = view;
     }
 }

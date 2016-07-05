@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,12 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.base.BaseActivity;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewFragment;
 import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
 
 /**
@@ -34,6 +39,9 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+
+    @Inject
+    FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +73,7 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         mNavigationView.setNavigationItemSelectedListener(this);
 
         //add init fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance("all")).commit();
+        mFragmentManager.beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance("all"), "all").commit();
 
     }
 
@@ -94,6 +102,7 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
+            mFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             super.onBackPressed();
         }
     }
@@ -102,6 +111,38 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
+        Fragment fragment = null;
+        String tag = null;
+        switch (item.getItemId()) {
+            case R.id.nav_latest_news:
+                tag = "all";
+                fragment = mFragmentManager.findFragmentByTag("all");
+                if (fragment == null) {
+                    fragment = ArticlesFragment.newInstance("all");
+                }
+                break;
+            case R.id.nav_hot_news:
+                tag = "jhcomment";
+                fragment = mFragmentManager.findFragmentByTag("jhcomment");
+                if (fragment == null) {
+                    fragment = ReviewFragment.newInstance("jhcomment");
+                }
+                break;
+            default:
+                break;
+        }
+        if (fragment != null) {
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.fl_container, fragment, tag)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+        setTitle(item.getTitle());
         return true;
+    }
+
+    private void replaceFragment(String type) {
+
     }
 }

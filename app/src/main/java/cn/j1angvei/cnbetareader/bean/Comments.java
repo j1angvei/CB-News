@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Comment {
+public final class Comments {
     private String token;
     private boolean open;
     private String sid;
@@ -20,7 +20,7 @@ public final class Comment {
     private List<String> allIds;
     private Map<String, CommentItem> commentMap;
 
-    public Comment() {
+    public Comments() {
         hotIds = new ArrayList<>();
         allIds = new ArrayList<>();
         commentMap = new HashMap<>();
@@ -100,7 +100,7 @@ public final class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Comments{" +
                 "token='" + token + '\'' +
                 ", open=" + open +
                 ", sid='" + sid + '\'' +

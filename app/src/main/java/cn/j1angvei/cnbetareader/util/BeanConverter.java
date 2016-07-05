@@ -1,7 +1,6 @@
 package cn.j1angvei.cnbetareader.util;
 
 import android.text.Html;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -12,9 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,10 +20,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import cn.j1angvei.cnbetareader.bean.Comment;
+import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
@@ -48,39 +42,39 @@ public final class BeanConverter {
         mBaseUrl = baseUrl;
     }
 
-    public Comment toComment(String json) {
-        Comment comment = new Comment();
+    public Comments toComments(String json) {
+        Comments comments = new Comments();
         try {
             JSONObject result = new JSONObject(json).getJSONObject("result");
-            comment.setCommentNum(result.getString("comment_num"));
-            comment.setJoinNum(result.getString("join_num"));
-            comment.setOpen(result.getString("open").equals("1"));
-            comment.setToken(result.getString("token"));
-            comment.setPage(result.getString("page"));
-            comment.setSid(result.getString("sid"));
+            comments.setCommentNum(result.getString("comment_num"));
+            comments.setJoinNum(result.getString("join_num"));
+            comments.setOpen(result.getString("open").equals("1"));
+            comments.setToken(result.getString("token"));
+            comments.setPage(result.getString("page"));
+            comments.setSid(result.getString("sid"));
 
             //hot comments tid list
             JSONArray hotArray = result.getJSONArray("hotlist");
-            comment.setHotIds(getCommentIds(hotArray));
+            comments.setHotIds(getCommentIds(hotArray));
 
-            //all comment tid list
+            //all comments tid list
             JSONArray allArray = result.getJSONArray("cmntlist");
             List<String> allIds = getCommentIds(allArray);
-            comment.setAllIds(getCommentIds(allArray));
+            comments.setAllIds(getCommentIds(allArray));
 
-            //comment map
+            //comments map
             JSONObject store = result.getJSONObject("cmntstore");
             Map<String, CommentItem> map = new HashMap<>();
             for (String tid : allIds) {
-                CommentItem item = toCommentItem(store.getJSONObject(tid).toString());
+                CommentItem item = mGson.fromJson(store.getJSONObject(tid).toString(), CommentItem.class);
                 map.put(tid, item);
             }
-            comment.setCommentMap(map);
+            comments.setCommentMap(map);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return comment;
+        return comments;
     }
 
     private List<String> getCommentIds(JSONArray array) throws JSONException {
@@ -92,10 +86,6 @@ public final class BeanConverter {
         return ids;
     }
 
-    private CommentItem toCommentItem(String json) {
-        return mGson.fromJson(json, CommentItem.class);
-    }
-
     public Content toContent(String html) {
         Content content = new Content();
 
@@ -103,7 +93,6 @@ public final class BeanConverter {
         //parse title
         String title = doc.getElementById("news_title").text();
         content.setTitle(title);
-
         //parse date
         String dateString = doc.getElementsByClass("date").first().text();
         try {
@@ -112,15 +101,12 @@ public final class BeanConverter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         //parse source
         String where = doc.getElementsByClass("where").first().text().replace("稿源：", "");
         content.setSource(where);
-
         //parse introduction
         String introduction = doc.select(".introduction > p").text();
         content.setSummary(introduction);
-
         //parse detail
         Element elementContent = doc.getElementsByClass("content").first();
         //convert relative url to absolute url
@@ -129,11 +115,9 @@ public final class BeanConverter {
         }
         String detail = elementContent.html();
         content.setDetail(detail);
-
         //parse sid, sn and token
         Pattern pattern;
         Matcher matcher;
-
         //parse sid
         String sid = "";
         pattern = Pattern.compile("SID:\".+?\"");
@@ -143,7 +127,6 @@ public final class BeanConverter {
             sid = sid.substring(sid.indexOf('"') + 1, sid.lastIndexOf('"'));
         }
         content.setSid(sid);
-
         //parse sn
         String sn = "";
         pattern = Pattern.compile("SN:\".+?\"");
@@ -153,7 +136,6 @@ public final class BeanConverter {
             sn = sn.substring(sn.indexOf('"') + 1, sn.lastIndexOf('"'));
         }
         content.setSn(sn);
-
         //parse token
         String token = "";
         pattern = Pattern.compile("TOKEN:\".+?\"");
@@ -163,7 +145,6 @@ public final class BeanConverter {
             token = token.substring(token.indexOf('"') + 1, token.lastIndexOf('"'));
         }
         content.setToken(token);
-
         //parse topic image url
         String src = doc.select(".introduction > div > a > img").attr("src");
 //        String src = doc.select(".introduction img").attr("src");

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">cnBeta阅读器</string>
+    <string name="ph_review_location">来自 %1$s 的 匿名用户 评论于</string>
+</resources>

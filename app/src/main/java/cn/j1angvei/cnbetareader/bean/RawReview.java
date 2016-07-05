@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.bean;
 
 /**
+ * hot comment
  * Created by Wayne on 2016/6/13.
  */
 public final class RawReview {

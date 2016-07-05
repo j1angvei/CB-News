@@ -3,6 +3,9 @@ package cn.j1angvei.cnbetareader.util;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
+
+import cn.j1angvei.cnbetareader.newscontent.NewsContentActivity;
 import cn.j1angvei.cnbetareader.settings.SettingsActivity;
 
 /**
@@ -15,6 +18,14 @@ public final class Navigator {
             Intent intent = new Intent(context, SettingsActivity.class);
             context.startActivity(intent);
         }
+    }
+
+    public static void toContent(int position, ArrayList<String> ids, Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, NewsContentActivity.class);
+            context.startActivity(intent);
+        }
+
     }
 
 
