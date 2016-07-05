@@ -10,4 +10,21 @@
 
     <style name="CBTheme" parent="AppTheme"/>
 
+    <style name="CBTheme.TextView.Articles" parent="CBTheme"/>
+
+    <style name="CBTheme.TextView.Articles.Title">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="CBTheme.TextView.Articles.Summary">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="CBTheme.TextView.Articles.Statistic">
+        <item name="android:textColor">@color/textHint</item>
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
 </resources>

@@ -18,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.base.BaseActivity;
+import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -36,6 +39,12 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
+        //di
+        mActivityComponent = DaggerActivityComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(new ActivityModule(this))
+                .build();
+        mActivityComponent.inject(this);
         //bind view
         ButterKnife.bind(this);
         //toolbar
@@ -55,9 +64,10 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         //navigation view
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        //add init fragment
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance("all")).commit();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

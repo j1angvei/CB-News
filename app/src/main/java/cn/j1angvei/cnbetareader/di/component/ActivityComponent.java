@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.di.component;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.newslist.NewsListActivity;
 import dagger.Component;
 
 /**
@@ -11,6 +12,8 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
+    void inject(NewsListActivity newsListActivity);
 
+    //expose variable to sub-graph
     FragmentComponent fragmentComponent(FragmentModule fragmentModule);
 }

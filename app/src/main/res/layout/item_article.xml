@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginRight="@dimen/card_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/card_margin">
+
+        <TextView
+            android:id="@+id/tv_article_title"
+            style="@style/CBTheme.TextView.Articles.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+        <LinearLayout
+            android:id="@+id/ll_article_summary_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_article_title"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_article_summary"
+                style="@style/CBTheme.TextView.Articles.Summary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="3"
+                android:text="Summary\nSummary\nSummary\nSummary"
+                />
+
+            <ImageView
+                android:id="@+id/iv_article_thumb"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/fake_thumb"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_article_summary_thumb"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_article_time"
+                style="@style/CBTheme.TextView.Articles.Statistic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:drawableLeft="@drawable/ic_news_time"
+                android:drawablePadding="4dp"
+                android:text="2016-02-15"
+                />
+
+            <TextView
+                android:id="@+id/tv_article_comment"
+                style="@style/CBTheme.TextView.Articles.Statistic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:drawableLeft="@drawable/ic_news_comments"
+                android:drawablePadding="4dp"
+                android:text="20"/>
+
+            <TextView
+                android:id="@+id/tv_article_count"
+                style="@style/CBTheme.TextView.Articles.Statistic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_news_viewer"
+                android:drawablePadding="4dp"
+                android:text="300"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
