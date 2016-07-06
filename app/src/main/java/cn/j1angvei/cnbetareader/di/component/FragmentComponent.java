@@ -4,6 +4,7 @@ import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewFragment;
 import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
+import cn.j1angvei.cnbetareader.newslist.pastheadlines.HeadlineFragment;
 import dagger.Subcomponent;
 
 /**
@@ -16,5 +17,7 @@ public interface FragmentComponent {
     void inject(ArticlesFragment articlesFragment);
 
     void inject(ReviewFragment reviewFragment);
+
+    void inject(HeadlineFragment headlineFragment);
 
 }

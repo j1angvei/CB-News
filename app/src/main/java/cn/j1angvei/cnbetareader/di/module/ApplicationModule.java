@@ -6,23 +6,19 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.JsonpInterceptor;
-import cn.j1angvei.cnbetareader.data.remote.interceptor.LoggingInterceptor;
 import cn.j1angvei.cnbetareader.util.BeanConverter;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Wayne on 2016/6/15.
@@ -60,10 +56,18 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient() {
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        return loggingInterceptor;
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkhttpClient(HttpLoggingInterceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(new AddHeaderInterceptor())
-//                .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .addInterceptor(new JsonpInterceptor())
                 .build();
     }

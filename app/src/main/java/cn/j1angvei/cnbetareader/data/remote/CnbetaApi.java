@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.data.remote;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
@@ -27,7 +28,7 @@ public interface CnbetaApi {
     Observable<ExposedResponse<RawReview>> getReviews(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/more")
-    Observable<ExposedResponse<Headline>> getHeadlines(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
+    Observable<ExposedResponse<RawHeadline>> getHeadlines(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/topics/more")
     Observable<WrappedResponse<Article>> getTopicArticles(@Query("jsoncallback") String callback, @Query("id") String id, @Query("page") int page, @Query("_") long timestamp);

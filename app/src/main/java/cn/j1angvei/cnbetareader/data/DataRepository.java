@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
@@ -27,6 +28,7 @@ public class DataRepository implements Repository {
     private Map<String, List<Article>> mNewsMap;
     private Map<String, Content> mContentMap;
     private Map<String, Review> mReviewMap;
+    private Map<String, Headline> mHeadlineMap;
 
     @Inject
     public DataRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
@@ -75,10 +77,22 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public Observable<Headline> getHeadlinesFromSource(String type, int page) {
+        return mRemoteDataSource.getHeadlinesFromSource(type, page)
+                .doOnNext(new Action1<Headline>() {
+                    @Override
+                    public void call(Headline headline) {
+                        mHeadlineMap.put(headline.getSid(), headline);
+                    }
+                });
+    }
+
+    @Override
     public void initDataContainer() {
         mNewsMap = new HashMap<>();
         mContentMap = new HashMap<>();
         mReviewMap = new HashMap<>();
+        mHeadlineMap = new HashMap<>();
     }
 
     @Override

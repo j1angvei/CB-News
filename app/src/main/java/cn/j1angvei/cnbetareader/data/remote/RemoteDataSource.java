@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.DataSource;
@@ -84,6 +86,25 @@ public class RemoteDataSource implements DataSource {
                     @Override
                     public Review call(RawReview rawReview) {
                         return mConverter.toReview(rawReview);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Headline> getHeadlinesFromSource(String type, int page) {
+        String callback = JsonpGenerator.getParameter();
+        long timeStamp = JsonpGenerator.getInitTime() + page;
+        return mCnbetaApi.getHeadlines(callback, type, page, timeStamp)
+                .flatMap(new Func1<ExposedResponse<RawHeadline>, Observable<RawHeadline>>() {
+                    @Override
+                    public Observable<RawHeadline> call(ExposedResponse<RawHeadline> rawHeadlineExposedResponse) {
+                        return Observable.from(rawHeadlineExposedResponse.getResult());
+                    }
+                })
+                .map(new Func1<RawHeadline, Headline>() {
+                    @Override
+                    public Headline call(RawHeadline rawHeadline) {
+                        return mConverter.toHeadline(rawHeadline);
                     }
                 });
     }

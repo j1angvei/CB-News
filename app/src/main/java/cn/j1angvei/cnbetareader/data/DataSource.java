@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.data;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import rx.Observable;
 
@@ -16,4 +17,6 @@ public interface DataSource {
     Observable<Content> getContentFromSource(String sid);
 
     Observable<Review> getReviewsFromSource(String type, int page);
+
+    Observable<Headline> getHeadlinesFromSource(String type, int page);
 }

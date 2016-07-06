@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wayne on 2016/6/13.
@@ -10,7 +11,7 @@ public final class Headline {
     private String title;
     private String content;
     private String thumb;
-    private ArrayList<RelatedItem> relatedArticles;
+    private List<RelatedItem> relatedArticles;
 
     public Headline() {
         relatedArticles = new ArrayList<>();
@@ -48,11 +49,11 @@ public final class Headline {
         this.thumb = thumb;
     }
 
-    public ArrayList<RelatedItem> getRelatedArticles() {
+    public List<RelatedItem> getRelatedArticles() {
         return relatedArticles;
     }
 
-    public void setRelatedArticles(ArrayList<RelatedItem> relatedArticles) {
+    public void setRelatedArticles(List<RelatedItem> relatedArticles) {
         this.relatedArticles = relatedArticles;
     }
 

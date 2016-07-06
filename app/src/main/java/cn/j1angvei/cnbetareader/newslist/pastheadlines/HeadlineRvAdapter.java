@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +29,7 @@ import cn.j1angvei.cnbetareader.bean.RelatedItem;
  * Created by Wayne on 2016/7/5.
  */
 public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.ViewHolder> implements BaseAdapter<Headline> {
+    private static final String TAG = "HeadlineRvAdapter";
     private List<Headline> mHeadlines;
     private Activity mActivity;
 
@@ -37,28 +40,48 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_past_headline, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_headline, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Headline headline = mHeadlines.get(position);
+        final Headline headline = mHeadlines.get(position);
         holder.tvTitle.setText(headline.getTitle());
         holder.tvDescription.setText(headline.getContent());
-        Glide.with(context).load(headline.getThumb()).into(holder.ivThumb);
-        for (int i = 0; i < headline.getRelatedArticles().size(); i++) {
-            TextView tv = holder.tvRelate.get(i);
-            final RelatedItem item = headline.getRelatedArticles().get(i);
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(item.getTitle());
-            tv.setOnClickListener(new View.OnClickListener() {
+        holder.tvDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: " + headline.getContent().trim());
+
+            }
+        });
+        //relate items
+        List<RelatedItem> relatedItems = headline.getRelatedArticles();
+        if (relatedItems.size() <= 0) {
+            holder.llRelateContainer.setVisibility(View.GONE);
+        } else {
+            holder.llRelateContainer.setVisibility(View.VISIBLE);
+            Glide.with(context).load(headline.getThumb()).into(holder.ivThumb);
+            holder.ivThumb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(holder.itemView, "ha ha" + item.getSid(), Snackbar.LENGTH_LONG).show();
+                    Log.d(TAG, "onClick: " + headline.getThumb());
                 }
             });
+            for (int i = 0; i < relatedItems.size(); i++) {
+                TextView tv = holder.tvRelate.get(i);
+                final RelatedItem item = headline.getRelatedArticles().get(i);
+                tv.setVisibility(View.VISIBLE);
+                tv.setText(item.getTitle());
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(holder.itemView, "ha ha" + item.getSid(), Snackbar.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
@@ -93,20 +116,16 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
         TextView tvDescription;
         @BindView(R.id.iv_headline_thumb)
         ImageView ivThumb;
-        //        @BindView(R.id.tv_headline_relate_1)
-//        TextView tvRelate1;
-//        @BindView(R.id.tv_headline_relate_2)
-//        TextView tvRelate2;
-//        @BindView(R.id.tv_headline_relate_3)
-//        TextView tvRelate3;
         @BindViews({R.id.tv_headline_relate_1, R.id.tv_headline_relate_2, R.id.tv_headline_relate_3})
         List<TextView> tvRelate;
 
+        LinearLayout llRelateContainer;
         View itemView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
+            llRelateContainer = (LinearLayout) itemView.findViewById(R.id.ll_headline_relate_container);
             ButterKnife.bind(this, itemView);
         }
     }

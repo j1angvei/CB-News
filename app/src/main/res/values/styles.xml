@@ -62,4 +62,5 @@
     <style name="CBTheme.CardView.Inside">
         <item name="android:padding">@dimen/card_margin_horz</item>
     </style>
+
 </resources>

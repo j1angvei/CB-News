@@ -26,6 +26,7 @@ import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewFragment;
 import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
+import cn.j1angvei.cnbetareader.newslist.pastheadlines.HeadlineFragment;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -116,16 +117,23 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         switch (item.getItemId()) {
             case R.id.nav_latest_news:
                 tag = "all";
-                fragment = mFragmentManager.findFragmentByTag("all");
+                fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
-                    fragment = ArticlesFragment.newInstance("all");
+                    fragment = ArticlesFragment.newInstance(tag);
                 }
                 break;
             case R.id.nav_hot_news:
                 tag = "jhcomment";
-                fragment = mFragmentManager.findFragmentByTag("jhcomment");
+                fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
-                    fragment = ReviewFragment.newInstance("jhcomment");
+                    fragment = ReviewFragment.newInstance(tag);
+                }
+                break;
+            case R.id.nav_past_headlines:
+                tag = "editorcommend";
+                fragment = mFragmentManager.findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = HeadlineFragment.newInstance(tag);
                 }
                 break;
             default:
@@ -140,9 +148,5 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
 
         setTitle(item.getTitle());
         return true;
-    }
-
-    private void replaceFragment(String type) {
-
     }
 }

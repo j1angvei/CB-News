@@ -175,7 +175,8 @@ public final class BeanConverter {
 
         headline.setSid(raw.getFromId());
         headline.setTitle(Html.fromHtml(raw.getTitle()).toString());
-        headline.setContent(Html.fromHtml(raw.getDescription()).toString());
+        String content = Html.fromHtml(raw.getDescription()).toString();
+        headline.setContent(StringUtil.removeInvalidEnd(content));
 
         ArrayList<RelatedItem> items = new ArrayList<>();
         for (String relation : raw.getRelatedArticles()) {
