@@ -12,55 +12,80 @@
     <!--TextView style-->
     <style name="CBTheme.TextView"/>
 
-    <style name="CBTheme.TextView.Articles" parent="CBTheme"/>
+    <style name="CBTheme.TextView.Title"/>
 
-    <style name="CBTheme.TextView.Articles.Title">
+    <style name="CBTheme.TextView.Title.Articles">
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
-    <style name="CBTheme.TextView.Articles.Summary">
+    <style name="CBTheme.TextView.Title.Review">
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
         <item name="android:textColor">@color/textSecondary</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="CBTheme.TextView.Articles.Statistic">
-        <item name="android:textColor">@color/textHint</item>
-        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    <style name="CBTheme.TextView.Title.Headline">
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
-    <style name="CBTheme.TextView.Review" parent="CBTheme"/>
+    <style name="CBTheme.TextView.Content"/>
 
-    <style name="CBTheme.TextView.Review.Comment">
+    <style name="CBTheme.TextView.Content.Articles">
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="CBTheme.TextView.Content.Headline">
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@drawable/bg_headline_content</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="CBTheme.TextView.Content.Review">
         <item name="android:background">@drawable/bg_review_comment</item>
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
-    <style name="CBTheme.TextView.Review.Location">
-        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
-        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
+    <style name="CBTheme.TextView.Hint"/>
+
+    <style name="CBTheme.TextView.Hint.Articles">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:textColor">@color/textHint</item>
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="CBTheme.TextView.Hint.Review">
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
         <item name="android:textColor">@color/textSecondary</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="CBTheme.TextView.Review.Title">
-        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
-        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+    <style name="CBTheme.TextView.Link"/>
+
+    <style name="CBTheme.TextView.Link.Headline">
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:drawableLeft">@drawable/ic_headline_relate</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
     </style>
     <!--CardView style-->
     <style name="CBTheme.CardView">
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:layout_marginBottom">@dimen/card_margin_vert</item>
-        <item name="android:layout_marginLeft">@dimen/card_margin_horz</item>
-        <item name="android:layout_marginRight">@dimen/card_margin_horz</item>
-    </style>
-
-    <style name="CBTheme.CardView.Inside">
-        <item name="android:padding">@dimen/card_margin_horz</item>
+        <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
 </resources>

@@ -8,11 +8,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/card_margin_horz">
+        android:padding="@dimen/card_margin">
 
         <TextView
             android:id="@+id/tv_article_title"
-            style="@style/CBTheme.TextView.Articles.Title"
+            style="@style/CBTheme.TextView.Title.Articles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"/>
@@ -22,27 +22,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_article_title"
-            android:layout_marginBottom="@dimen/card_margin_horz"
-            android:layout_marginTop="@dimen/card_margin_horz"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_article_summary"
-                style="@style/CBTheme.TextView.Articles.Summary"
+                style="@style/CBTheme.TextView.Content.Articles"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:ellipsize="end"
-                android:lineSpacingMultiplier="1.2"
-                android:maxLines="3"
-                android:text="Summary\nSummary\nSummary\nSummary"
-                />
+                android:text="Summary\nSummary\nSummary\nSummary"/>
 
             <ImageView
                 android:id="@+id/iv_article_thumb"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/fake_article_thumb"/>
         </LinearLayout>
 
@@ -54,32 +51,29 @@
 
             <TextView
                 android:id="@+id/tv_article_time"
-                style="@style/CBTheme.TextView.Articles.Statistic"
+                style="@style/CBTheme.TextView.Hint.Articles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:drawableLeft="@drawable/ic_news_time"
-                android:drawablePadding="4dp"
-                android:text="2016-02-15"
-                />
+                android:drawableStart="@drawable/ic_news_time"
+                android:text="2016-02-15"/>
 
             <TextView
                 android:id="@+id/tv_article_comment"
-                style="@style/CBTheme.TextView.Articles.Statistic"
+                style="@style/CBTheme.TextView.Hint.Articles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:drawableLeft="@drawable/ic_news_comments"
-                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_news_comments"
                 android:text="20"/>
 
             <TextView
                 android:id="@+id/tv_article_count"
-                style="@style/CBTheme.TextView.Articles.Statistic"
+                style="@style/CBTheme.TextView.Hint.Articles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_news_viewer"
-                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_news_viewer"
                 android:text="300"/>
 
         </LinearLayout>

@@ -50,13 +50,6 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
         final Headline headline = mHeadlines.get(position);
         holder.tvTitle.setText(headline.getTitle());
         holder.tvDescription.setText(headline.getContent());
-        holder.tvDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: " + headline.getContent().trim());
-
-            }
-        });
         //relate items
         List<RelatedItem> relatedItems = headline.getRelatedArticles();
         if (relatedItems.size() <= 0) {
@@ -64,12 +57,6 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
         } else {
             holder.llRelateContainer.setVisibility(View.VISIBLE);
             Glide.with(context).load(headline.getThumb()).into(holder.ivThumb);
-            holder.ivThumb.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d(TAG, "onClick: " + headline.getThumb());
-                }
-            });
             for (int i = 0; i < relatedItems.size(); i++) {
                 TextView tv = holder.tvRelate.get(i);
                 final RelatedItem item = headline.getRelatedArticles().get(i);

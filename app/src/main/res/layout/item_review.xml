@@ -8,27 +8,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/card_margin_horz">
+        android:layout_marginBottom="@dimen/card_margin">
 
         <TextView
             android:id="@+id/tv_review_comment"
-            style="@style/CBTheme.TextView.Review.Comment"
+            style="@style/CBTheme.TextView.Content.Review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Comment"/>
 
         <TextView
             android:id="@+id/tv_review_location"
-            style="@style/CBTheme.TextView.Review.Location"
+            style="@style/CBTheme.TextView.Hint.Review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_review_comment"
-            android:layout_marginTop="@dimen/card_margin_horz"
+            android:layout_marginTop="@dimen/card_margin"
             android:text="Location"/>
 
         <TextView
             android:id="@+id/tv_review_title"
-            style="@style/CBTheme.TextView.Review.Title"
+            style="@style/CBTheme.TextView.Title.Review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_review_location"

@@ -2,7 +2,7 @@
     <string name="app_name">cnBeta News</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="ph_review_location">Anonymous user from %1$s commented on </string>
+    <string name="ph_review_location">Anonymous user from %1$s comment on</string>
     <string name="nav_latest_news">Latest news</string>
     <string name="nav_top_comments">Top comments</string>
     <string name="nav_past_headlines">Past headlines</string>
