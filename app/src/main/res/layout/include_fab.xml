@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.FloatingActionButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fab"
     android:layout_width="wrap_content"
@@ -7,6 +8,7 @@
     android:layout_gravity="bottom|end"
     android:layout_margin="@dimen/fab_margin"
     android:src="@drawable/ic_refresh_white"
-    app:fabSize="normal">
+    app:fabSize="normal"
+    app:layout_behavior="cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior">
 
 </android.support.design.widget.FloatingActionButton>
