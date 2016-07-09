@@ -5,5 +5,7 @@ package cn.j1angvei.cnbetareader.adapter;
  */
 
 public interface BaseAdapter<T> {
+    void clear();
 
+    void add(T item);
 }

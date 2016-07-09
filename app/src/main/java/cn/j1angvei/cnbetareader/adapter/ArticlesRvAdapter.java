@@ -27,7 +27,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.ViewHolder> implements SwipeAdapter<Article> {
+public class ArticlesRvAdapter extends SwipeAdapter<Article, ArticlesRvAdapter.ViewHolder> {
 
     private List<Article> mArticles;
     private Activity mActivity;
@@ -82,7 +82,7 @@ public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.Vi
         notifyItemInserted(mArticles.size() - 1);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_article_title)
         TextView tvTitle;
         @BindView(R.id.tv_article_summary)

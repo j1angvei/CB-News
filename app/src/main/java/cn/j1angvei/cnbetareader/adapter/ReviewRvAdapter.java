@@ -20,7 +20,7 @@ import cn.j1angvei.cnbetareader.bean.Review;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHolder> implements SwipeAdapter<Review> {
+public class ReviewRvAdapter extends SwipeAdapter<Review, ReviewRvAdapter.ViewHolder> {
     private List<Review> mReviews;
     private Activity mActivity;
 
@@ -69,7 +69,7 @@ public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHo
         notifyItemInserted(mReviews.size() - 1);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_review_comment)
         TextView tvComment;
         @BindView(R.id.tv_review_location)

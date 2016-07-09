@@ -26,7 +26,7 @@ import cn.j1angvei.cnbetareader.bean.RelatedItem;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.ViewHolder> implements SwipeAdapter<Headline> {
+public class HeadlineRvAdapter extends SwipeAdapter<Headline, HeadlineRvAdapter.ViewHolder> {
     private static final String TAG = "HeadlineRvAdapter";
     private List<Headline> mHeadlines;
     private Activity mActivity;
@@ -90,7 +90,7 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
     }
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_headline_title)
         TextView tvTitle;
         @BindView(R.id.tv_headline_description)

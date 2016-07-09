@@ -1,12 +1,12 @@
 package cn.j1angvei.cnbetareader.adapter;
 
+import android.support.v7.widget.RecyclerView;
+
 /**
  * Created by Wayne on 2016/7/9.
  */
-public interface SwipeAdapter<T> extends BaseAdapter {
+public abstract class SwipeAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+    public abstract void clear();
 
-    void clear();
-
-    void add(T item);
-
+    public abstract void add(T item);
 }

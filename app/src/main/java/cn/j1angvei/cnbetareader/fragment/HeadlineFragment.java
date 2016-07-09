@@ -21,9 +21,7 @@ import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class HeadlineFragment extends SwipeFragment<Headline> {
-    @Inject
-    HeadlineRvAdapter mAdapter;
+public class HeadlineFragment extends SwipeFragment<Headline, HeadlineRvAdapter.ViewHolder> {
     @Inject
     HeadlinePresenter mPresenter;
 
@@ -36,26 +34,10 @@ public class HeadlineFragment extends SwipeFragment<Headline> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAdapter = new HeadlineRvAdapter(getActivity());
         ((BaseActivity) getActivity()).getActivityComponent().fragmentComponent(new FragmentModule()).inject(this);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
-        ButterKnife.bind(this, view);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPage = 1;
-                clearItems();
-                mPresenter.retrieveItem(mType, mPage++);
-            }
-        });
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -73,5 +55,10 @@ public class HeadlineFragment extends SwipeFragment<Headline> {
     @Override
     public void clearItems() {
         mAdapter.clear();
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

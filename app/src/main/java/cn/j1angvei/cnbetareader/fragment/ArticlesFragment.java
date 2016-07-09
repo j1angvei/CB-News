@@ -2,15 +2,12 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
@@ -20,9 +17,7 @@ import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesFragment extends SwipeFragment<Article> {
-    @Inject
-    ArticlesRvAdapter mAdapter;
+public class ArticlesFragment extends SwipeFragment<Article, ArticlesRvAdapter.ViewHolder> {
     @Inject
     ArticlesPresenter mPresenter;
 
@@ -39,23 +34,6 @@ public class ArticlesFragment extends SwipeFragment<Article> {
         ((BaseActivity) getActivity()).getActivityComponent().fragmentComponent(new FragmentModule()).inject(this);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
-        ButterKnife.bind(this, view);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPage = 1;
-                clearItems();
-                mPresenter.retrieveItem(mType, mPage++);
-            }
-        });
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -75,4 +53,8 @@ public class ArticlesFragment extends SwipeFragment<Article> {
         mAdapter.clear();
     }
 
+    @Override
+    public void onRefresh() {
+        mPresenter.retrieveItem(mType, mPage++);
+    }
 }
