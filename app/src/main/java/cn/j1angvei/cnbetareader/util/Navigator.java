@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
-import cn.j1angvei.cnbetareader.newscontent.NewsContentActivity;
-import cn.j1angvei.cnbetareader.settings.SettingsActivity;
+import cn.j1angvei.cnbetareader.activity.NewsContentActivity;
+import cn.j1angvei.cnbetareader.activity.SettingsActivity;
 
 /**
  * Created by Wayne on 2016/6/13.

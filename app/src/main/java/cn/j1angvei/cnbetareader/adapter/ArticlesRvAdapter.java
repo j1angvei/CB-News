@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.newslist.latestnews;
+package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.base.BaseAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -28,7 +27,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.ViewHolder> implements BaseAdapter<Article> {
+public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.ViewHolder> implements SwipeAdapter<Article> {
 
     private List<Article> mArticles;
     private Activity mActivity;
@@ -81,11 +80,6 @@ public class ArticlesRvAdapter extends RecyclerView.Adapter<ArticlesRvAdapter.Vi
     public void add(Article item) {
         mArticles.add(item);
         notifyItemInserted(mArticles.size() - 1);
-    }
-
-    @Override
-    public ArrayList<String> gatherNewsIds() {
-        return null;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

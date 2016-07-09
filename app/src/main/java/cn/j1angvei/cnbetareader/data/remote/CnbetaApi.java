@@ -31,7 +31,7 @@ public interface CnbetaApi {
     Observable<ExposedResponse<RawHeadline>> getHeadlines(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/topics/more")
-    Observable<WrappedResponse<Article>> getTopicArticles(@Query("jsoncallback") String callback, @Query("id") String id, @Query("page") int page, @Query("_") long timestamp);
+    Observable<WrappedResponse<Article>> getTopicArticles(@Query("jsoncallback") String callback, @Query("id") String topicId, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/articles/{sid}.htm")
     Observable<ResponseBody> getArticleContent(@Path("sid") String sid);

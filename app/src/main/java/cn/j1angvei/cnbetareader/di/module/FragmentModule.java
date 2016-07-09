@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewRvAdapter;
-import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesRvAdapter;
-import cn.j1angvei.cnbetareader.newslist.pastheadlines.HeadlineRvAdapter;
+import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
+import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
+import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import dagger.Module;
 import dagger.Provides;
 

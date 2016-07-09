@@ -9,14 +9,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CBTheme">
-        <activity android:name=".newslist.NewsListActivity">
+        <activity android:name=".activity.NewsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".newscontent.NewsContentActivity"/>
-        <activity android:name=".settings.SettingsActivity">
+        <activity android:name=".activity.NewsContentActivity"/>
+        <activity android:name=".activity.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
                 <category android:name="android.intent.category.DEFAULT"/>

@@ -3,7 +3,7 @@ package cn.j1angvei.cnbetareader.di.component;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
-import cn.j1angvei.cnbetareader.newslist.NewsListActivity;
+import cn.j1angvei.cnbetareader.activity.NewsListActivity;
 import dagger.Component;
 
 /**

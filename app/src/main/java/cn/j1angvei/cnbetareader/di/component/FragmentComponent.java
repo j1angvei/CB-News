@@ -2,9 +2,9 @@ package cn.j1angvei.cnbetareader.di.component;
 
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewFragment;
-import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
-import cn.j1angvei.cnbetareader.newslist.pastheadlines.HeadlineFragment;
+import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
+import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
+import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import dagger.Subcomponent;
 
 /**

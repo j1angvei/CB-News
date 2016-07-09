@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.settings;
+package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

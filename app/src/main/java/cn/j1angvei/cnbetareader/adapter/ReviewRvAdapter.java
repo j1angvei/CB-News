@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.newslist.hotcomments;
+package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,13 +15,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.base.BaseAdapter;
 import cn.j1angvei.cnbetareader.bean.Review;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHolder> implements BaseAdapter<Review> {
+public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHolder> implements SwipeAdapter<Review> {
     private List<Review> mReviews;
     private Activity mActivity;
 
@@ -68,11 +67,6 @@ public class ReviewRvAdapter extends RecyclerView.Adapter<ReviewRvAdapter.ViewHo
     public void add(Review item) {
         mReviews.add(item);
         notifyItemInserted(mReviews.size() - 1);
-    }
-
-    @Override
-    public ArrayList<String> gatherNewsIds() {
-        return null;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

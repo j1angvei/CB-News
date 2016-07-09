@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.newslist;
+package cn.j1angvei.cnbetareader.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,12 +21,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.base.BaseActivity;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.newslist.hotcomments.ReviewFragment;
-import cn.j1angvei.cnbetareader.newslist.latestnews.ArticlesFragment;
-import cn.j1angvei.cnbetareader.newslist.pastheadlines.HeadlineFragment;
+import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
+import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
+import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 
 /**
  * Created by Wayne on 2016/7/4.

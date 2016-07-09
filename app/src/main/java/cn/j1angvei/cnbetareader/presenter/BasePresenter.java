@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.base;
+package cn.j1angvei.cnbetareader.presenter;
 
 /**
  * Created by Wayne on 2016/6/16.

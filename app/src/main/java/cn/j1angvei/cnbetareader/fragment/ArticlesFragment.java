@@ -1,55 +1,41 @@
-package cn.j1angvei.cnbetareader.newslist.latestnews;
+package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.base.BaseActivity;
-import cn.j1angvei.cnbetareader.base.BaseFragment;
+import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.presenter.ArticlesPresenter;
+import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesFragment extends BaseFragment implements ArticlesContract.View {
-    private static final String ARTICLE_TYPE = "ArticlesFragment.news_type";
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
-
+public class ArticlesFragment extends SwipeFragment<Article> {
     @Inject
     ArticlesRvAdapter mAdapter;
     @Inject
-    LinearLayoutManager mLinearLayoutManager;
-    @Inject
     ArticlesPresenter mPresenter;
 
-    private String mArticleType;
-
-    public static ArticlesFragment newInstance(String newsType) {
+    public static ArticlesFragment newInstance(String type) {
         ArticlesFragment fragment = new ArticlesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARTICLE_TYPE, newsType);
-        fragment.setArguments(args);
+        fragment.setBundle(type);
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mArticleType = getArguments().getString(ARTICLE_TYPE);
+        mAdapter = new ArticlesRvAdapter(getActivity());
         ((BaseActivity) getActivity()).getActivityComponent().fragmentComponent(new FragmentModule()).inject(this);
     }
 
@@ -63,7 +49,9 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.retrieveLatestNews();
+                mPage = 1;
+                clearItems();
+                mPresenter.retrieveItem(mType, mPage++);
             }
         });
         return view;
@@ -73,38 +61,18 @@ public class ArticlesFragment extends BaseFragment implements ArticlesContract.V
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        mPresenter.retrieveLatestNews();
+        mPresenter.retrieveItem(mType, mPage++);
+    }
+
+
+    @Override
+    public void renderItem(Article item) {
+        mAdapter.add(item);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mRecyclerView.setAdapter(null);
-        mRecyclerView.setLayoutManager(null);
-    }
-
-    @Override
-    public void addNews(Article article) {
-        mAdapter.add(article);
-    }
-
-    @Override
-    public void clearNews() {
+    public void clearItems() {
         mAdapter.clear();
     }
 
-    @Override
-    public String getSourceType() {
-        return mArticleType;
-    }
-
-    @Override
-    public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hideLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
 }

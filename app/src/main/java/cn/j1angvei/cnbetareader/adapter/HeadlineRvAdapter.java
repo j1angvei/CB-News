@@ -1,10 +1,9 @@
-package cn.j1angvei.cnbetareader.newslist.pastheadlines;
+package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +20,13 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.base.BaseAdapter;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RelatedItem;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.ViewHolder> implements BaseAdapter<Headline> {
+public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.ViewHolder> implements SwipeAdapter<Headline> {
     private static final String TAG = "HeadlineRvAdapter";
     private List<Headline> mHeadlines;
     private Activity mActivity;
@@ -91,10 +89,6 @@ public class HeadlineRvAdapter extends RecyclerView.Adapter<HeadlineRvAdapter.Vi
         notifyItemInserted(mHeadlines.size() - 1);
     }
 
-    @Override
-    public ArrayList<String> gatherNewsIds() {
-        return null;
-    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_headline_title)

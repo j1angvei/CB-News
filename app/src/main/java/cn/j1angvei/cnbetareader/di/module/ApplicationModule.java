@@ -56,19 +56,11 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        return loggingInterceptor;
-    }
-
-    @Provides
-    @Singleton
-    OkHttpClient provideOkhttpClient(HttpLoggingInterceptor loggingInterceptor) {
+    OkHttpClient provideOkhttpClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(new AddHeaderInterceptor())
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(new JsonpInterceptor())
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE))
                 .build();
     }
 

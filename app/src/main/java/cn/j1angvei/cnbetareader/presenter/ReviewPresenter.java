@@ -1,10 +1,11 @@
-package cn.j1angvei.cnbetareader.newslist.pastheadlines;
+package cn.j1angvei.cnbetareader.presenter;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.DataRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.view.SwipeView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -13,30 +14,27 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/5.
  */
 @PerFragment
-public class HeadlinePresenter implements HeadlinesContract.Presenter {
-    private int mPage = 1;
-    private HeadlinesContract.View mView;
+public class ReviewPresenter implements SwipePresenter<Review> {
+    private SwipeView<Review> mView;
     private DataRepository mRepository;
 
     @Inject
-    public HeadlinePresenter(DataRepository repository) {
+    public ReviewPresenter(DataRepository repository) {
         mRepository = repository;
     }
 
     @Override
-    public void retrieveLatestHeadlines() {
-        mPage = 1;
-        mView.clearHeadlines();
-        retrieveMoreHeadlines();
+    public void setView(SwipeView<Review> swipeView) {
+        mView = swipeView;
     }
 
     @Override
-    public void retrieveMoreHeadlines() {
+    public void retrieveItem(String type, int page) {
         mView.showLoading();
-        mRepository.getHeadlinesFromSource(mView.getSourceType(), mPage++)
+        mRepository.getReviewsFromSource(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Headline>() {
+                .subscribe(new Subscriber<Review>() {
                     @Override
                     public void onCompleted() {
                         mView.hideLoading();
@@ -48,14 +46,9 @@ public class HeadlinePresenter implements HeadlinesContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Headline headline) {
-                        mView.addHeadlines(headline);
+                    public void onNext(Review review) {
+                        mView.renderItem(review);
                     }
                 });
-    }
-
-    @Override
-    public void setView(HeadlinesContract.View view) {
-        mView = view;
     }
 }

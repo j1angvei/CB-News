@@ -1,6 +1,4 @@
-package cn.j1angvei.cnbetareader.settings;
-
-import cn.j1angvei.cnbetareader.base.BaseActivity;
+package cn.j1angvei.cnbetareader.activity;
 
 /**
  * Created by Wayne on 2016/6/28.

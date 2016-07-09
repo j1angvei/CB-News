@@ -1,10 +1,11 @@
-package cn.j1angvei.cnbetareader.newslist.latestnews;
+package cn.j1angvei.cnbetareader.presenter;
 
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.DataRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.view.SwipeView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -13,9 +14,8 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/4.
  */
 @PerFragment
-public class ArticlesPresenter implements ArticlesContract.Presenter {
-    private int mPage = 1;
-    private ArticlesContract.View mView;
+public class ArticlesPresenter implements SwipePresenter<Article> {
+    private SwipeView<Article> mView;
     private DataRepository mRepository;
 
     @Inject
@@ -24,16 +24,14 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
     }
 
     @Override
-    public void retrieveLatestNews() {
-        mPage = 1;
-        mView.clearNews();
-        retrieveMoreNews();
+    public void setView(SwipeView<Article> swipeView) {
+        mView = swipeView;
     }
 
     @Override
-    public void retrieveMoreNews() {
+    public void retrieveItem(String type, int page) {
         mView.showLoading();
-        mRepository.getArticleFromSource(mView.getSourceType(), mPage++)
+        mRepository.getArticleFromSource(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Article>() {
@@ -49,13 +47,9 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
 
                     @Override
                     public void onNext(Article article) {
-                        mView.addNews(article);
+                        mView.renderItem(article);
                     }
                 });
     }
 
-    @Override
-    public void setView(ArticlesContract.View view) {
-        mView = view;
-    }
 }

@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.base;
+package cn.j1angvei.cnbetareader.activity;
 
 import android.support.v7.app.AppCompatActivity;
 
