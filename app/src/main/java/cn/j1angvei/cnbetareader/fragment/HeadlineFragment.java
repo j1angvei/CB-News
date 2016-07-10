@@ -1,9 +1,5 @@
 package cn.j1angvei.cnbetareader.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -23,27 +19,5 @@ public class HeadlineFragment extends SwipeFragment<Headline, HeadlineRvAdapter.
     @Override
     protected void inject(ActivityComponent component) {
         component.headlinesComponent(new HeadlinesModule()).inject(this);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.setView(this);
-        mPresenter.retrieveItem(mType, mPage++);
-    }
-
-    @Override
-    public void renderItem(Headline item) {
-        mAdapter.add(item);
-    }
-
-    @Override
-    public void clearItems() {
-        mAdapter.clear();
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 }

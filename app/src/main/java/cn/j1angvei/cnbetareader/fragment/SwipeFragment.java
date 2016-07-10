@@ -65,6 +65,14 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.setView(this);
+        clearItems();
+        mPresenter.retrieveItem(mType, mPage++);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
@@ -81,6 +89,22 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    protected abstract void inject(ActivityComponent component);
+    @Override
+    public void renderItem(T item) {
+        mAdapter.add(item);
+    }
 
+    @Override
+    public void clearItems() {
+        mPage = 1;
+        mAdapter.clear();
+    }
+
+    @Override
+    public void onRefresh() {
+        clearItems();
+        mPresenter.retrieveItem(mType, mPage++);
+    }
+
+    protected abstract void inject(ActivityComponent component);
 }
