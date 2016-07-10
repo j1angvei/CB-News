@@ -19,4 +19,6 @@ public interface DataSource {
     Observable<Review> getReviewsFromSource(String type, int page);
 
     Observable<Headline> getHeadlinesFromSource(String type, int page);
+
+    Observable<Article> getTopicArticlesFromSource(String topicId, int page);
 }

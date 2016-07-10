@@ -29,6 +29,7 @@ public class DataRepository implements Repository {
     private Map<String, Content> mContentMap;
     private Map<String, Review> mReviewMap;
     private Map<String, Headline> mHeadlineMap;
+    private Map<String, List<Article>> mTopicsMap;
 
     @Inject
     public DataRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
@@ -88,11 +89,28 @@ public class DataRepository implements Repository {
     }
 
     @Override
+    public Observable<Article> getTopicArticlesFromSource(final String topicId, int page) {
+        return mRemoteDataSource.getTopicArticlesFromSource(topicId, page)
+                .doOnNext(new Action1<Article>() {
+                    @Override
+                    public void call(Article article) {
+                        List<Article> articleList = mTopicsMap.get(topicId);
+                        if (articleList == null) {
+                            articleList = new ArrayList<>();
+                            mTopicsMap.put(topicId, articleList);
+                        }
+                        articleList.add(article);
+                    }
+                });
+    }
+
+    @Override
     public void initDataContainer() {
         mNewsMap = new HashMap<>();
         mContentMap = new HashMap<>();
         mReviewMap = new HashMap<>();
         mHeadlineMap = new HashMap<>();
+        mTopicsMap = new HashMap<>();
     }
 
     @Override

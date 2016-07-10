@@ -4,9 +4,9 @@ import android.app.Activity;
 
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.ArticlesModule;
-import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.HeadlinesModule;
 import cn.j1angvei.cnbetareader.di.module.ReviewModule;
+import cn.j1angvei.cnbetareader.di.module.TopicsModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import cn.j1angvei.cnbetareader.activity.NewsListActivity;
 import dagger.Component;
@@ -28,5 +28,7 @@ public interface ActivityComponent {
     HeadlinesComponent headlinesComponent(HeadlinesModule headlinesModule);
 
     ReviewsComponent reviewsComponent(ReviewModule reviewModule);
+
+    TopicsComponent topicsComponent(TopicsModule topicsModule);
 
 }

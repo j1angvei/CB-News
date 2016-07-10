@@ -26,6 +26,7 @@ import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
+import cn.j1angvei.cnbetareader.fragment.TopicsFragment;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -133,6 +134,14 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = HeadlineFragment.newInstance(tag);
+                }
+                break;
+
+            case R.id.nav_my_topics:
+                tag = "topics";
+                fragment = mFragmentManager.findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = new TopicsFragment();
                 }
                 break;
             default:

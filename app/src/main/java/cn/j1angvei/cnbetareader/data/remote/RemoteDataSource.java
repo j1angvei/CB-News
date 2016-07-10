@@ -108,4 +108,22 @@ public class RemoteDataSource implements DataSource {
                     }
                 });
     }
+
+    @Override
+    public Observable<Article> getTopicArticlesFromSource(String topicId, int page) {
+        String callback = JsonpGenerator.getParameter();
+        long timeStamp = JsonpGenerator.getInitTime() + page;
+        return mCnbetaApi.getTopicArticles(callback, topicId, page, timeStamp)
+                .map(new Func1<WrappedResponse<Article>, List<Article>>() {
+                    @Override
+                    public List<Article> call(WrappedResponse<Article> articleWrappedResponse) {
+                        return articleWrappedResponse.getResult().getList();
+                    }
+                }).flatMap(new Func1<List<Article>, Observable<Article>>() {
+                    @Override
+                    public Observable<Article> call(List<Article> articles) {
+                        return Observable.from(articles);
+                    }
+                });
+    }
 }

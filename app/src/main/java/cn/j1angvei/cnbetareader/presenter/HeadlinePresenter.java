@@ -15,8 +15,6 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class HeadlinePresenter extends SwipePresenter<Headline> {
-    private SwipeView<Headline> mView;
-    private DataRepository mRepository;
 
     @Inject
     public HeadlinePresenter(DataRepository repository) {
@@ -24,13 +22,8 @@ public class HeadlinePresenter extends SwipePresenter<Headline> {
     }
 
     @Override
-    public void setView(SwipeView<Headline> swipeView) {
-        mView = swipeView;
-    }
-
-    @Override
     public void retrieveItem(String type, int page) {
-        mView.showLoading();
+        super.retrieveItem(type, page);
         mRepository.getHeadlinesFromSource(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

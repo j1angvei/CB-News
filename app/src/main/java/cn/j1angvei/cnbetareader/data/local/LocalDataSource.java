@@ -39,4 +39,9 @@ public class LocalDataSource implements DataSource {
     public Observable<Headline> getHeadlinesFromSource(String type, int page) {
         return null;
     }
+
+    @Override
+    public Observable<Article> getTopicArticlesFromSource(String topicId, int page) {
+        return null;
+    }
 }

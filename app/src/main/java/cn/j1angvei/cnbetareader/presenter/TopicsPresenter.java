@@ -2,7 +2,7 @@ package cn.j1angvei.cnbetareader.presenter;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.DataRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import rx.Subscriber;
@@ -10,22 +10,22 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Wayne on 2016/7/5.
+ * Created by Wayne on 2016/7/10.
  */
 @PerFragment
-public class ReviewPresenter extends SwipePresenter<Review> {
+public class TopicsPresenter extends SwipePresenter<Article> {
     @Inject
-    public ReviewPresenter(DataRepository repository) {
+    public TopicsPresenter(DataRepository repository) {
         mRepository = repository;
     }
 
     @Override
     public void retrieveItem(String type, int page) {
         super.retrieveItem(type, page);
-        mRepository.getReviewsFromSource(type, page)
+        mRepository.getTopicArticlesFromSource(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Review>() {
+                .subscribe(new Subscriber<Article>() {
                     @Override
                     public void onCompleted() {
                         mView.hideLoading();
@@ -37,9 +37,10 @@ public class ReviewPresenter extends SwipePresenter<Review> {
                     }
 
                     @Override
-                    public void onNext(Review review) {
-                        mView.renderItem(review);
+                    public void onNext(Article article) {
+                        mView.renderItem(article);
                     }
                 });
+
     }
 }

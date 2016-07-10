@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.DataRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.view.SwipeView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -15,8 +14,6 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class ArticlesPresenter extends SwipePresenter<Article> {
-    private SwipeView<Article> mView;
-    private DataRepository mRepository;
 
     @Inject
     public ArticlesPresenter(DataRepository repository) {
@@ -24,13 +21,8 @@ public class ArticlesPresenter extends SwipePresenter<Article> {
     }
 
     @Override
-    public void setView(SwipeView<Article> swipeView) {
-        mView = swipeView;
-    }
-
-    @Override
     public void retrieveItem(String type, int page) {
-        mView.showLoading();
+        super.retrieveItem(type, page);
         mRepository.getArticleFromSource(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
