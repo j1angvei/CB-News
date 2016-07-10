@@ -3,15 +3,21 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
+import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.presenter.SwipePresenter;
 import cn.j1angvei.cnbetareader.view.SwipeView;
 
 /**
@@ -24,7 +30,12 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
+    @Inject
+    LinearLayoutManager mLinearLayoutManager;
+    @Inject
     SwipeAdapter<T, VH> mAdapter;
+    @Inject
+    SwipePresenter<T> mPresenter;
 
     String mType;
     int mPage = 1;
@@ -39,6 +50,7 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mType = getArguments().getString(NEWS_TYPE);
+        inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
     @Nullable
@@ -68,5 +80,7 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     public void hideLoading() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
+    protected abstract void inject(ActivityComponent component);
 
 }

@@ -1,7 +1,12 @@
 package cn.j1angvei.cnbetareader.di.component;
 
+import android.app.Activity;
+
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.di.module.ArticlesModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.di.module.HeadlinesModule;
+import cn.j1angvei.cnbetareader.di.module.ReviewModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import cn.j1angvei.cnbetareader.activity.NewsListActivity;
 import dagger.Component;
@@ -12,8 +17,16 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
+
     void inject(NewsListActivity newsListActivity);
 
     //expose variable to sub-graph
-    FragmentComponent fragmentComponent(FragmentModule fragmentModule);
+    Activity activity();
+
+    ArticlesComponent articlesComponent(ArticlesModule articlesModule);
+
+    HeadlinesComponent headlinesComponent(HeadlinesModule headlinesModule);
+
+    ReviewsComponent reviewsComponent(ReviewModule reviewModule);
+
 }

@@ -4,21 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import javax.inject.Inject;
-
-import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.bean.Review;
-import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.ReviewPresenter;
+import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.ReviewModule;
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
 public class ReviewFragment extends SwipeFragment<Review, ReviewRvAdapter.ViewHolder> {
-
-    @Inject
-    ReviewPresenter mPresenter;
 
     public static ReviewFragment newInstance(String type) {
         ReviewFragment fragment = new ReviewFragment();
@@ -27,10 +21,8 @@ public class ReviewFragment extends SwipeFragment<Review, ReviewRvAdapter.ViewHo
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mAdapter = new ReviewRvAdapter(getActivity());
-        ((BaseActivity) getActivity()).getActivityComponent().fragmentComponent(new FragmentModule()).inject(this);
+    protected void inject(ActivityComponent component) {
+        component.reviewsComponent(new ReviewModule()).inject(this);
     }
 
     @Override

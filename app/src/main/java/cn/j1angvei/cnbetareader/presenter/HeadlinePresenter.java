@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/5.
  */
 @PerFragment
-public class HeadlinePresenter implements SwipePresenter<Headline> {
+public class HeadlinePresenter extends SwipePresenter<Headline> {
     private SwipeView<Headline> mView;
     private DataRepository mRepository;
 
