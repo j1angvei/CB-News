@@ -4,6 +4,7 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import rx.Observable;
 
 /**
@@ -21,4 +22,6 @@ public interface DataSource {
     Observable<Headline> getHeadlinesFromSource(String type, int page);
 
     Observable<Article> getTopicArticlesFromSource(String topicId, int page);
+
+    Observable<Topic> getTopicsCoverByLetter(char letter);
 }

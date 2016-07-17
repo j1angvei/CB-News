@@ -1,10 +1,9 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
+
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RawReview;
-import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import okhttp3.ResponseBody;
@@ -18,6 +17,7 @@ import rx.Observable;
 
 /**
  * Created by Wayne on 2016/6/13.
+ * cnBeta Api retrieved from fiddler
  */
 public interface CnbetaApi {
 
@@ -39,5 +39,8 @@ public interface CnbetaApi {
     @FormUrlEncoded
     @POST("/cmt")
     Observable<ResponseBody> getArticleComment(@Field("csrf_token") String token, @Field("op") String op);
+
+    @GET("/topics.htm")
+    Observable<ResponseBody> getTopicsCoverByLetter(@Query("letter") char letter);
 
 }

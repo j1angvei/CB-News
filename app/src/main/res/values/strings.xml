@@ -12,4 +12,5 @@
     <string name="nav_quick_entry">Quick entry</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_exit">Exit</string>
+    <string name="topic_thumb">Topic thumb</string>
 </resources>

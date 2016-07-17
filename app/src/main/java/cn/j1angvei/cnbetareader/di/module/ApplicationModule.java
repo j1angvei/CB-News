@@ -60,7 +60,7 @@ public class ApplicationModule {
         return new OkHttpClient.Builder()
                 .addInterceptor(new AddHeaderInterceptor())
                 .addInterceptor(new JsonpInterceptor())
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE))
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                 .build();
     }
 

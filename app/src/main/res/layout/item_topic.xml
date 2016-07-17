@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_topic_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/topic_thumb"
+            android:scaleType="center"
+            android:src="@drawable/fake_topic_album"/>
+
+        <TextView
+            android:id="@+id/tv_topic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_topic_thumb"
+            android:text="Google 谷歌"/>
+
+        <ImageView
+            android:id="@+id/iv_topic_dot_menu"
+            android:layout_width="@dimen/cv_menu_width"
+            android:layout_height="@dimen/cv_menu_height"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/iv_topic_thumb"
+            android:layout_marginTop="@dimen/cv_menu_margin_top"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_cv_menu"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

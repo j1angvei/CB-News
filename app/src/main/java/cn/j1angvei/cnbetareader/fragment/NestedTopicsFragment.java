@@ -3,7 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.TopicsModule;
+import cn.j1angvei.cnbetareader.di.module.MyTopicsModule;
 
 /**
  * Created by Wayne on 2016/7/9.
@@ -18,6 +18,6 @@ public class NestedTopicsFragment extends SwipeFragment<Article, ArticlesRvAdapt
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.topicsComponent(new TopicsModule()).inject(this);
+        component.topicsComponent(new MyTopicsModule()).inject(this);
     }
 }

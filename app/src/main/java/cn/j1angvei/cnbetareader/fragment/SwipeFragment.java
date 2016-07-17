@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
+    GridLayoutManager mGridLayoutManager;
+    @Inject
     SwipeAdapter<T, VH> mAdapter;
     @Inject
     SwipePresenter<T> mPresenter;
@@ -56,12 +59,16 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.include_swipe_recycler_view, container, false);
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        setLayoutManager();
         mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
+    }
+
+    public void setLayoutManager() {
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
     }
 
     @Override
@@ -69,7 +76,7 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         clearItems();
-        mPresenter.retrieveItem(mType, mPage++);
+        retrieveItem();
     }
 
     @Override
@@ -103,6 +110,10 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     @Override
     public void onRefresh() {
         clearItems();
+        retrieveItem();
+    }
+
+    protected void retrieveItem() {
         mPresenter.retrieveItem(mType, mPage++);
     }
 

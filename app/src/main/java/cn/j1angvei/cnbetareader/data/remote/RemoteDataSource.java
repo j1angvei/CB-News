@@ -12,6 +12,7 @@ import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.DataSource;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
@@ -123,6 +124,28 @@ public class RemoteDataSource implements DataSource {
                     @Override
                     public Observable<Article> call(List<Article> articles) {
                         return Observable.from(articles);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Topic> getTopicsCoverByLetter(char letter) {
+        return mCnbetaApi.getTopicsCoverByLetter(letter)
+                .map(new Func1<ResponseBody, List<Topic>>() {
+                    @Override
+                    public List<Topic> call(ResponseBody responseBody) {
+                        try {
+                            return mConverter.toTopic(responseBody.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                })
+                .flatMap(new Func1<List<Topic>, Observable<Topic>>() {
+                    @Override
+                    public Observable<Topic> call(List<Topic> topics) {
+                        return Observable.from(topics);
                     }
                 });
     }

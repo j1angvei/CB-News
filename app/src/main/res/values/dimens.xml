@@ -9,4 +9,8 @@
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_extra_small">12sp</dimen>
+
+    <dimen name="cv_menu_width">20dp</dimen>
+    <dimen name="cv_menu_height">30dp</dimen>
+    <dimen name="cv_menu_margin_top">10dp</dimen>
 </resources>

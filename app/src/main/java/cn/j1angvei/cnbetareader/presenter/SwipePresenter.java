@@ -18,4 +18,8 @@ public abstract class SwipePresenter<T> {
         mView.showLoading();
     }
 
+    public void retrieveItem(int index) {
+        mView.showLoading();
+    }
+
 }

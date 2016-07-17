@@ -14,12 +14,12 @@ import android.view.animation.Interpolator;
 /**
  * Created by Wayne on 2016/7/6.
  */
-public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
+public class ScrollAwareFABUpDownBehavior extends FloatingActionButton.Behavior {
     //先慢后快再慢
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
     private boolean mIsAnimatingOut = false;
 
-    public ScrollAwareFABBehavior(Context context, AttributeSet attrs) {
+    public ScrollAwareFABUpDownBehavior(Context context, AttributeSet attrs) {
         super();
     }
 
@@ -52,15 +52,15 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
         ViewCompat.animate(button).translationY(button.getHeight() + getMarginBottom(button)).setInterpolator(INTERPOLATOR).withLayer()
                 .setListener(new ViewPropertyAnimatorListener() {
                     public void onAnimationStart(View view) {
-                        ScrollAwareFABBehavior.this.mIsAnimatingOut = true;
+                        ScrollAwareFABUpDownBehavior.this.mIsAnimatingOut = true;
                     }
 
                     public void onAnimationCancel(View view) {
-                        ScrollAwareFABBehavior.this.mIsAnimatingOut = false;
+                        ScrollAwareFABUpDownBehavior.this.mIsAnimatingOut = false;
                     }
 
                     public void onAnimationEnd(View view) {
-                        ScrollAwareFABBehavior.this.mIsAnimatingOut = false;
+                        ScrollAwareFABUpDownBehavior.this.mIsAnimatingOut = false;
                         view.setVisibility(View.GONE);
                     }
                 }).start();

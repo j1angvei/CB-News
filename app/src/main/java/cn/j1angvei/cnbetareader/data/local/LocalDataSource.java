@@ -7,6 +7,7 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.DataSource;
 import rx.Observable;
 
@@ -42,6 +43,11 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public Observable<Article> getTopicArticlesFromSource(String topicId, int page) {
+        return null;
+    }
+
+    @Override
+    public Observable<Topic> getTopicsCoverByLetter(char letter) {
         return null;
     }
 }

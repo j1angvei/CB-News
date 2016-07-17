@@ -11,28 +11,28 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.adapter.TopicsPagerAdapter;
+import cn.j1angvei.cnbetareader.adapter.MyTopicsPagerAdapter;
 
 /**
  * Created by Wayne on 2016/7/6.
  */
-public class TopicsFragment extends BaseFragment {
+public class MyTopicsFragment extends BaseFragment {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
     TabLayout mTabLayout;
-    TopicsPagerAdapter mAdapter;
+    MyTopicsPagerAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new TopicsPagerAdapter(getChildFragmentManager());
+        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
+        View view = inflater.inflate(R.layout.include_viewpager, container, false);
         ButterKnife.bind(this, view);
         mViewPager.setAdapter(mAdapter);
 

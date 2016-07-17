@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.RelatedItem;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 
 /**
  * Created by Wayne on 2016/6/13.
@@ -150,6 +152,26 @@ public final class BeanConverter {
 //        String src = doc.select(".introduction img").attr("src");
         content.setTopicPhoto(src);
         return content;
+    }
+
+    public List<Topic> toTopic(String html) {
+        List<Topic> topics = new ArrayList<>();
+        Document document = Jsoup.parse(html);
+        Elements dls = document.select("div.topic_list > div:eq(1) > dl");
+        for (Element dl : dls) {
+            Topic topic = new Topic();
+            //cover
+            topic.setCover(dl.select("dt > div > a > img").attr("src"));
+            //elements contain id and title
+            Element a = dl.select("dd > a").get(0);
+            //title
+            topic.setTitle(a.text());
+            //id
+            String href = a.attr("href");
+            topic.setId(href.substring(href.lastIndexOf('/') + 1, href.lastIndexOf('.')));
+            topics.add(topic);
+        }
+        return topics;
     }
 
     public Review toReview(RawReview raw) {

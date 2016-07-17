@@ -23,10 +23,11 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
-import cn.j1angvei.cnbetareader.fragment.TopicsFragment;
+import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -141,7 +142,14 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
                 tag = "topics";
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
-                    fragment = new TopicsFragment();
+                    fragment = new MyTopicsFragment();
+                }
+                break;
+            case R.id.nav_explore:
+                tag = "explore";
+                fragment = mFragmentManager.findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = ExploreFragment.newInstance(tag);
                 }
                 break;
             default:

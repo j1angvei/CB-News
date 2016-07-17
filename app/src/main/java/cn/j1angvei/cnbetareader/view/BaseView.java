@@ -5,5 +5,7 @@ package cn.j1angvei.cnbetareader.view;
  */
 
 public interface BaseView {
+    void showLoading();
 
+    void hideLoading();
 }

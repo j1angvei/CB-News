@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +14,10 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
+import dagger.Module;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -29,7 +33,8 @@ public class DataRepository implements Repository {
     private Map<String, Content> mContentMap;
     private Map<String, Review> mReviewMap;
     private Map<String, Headline> mHeadlineMap;
-    private Map<String, List<Article>> mTopicsMap;
+    private Map<String, List<Article>> mTopicsArticleMap;
+    private Map<Character, List<Topic>> mTopicsMap;
 
     @Inject
     public DataRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
@@ -94,12 +99,31 @@ public class DataRepository implements Repository {
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {
-                        List<Article> articleList = mTopicsMap.get(topicId);
+                        List<Article> articleList = mTopicsArticleMap.get(topicId);
                         if (articleList == null) {
                             articleList = new ArrayList<>();
-                            mTopicsMap.put(topicId, articleList);
+                            mTopicsArticleMap.put(topicId, articleList);
                         }
                         articleList.add(article);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Topic> getTopicsCoverByLetter(final char letter) {
+        return mRemoteDataSource.getTopicsCoverByLetter(letter)
+                .doOnNext(new Action1<Topic>() {
+                    @Override
+                    public void call(Topic topic) {
+                        //store in cache
+                        List<Topic> topics;
+                        if (mTopicsMap.containsKey(letter)) {
+                            topics = mTopicsMap.get(letter);
+                        } else {
+                            topics = new ArrayList<>();
+                            mTopicsMap.put(letter, topics);
+                        }
+                        topics.add(topic);
                     }
                 });
     }
@@ -110,6 +134,7 @@ public class DataRepository implements Repository {
         mContentMap = new HashMap<>();
         mReviewMap = new HashMap<>();
         mHeadlineMap = new HashMap<>();
+        mTopicsArticleMap = new HashMap<>();
         mTopicsMap = new HashMap<>();
     }
 

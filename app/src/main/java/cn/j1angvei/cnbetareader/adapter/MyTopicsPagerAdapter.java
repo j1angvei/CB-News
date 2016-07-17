@@ -13,10 +13,10 @@ import cn.j1angvei.cnbetareader.fragment.NestedTopicsFragment;
 /**
  * Created by Wayne on 2016/7/6.
  */
-public class TopicsPagerAdapter extends FragmentPagerAdapter {
+public class MyTopicsPagerAdapter extends FragmentPagerAdapter {
     private final List<String> mTopicIds;
 
-    public TopicsPagerAdapter(FragmentManager fm) {
+    public MyTopicsPagerAdapter(FragmentManager fm) {
         super(fm);
         mTopicIds = new ArrayList<>(Arrays.asList("4", "9", "444", "261", "18", "428"));
     }
