@@ -23,7 +23,7 @@ public class FragmentModule {
     @Provides
     @PerFragment
     GridLayoutManager provideGridLayoutManager(Activity activity) {
-        return new GridLayoutManager(activity, 4);
+        return new GridLayoutManager(activity, 3);
     }
 
 }

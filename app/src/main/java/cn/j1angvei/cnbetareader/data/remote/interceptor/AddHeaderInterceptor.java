@@ -20,7 +20,7 @@ public class AddHeaderInterceptor implements Interceptor {
                 .header("Accept-Language", " zh-Hans,en-US;q=0.7,en;q=0.3")
 //                .header("Accept-Encoding", " gzip, deflate")
                 .header("User-Agent", " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 Edge/14.14342")
-                .header("Host", " www.cnbeta.com")
+                .header("Host", "www.cnbeta.com")
                 .header("Connection", " Keep-Alive")
                 .build();
         return chain.proceed(modifiedRequest);

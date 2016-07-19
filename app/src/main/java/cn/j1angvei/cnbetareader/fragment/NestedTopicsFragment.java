@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.view.View;
+
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -19,5 +21,10 @@ public class NestedTopicsFragment extends SwipeFragment<Article, ArticlesRvAdapt
     @Override
     protected void inject(ActivityComponent component) {
         component.topicsComponent(new MyTopicsModule()).inject(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

@@ -1,6 +1,8 @@
 package cn.j1angvei.cnbetareader.fragment;
 
 
+import android.view.View;
+
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ReviewModule;
@@ -22,4 +24,8 @@ public class ReviewFragment extends SwipeFragment<Review, ReviewRvAdapter.ViewHo
         component.reviewsComponent(new ReviewModule()).inject(this);
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }

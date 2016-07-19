@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.view.View;
+
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -19,5 +21,10 @@ public class HeadlineFragment extends SwipeFragment<Headline, HeadlineRvAdapter.
     @Override
     protected void inject(ActivityComponent component) {
         component.headlinesComponent(new HeadlinesModule()).inject(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

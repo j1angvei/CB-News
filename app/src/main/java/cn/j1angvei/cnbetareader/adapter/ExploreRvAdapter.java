@@ -53,29 +53,29 @@ public class ExploreRvAdapter extends SwipeAdapter<Topic, ExploreRvAdapter.ViewH
             }
         });
         holder.tvName.setText(topic.getTitle());
-        holder.ivDotMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(mActivity, view);
-                final MenuInflater menuInflater = popupMenu.getMenuInflater();
-                menuInflater.inflate(R.menu.menu_topic_popup, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_topic_add_to_my_topics:
-                                ToastUtil.showShortToast("add to my topic", mActivity);
-                                return true;
-                            case R.id.action_topic_open_topic_articles:
-                                ToastUtil.showShortToast("open topic articles", mActivity);
-                                return true;
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
+//        holder.ivDotMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopupMenu popupMenu = new PopupMenu(mActivity, view);
+//                final MenuInflater menuInflater = popupMenu.getMenuInflater();
+//                menuInflater.inflate(R.menu.menu_topic_popup, popupMenu.getMenu());
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()) {
+//                            case R.id.action_topic_add_to_my_topics:
+//                                ToastUtil.showShortToast("add to my topic", mActivity);
+//                                return true;
+//                            case R.id.action_topic_open_topic_articles:
+//                                ToastUtil.showShortToast("open topic articles", mActivity);
+//                                return true;
+//                        }
+//                        return false;
+//                    }
+//                });
+//                popupMenu.show();
+//            }
+//        });
     }
 
     @Override
@@ -102,8 +102,8 @@ public class ExploreRvAdapter extends SwipeAdapter<Topic, ExploreRvAdapter.ViewH
         ImageView ivThumb;
         @BindView(R.id.tv_topic_name)
         TextView tvName;
-        @BindView(R.id.iv_topic_dot_menu)
-        ImageView ivDotMenu;
+//        @BindView(R.id.iv_topic_dot_menu)
+//        ImageView ivDotMenu;
 
         View itemView;
 

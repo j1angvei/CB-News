@@ -35,8 +35,8 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 public class NewsListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-    @BindView(R.id.fab)
-    protected FloatingActionButton mFab;
+//    @BindView(R.id.fab)
+//    protected FloatingActionButton mFab;
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
@@ -60,13 +60,13 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         //toolbar
         setSupportActionBar(mToolbar);
         //fab
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         //drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
