@@ -2,9 +2,7 @@ package cn.j1angvei.cnbetareader.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -21,6 +18,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
@@ -35,8 +33,6 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 public class NewsListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-//    @BindView(R.id.fab)
-//    protected FloatingActionButton mFab;
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
@@ -59,14 +55,6 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
-        //fab
-//        mFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
         //drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -117,21 +105,21 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         String tag = null;
         switch (item.getItemId()) {
             case R.id.nav_latest_news:
-                tag = "all";
+                tag = SourceType.LATEST_NEWS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ArticlesFragment.newInstance(tag);
                 }
                 break;
-            case R.id.nav_hot_news:
-                tag = "jhcomment";
+            case R.id.nav_hot_news_comment:
+                tag = SourceType.HOT_COMMENT.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ReviewFragment.newInstance(tag);
                 }
                 break;
             case R.id.nav_past_headlines:
-                tag = "editorcommend";
+                tag = SourceType.PAST_HEADLINE.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = HeadlineFragment.newInstance(tag);
@@ -139,14 +127,14 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
                 break;
 
             case R.id.nav_my_topics:
-                tag = "topics";
+                tag = SourceType.MY_TOPICS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = new MyTopicsFragment();
                 }
                 break;
             case R.id.nav_explore:
-                tag = "explore";
+                tag = SourceType.ALL_TOPICS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ExploreFragment.newInstance(tag);
@@ -155,12 +143,11 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
             default:
                 break;
         }
-        if (fragment != null) {
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.fl_container, fragment, tag)
-                    .addToBackStack(null)
-                    .commit();
-        }
+        assert fragment != null;
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fl_container, fragment, tag)
+                .addToBackStack(null)
+                .commit();
 
         setTitle(item.getTitle());
         return true;

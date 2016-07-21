@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RelatedItem;
+import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/5.
@@ -48,8 +49,18 @@ public class HeadlineRvAdapter extends SwipeAdapter<Headline, HeadlineRvAdapter.
         final Headline headline = mHeadlines.get(position);
         holder.tvTitle.setText(headline.getTitle());
         holder.tvDescription.setText(headline.getContent());
+        holder.tvDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
+            }
+        });
         //relate items
         List<RelatedItem> relatedItems = headline.getRelatedArticles();
+        final ArrayList<String> relatedSids = new ArrayList<>();
+        for (RelatedItem item : relatedItems) {
+            relatedSids.add(item.getSid());
+        }
         if (relatedItems.size() <= 0) {
             holder.llRelateContainer.setVisibility(View.GONE);
         } else {
@@ -60,10 +71,11 @@ public class HeadlineRvAdapter extends SwipeAdapter<Headline, HeadlineRvAdapter.
                 final RelatedItem item = headline.getRelatedArticles().get(i);
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(item.getTitle());
+                final int finalI = i;
                 tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Snackbar.make(holder.itemView, "ha ha" + item.getSid(), Snackbar.LENGTH_LONG).show();
+                        Navigator.toContent(finalI, relatedSids, mActivity);
                     }
                 });
             }
@@ -80,13 +92,21 @@ public class HeadlineRvAdapter extends SwipeAdapter<Headline, HeadlineRvAdapter.
         int size = mHeadlines.size();
         mHeadlines.clear();
         notifyItemRangeRemoved(0, size);
-
     }
 
     @Override
     public void add(Headline item) {
         mHeadlines.add(item);
         notifyItemInserted(mHeadlines.size() - 1);
+    }
+
+    @Override
+    ArrayList<String> getSids() {
+        ArrayList<String> allSid = new ArrayList<>();
+        for (Headline headline : mHeadlines) {
+            allSid.add(headline.getSid());
+        }
+        return allSid;
     }
 
 

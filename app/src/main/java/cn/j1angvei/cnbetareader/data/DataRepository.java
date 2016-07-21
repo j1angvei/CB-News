@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +15,6 @@ import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
-import dagger.Module;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -31,8 +28,8 @@ public class DataRepository implements Repository {
 
     private Map<String, List<Article>> mNewsMap;
     private Map<String, Content> mContentMap;
-    private Map<String, Review> mReviewMap;
-    private Map<String, Headline> mHeadlineMap;
+    private List<Review> mReviews;
+    private List<Headline> mHeadlines;
     private Map<String, List<Article>> mTopicsArticleMap;
     private Map<Character, List<Topic>> mTopicsMap;
 
@@ -77,7 +74,7 @@ public class DataRepository implements Repository {
                 .doOnNext(new Action1<Review>() {
                     @Override
                     public void call(Review review) {
-                        mReviewMap.put(review.getCommentId(), review);
+                        mReviews.add(review);
                     }
                 });
     }
@@ -88,7 +85,7 @@ public class DataRepository implements Repository {
                 .doOnNext(new Action1<Headline>() {
                     @Override
                     public void call(Headline headline) {
-                        mHeadlineMap.put(headline.getSid(), headline);
+                        mHeadlines.add(headline);
                     }
                 });
     }
@@ -132,8 +129,8 @@ public class DataRepository implements Repository {
     public void initDataContainer() {
         mNewsMap = new HashMap<>();
         mContentMap = new HashMap<>();
-        mReviewMap = new HashMap<>();
-        mHeadlineMap = new HashMap<>();
+        mReviews = new ArrayList<>();
+        mHeadlines = new ArrayList<>();
         mTopicsArticleMap = new HashMap<>();
         mTopicsMap = new HashMap<>();
     }

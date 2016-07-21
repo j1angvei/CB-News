@@ -20,13 +20,13 @@ public final class Navigator {
         }
     }
 
-    public static void toContent(int position, ArrayList<String> ids, Context context) {
+    public static void toContent(int position, ArrayList<String> allSid, Context context) {
         if (context != null) {
             Intent intent = new Intent(context, NewsContentActivity.class);
+            intent.putExtra(NewsContentActivity.NEWS_POSITION, position);
+            intent.putStringArrayListExtra(NewsContentActivity.NEWS_SIDS, allSid);
             context.startActivity(intent);
         }
 
     }
-
-
 }

@@ -9,6 +9,6 @@
         android:endColor="@color/colorPrimary"
         android:gradientRadius="120dp"
         android:startColor="@color/colorPrimaryDark"
-        android:type="radial"/>
+        android:value="radial"/>
 
 </shape>

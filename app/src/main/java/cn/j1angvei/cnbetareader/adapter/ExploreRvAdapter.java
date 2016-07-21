@@ -97,6 +97,11 @@ public class ExploreRvAdapter extends SwipeAdapter<Topic, ExploreRvAdapter.ViewH
 
     }
 
+    @Override
+    ArrayList<String> getSids() {
+        return null;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_topic_thumb)
         ImageView ivThumb;

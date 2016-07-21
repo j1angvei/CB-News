@@ -11,13 +11,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        <include layout="@layout/include_toolbar"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -29,12 +23,7 @@
             app:tabMode="scrollable"/>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </FrameLayout>
+    <include layout="@layout/include_container"/>
 
     <include layout="@layout/include_fab"/>
 </android.support.design.widget.CoordinatorLayout>

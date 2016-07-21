@@ -5,21 +5,21 @@ package cn.j1angvei.cnbetareader.bean;
  */
 
 public enum SourceType {
-    ALL("all"),
-    POPULAR("dig"),
-    SOFTWARE("soft"),
-    INDUSTRY("industry"),
-    INTERACT("interact"),
-    HEADLINE("headline"),
-    HOT_COMMENT("hot_comment");
 
-    private String type;
+    LATEST_NEWS("all"),
+    HOT_COMMENT("jhcomment"),
+    PAST_HEADLINE("editorcommend"),
+    MY_TOPICS("my_topics"),
+    ALL_TOPICS("explore");
 
-    SourceType(String type) {
-        this.type = type;
+
+    private String value;
+
+    SourceType(String value) {
+        this.value = value;
     }
 
-    public String getType() {
-        return type;
+    public String getValue() {
+        return value;
     }
 }

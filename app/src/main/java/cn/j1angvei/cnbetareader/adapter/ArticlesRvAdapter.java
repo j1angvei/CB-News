@@ -21,7 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -44,7 +46,7 @@ public class ArticlesRvAdapter extends SwipeAdapter<Article, ArticlesRvAdapter.V
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Context context = holder.itemView.getContext();
         final Article article = mArticles.get(position);
         holder.tvTitle.setText(Html.fromHtml(article.getTitle()).toString());
@@ -59,7 +61,7 @@ public class ArticlesRvAdapter extends SwipeAdapter<Article, ArticlesRvAdapter.V
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(holder.itemView, "hei hei" + article.getId(), Snackbar.LENGTH_SHORT).show();
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
             }
         });
     }
@@ -80,6 +82,15 @@ public class ArticlesRvAdapter extends SwipeAdapter<Article, ArticlesRvAdapter.V
     public void add(Article item) {
         mArticles.add(item);
         notifyItemInserted(mArticles.size() - 1);
+    }
+
+    @Override
+    ArrayList<String> getSids() {
+        ArrayList<String> allSid = new ArrayList<>();
+        for (Article article : mArticles) {
+            allSid.add(article.getId());
+        }
+        return allSid;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

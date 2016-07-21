@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/5.
@@ -46,7 +47,7 @@ public class ReviewRvAdapter extends SwipeAdapter<Review, ReviewRvAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(holder.itemView, "ha ha" + review.getArticleId(), Snackbar.LENGTH_LONG).show();
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
             }
         });
     }
@@ -67,6 +68,15 @@ public class ReviewRvAdapter extends SwipeAdapter<Review, ReviewRvAdapter.ViewHo
     public void add(Review item) {
         mReviews.add(item);
         notifyItemInserted(mReviews.size() - 1);
+    }
+
+    @Override
+    ArrayList<String> getSids() {
+        ArrayList<String> allSid = new ArrayList<>();
+        for (Review review : mReviews) {
+            allSid.add(review.getArticleId());
+        }
+        return allSid;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

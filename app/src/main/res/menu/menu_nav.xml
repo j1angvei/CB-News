@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_nav_latest_news"
             android:title="@string/nav_latest_news"/>
         <item
-            android:id="@+id/nav_hot_news"
+            android:id="@+id/nav_hot_news_comment"
             android:icon="@drawable/ic_nav_hot_news"
             android:title="@string/nav_top_comments"/>
 

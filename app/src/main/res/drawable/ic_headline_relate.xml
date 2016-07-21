@@ -16,5 +16,5 @@
         android:endColor="#FFD4B7"
         android:gradientRadius="8dp"
         android:startColor="#FF6633"
-        android:type="radial"/>
+        android:value="radial"/>
 </shape>

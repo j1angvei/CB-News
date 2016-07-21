@@ -88,4 +88,29 @@
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
+    <style name="CBTheme.AppBarLayout">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="CBTheme.Toolbar">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="CBTheme.Fab">
+        <item name="fabSize">normal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CBTheme.Fab.Content">
+    </style>
+
+    <style name="CBTheme.Fab.Content.Small">
+        <item name="fabSize">mini</item>
+    </style>
+
+    <style name="CBTheme.FabMenu">
+
+    </style>
+
 </resources>
