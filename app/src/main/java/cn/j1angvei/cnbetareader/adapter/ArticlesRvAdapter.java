@@ -2,7 +2,6 @@ package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -29,7 +27,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesRvAdapter extends SwipeAdapter<Article, ArticlesRvAdapter.ViewHolder> {
+public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> {
 
     private List<Article> mArticles;
     private Activity mActivity;

@@ -1,7 +1,8 @@
 package cn.j1angvei.cnbetareader.presenter;
 
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
+import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
+import cn.j1angvei.cnbetareader.view.NestedTopicsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -9,15 +10,23 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/10.
  */
-public class MyTopicsPresenter extends NewsPresenter<Article> {
-    public MyTopicsPresenter(NewsRepository<Article> repository) {
-        super(repository);
+public class NestedTopicsPresenter implements BasePresenter<NestedTopicsView> {
+    private NestedTopicsView mView;
+    private MyTopicsRepository mRepository;
+
+    public NestedTopicsPresenter(MyTopicsRepository repository) {
+        mRepository = repository;
     }
 
     @Override
-    public void retrieveNews(String type, int page) {
-        super.retrieveNews(type, page);
-        mRepository.get(page, type)
+    public void setView(NestedTopicsView view) {
+        mView = view;
+
+    }
+
+    public void retrieveMyTopics(int page, String topicId) {
+        mView.showLoading();
+        mRepository.get(page, topicId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Article>() {

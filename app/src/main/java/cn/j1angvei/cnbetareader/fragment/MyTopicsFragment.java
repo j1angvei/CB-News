@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.adapter.MyTopicsPagerAdapter;
+import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 
 /**
  * Created by Wayne on 2016/7/6.
@@ -47,5 +48,10 @@ public class MyTopicsFragment extends BaseFragment {
     public void onDestroyView() {
         mTabLayout.setVisibility(View.GONE);
         super.onDestroyView();
+    }
+
+    @Override
+    protected void inject(ActivityComponent component) {
+
     }
 }

@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.j1angvei.cnbetareader.bean.Content;
-import cn.j1angvei.cnbetareader.view.ContentView;
+import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.view.BaseView;
 
 /**
  * Created by Wayne on 2016/7/21.
  */
-public class ContentFragment extends BaseFragment implements ContentView {
+public class ContentFragment extends BaseFragment implements BaseView<Content> {
     private static final String NEWS_ID = "ContentFragment.news_id";
 
     public static ContentFragment newInstance(String sid) {
@@ -35,17 +36,27 @@ public class ContentFragment extends BaseFragment implements ContentView {
     }
 
     @Override
-    public void renderContent(Content content) {
-
-    }
-
-    @Override
     public void showLoading() {
 
     }
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void renderItem(Content item) {
+
+    }
+
+    @Override
+    public void clearItems() {
+
+    }
+
+    @Override
+    protected void inject(ActivityComponent component) {
 
     }
 }

@@ -9,15 +9,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
-    NewsView<T> mView;
-    NewsRepository<T> mRepository;
+public class NewsPresenter<N> implements BasePresenter<NewsView<N>> {
+    NewsView<N> mView;
+    NewsRepository<N> mRepository;
 
-    public NewsPresenter(NewsRepository<T> repository) {
+    public NewsPresenter(NewsRepository<N> repository) {
         mRepository = repository;
     }
 
-    public void setView(NewsView<T> newsView) {
+    public void setView(NewsView<N> newsView) {
         mView = newsView;
     }
 
@@ -26,7 +26,7 @@ public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
         mRepository.get(page, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<T>() {
+                .subscribe(new Subscriber<N>() {
                     @Override
                     public void onCompleted() {
                         mView.hideLoading();
@@ -38,8 +38,8 @@ public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
                     }
 
                     @Override
-                    public void onNext(T t) {
-                        mView.renderItem(t);
+                    public void onNext(N n) {
+                        mView.renderItem(n);
                     }
                 });
     }

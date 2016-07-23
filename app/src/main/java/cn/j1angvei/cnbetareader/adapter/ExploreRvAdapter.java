@@ -2,11 +2,8 @@ package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,7 +23,7 @@ import cn.j1angvei.cnbetareader.util.ToastUtil;
 /**
  * Created by Wayne on 2016/7/13.
  */
-public class ExploreRvAdapter extends SwipeAdapter<Topic, ExploreRvAdapter.ViewHolder> {
+public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHolder> {
     private List<Topic> mTopics;
     private Activity mActivity;
 

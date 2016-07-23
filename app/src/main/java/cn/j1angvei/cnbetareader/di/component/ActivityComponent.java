@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.di.module.sub.NestedTopicsModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
 import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
@@ -30,5 +31,7 @@ public interface ActivityComponent {
     HeadlineComponent headlineComponent(HeadlineModule module);
 
     ReviewComponent reviewComponent(ReviewModule module);
+
+    NestedTopicsComponent myTopicsComponent(NestedTopicsModule module);
 
 }

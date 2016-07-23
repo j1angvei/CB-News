@@ -42,7 +42,7 @@ public class ContentPresenter implements BasePresenter<ContentView> {
 
                     @Override
                     public void onNext(Content content) {
-                        mView.renderContent(content);
+                        mView.renderItem(content);
                     }
                 });
     }

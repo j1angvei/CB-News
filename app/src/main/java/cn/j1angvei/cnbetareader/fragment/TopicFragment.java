@@ -20,19 +20,10 @@ public class TopicFragment extends NewsFragment<Topic, ExploreRvAdapter.ViewHold
     }
 
     @Override
-    public void setLayoutManager() {
-        mRecyclerView.setLayoutManager(mGridLayoutManager);
-    }
-
-    @Override
     protected void inject(ActivityComponent component) {
 //        component.exploreComponent(new ExploreModule()).inject(this);
     }
-//
-//    @Override
-//    protected void retrieveTopic() {
-//        mPresenter.retrieveTopics(mPage++);
-//    }
+
 
     @Override
     public void onClick(View view) {

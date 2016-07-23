@@ -8,6 +8,6 @@ import java.util.ArrayList;
 /**
  * Created by Wayne on 2016/7/9.
  */
-public abstract class SwipeAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements BaseAdapter<T> {
+public abstract class NewsAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements BaseAdapter<T> {
     abstract ArrayList<String> getSids();
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
-import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.adapter.NewsAdapter;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import cn.j1angvei.cnbetareader.view.NewsView;
 
@@ -35,16 +33,14 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    GridLayoutManager mGridLayoutManager;
-    @Inject
-    SwipeAdapter<T, VH> mAdapter;
+    NewsAdapter<T, VH> mAdapter;
     @Inject
     NewsPresenter<T> mPresenter;
 
     FloatingActionButton mFab;
 
-    String mType;
-    int mPage = 1;
+    private String mType;
+    private int mPage = 1;
 
     void setBundle(String type) {
         Bundle args = new Bundle();
@@ -62,17 +58,13 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.include_swipe_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
-        setLayoutManager();
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
-    }
-
-    public void setLayoutManager() {
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
     }
 
     @Override
@@ -80,8 +72,7 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
         super.onViewCreated(view, savedInstanceState);
         mFab.setOnClickListener(this);
         mPresenter.setView(this);
-        clearItems();
-        retrieveItem();
+        onRefresh();
     }
 
     @Override
@@ -122,6 +113,5 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
         mPresenter.retrieveNews(mType, mPage++);
     }
 
-    protected abstract void inject(ActivityComponent component);
 
 }

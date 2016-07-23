@@ -2,7 +2,6 @@ package cn.j1angvei.cnbetareader.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class HeadlineRvAdapter extends SwipeAdapter<Headline, HeadlineRvAdapter.ViewHolder> {
+public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.ViewHolder> {
     private static final String TAG = "HeadlineRvAdapter";
     private List<Headline> mHeadlines;
     private Activity mActivity;
