@@ -7,7 +7,7 @@ import javax.inject.Named;
 import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
 import cn.j1angvei.cnbetareader.bean.Headline;
-import cn.j1angvei.cnbetareader.data.DataRepository;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import dagger.Module;
@@ -26,7 +26,7 @@ public class HeadlineModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Headline> headlinesPresenter(@Named("d_headline") DataRepository<Headline> repository) {
+    NewsPresenter<Headline> headlinesPresenter(@Named("d_headline") NewsRepository<Headline> repository) {
         return new NewsPresenter<>(repository);
     }
 }

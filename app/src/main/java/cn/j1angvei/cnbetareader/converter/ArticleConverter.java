@@ -15,8 +15,7 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/22.
  */
-public class ArticleConverter extends Converter<Article> {
-    private static final String TAG = "ArticleConverter";
+public class ArticleConverter extends NewsConverter<Article> {
 
     public ArticleConverter(Gson gson, String baseUrl) {
         super(gson, baseUrl);
@@ -29,7 +28,6 @@ public class ArticleConverter extends Converter<Article> {
 
     @Override
     public List<Article> toList(String json) {
-        Log.d(TAG, "toList: " + json);
         WrappedResponse<Article> response = mGson.fromJson(json, new TypeToken<WrappedResponse<Article>>() {
         }.getType());
         return response.getResult().getList();
@@ -37,7 +35,6 @@ public class ArticleConverter extends Converter<Article> {
 
     @Override
     public Observable<Article> toObservable(String json) {
-        Log.d(TAG, "toObservable: " + json);
         return Observable.from(toList(json));
     }
 }

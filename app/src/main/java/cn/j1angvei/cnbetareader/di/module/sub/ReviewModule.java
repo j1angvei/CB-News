@@ -7,7 +7,7 @@ import javax.inject.Named;
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
 import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
 import cn.j1angvei.cnbetareader.bean.Review;
-import cn.j1angvei.cnbetareader.data.DataRepository;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import dagger.Module;
@@ -27,7 +27,7 @@ public class ReviewModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Review> reviewsPresenter(@Named("d_review") DataRepository<Review> repository) {
+    NewsPresenter<Review> reviewsPresenter(@Named("d_review") NewsRepository<Review> repository) {
         return new NewsPresenter<>(repository);
     }
 

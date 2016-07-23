@@ -2,9 +2,6 @@ package cn.j1angvei.cnbetareader.data.remote;
 
 
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.bean.RawHeadline;
-import cn.j1angvei.cnbetareader.bean.RawReview;
-import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
@@ -24,10 +21,10 @@ public interface CnbetaApi {
     Observable<ResponseBody> getNews(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/topics/more")
-    Observable<WrappedResponse<Article>> getTopicNews(@Query("jsoncallback") String callback, @Query("id") String topicId, @Query("page") int page, @Query("_") long timestamp);
+    Observable<ResponseBody> getTopicNews(@Query("jsoncallback") String callback, @Query("id") String topicId, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/topics.htm")
-    Observable<ResponseBody> getTopics(@Query("letter") char letter);
+    Observable<ResponseBody> getTopics(@Query("letter") String letter);
 
     @GET("/articles/{sid}.htm")
     Observable<ResponseBody> getArticleContent(@Path("sid") String sid);

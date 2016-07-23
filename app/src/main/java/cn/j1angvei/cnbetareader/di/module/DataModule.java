@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.di.module;
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 
 import javax.inject.Named;
@@ -12,10 +14,10 @@ import cn.j1angvei.cnbetareader.converter.ArticleConverter;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
 import cn.j1angvei.cnbetareader.converter.ReviewConverter;
-import cn.j1angvei.cnbetareader.data.DataRepository;
-import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
-import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
+import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
+import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import dagger.Module;
 import dagger.Provides;
 
@@ -49,63 +51,63 @@ public class DataModule {
     @Provides
     @Singleton
     @Named("l_article")
-    LocalDataSource<Article> provideArticleLocalDataSource() {
-        return new LocalDataSource<>();
+    NewsLocalSource<Article> provideArticleNewsLocalSource(Application application) {
+        return new NewsLocalSource<>(application);
     }
 
     @Provides
     @Singleton
     @Named("l_review")
-    LocalDataSource<Review> provideReviewLocalDataSource() {
-        return new LocalDataSource<>();
+    NewsLocalSource<Review> provideReviewNewsLocalSource(Application application) {
+        return new NewsLocalSource<>(application);
     }
 
     @Provides
     @Singleton
     @Named("l_headline")
-    LocalDataSource<Headline> provideHeadlineLocalDataSource() {
-        return new LocalDataSource<>();
+    NewsLocalSource<Headline> provideHeadlineNewsLocalSource(Application application) {
+        return new NewsLocalSource<>(application);
     }
 
     @Provides
     @Singleton
     @Named("r_article")
-    RemoteDataSource<Article> provideArticleRemoteDataSource(CnbetaApi api, @Named("c_article") Converter<Article> converter) {
-        return new RemoteDataSource<>(api, converter);
+    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CnbetaApi api, @Named("c_article") Converter<Article> converter) {
+        return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("r_review")
-    RemoteDataSource<Review> provideReviewRemoteDataSource(CnbetaApi api, @Named("c_review") Converter<Review> converter) {
-        return new RemoteDataSource<>(api, converter);
+    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CnbetaApi api, @Named("c_review") Converter<Review> converter) {
+        return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("r_headline")
-    RemoteDataSource<Headline> provideHeadlineRemoteDataSource(CnbetaApi api, @Named("c_headline") Converter<Headline> converter) {
-        return new RemoteDataSource<>(api, converter);
+    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CnbetaApi api, @Named("c_headline") Converter<Headline> converter) {
+        return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("d_article")
-    DataRepository<Article> provideArticleRepository(@Named("l_article") LocalDataSource<Article> local, @Named("r_article") RemoteDataSource<Article> remote) {
-        return new DataRepository<>(local, remote);
+    NewsRepository<Article> provideArticleRepository(@Named("l_article") NewsLocalSource<Article> local, @Named("r_article") NewsRemoteSource<Article> remote) {
+        return new NewsRepository<>(local, remote);
     }
 
     @Provides
     @Singleton
     @Named("d_review")
-    DataRepository<Review> provideReviewRepository(@Named("l_review") LocalDataSource<Review> local, @Named("r_review") RemoteDataSource<Review> remote) {
-        return new DataRepository<>(local, remote);
+    NewsRepository<Review> provideReviewRepository(@Named("l_review") NewsLocalSource<Review> local, @Named("r_review") NewsRemoteSource<Review> remote) {
+        return new NewsRepository<>(local, remote);
     }
 
     @Provides
     @Singleton
     @Named("d_headline")
-    DataRepository<Headline> provideHeadlineRepository(@Named("l_headline") LocalDataSource<Headline> local, @Named("r_headline") RemoteDataSource<Headline> remote) {
-        return new DataRepository<>(local, remote);
+    NewsRepository<Headline> provideHeadlineRepository(@Named("l_headline") NewsLocalSource<Headline> local, @Named("r_headline") NewsRemoteSource<Headline> remote) {
+        return new NewsRepository<>(local, remote);
     }
 }

@@ -2,7 +2,7 @@ package cn.j1angvei.cnbetareader.presenter;
 
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.data.DataRepository;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.view.TopicView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -11,25 +11,25 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/15.
  */
-public class TopicPresenter<T> implements BasePresenter<TopicView> {
+public class TopicPresenter implements BasePresenter<TopicView> {
     TopicView mView;
-    DataRepository<T> mRepository;
+    NewsRepository<Topic> mRepository;
 
-    public TopicPresenter(DataRepository<T> repository) {
+    public TopicPresenter(NewsRepository<Topic> repository) {
         mRepository = repository;
     }
 
     public void retrieveTopics(int index) {
         //convert number 1-26 to letter a-z
-        char letter = (char) ('a' + index - 1);
+        String letter = String.valueOf((char) ('a' + index - 1));
         mView.showLoading();
-        mRepository.getTopics(letter)
+        mRepository.get(0, letter)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Topic>() {
                     @Override
                     public void onCompleted() {
-
+                        mView.hideLoading();
                     }
 
                     @Override
@@ -39,7 +39,7 @@ public class TopicPresenter<T> implements BasePresenter<TopicView> {
 
                     @Override
                     public void onNext(Topic topic) {
-
+                        mView.renderItem(topic);
                     }
 
                 });

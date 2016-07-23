@@ -1,6 +1,6 @@
 package cn.j1angvei.cnbetareader.presenter;
 
-import cn.j1angvei.cnbetareader.data.DataRepository;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.view.NewsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -11,9 +11,9 @@ import rx.schedulers.Schedulers;
  */
 public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
     NewsView<T> mView;
-    DataRepository<T> mRepository;
+    NewsRepository<T> mRepository;
 
-    public NewsPresenter(DataRepository<T> repository) {
+    public NewsPresenter(NewsRepository<T> repository) {
         mRepository = repository;
     }
 
@@ -23,7 +23,7 @@ public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
 
     public void retrieveNews(String type, int page) {
         mView.showLoading();
-        mRepository.getNews(type, page)
+        mRepository.get(page, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<T>() {

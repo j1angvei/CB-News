@@ -7,7 +7,7 @@ import javax.inject.Named;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.data.DataRepository;
+import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import dagger.Module;
@@ -27,7 +27,7 @@ public class ArticleModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Article> articlesPresenter(@Named("d_article") DataRepository<Article> repository) {
+    NewsPresenter<Article> articlesPresenter(@Named("d_article") NewsRepository<Article> repository) {
         return new NewsPresenter<>(repository);
     }
 
