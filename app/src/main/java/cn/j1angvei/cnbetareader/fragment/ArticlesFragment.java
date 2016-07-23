@@ -4,13 +4,13 @@ import android.view.View;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.ArticlesModule;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
+import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
 
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesFragment extends SwipeFragment<Article, ArticlesRvAdapter.ViewHolder> {
+public class ArticlesFragment extends NewsFragment<Article, ArticlesRvAdapter.ViewHolder> {
 
     public static ArticlesFragment newInstance(String type) {
         ArticlesFragment fragment = new ArticlesFragment();
@@ -20,7 +20,7 @@ public class ArticlesFragment extends SwipeFragment<Article, ArticlesRvAdapter.V
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.articlesComponent(new ArticlesModule()).inject(this);
+        component.articleComponent(new ArticleModule()).inject(this);
     }
 
     @Override

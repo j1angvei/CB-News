@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by Wayne on 2016/6/2.
  */
 
-public final class Md5Generator {
+public final class Md5Util {
     public static String getMd5(String input) {
         byte[] hash = null;
         try {

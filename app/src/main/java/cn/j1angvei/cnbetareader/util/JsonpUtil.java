@@ -4,7 +4,7 @@ package cn.j1angvei.cnbetareader.util;
  * Created by Wayne on 2016/6/13.
  */
 
-public final class JsonpGenerator {
+public final class JsonpUtil {
     private static final String JQUERY = "jQuery";
     private static final String JQUERY_VERSION = "1.8.0";
     private static String PARAMETER;

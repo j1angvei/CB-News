@@ -21,7 +21,7 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
+import cn.j1angvei.cnbetareader.fragment.TopicFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
@@ -30,7 +30,7 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class NewsListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
     @BindView(R.id.nav_view)
@@ -40,6 +40,16 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
 
     @Inject
     FragmentManager mFragmentManager;
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void inject() {
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +147,7 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
                 tag = SourceType.ALL_TOPICS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
-                    fragment = ExploreFragment.newInstance(tag);
+                    fragment = TopicFragment.newInstance(tag);
                 }
                 break;
             default:
@@ -152,4 +162,6 @@ public class NewsListActivity extends BaseActivity implements NavigationView.OnN
         setTitle(item.getTitle());
         return true;
     }
+
+
 }

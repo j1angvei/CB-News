@@ -3,21 +3,14 @@ package cn.j1angvei.cnbetareader.data.remote;
 import java.io.IOException;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.Content;
-import cn.j1angvei.cnbetareader.bean.Headline;
-import cn.j1angvei.cnbetareader.bean.RawHeadline;
-import cn.j1angvei.cnbetareader.bean.RawReview;
-import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.data.DataSource;
-import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
-import cn.j1angvei.cnbetareader.util.BeanConverter;
-import cn.j1angvei.cnbetareader.util.JsonpGenerator;
+import cn.j1angvei.cnbetareader.util.JsonpUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -25,39 +18,35 @@ import rx.functions.Func1;
 /**
  * Created by Wayne on 2016/6/16.
  */
-@Singleton
-public class RemoteDataSource implements DataSource {
+public class RemoteDataSource<T> implements DataSource<T> {
     private CnbetaApi mCnbetaApi;
-    private BeanConverter mConverter;
+    private Converter<T> mConverter;
 
-    @Inject
-    public RemoteDataSource(CnbetaApi api, BeanConverter converter) {
+    public RemoteDataSource(CnbetaApi api, Converter<T> converter) {
         mCnbetaApi = api;
         mConverter = converter;
     }
 
     @Override
-    public Observable<Article> getArticleFromSource(String type, int page) {
-        String callback = JsonpGenerator.getParameter();
-        long timeStamp = JsonpGenerator.getInitTime() + page;
-
-        return mCnbetaApi.getArticles(callback, type, page, timeStamp)
-                .map(new Func1<WrappedResponse<Article>, List<Article>>() {
+    public Observable<T> getNews(String type, int page) {
+        String callback = JsonpUtil.getParameter();
+        long timeStamp = JsonpUtil.getInitTime() + page;
+        return mCnbetaApi.getNews(callback, type, page, timeStamp)
+                .flatMap(new Func1<ResponseBody, Observable<T>>() {
                     @Override
-                    public List<Article> call(WrappedResponse<Article> articleWrappedResponse) {
-                        return articleWrappedResponse.getResult().getList();
-                    }
-                })
-                .flatMap(new Func1<List<Article>, Observable<Article>>() {
-                    @Override
-                    public Observable<Article> call(List<Article> articles) {
-                        return Observable.from(articles);
+                    public Observable<T> call(ResponseBody responseBody) {
+                        try {
+                            return mConverter.toObservable(responseBody.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
                     }
                 });
     }
 
     @Override
-    public Observable<Content> getContentFromSource(String sid) {
+    public Observable<Content> getContent(String sid) {
         return mCnbetaApi.getArticleContent(sid).map(new Func1<ResponseBody, Content>() {
             @Override
             public Content call(ResponseBody responseBody) {
@@ -73,48 +62,15 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Observable<Review> getReviewsFromSource(String type, int page) {
-        String callback = JsonpGenerator.getParameter();
-        long timeStamp = JsonpGenerator.getInitTime() + page;
-        return mCnbetaApi.getReviews(callback, type, page, timeStamp)
-                .flatMap(new Func1<ExposedResponse<RawReview>, Observable<RawReview>>() {
-                    @Override
-                    public Observable<RawReview> call(ExposedResponse<RawReview> rawReviewExposedResponse) {
-                        return Observable.from(rawReviewExposedResponse.getResult());
-                    }
-                })
-                .map(new Func1<RawReview, Review>() {
-                    @Override
-                    public Review call(RawReview rawReview) {
-                        return mConverter.toReview(rawReview);
-                    }
-                });
+    public Observable<Comments> getComments(String token, String op) {
+        return null;
     }
 
     @Override
-    public Observable<Headline> getHeadlinesFromSource(String type, int page) {
-        String callback = JsonpGenerator.getParameter();
-        long timeStamp = JsonpGenerator.getInitTime() + page;
-        return mCnbetaApi.getHeadlines(callback, type, page, timeStamp)
-                .flatMap(new Func1<ExposedResponse<RawHeadline>, Observable<RawHeadline>>() {
-                    @Override
-                    public Observable<RawHeadline> call(ExposedResponse<RawHeadline> rawHeadlineExposedResponse) {
-                        return Observable.from(rawHeadlineExposedResponse.getResult());
-                    }
-                })
-                .map(new Func1<RawHeadline, Headline>() {
-                    @Override
-                    public Headline call(RawHeadline rawHeadline) {
-                        return mConverter.toHeadline(rawHeadline);
-                    }
-                });
-    }
-
-    @Override
-    public Observable<Article> getTopicArticlesFromSource(String topicId, int page) {
-        String callback = JsonpGenerator.getParameter();
-        long timeStamp = JsonpGenerator.getInitTime() + page;
-        return mCnbetaApi.getTopicArticles(callback, topicId, page, timeStamp)
+    public Observable<Article> getTopicArticles(String topicId, int page) {
+        String callback = JsonpUtil.getParameter();
+        long timeStamp = JsonpUtil.getInitTime() + page;
+        return mCnbetaApi.getTopicNews(callback, topicId, page, timeStamp)
                 .map(new Func1<WrappedResponse<Article>, List<Article>>() {
                     @Override
                     public List<Article> call(WrappedResponse<Article> articleWrappedResponse) {
@@ -129,8 +85,8 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Observable<Topic> getTopicsCoverByLetter(char letter) {
-        return mCnbetaApi.getTopicsCoverByLetter(letter)
+    public Observable<Topic> getTopics(char letter) {
+        return mCnbetaApi.getTopics(letter)
                 .map(new Func1<ResponseBody, List<Topic>>() {
                     @Override
                     public List<Topic> call(ResponseBody responseBody) {

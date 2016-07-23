@@ -3,9 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +19,14 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.SwipeAdapter;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.fragment.dialog.SeekPageDialog;
-import cn.j1angvei.cnbetareader.presenter.SwipePresenter;
-import cn.j1angvei.cnbetareader.view.SwipeView;
+import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
+import cn.j1angvei.cnbetareader.view.NewsView;
 
 /**
  * Created by Wayne on 2016/7/9.
  */
-public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> extends BaseFragment implements SwipeView<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
-    static final String NEWS_TYPE = "SwipeFragment.news_type";
+public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsView<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+    static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -42,7 +39,7 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     @Inject
     SwipeAdapter<T, VH> mAdapter;
     @Inject
-    SwipePresenter<T> mPresenter;
+    NewsPresenter<T> mPresenter;
 
     FloatingActionButton mFab;
 
@@ -70,7 +67,6 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         setLayoutManager();
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
@@ -123,7 +119,7 @@ public abstract class SwipeFragment<T, VH extends RecyclerView.ViewHolder> exten
     }
 
     protected void retrieveItem() {
-        mPresenter.retrieveItem(mType, mPage++);
+        mPresenter.retrieveNews(mType, mPage++);
     }
 
     protected abstract void inject(ActivityComponent component);

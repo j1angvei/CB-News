@@ -10,7 +10,7 @@ import cn.j1angvei.cnbetareader.di.module.MyTopicsModule;
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NestedTopicsFragment extends SwipeFragment<Article, ArticlesRvAdapter.ViewHolder> {
+public class NestedTopicsFragment extends NewsFragment<Article, ArticlesRvAdapter.ViewHolder> {
 
     public static NestedTopicsFragment newInstance(String topicId) {
         NestedTopicsFragment fragment = new NestedTopicsFragment();
@@ -20,7 +20,7 @@ public class NestedTopicsFragment extends SwipeFragment<Article, ArticlesRvAdapt
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.topicsComponent(new MyTopicsModule()).inject(this);
+//        component.topicsComponent(new MyTopicsModule()).inject(this);
     }
 
     @Override

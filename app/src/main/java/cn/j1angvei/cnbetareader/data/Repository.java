@@ -3,8 +3,6 @@ package cn.j1angvei.cnbetareader.data;
 /**
  * Created by Wayne on 2016/7/5.
  */
-public interface Repository extends DataSource {
-    void initDataContainer();
+public interface Repository<T> extends DataSource<T> {
 
-    void toMemory(String source, Object item);
 }

@@ -3,6 +3,8 @@ package cn.j1angvei.cnbetareader.di.module;
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import dagger.Module;
@@ -29,6 +31,18 @@ public class ActivityModule {
     @PerActivity
     FragmentManager provideFragmentManager(Activity activity) {
         return ((FragmentActivity) activity).getSupportFragmentManager();
+    }
+
+    @Provides
+    @PerActivity
+    LinearLayoutManager provideLinearLayoutManager(Activity activity) {
+        return new LinearLayoutManager(activity);
+    }
+
+    @Provides
+    @PerActivity
+    GridLayoutManager provideGridLayoutManager(Activity activity) {
+        return new GridLayoutManager(activity, 3);
     }
 
 }

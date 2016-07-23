@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import cn.j1angvei.cnbetareader.CBApplication;
@@ -9,7 +11,7 @@ import cn.j1angvei.cnbetareader.di.component.ApplicationComponent;
 /**
  * Created by Wayne on 2016/6/27.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected ActivityComponent mActivityComponent;
 
     protected ApplicationComponent getApplicationComponent() {
@@ -19,4 +21,15 @@ public class BaseActivity extends AppCompatActivity {
     public ActivityComponent getActivityComponent() {
         return mActivityComponent;
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        inject();
+        initView();
+    }
+
+    protected abstract void initView();
+
+    protected abstract void inject();
 }

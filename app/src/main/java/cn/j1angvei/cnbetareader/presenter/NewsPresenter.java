@@ -1,35 +1,32 @@
 package cn.j1angvei.cnbetareader.presenter;
 
-import javax.inject.Inject;
-
-import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.DataRepository;
-import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.view.NewsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Wayne on 2016/7/15.
+ * Created by Wayne on 2016/7/9.
  */
-@PerFragment
-public class ExplorePresenter extends SwipePresenter<Topic> {
+public class NewsPresenter<T> implements BasePresenter<NewsView<T>> {
+    NewsView<T> mView;
+    DataRepository<T> mRepository;
 
-    @Inject
-    public ExplorePresenter(DataRepository repository) {
+    public NewsPresenter(DataRepository<T> repository) {
         mRepository = repository;
     }
 
-    @Override
-    public void retrieveItem(int index) {
-        super.retrieveItem(index);
-        //convert number 1-26 to letter a-z
-        char letter = (char) ('a' + index - 1);
+    public void setView(NewsView<T> newsView) {
+        mView = newsView;
+    }
+
+    public void retrieveNews(String type, int page) {
         mView.showLoading();
-        mRepository.getTopicsCoverByLetter(letter)
+        mRepository.getNews(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Topic>() {
+                .subscribe(new Subscriber<T>() {
                     @Override
                     public void onCompleted() {
                         mView.hideLoading();
@@ -41,8 +38,8 @@ public class ExplorePresenter extends SwipePresenter<Topic> {
                     }
 
                     @Override
-                    public void onNext(Topic topic) {
-                        mView.renderItem(topic);
+                    public void onNext(T t) {
+                        mView.renderItem(t);
                     }
                 });
     }

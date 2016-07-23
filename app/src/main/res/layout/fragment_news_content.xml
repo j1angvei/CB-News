@@ -1,8 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sv_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_gravity="fill_vertical">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/tv_content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Title"/>
+
+        <TextView
+            android:id="@+id/tv_content_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content_title"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Header"/>
+
+        <RelativeLayout
+            android:id="@+id/ll_content_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content_header"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_content_thumb"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="top"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/fake_topic_album"/>
+
+            <TextView
+                android:id="@+id/tv_content_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_toLeftOf="@id/iv_content_thumb"
+                android:text="Summary"/>
+        </RelativeLayout>
+
+        <WebView
+            android:id="@+id/wv_content_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_content_summary"
+            android:layout_marginTop="8dp">
+        </WebView>
+
+        <ProgressBar
+            android:id="@+id/pb_content"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

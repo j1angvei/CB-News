@@ -20,18 +20,14 @@ import rx.Observable;
  * cnBeta Api retrieved from fiddler
  */
 public interface CnbetaApi {
-
     @GET("/more")
-    Observable<WrappedResponse<Article>> getArticles(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
-
-    @GET("/more")
-    Observable<ExposedResponse<RawReview>> getReviews(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
-
-    @GET("/more")
-    Observable<ExposedResponse<RawHeadline>> getHeadlines(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
+    Observable<ResponseBody> getNews(@Query("jsoncallback") String callback, @Query("type") String type, @Query("page") int page, @Query("_") long timestamp);
 
     @GET("/topics/more")
-    Observable<WrappedResponse<Article>> getTopicArticles(@Query("jsoncallback") String callback, @Query("id") String topicId, @Query("page") int page, @Query("_") long timestamp);
+    Observable<WrappedResponse<Article>> getTopicNews(@Query("jsoncallback") String callback, @Query("id") String topicId, @Query("page") int page, @Query("_") long timestamp);
+
+    @GET("/topics.htm")
+    Observable<ResponseBody> getTopics(@Query("letter") char letter);
 
     @GET("/articles/{sid}.htm")
     Observable<ResponseBody> getArticleContent(@Path("sid") String sid);
@@ -40,7 +36,5 @@ public interface CnbetaApi {
     @POST("/cmt")
     Observable<ResponseBody> getArticleComment(@Field("csrf_token") String token, @Field("op") String op);
 
-    @GET("/topics.htm")
-    Observable<ResponseBody> getTopicsCoverByLetter(@Query("letter") char letter);
 
 }

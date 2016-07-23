@@ -5,12 +5,12 @@ import android.view.View;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.HeadlinesModule;
+import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class HeadlineFragment extends SwipeFragment<Headline, HeadlineRvAdapter.ViewHolder> {
+public class HeadlineFragment extends NewsFragment<Headline, HeadlineRvAdapter.ViewHolder> {
 
     public static HeadlineFragment newInstance(String type) {
         HeadlineFragment fragment = new HeadlineFragment();
@@ -20,7 +20,7 @@ public class HeadlineFragment extends SwipeFragment<Headline, HeadlineRvAdapter.
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.headlinesComponent(new HeadlinesModule()).inject(this);
+        component.headlineComponent(new HeadlineModule()).inject(this);
     }
 
     @Override

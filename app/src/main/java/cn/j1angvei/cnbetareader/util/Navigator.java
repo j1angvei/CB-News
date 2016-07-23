@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
-import cn.j1angvei.cnbetareader.activity.NewsContentActivity;
+import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.SettingsActivity;
 
 /**
@@ -22,9 +22,9 @@ public final class Navigator {
 
     public static void toContent(int position, ArrayList<String> allSid, Context context) {
         if (context != null) {
-            Intent intent = new Intent(context, NewsContentActivity.class);
-            intent.putExtra(NewsContentActivity.NEWS_POSITION, position);
-            intent.putStringArrayListExtra(NewsContentActivity.NEWS_SIDS, allSid);
+            Intent intent = new Intent(context, ContentActivity.class);
+            intent.putExtra(ContentActivity.NEWS_POSITION, position);
+            intent.putStringArrayListExtra(ContentActivity.NEWS_SIDS, allSid);
             context.startActivity(intent);
         }
 

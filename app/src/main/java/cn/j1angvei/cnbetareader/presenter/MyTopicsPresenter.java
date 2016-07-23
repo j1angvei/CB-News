@@ -12,17 +12,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/10.
  */
-@PerFragment
-public class MyTopicsPresenter extends SwipePresenter<Article> {
-    @Inject
-    public MyTopicsPresenter(DataRepository repository) {
-        mRepository = repository;
+public class MyTopicsPresenter extends NewsPresenter<Article> {
+    public MyTopicsPresenter(DataRepository<Article> repository) {
+        super(repository);
     }
 
     @Override
-    public void retrieveItem(String type, int page) {
-        super.retrieveItem(type, page);
-        mRepository.getTopicArticlesFromSource(type, page)
+    public void retrieveNews(String type, int page) {
+        super.retrieveNews(type, page);
+        mRepository.getTopicArticles(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Article>() {

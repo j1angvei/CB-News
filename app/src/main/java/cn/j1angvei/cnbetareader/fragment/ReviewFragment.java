@@ -5,13 +5,13 @@ import android.view.View;
 
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.ReviewModule;
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
+import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class ReviewFragment extends SwipeFragment<Review, ReviewRvAdapter.ViewHolder> {
+public class ReviewFragment extends NewsFragment<Review, ReviewRvAdapter.ViewHolder> {
 
     public static ReviewFragment newInstance(String type) {
         ReviewFragment fragment = new ReviewFragment();
@@ -21,7 +21,7 @@ public class ReviewFragment extends SwipeFragment<Review, ReviewRvAdapter.ViewHo
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.reviewsComponent(new ReviewModule()).inject(this);
+        component.reviewComponent(new ReviewModule()).inject(this);
     }
 
     @Override

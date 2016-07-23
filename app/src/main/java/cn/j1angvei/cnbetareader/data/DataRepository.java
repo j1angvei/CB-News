@@ -1,17 +1,8 @@
 package cn.j1angvei.cnbetareader.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.Content;
-import cn.j1angvei.cnbetareader.bean.Headline;
-import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.LocalDataSource;
 import cn.j1angvei.cnbetareader.data.remote.RemoteDataSource;
@@ -21,123 +12,50 @@ import rx.functions.Action1;
 /**
  * Created by Wayne on 2016/6/16.
  */
-@Singleton
-public class DataRepository implements Repository {
-    private LocalDataSource mLocalDataSource;
-    private RemoteDataSource mRemoteDataSource;
+public class DataRepository<T> implements Repository<T> {
+    private LocalDataSource<T> mLocalDataSource;
+    private RemoteDataSource<T> mRemoteDataSource;
 
-    private Map<String, List<Article>> mNewsMap;
-    private Map<String, Content> mContentMap;
-    private List<Review> mReviews;
-    private List<Headline> mHeadlines;
-    private Map<String, List<Article>> mTopicsArticleMap;
-    private Map<Character, List<Topic>> mTopicsMap;
 
-    @Inject
-    public DataRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
+    public DataRepository(LocalDataSource<T> localDataSource, RemoteDataSource<T> remoteDataSource) {
         mLocalDataSource = localDataSource;
         mRemoteDataSource = remoteDataSource;
-        initDataContainer();
-    }
-
-
-    @Override
-    public Observable<Article> getArticleFromSource(final String type, int page) {
-        return mRemoteDataSource.getArticleFromSource(type, page)
-                .doOnNext(new Action1<Article>() {
-                    @Override
-                    public void call(Article article) {
-                        List<Article> articleList = mNewsMap.get(type);
-                        if (articleList == null) {
-                            articleList = new ArrayList<>();
-                            mNewsMap.put(type, articleList);
-                        }
-                        articleList.add(article);
-                    }
-                });
     }
 
     @Override
-    public Observable<Content> getContentFromSource(final String sid) {
-        return mRemoteDataSource.getContentFromSource(sid)
+    public Observable<Content> getContent(final String sid) {
+        return mRemoteDataSource.getContent(sid)
                 .doOnNext(new Action1<Content>() {
                     @Override
                     public void call(Content content) {
-                        mContentMap.put(sid, content);
                     }
                 });
     }
 
     @Override
-    public Observable<Review> getReviewsFromSource(String type, int page) {
-        return mRemoteDataSource.getReviewsFromSource(type, page)
-                .doOnNext(new Action1<Review>() {
+    public Observable<Comments> getComments(String token, String op) {
+        return null;
+    }
+
+    @Override
+    public Observable<T> getNews(String type, int page) {
+        return mRemoteDataSource.getNews(type, page)
+                .doOnNext(new Action1<T>() {
                     @Override
-                    public void call(Review review) {
-                        mReviews.add(review);
+                    public void call(T t) {
+                        //add to memory
                     }
                 });
     }
 
     @Override
-    public Observable<Headline> getHeadlinesFromSource(String type, int page) {
-        return mRemoteDataSource.getHeadlinesFromSource(type, page)
-                .doOnNext(new Action1<Headline>() {
-                    @Override
-                    public void call(Headline headline) {
-                        mHeadlines.add(headline);
-                    }
-                });
+    public Observable<Article> getTopicArticles(final String topicId, int page) {
+        return mRemoteDataSource.getTopicArticles(topicId, page);
     }
 
     @Override
-    public Observable<Article> getTopicArticlesFromSource(final String topicId, int page) {
-        return mRemoteDataSource.getTopicArticlesFromSource(topicId, page)
-                .doOnNext(new Action1<Article>() {
-                    @Override
-                    public void call(Article article) {
-                        List<Article> articleList = mTopicsArticleMap.get(topicId);
-                        if (articleList == null) {
-                            articleList = new ArrayList<>();
-                            mTopicsArticleMap.put(topicId, articleList);
-                        }
-                        articleList.add(article);
-                    }
-                });
-    }
-
-    @Override
-    public Observable<Topic> getTopicsCoverByLetter(final char letter) {
-        return mRemoteDataSource.getTopicsCoverByLetter(letter)
-                .doOnNext(new Action1<Topic>() {
-                    @Override
-                    public void call(Topic topic) {
-                        //store in cache
-                        List<Topic> topics;
-                        if (mTopicsMap.containsKey(letter)) {
-                            topics = mTopicsMap.get(letter);
-                        } else {
-                            topics = new ArrayList<>();
-                            mTopicsMap.put(letter, topics);
-                        }
-                        topics.add(topic);
-                    }
-                });
-    }
-
-    @Override
-    public void initDataContainer() {
-        mNewsMap = new HashMap<>();
-        mContentMap = new HashMap<>();
-        mReviews = new ArrayList<>();
-        mHeadlines = new ArrayList<>();
-        mTopicsArticleMap = new HashMap<>();
-        mTopicsMap = new HashMap<>();
-    }
-
-    @Override
-    public void toMemory(String source, Object item) {
-
+    public Observable<Topic> getTopics(final char letter) {
+        return mRemoteDataSource.getTopics(letter);
     }
 
 }

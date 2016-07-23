@@ -2,15 +2,13 @@ package cn.j1angvei.cnbetareader.di.component;
 
 import android.app.Activity;
 
+import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.di.module.ArticlesModule;
-import cn.j1angvei.cnbetareader.di.module.ExploreModule;
-import cn.j1angvei.cnbetareader.di.module.HeadlinesModule;
-import cn.j1angvei.cnbetareader.di.module.MyTopicsModule;
-import cn.j1angvei.cnbetareader.di.module.ReviewModule;
+import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
+import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
+import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
-import cn.j1angvei.cnbetareader.activity.NewsListActivity;
-import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
+import cn.j1angvei.cnbetareader.activity.NewsActivity;
 import dagger.Component;
 
 /**
@@ -20,19 +18,17 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 
-    void inject(NewsListActivity newsListActivity);
+    void inject(NewsActivity activity);
+
+    void inject(ContentActivity activity);
 
     //expose variable to sub-graph
     Activity activity();
 
-    ArticlesComponent articlesComponent(ArticlesModule articlesModule);
+    ArticleComponent articleComponent(ArticleModule module);
 
-    HeadlinesComponent headlinesComponent(HeadlinesModule headlinesModule);
+    HeadlineComponent headlineComponent(HeadlineModule module);
 
-    ReviewsComponent reviewsComponent(ReviewModule reviewModule);
-
-    TopicsComponent topicsComponent(MyTopicsModule myTopicsModule);
-
-    ExploreComponent exploreComponent(ExploreModule exploreModule);
+    ReviewComponent reviewComponent(ReviewModule module);
 
 }

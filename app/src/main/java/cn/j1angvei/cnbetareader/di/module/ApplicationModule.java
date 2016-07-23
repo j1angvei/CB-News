@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.JsonpInterceptor;
-import cn.j1angvei.cnbetareader.util.BeanConverter;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -41,17 +40,17 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
+    String provideBaseUrl() {
+        return BASE_URL;
+    }
+
+    @Provides
+    @Singleton
     Gson provideGson() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat(DATE_FORMAT)
                 .create();
-    }
-
-    @Provides
-    @Singleton
-    BeanConverter provideBeanConverter(Gson gson) {
-        return new BeanConverter(gson, BASE_URL);
     }
 
     @Provides
