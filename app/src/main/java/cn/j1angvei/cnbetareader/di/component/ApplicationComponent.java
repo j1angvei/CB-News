@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
@@ -34,5 +35,7 @@ public interface ApplicationComponent {
     NewsRepository<Headline> headlineRepository();
 
     MyTopicsRepository myTopicsRepository();
+
+    ExploreRepository exploreRepository();
 
 }

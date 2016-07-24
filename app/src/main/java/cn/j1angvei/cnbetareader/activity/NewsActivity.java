@@ -21,7 +21,7 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.fragment.TopicFragment;
+import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
@@ -145,9 +145,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_explore:
                 tag = SourceType.ALL_TOPICS.getValue();
+                int page = 3;
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
-                    fragment = TopicFragment.newInstance(tag);
+                    fragment = ExploreFragment.newInstance(3);
                 }
                 break;
             default:

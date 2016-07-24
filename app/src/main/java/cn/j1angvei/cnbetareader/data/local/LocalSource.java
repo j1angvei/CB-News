@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.app.Application;
 import android.content.Context;
 
 import rx.Observable;
@@ -10,7 +11,7 @@ import rx.Observable;
 public abstract class LocalSource<T> {
     final Context mContext;
 
-    public LocalSource(Context context) {
+    public LocalSource(Application context) {
         mContext = context;
     }
 

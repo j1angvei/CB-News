@@ -1,10 +1,9 @@
 package cn.j1angvei.cnbetareader.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,36 +15,35 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
-import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.adapter.ExploreRvAdapter;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.sub.NestedTopicsModule;
-import cn.j1angvei.cnbetareader.presenter.NestedTopicsPresenter;
-import cn.j1angvei.cnbetareader.view.NestedTopicsView;
+import cn.j1angvei.cnbetareader.di.module.sub.ExploreModule;
+import cn.j1angvei.cnbetareader.presenter.ExplorePresenter;
+import cn.j1angvei.cnbetareader.view.ExploreView;
 
 /**
- * Created by Wayne on 2016/7/9.
+ * Created by Wayne on 2016/7/13.
  */
-public class NestedTopicsFragment extends BaseFragment implements NestedTopicsView, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TOPIC_ID = "NestedTopicsFragment.topic_id";
+public class ExploreFragment extends BaseFragment implements ExploreView, SwipeRefreshLayout.OnRefreshListener {
+    private static final String PAGE = "ExploreFragment.page";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @Inject
-    LinearLayoutManager mLinearLayoutManager;
+    GridLayoutManager mGridLayoutManager;
     @Inject
-    ArticlesRvAdapter mAdapter;
+    ExploreRvAdapter mAdapter;
     @Inject
-    NestedTopicsPresenter mPresenter;
+    ExplorePresenter mPresenter;
 
-    private int mPage = 1;
-    private String mTopicId;
+    private int mPage;
 
-    public static NestedTopicsFragment newInstance(String topicId) {
-        NestedTopicsFragment fragment = new NestedTopicsFragment();
+    public static ExploreFragment newInstance(int page) {
+        ExploreFragment fragment = new ExploreFragment();
         Bundle args = new Bundle();
-        args.putString(TOPIC_ID, topicId);
+        args.putInt(PAGE, page);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,17 +51,17 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTopicId = getArguments().getString(TOPIC_ID);
+        mPage = getArguments().getInt(PAGE);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nested_topics, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
@@ -83,6 +81,12 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
     }
 
     @Override
+    protected void inject(ActivityComponent component) {
+        component.exploreComponent(new ExploreModule()).inject(this);
+    }
+
+
+    @Override
     public void showLoading() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
@@ -93,25 +97,18 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
     }
 
     @Override
-    public void renderItem(Article item) {
+    public void renderItem(Topic item) {
         mAdapter.add(item);
     }
 
     @Override
     public void clearItems() {
-        mPage = 1;
         mAdapter.clear();
-    }
-
-    @Override
-    protected void inject(ActivityComponent component) {
-        component.nestedTopicsComponent(new NestedTopicsModule()).inject(this);
     }
 
     @Override
     public void onRefresh() {
         clearItems();
-        mPresenter.retrieveMyTopics(mPage++, mTopicId);
-
+        mPresenter.retrieveTopics(mPage);
     }
 }

@@ -1,8 +1,7 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.content.Context;
+import android.app.Application;
 
-import cn.j1angvei.cnbetareader.data.local.LocalSource;
 import rx.Observable;
 
 /**
@@ -10,7 +9,7 @@ import rx.Observable;
  */
 public class NewsLocalSource<T> extends LocalSource<T> {
 
-    public NewsLocalSource(Context context) {
+    public NewsLocalSource(Application context) {
         super(context);
     }
 

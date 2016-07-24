@@ -10,16 +10,15 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.converter.ArticleConverter;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
 import cn.j1angvei.cnbetareader.converter.ReviewConverter;
-import cn.j1angvei.cnbetareader.data.local.MyTopicsLocalSource;
+import cn.j1angvei.cnbetareader.converter.TopicConverter;
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
-import cn.j1angvei.cnbetareader.data.remote.MyTopicsRemoteSource;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
-import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import dagger.Module;
 import dagger.Provides;
@@ -49,6 +48,13 @@ public class DataModule {
     @Named("c_headline")
     Converter<Headline> provideHeadlineConverter(Gson gson, String url) {
         return new HeadlineConverter(gson, url);
+    }
+
+    @Provides
+    @Singleton
+    @Named("c_topic")
+    Converter<Topic> provideTopicConverter() {
+        return new TopicConverter();
     }
 
     @Provides
@@ -114,22 +120,4 @@ public class DataModule {
         return new NewsRepository<>(local, remote);
     }
 
-    //my topics
-    @Provides
-    @Singleton
-    MyTopicsLocalSource provideMyTopicsLocalSource(Application application) {
-        return new MyTopicsLocalSource(application);
-    }
-
-    @Provides
-    @Singleton
-    MyTopicsRemoteSource provideMyTopicsRemoteSource(CnbetaApi api, @Named("c_article") Converter<Article> converter) {
-        return new MyTopicsRemoteSource(api, converter);
-    }
-
-    @Provides
-    @Singleton
-    MyTopicsRepository provideMyTopicsRepository(MyTopicsLocalSource localSource, MyTopicsRemoteSource remoteSource) {
-        return new MyTopicsRepository(localSource, remoteSource);
-    }
 }
