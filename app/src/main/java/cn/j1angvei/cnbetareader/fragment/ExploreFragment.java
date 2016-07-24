@@ -6,8 +6,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import javax.inject.Inject;
 
@@ -20,6 +26,7 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.sub.ExploreModule;
 import cn.j1angvei.cnbetareader.presenter.ExplorePresenter;
+import cn.j1angvei.cnbetareader.util.ToastUtil;
 import cn.j1angvei.cnbetareader.view.ExploreView;
 
 /**
@@ -40,6 +47,8 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
 
     private int mPage;
 
+    Spinner mSpinner;
+
     public static ExploreFragment newInstance(int page) {
         ExploreFragment fragment = new ExploreFragment();
         Bundle args = new Bundle();
@@ -51,8 +60,29 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mPage = getArguments().getInt(PAGE);
         inject(((BaseActivity) getActivity()).getActivityComponent());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_explore, menu);
+        MenuItem item = menu.findItem(R.id.menu_spinner);
+        mSpinner = (Spinner) item.getActionView();
+        setupViewInMenu();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_spinner:
+                ToastUtil.showShortToast("spiiner", getActivity());
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     @Nullable
@@ -110,5 +140,24 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
     public void onRefresh() {
         clearItems();
         mPresenter.retrieveTopics(mPage);
+    }
+
+    private void setupViewInMenu() {
+        //spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.alphabet_caps, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mPage = i + 1;
+                onRefresh();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                ToastUtil.showShortToast("nothing  selected", getActivity());
+            }
+        });
     }
 }

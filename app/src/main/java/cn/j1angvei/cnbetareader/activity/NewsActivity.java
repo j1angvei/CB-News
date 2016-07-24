@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -26,6 +25,7 @@ import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
+import cn.j1angvei.cnbetareader.util.ToastUtil;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -79,7 +79,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_news_list, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_news_list, menu);
         return true;
     }
 
@@ -87,13 +87,14 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
+                ToastUtil.showShortToast("search", this);
                 break;
             case R.id.menu_mini_card:
+                ToastUtil.showShortToast("mini card", this);
                 break;
             default:
                 break;
         }
-        Toast.makeText(this, "haha", Toast.LENGTH_LONG).show();
         return super.onOptionsItemSelected(item);
     }
 
