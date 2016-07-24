@@ -16,7 +16,7 @@ import cn.j1angvei.cnbetareader.R;
 /**
  * Created by Wayne on 2016/7/17.
  */
-public class SeekPageDialog extends DialogFragment implements SeekBar.OnSeekBarChangeListener{
+public class SeekPageDialog extends DialogFragment implements SeekBar.OnSeekBarChangeListener {
     private static final String CUR_PAGE = "SeekPageDialog.cur_page";
 
     @BindView(R.id.seek_bar)

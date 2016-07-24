@@ -1,8 +1,6 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 
-import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

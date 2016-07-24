@@ -1,7 +1,6 @@
 package cn.j1angvei.cnbetareader.data.local;
 
 import android.app.Application;
-import android.content.Context;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

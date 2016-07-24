@@ -2,7 +2,6 @@ package cn.j1angvei.cnbetareader.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;

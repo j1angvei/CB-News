@@ -21,11 +21,11 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.SourceType;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
-import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
+import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
+import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 
 /**
  * Created by Wayne on 2016/7/4.

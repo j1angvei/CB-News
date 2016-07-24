@@ -2,9 +2,9 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.view.View;
 
+import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
 
 /**

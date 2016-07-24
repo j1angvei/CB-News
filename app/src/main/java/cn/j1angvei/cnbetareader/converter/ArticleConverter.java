@@ -1,10 +1,7 @@
 package cn.j1angvei.cnbetareader.converter;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 
 import java.util.List;
 

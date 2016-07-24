@@ -12,8 +12,8 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentPresenter implements BasePresenter<ContentView> {
-    private ContentView mView;
     private final NewsRepository<Content> mRepository;
+    private ContentView mView;
 
     public ContentPresenter(NewsRepository<Content> repository) {
         mRepository = repository;

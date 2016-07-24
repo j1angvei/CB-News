@@ -8,10 +8,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import cn.j1angvei.cnbetareader.bean.Topic;
 import rx.Observable;
 
