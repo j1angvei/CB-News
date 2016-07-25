@@ -9,6 +9,16 @@
     </style>
 
     <style name="CBTheme" parent="AppTheme"/>
+
+    <style name="CBTheme.AppBarOverlay">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="CBTheme.PopupOverlay">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="CBTheme.TransparentStatusBar"/>
     <!--TextView style-->
     <style name="CBTheme.TextView"/>
 
@@ -88,13 +98,6 @@
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
-    <style name="CBTheme.AppBarLayout">
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-    </style>
-
-    <style name="CBTheme.Toolbar">
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-    </style>
 
     <style name="CBTheme.Fab">
         <item name="fabSize">normal</item>

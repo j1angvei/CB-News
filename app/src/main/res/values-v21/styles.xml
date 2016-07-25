@@ -3,6 +3,10 @@
 
     <style name="CBTheme" parent="AppTheme">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="CBTheme.TransparentStatusBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
