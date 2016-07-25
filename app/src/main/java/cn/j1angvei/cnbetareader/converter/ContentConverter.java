@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.StringUtil;
 import rx.Observable;
 
 /**
@@ -32,7 +33,7 @@ public class ContentConverter implements Converter<Content> {
         Document doc = Jsoup.parse(html, mBaseUrl);
         //parse title
         String title = doc.getElementById("news_title").text();
-        content.setTitle(title);
+        content.setTitle(StringUtil.removeAllBlanks(title));
         //parse date
         String dateString = doc.getElementsByClass("date").first().text();
         try {
@@ -46,7 +47,7 @@ public class ContentConverter implements Converter<Content> {
         content.setSource(where);
         //parse introduction
         String introduction = doc.select(".introduction > p").text();
-        content.setSummary(introduction);
+        content.setSummary(StringUtil.removeAllBlanks(introduction));
         //parse detail
         Element elementContent = doc.getElementsByClass("content").first();
         //convert relative url to absolute url

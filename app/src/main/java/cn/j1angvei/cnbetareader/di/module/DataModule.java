@@ -8,10 +8,12 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.converter.ArticleConverter;
+import cn.j1angvei.cnbetareader.converter.ContentConverter;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
 import cn.j1angvei.cnbetareader.converter.ReviewConverter;
@@ -55,6 +57,13 @@ public class DataModule {
     @Named("c_topic")
     Converter<Topic> provideTopicConverter() {
         return new TopicConverter();
+    }
+
+    @Provides
+    @Singleton
+    @Named("c_content")
+    Converter<Content> provideContentConverter(String baseUrl) {
+        return new ContentConverter(baseUrl);
     }
 
     @Provides

@@ -41,4 +41,8 @@
         <item>Y</item>
         <item>Z</item>
     </string-array>
+
+    <!--news content-->
+    <string name="ph_news_content_header">Pubtime: %1$s\t Source: %2$s </string>
+    <string name="ph_news_content_detail" translatable="false"><![CDATA[<html><body style="text-align:justify">%1$s</body></Html>]]></string>
 </resources>

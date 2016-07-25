@@ -5,6 +5,7 @@ import android.app.Activity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.NewsActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ExploreModule;
 import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
@@ -26,6 +27,8 @@ public interface ActivityComponent {
 
     //expose variable to sub-graph
     Activity activity();
+
+    FragmentComponent fragmentComponent(FragmentModule module);
 
     ArticleComponent articleComponent(ArticleModule module);
 

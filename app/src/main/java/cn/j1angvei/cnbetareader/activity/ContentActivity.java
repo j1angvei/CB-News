@@ -9,10 +9,14 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.adapter.NewsContentPagerAdapter;
+import cn.j1angvei.cnbetareader.adapter.ContentPagerAdapter;
+import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 
 /**
  * Created by Wayne on 2016/7/5.
@@ -25,30 +29,26 @@ public class ContentActivity extends BaseActivity {
     ViewPager mViewPager;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @Inject
+    ContentPagerAdapter mAdapter;
 
     private int mInitPos;
     private List<String> allSid;
-    private NewsContentPagerAdapter mAdapter;
 
-    @Override
-    protected void initView() {
-
-    }
-
-    @Override
-    protected void inject() {
-
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_content);
         //parse intent
         mInitPos = getIntent().getIntExtra(NEWS_POSITION, 0);
         allSid = getIntent().getStringArrayListExtra(NEWS_SIDS);
-        //init member
-        mAdapter = new NewsContentPagerAdapter(getSupportFragmentManager(), this, allSid);
+        //inject
+        mActivityComponent = DaggerActivityComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(new ActivityModule(this))
+                .build();
+        mActivityComponent.inject(this);
+        setContentView(R.layout.activity_news_content);
         //init view
         ButterKnife.bind(this);
         //toolbar
@@ -71,5 +71,20 @@ public class ContentActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void inject() {
+
+    }
+
+    public List<String> getAllSid() {
+        return allSid;
     }
 }
