@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -35,21 +33,24 @@ public class ContentActivity extends BaseActivity {
     private int mInitPos;
     private List<String> allSid;
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //parse intent
+    protected void parseIntent() {
         mInitPos = getIntent().getIntExtra(NEWS_POSITION, 0);
         allSid = getIntent().getStringArrayListExtra(NEWS_SIDS);
-        //inject
+    }
+
+    @Override
+    protected void doInjection() {
         mActivityComponent = DaggerActivityComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
+    }
+
+    @Override
+    protected void initView() {
         setContentView(R.layout.activity_news_content);
-        //init view
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
@@ -71,17 +72,6 @@ public class ContentActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-
-    @Override
-    protected void initView() {
-
-    }
-
-    @Override
-    protected void inject() {
-
     }
 
     public List<String> getAllSid() {

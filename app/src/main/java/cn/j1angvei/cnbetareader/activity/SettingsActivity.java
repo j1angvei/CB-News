@@ -10,7 +10,12 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    protected void inject() {
+    protected void parseIntent() {
+
+    }
+
+    @Override
+    protected void doInjection() {
 
     }
 }

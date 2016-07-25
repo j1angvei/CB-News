@@ -16,10 +16,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -27,11 +30,13 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by Wayne on 2016/7/4.
  */
+@PerFragment
 public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> {
 
     private List<Article> mArticles;
     private Activity mActivity;
 
+    @Inject
     public ArticlesRvAdapter(Activity activity) {
         mActivity = activity;
         mArticles = new ArrayList<>();

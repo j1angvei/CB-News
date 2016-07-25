@@ -1,7 +1,10 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import javax.inject.Inject;
+
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.view.NestedTopicsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -10,10 +13,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/10.
  */
+@PerFragment
 public class NestedTopicsPresenter implements BasePresenter<NestedTopicsView> {
     private NestedTopicsView mView;
     private MyTopicsRepository mRepository;
 
+    @Inject
     public NestedTopicsPresenter(MyTopicsRepository repository) {
         mRepository = repository;
     }

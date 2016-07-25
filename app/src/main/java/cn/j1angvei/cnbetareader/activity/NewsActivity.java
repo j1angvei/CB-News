@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,26 +40,21 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     FragmentManager mFragmentManager;
 
     @Override
-    protected void initView() {
-
+    protected void parseIntent() {
     }
 
     @Override
-    protected void inject() {
-
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
-        //di
+    protected void doInjection() {
         mActivityComponent = DaggerActivityComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
-        //bind view
+    }
+
+    @Override
+    protected void initView() {
+        setContentView(R.layout.activity_news_list);
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
@@ -71,10 +64,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         //navigation view
         mNavigationView.setNavigationItemSelectedListener(this);
-
         //add init fragment
         mFragmentManager.beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance("all"), "all").commit();
-
     }
 
     @Override

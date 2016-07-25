@@ -25,11 +25,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inject();
+        parseIntent();
+        doInjection();
         initView();
     }
 
+    protected abstract void parseIntent();
+
+    protected abstract void doInjection();
+
     protected abstract void initView();
 
-    protected abstract void inject();
 }

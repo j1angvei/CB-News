@@ -3,6 +3,8 @@ package cn.j1angvei.cnbetareader.di.component;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
+import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
+import cn.j1angvei.cnbetareader.fragment.NestedTopicsFragment;
 import dagger.Subcomponent;
 
 /**
@@ -11,5 +13,9 @@ import dagger.Subcomponent;
 @PerFragment
 @Subcomponent(modules = FragmentModule.class)
 public interface FragmentComponent {
+    void inject(ExploreFragment fragment);
+
+    void inject(NestedTopicsFragment fragment);
+
     void inject(ContentFragment fragment);
 }

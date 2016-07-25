@@ -14,19 +14,24 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ToastUtil;
 
 /**
  * Created by Wayne on 2016/7/13.
  */
+@PerFragment
 public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHolder> {
     private List<Topic> mTopics;
     private Activity mActivity;
 
+    @Inject
     public ExploreRvAdapter(Activity activity) {
         mActivity = activity;
         mTopics = new ArrayList<>();

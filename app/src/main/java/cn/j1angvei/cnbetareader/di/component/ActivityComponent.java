@@ -7,9 +7,7 @@ import cn.j1angvei.cnbetareader.activity.NewsActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
-import cn.j1angvei.cnbetareader.di.module.sub.ExploreModule;
 import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
-import cn.j1angvei.cnbetareader.di.module.sub.NestedTopicsModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import dagger.Component;
@@ -36,7 +34,4 @@ public interface ActivityComponent {
 
     ReviewComponent reviewComponent(ReviewModule module);
 
-    NestedTopicsComponent nestedTopicsComponent(NestedTopicsModule module);
-
-    ExploreComponent exploreComponent(ExploreModule module);
 }

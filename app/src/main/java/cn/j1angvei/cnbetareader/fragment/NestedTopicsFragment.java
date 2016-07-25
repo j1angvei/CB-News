@@ -19,7 +19,7 @@ import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.sub.NestedTopicsModule;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.NestedTopicsPresenter;
 import cn.j1angvei.cnbetareader.view.NestedTopicsView;
 
@@ -105,7 +105,7 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.nestedTopicsComponent(new NestedTopicsModule()).inject(this);
+        component.fragmentComponent(new FragmentModule()).inject(this);
     }
 
     @Override

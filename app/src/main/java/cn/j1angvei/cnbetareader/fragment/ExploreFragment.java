@@ -24,7 +24,7 @@ import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.ExploreRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
-import cn.j1angvei.cnbetareader.di.module.sub.ExploreModule;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.ExplorePresenter;
 import cn.j1angvei.cnbetareader.util.ToastUtil;
 import cn.j1angvei.cnbetareader.view.ExploreView;
@@ -77,7 +77,7 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_spinner:
-                ToastUtil.showShortToast("spiiner", getActivity());
+                ToastUtil.showShortToast("spinner", getActivity());
                 break;
             default:
                 break;
@@ -112,7 +112,7 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.exploreComponent(new ExploreModule()).inject(this);
+        component.fragmentComponent(new FragmentModule()).inject(this);
     }
 
 
