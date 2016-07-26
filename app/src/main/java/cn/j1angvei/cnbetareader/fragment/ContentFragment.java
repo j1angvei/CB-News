@@ -3,15 +3,14 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -39,6 +38,7 @@ import cn.j1angvei.cnbetareader.view.ContentView;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
+    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -50,6 +50,10 @@ public class ContentFragment extends BaseFragment implements ContentView {
     ImageView ivThumb;
     @BindView(R.id.wv_content_detail)
     WebView wvDetail;
+
+    @BindView(R.id.nsv_content)
+    NestedScrollView mNestedScrollView;
+    AppBarLayout mAppBarLayout;
 
     @Inject
     ContentPresenter mPresenter;
@@ -67,6 +71,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mSid = getArguments().getString(NEWS_ID);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
@@ -76,7 +81,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
-        setHasOptionsMenu(true);
+        mAppBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appbar_layout);
         mProgressBar = (ProgressBar) getActivity().findViewById(R.id.progress_bar);
         ButterKnife.bind(this, view);
         //webView

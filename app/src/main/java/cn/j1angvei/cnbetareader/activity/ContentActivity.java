@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.activity;
 
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.adapter.ContentPagerAdapter;
+import cn.j1angvei.cnbetareader.animation.AppBarLayoutNotEmptyBehavior;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 
@@ -55,6 +57,8 @@ public class ContentActivity extends BaseActivity {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_news_content);
+        //test
+
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
@@ -66,6 +70,7 @@ public class ContentActivity extends BaseActivity {
         //viewpager
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mInitPos);
+
     }
 
     @Override

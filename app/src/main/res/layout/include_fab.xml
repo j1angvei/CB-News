@@ -9,6 +9,6 @@
     android:layout_margin="@dimen/fab_margin"
     android:src="@drawable/ic_refresh_white"
     app:fabSize="normal"
-    app:layout_behavior="cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior">
+    app:layout_behavior="@string/behavior_fab">
 
 </android.support.design.widget.FloatingActionButton>
