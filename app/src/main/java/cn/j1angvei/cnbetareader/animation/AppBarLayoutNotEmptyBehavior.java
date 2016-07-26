@@ -45,6 +45,10 @@ public class AppBarLayoutNotEmptyBehavior extends AppBarLayout.Behavior {
             int appBarHeight = mAppBarLayout != null ? mAppBarLayout.getHeight() : 0;
             nestScrollHeight -= appBarHeight;
             isNestedScrollViewScrollable = ((NestedScrollView) targetChild).computeVerticalScrollRange() > nestScrollHeight;
+            //if nestedScrollView can not scroll, expand appBarLayout once, make toolbar visible
+            if (!isNestedScrollViewScrollable) {
+                mAppBarLayout.setExpanded(true, true);
+            }
         }
 
     }
