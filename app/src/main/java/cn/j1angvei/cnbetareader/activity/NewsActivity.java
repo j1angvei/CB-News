@@ -15,15 +15,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.SourceType;
+import cn.j1angvei.cnbetareader.bean.Source;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
+import cn.j1angvei.cnbetareader.fragment.BookmarkFragment;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
-import cn.j1angvei.cnbetareader.util.ToastUtil;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -78,10 +79,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                ToastUtil.showShortToast("search", this);
+                MessageUtil.shortToast("search", this);
                 break;
             case R.id.menu_mini_card:
-                ToastUtil.showShortToast("mini card", this);
+                MessageUtil.shortToast("mini card", this);
                 break;
             default:
                 break;
@@ -107,21 +108,21 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         String tag = null;
         switch (item.getItemId()) {
             case R.id.nav_latest_news:
-                tag = SourceType.LATEST_NEWS.getValue();
+                tag = Source.LATEST_NEWS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ArticlesFragment.newInstance(tag);
                 }
                 break;
             case R.id.nav_hot_news_comment:
-                tag = SourceType.HOT_COMMENT.getValue();
+                tag = Source.HOT_COMMENT.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ReviewFragment.newInstance(tag);
                 }
                 break;
             case R.id.nav_past_headlines:
-                tag = SourceType.PAST_HEADLINE.getValue();
+                tag = Source.PAST_HEADLINE.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = HeadlineFragment.newInstance(tag);
@@ -129,18 +130,25 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.id.nav_my_topics:
-                tag = SourceType.MY_TOPICS.getValue();
+                tag = Source.MY_TOPICS.getValue();
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = new MyTopicsFragment();
                 }
                 break;
             case R.id.nav_explore:
-                tag = SourceType.ALL_TOPICS.getValue();
+                tag = Source.ALL_TOPICS.getValue();
                 int page = 3;
                 fragment = mFragmentManager.findFragmentByTag(tag);
                 if (fragment == null) {
                     fragment = ExploreFragment.newInstance(3);
+                }
+                break;
+            case R.id.nav_bookmarks:
+                tag = Source.BOOKMARKS.getValue();
+                fragment = mFragmentManager.findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = BookmarkFragment.newInstance(tag);
                 }
                 break;
             default:

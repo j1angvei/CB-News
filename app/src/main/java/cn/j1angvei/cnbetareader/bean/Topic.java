@@ -35,7 +35,7 @@ public final class Topic {
     @Override
     public String toString() {
         return "Topic{" +
-                "id='" + id + '\'' +
+                "sid='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", cover='" + cover + '\'' +
                 '}' +

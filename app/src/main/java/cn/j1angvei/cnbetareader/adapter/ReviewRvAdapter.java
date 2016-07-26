@@ -73,7 +73,7 @@ public class ReviewRvAdapter extends NewsAdapter<Review, ReviewRvAdapter.ViewHol
     ArrayList<String> getSids() {
         ArrayList<String> allSid = new ArrayList<>();
         for (Review review : mReviews) {
-            allSid.add(review.getArticleId());
+            allSid.add(review.getSid());
         }
         return allSid;
     }

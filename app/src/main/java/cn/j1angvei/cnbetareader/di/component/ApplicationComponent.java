@@ -6,6 +6,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
@@ -34,6 +35,9 @@ public interface ApplicationComponent {
 
     @Named("d_headline")
     NewsRepository<Headline> headlineRepository();
+
+    @Named("d_bookmark")
+    NewsRepository<Bookmark> bookmarkRepository();
 
     MyTopicsRepository myTopicsRepository();
 

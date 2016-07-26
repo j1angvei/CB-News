@@ -91,7 +91,7 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
     ArrayList<String> getSids() {
         ArrayList<String> allSid = new ArrayList<>();
         for (Article article : mArticles) {
-            allSid.add(article.getId());
+            allSid.add(article.getSid());
         }
         return allSid;
     }

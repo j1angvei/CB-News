@@ -7,6 +7,7 @@ import cn.j1angvei.cnbetareader.activity.NewsActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
+import cn.j1angvei.cnbetareader.di.module.sub.BookmarkModule;
 import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
@@ -33,5 +34,7 @@ public interface ActivityComponent {
     HeadlineComponent headlineComponent(HeadlineModule module);
 
     ReviewComponent reviewComponent(ReviewModule module);
+
+    BookmarkComponent bookmarkComponent(BookmarkModule module);
 
 }

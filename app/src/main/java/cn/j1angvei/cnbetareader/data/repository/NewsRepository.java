@@ -19,6 +19,7 @@ public class NewsRepository<T> implements Repository<T> {
 
     @Override
     public Observable<T> get(int page, String... str) {
+        //when it comes to bookmarks, use LocalSource
         return mRemoteSource.getItem(page, str)
                 .doOnNext(new Action1<T>() {
                     @Override

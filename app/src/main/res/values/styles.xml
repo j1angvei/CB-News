@@ -10,6 +10,7 @@
 
     <style name="CBTheme" parent="AppTheme"/>
 
+    <!--Less use widget style-->
     <style name="CBTheme.AppBarOverlay">
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
@@ -42,9 +43,15 @@
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
-    <style name="CBTheme.TextView.Content"/>
+    <style name="CBTheme.TextView.Title.Content">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
 
-    <style name="CBTheme.TextView.Content.Articles">
+    <style name="CBTheme.TextView.Summary"/>
+
+    <style name="CBTheme.TextView.Summary.Articles">
         <item name="android:ellipsize">end</item>
         <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:maxLines">3</item>
@@ -52,15 +59,14 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="CBTheme.TextView.Content.Headline">
+    <style name="CBTheme.TextView.Summary.Headline">
         <item name="android:lineSpacingMultiplier">1.1</item>
         <item name="android:padding">4dp</item>
-        <!--<item name="android:background">@drawable/bg_headline_content</item>-->
         <item name="android:textColor">@color/textSecondary</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="CBTheme.TextView.Content.Review">
+    <style name="CBTheme.TextView.Summary.Review">
         <item name="android:background">@drawable/bg_review_comment</item>
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -82,6 +88,14 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
+    <style name="CBTheme.TextView.Hint.Content">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+
+    </style>
+
     <style name="CBTheme.TextView.Link"/>
 
     <style name="CBTheme.TextView.Link.Headline">
@@ -98,22 +112,23 @@
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
-
+    <!--FloatActionButton style-->
     <style name="CBTheme.Fab">
         <item name="fabSize">normal</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="CBTheme.Fab.Content">
-    </style>
+    <style name="CBTheme.Fab.Content"/>
 
     <style name="CBTheme.Fab.Content.Small">
         <item name="fabSize">mini</item>
     </style>
 
-    <style name="CBTheme.FabMenu">
-
-    </style>
+    <style name="CBTheme.FabMenu"/>
+    <!--ImageView style-->
+    <style name="CBTheme.ImageView"/>
+    <!--ProgressBar style-->
+    <style name="CBTheme.ProgressBar"/>
 
 </resources>

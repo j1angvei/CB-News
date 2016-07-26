@@ -53,7 +53,7 @@ public class ReviewConverter extends NewsConverter<Review> {
         review.setLocation(location);
 
         String sid = description.replaceFirst("^.*<a href=\\\"/articles/", "").replaceAll("\\.html?\\\" target=\\\"_blank\\\">.*$", "");
-        review.setArticleId(sid);
+        review.setSid(sid);
 
         String articleTitle = description.replaceFirst("^.*\\.htm\\\" target=\\\"_blank\\\">", "").replaceAll("</a>.*$", "");
         review.setTitle(articleTitle);

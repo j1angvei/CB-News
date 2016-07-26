@@ -6,31 +6,13 @@ import java.util.List;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Headline {
-    private String sid;
-    private String title;
+public final class Headline extends News {
     private String content;
     private String thumb;
     private List<RelatedItem> relatedArticles;
 
     public Headline() {
         relatedArticles = new ArrayList<>();
-    }
-
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {

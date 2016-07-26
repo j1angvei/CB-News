@@ -8,11 +8,13 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.converter.ArticleConverter;
+import cn.j1angvei.cnbetareader.converter.BookmarkConverter;
 import cn.j1angvei.cnbetareader.converter.ContentConverter;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
@@ -44,7 +46,6 @@ public class DataModule {
         return new ReviewConverter(gson, url);
     }
 
-
     @Provides
     @Singleton
     @Named("c_headline")
@@ -68,6 +69,13 @@ public class DataModule {
 
     @Provides
     @Singleton
+    @Named("c_bookmark")
+    Converter<Bookmark> provideBookmarkConverter(Gson gson, String baseUrl) {
+        return new BookmarkConverter(gson, baseUrl);
+    }
+
+    @Provides
+    @Singleton
     @Named("l_article")
     NewsLocalSource<Article> provideArticleNewsLocalSource(Application application) {
         return new NewsLocalSource<>(application);
@@ -84,6 +92,13 @@ public class DataModule {
     @Singleton
     @Named("l_headline")
     NewsLocalSource<Headline> provideHeadlineNewsLocalSource(Application application) {
+        return new NewsLocalSource<>(application);
+    }
+
+    @Provides
+    @Singleton
+    @Named("l_bookmark")
+    NewsLocalSource<Bookmark> provideBookmarkLocalSource(Application application) {
         return new NewsLocalSource<>(application);
     }
 
@@ -110,6 +125,13 @@ public class DataModule {
 
     @Provides
     @Singleton
+    @Named("r_bookmark")
+    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CnbetaApi api, @Named("c_bookmark") Converter<Bookmark> converter) {
+        return new NewsRemoteSource<>(api, converter);
+    }
+
+    @Provides
+    @Singleton
     @Named("d_article")
     NewsRepository<Article> provideArticleRepository(@Named("l_article") NewsLocalSource<Article> local, @Named("r_article") NewsRemoteSource<Article> remote) {
         return new NewsRepository<>(local, remote);
@@ -126,6 +148,13 @@ public class DataModule {
     @Singleton
     @Named("d_headline")
     NewsRepository<Headline> provideHeadlineRepository(@Named("l_headline") NewsLocalSource<Headline> local, @Named("r_headline") NewsRemoteSource<Headline> remote) {
+        return new NewsRepository<>(local, remote);
+    }
+
+    @Provides
+    @Singleton
+    @Named("d_bookmark")
+    NewsRepository<Bookmark> provideNewsRepository(@Named("l_bookmark") NewsLocalSource<Bookmark> local, @Named("r_bookmark") NewsRemoteSource<Bookmark> remote) {
         return new NewsRepository<>(local, remote);
     }
 

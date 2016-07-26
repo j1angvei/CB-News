@@ -1,13 +1,16 @@
 package cn.j1angvei.cnbetareader.bean;
 
-import java.sql.Date;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 
 /**
  * Created by Wayne on 2016/7/24.
  */
 public final class Bookmark {
     private String title;
-    private String sid;
+    @SerializedName("sid")
+    private String id;
     private Date time;
 
     public String getTitle() {
@@ -18,12 +21,12 @@ public final class Bookmark {
         this.title = title;
     }
 
-    public String getSid() {
-        return sid;
+    public String getId() {
+        return id;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Date getTime() {

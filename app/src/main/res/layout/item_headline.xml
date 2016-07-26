@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/tv_headline_description"
-            style="@style/CBTheme.TextView.Content.Headline"
+            style="@style/CBTheme.TextView.Summary.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_headline_title"

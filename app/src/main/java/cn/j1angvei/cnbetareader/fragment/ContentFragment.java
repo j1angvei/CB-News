@@ -50,7 +50,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     ProgressBar mProgressBar;
     private String mSid;
 
-
     public static ContentFragment newInstance(String sid) {
         ContentFragment fragment = new ContentFragment();
         Bundle args = new Bundle();
@@ -71,7 +70,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
-        mProgressBar = (ProgressBar) getActivity().findViewById(R.id.pb_content);
+        mProgressBar = (ProgressBar) getActivity().findViewById(R.id.progress_bar);
         ButterKnife.bind(this, view);
         //webView
         WebSettings settings = wvDetail.getSettings();
@@ -89,12 +88,12 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Override
     public void showLoading() {
-
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override

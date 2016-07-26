@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.ToastUtil;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/13.
@@ -51,7 +51,7 @@ public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHo
         holder.ivThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShortToast("to topic in future", mActivity);
+                MessageUtil.shortToast("to topic in future", mActivity);
             }
         });
         holder.tvName.setText(topic.getTitle());
@@ -66,10 +66,10 @@ public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHo
 //                    public boolean onMenuItemClick(MenuItem item) {
 //                        switch (item.getItemId()) {
 //                            case R.id.action_topic_add_to_my_topics:
-//                                ToastUtil.showShortToast("add to my topic", mActivity);
+//                                MessageUtil.shortToast("add to my topic", mActivity);
 //                                return true;
 //                            case R.id.action_topic_open_topic_articles:
-//                                ToastUtil.showShortToast("open topic articles", mActivity);
+//                                MessageUtil.shortToast("open topic articles", mActivity);
 //                                return true;
 //                        }
 //                        return false;

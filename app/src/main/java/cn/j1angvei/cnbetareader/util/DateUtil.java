@@ -34,6 +34,10 @@ public final class DateUtil {
         return sdf.parse(dateString);
     }
 
+    public static Date currentDate() {
+        return new Date();
+    }
+
     public enum DateFormatType {
         CNBETA("yyyy-MM-dd HH:mm:ss"),
         SHORT("yyyy-MM-dd");

@@ -7,10 +7,7 @@ import java.util.Date;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Article {
-    @SerializedName("sid")
-    String id;
-    String title;
+public final class Article extends News {
     private String topic;
     @SerializedName("hometext")
     private String summary;
@@ -22,22 +19,6 @@ public final class Article {
     private Date time;
     private String thumb;
     private String source;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getTopic() {
         return topic;
@@ -98,8 +79,8 @@ public final class Article {
     @Override
     public String toString() {
         return "Article{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
+                "sid='" + getSid() + '\'' +
+                ", title='" + getTitle() + '\'' +
                 ", topic='" + topic + '\'' +
                 ", summary='" + summary + '\'' +
                 ", commentNum='" + commentNum + '\'' +
