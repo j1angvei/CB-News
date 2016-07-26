@@ -33,7 +33,7 @@ public class ContentConverter implements Converter<Content> {
         Document doc = Jsoup.parse(html, mBaseUrl);
         //parse title
         String title = doc.getElementById("news_title").text();
-        content.setTitle(StringUtil.removeAllBlanks(title));
+        content.setTitle(StringUtil.removeBlanks(title));
         //parse date
         String dateString = doc.getElementsByClass("date").first().text();
         try {
@@ -47,7 +47,7 @@ public class ContentConverter implements Converter<Content> {
         content.setSource(where);
         //parse introduction
         String introduction = doc.select(".introduction > p").text();
-        content.setSummary(StringUtil.removeAllBlanks(introduction));
+        content.setSummary(StringUtil.removeBlanks(introduction));
         //parse detail
         Element elementContent = doc.getElementsByClass("content").first();
         //convert relative url to absolute url
@@ -55,7 +55,7 @@ public class ContentConverter implements Converter<Content> {
             e.attr("href", e.absUrl("href"));
         }
         String detail = elementContent.html();
-        content.setDetail(detail);
+        content.setDetail(StringUtil.cleanParagraphs(detail));
         //parse sid, sn and token
         Pattern pattern;
         Matcher matcher;

@@ -67,7 +67,7 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_fragment_explore, menu);
+        inflater.inflate(R.menu.fragment_explore, menu);
         MenuItem item = menu.findItem(R.id.menu_spinner);
         mSpinner = (Spinner) item.getActionView();
         setupViewInMenu();
@@ -144,8 +144,11 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
 
     private void setupViewInMenu() {
         //spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.alphabet_caps, R.layout.item_spinner_letter);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Character> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item);
+        for (int i = 0; i < 26; i++) {
+            adapter.add((char) ('A' + i));
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setSelection(mPage - 1);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

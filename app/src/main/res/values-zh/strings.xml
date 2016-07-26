@@ -13,4 +13,10 @@
     <string name="nav_top_comments">热门评论</string>
     <string name="ph_news_content_header">发表时间： %1$s\t  稿源： %2$s</string>
     <string name="ph_bookmark_time" translatable="false">收藏于 %1$s</string>
+    <string name="menu_mini_card">迷你卡片</string>
+    <string name="menu_add_comment">添加评论</string>
+    <string name="menu_all_comments">所有评论</string>
+    <string name="menu_bookmark_this_article">收藏</string>
+    <string name="menu_share_this_article">分享</string>
+    <string name="title_activity_content">文章内容</string>
 </resources>

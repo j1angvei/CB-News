@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,9 @@ public class ContentActivity extends BaseActivity {
     private int mInitPos;
     private List<String> allSid;
 
+    @BindView(R.id.appbar_layout)
+    AppBarLayout mAppBarLayout;
+
     @Override
     protected void parseIntent() {
         mInitPos = getIntent().getIntExtra(NEWS_POSITION, 0);
@@ -58,6 +62,7 @@ public class ContentActivity extends BaseActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(R.string.title_activity_content);
         //viewpager
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mInitPos);

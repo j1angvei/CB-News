@@ -50,7 +50,7 @@ public class HeadlineConverter extends NewsConverter<Headline> {
         headline.setSid(raw.getFromId());
         headline.setTitle(Html.fromHtml(raw.getTitle()).toString());
         String content = Html.fromHtml(raw.getDescription()).toString();
-        headline.setContent(StringUtil.removeAllBlanks(content));
+        headline.setContent(StringUtil.removeBlanks(content));
 
         ArrayList<RelatedItem> items = new ArrayList<>();
         for (String relation : raw.getRelatedArticles()) {

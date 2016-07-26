@@ -13,6 +13,6 @@
         android:checked="false"
         android:icon="@drawable/ic_mini_cards_white"
         android:orderInCategory="999"
-        android:title="Mini card"
+        android:title="@string/menu_mini_card"
         app:showAsAction="never"/>
 </menu>

@@ -3,9 +3,15 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -26,6 +32,7 @@ import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.ContentPresenter;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.view.ContentView;
 
 /**
@@ -46,7 +53,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Inject
     ContentPresenter mPresenter;
-
     ProgressBar mProgressBar;
     private String mSid;
 
@@ -61,15 +67,16 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
         mSid = getArguments().getString(NEWS_ID);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
+        setHasOptionsMenu(true);
         mProgressBar = (ProgressBar) getActivity().findViewById(R.id.progress_bar);
         ButterKnife.bind(this, view);
         //webView
@@ -77,6 +84,31 @@ public class ContentFragment extends BaseFragment implements ContentView {
         settings.setLoadsImagesAutomatically(true);
         wvDetail.setWebChromeClient(new WebChromeClient());
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_content, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_content_add_comment:
+                MessageUtil.shortToast("add comment", getActivity());
+                return true;
+            case R.id.menu_content_all_comments:
+                MessageUtil.shortToast("all comment", getActivity());
+                return true;
+            case R.id.menu_content_bookmark:
+                MessageUtil.shortToast("bookmark", getActivity());
+                return true;
+            case R.id.menu_content_share:
+                MessageUtil.shortToast("share", getActivity());
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -115,7 +147,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Override
     public void clearItems() {
-
     }
 
     @Override
