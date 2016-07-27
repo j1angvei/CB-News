@@ -9,8 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -76,10 +74,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
         ButterKnife.bind(this, view);
-        //webView
-        WebSettings settings = wvDetail.getSettings();
-        settings.setLoadsImagesAutomatically(true);
-        wvDetail.setWebChromeClient(new WebChromeClient());
         return view;
     }
 

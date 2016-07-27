@@ -25,6 +25,7 @@
     <string name="menu_bookmark_this_article">Bookmark this</string>
     <string name="menu_share_this_article">Share this</string>
     <!--scroll behavior-->
-    <string name="behavior_fab">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
-    <string name="behavior_appbar_layout">cn.j1angvei.cnbetareader.animation.AppBarLayoutNotEmptyBehavior</string>
+    <string name="behavior_fab" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior</string>
+    <string name="behavior_fab_up_down" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
+    <string name="behavior_appbar_layout" translatable="false">cn.j1angvei.cnbetareader.animation.AppBarLayoutNotEmptyBehavior</string>
 </resources>

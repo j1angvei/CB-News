@@ -11,14 +11,14 @@ import android.view.View;
 /**
  * Created by Wayne on 2016/7/26.
  */
-public class AppBarLayoutNotEmptyBehavior extends AppBarLayout.Behavior {
+public class AppBarLayoutScrollableBehavior extends AppBarLayout.Behavior {
     private boolean isNestedScrollViewScrollable = false;
     private AppBarLayout mAppBarLayout;
 
-    public AppBarLayoutNotEmptyBehavior() {
+    public AppBarLayoutScrollableBehavior() {
     }
 
-    public AppBarLayoutNotEmptyBehavior(Context context, AttributeSet attrs) {
+    public AppBarLayoutScrollableBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -50,6 +50,5 @@ public class AppBarLayoutNotEmptyBehavior extends AppBarLayout.Behavior {
                 mAppBarLayout.setExpanded(true, true);
             }
         }
-
     }
 }

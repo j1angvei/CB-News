@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">cnBeta资讯</string>
+    <string name="app_name">cnBeta新闻</string>
     <string name="ph_review_location">%1$s 网友 评论于</string>
     <string name="nav_bookmarks">我的收藏</string>
     <string name="nav_exit">退出</string>
