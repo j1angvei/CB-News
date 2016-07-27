@@ -13,16 +13,13 @@
         style="@style/CBTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/behavior_appbar_layout"
-        >
+        app:layout_behavior="@string/behavior_appbar_layout">
 
         <include layout="@layout/include_toolbar"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/include_viewpager"/>
-
-    <include layout="@layout/include_progress_bar"/>
 
     <include layout="@layout/include_fab"/>
 

@@ -44,10 +44,8 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
     ExploreRvAdapter mAdapter;
     @Inject
     ExplorePresenter mPresenter;
-
-    private int mPage;
-
     Spinner mSpinner;
+    private int mPage;
 
     public static ExploreFragment newInstance(int page) {
         ExploreFragment fragment = new ExploreFragment();

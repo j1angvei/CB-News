@@ -36,7 +36,6 @@ import cn.j1angvei.cnbetareader.view.ContentView;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
-    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -48,10 +47,12 @@ public class ContentFragment extends BaseFragment implements ContentView {
     ImageView ivThumb;
     @BindView(R.id.wv_content_detail)
     WebView wvDetail;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     @Inject
     ContentPresenter mPresenter;
-    ProgressBar mProgressBar;
+
     private String mSid;
 
     public static ContentFragment newInstance(String sid) {
@@ -70,12 +71,10 @@ public class ContentFragment extends BaseFragment implements ContentView {
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
-        mProgressBar = (ProgressBar) getActivity().findViewById(R.id.progress_bar);
         ButterKnife.bind(this, view);
         //webView
         WebSettings settings = wvDetail.getSettings();
