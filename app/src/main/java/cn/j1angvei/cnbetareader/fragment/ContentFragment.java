@@ -1,6 +1,8 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,7 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -74,7 +78,21 @@ public class ContentFragment extends BaseFragment implements ContentView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
         ButterKnife.bind(this, view);
+        setupWebView();
         return view;
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void setupWebView() {
+        wvDetail.setWebViewClient(new WebViewClient());
+        WebSettings settings = wvDetail.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setLoadsImagesAutomatically(true);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        if (Build.VERSION.SDK_INT >= 19) {
+            settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+        }
     }
 
     @Override
@@ -144,4 +162,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     protected void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
+
+
 }

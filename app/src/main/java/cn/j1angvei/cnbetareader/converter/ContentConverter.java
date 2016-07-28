@@ -54,8 +54,17 @@ public class ContentConverter implements Converter<Content> {
         for (Element e : elementContent.select("a[href]")) {
             e.attr("href", e.absUrl("href"));
         }
+        //add attr to img tag
+        for (Element e : elementContent.getElementsByTag("img")) {
+            e.attr("width", "100%");
+        }
+        //modify attr of embed
+        for (Element e : elementContent.getElementsByTag("embed")) {
+            e.attr("width", "100%");
+            e.removeAttr("height");
+        }
         String detail = elementContent.html();
-        content.setDetail(StringUtil.cleanParagraphs(detail));
+        content.setDetail(StringUtil.removeTailingBlanks(detail));
         //parse sid, sn and token
         Pattern pattern;
         Matcher matcher;

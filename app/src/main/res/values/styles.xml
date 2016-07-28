@@ -45,8 +45,9 @@
 
     <style name="CBTheme.TextView.Title.Content">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
     </style>
 
     <style name="CBTheme.TextView.Summary"/>
