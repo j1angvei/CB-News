@@ -61,8 +61,8 @@ public class ContentActivity extends BaseActivity {
         actionBar.setTitle(R.string.title_activity_content);
         //viewpager
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setCurrentItem(mInitPos);
-
     }
 
     @Override

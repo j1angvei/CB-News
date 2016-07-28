@@ -8,7 +8,7 @@ import rx.Observable;
 public interface Repository<T> {
     Observable<T> get(int page, String... str);
 
-    void save(T item);
+    void toDisk(T item);
 
-    void cache(T item);
+    void toRAM(T item);
 }

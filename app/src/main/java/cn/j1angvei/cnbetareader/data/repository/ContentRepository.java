@@ -29,18 +29,18 @@ public class ContentRepository implements Repository<Content> {
                 .doOnNext(new Action1<Content>() {
                     @Override
                     public void call(Content content) {
-                        //to cache or save to local disk
+                        //to toRAM or toDisk to local disk
                     }
                 });
     }
 
     @Override
-    public void save(Content item) {
+    public void toDisk(Content item) {
 
     }
 
     @Override
-    public void cache(Content item) {
+    public void toRAM(Content item) {
 
     }
 }

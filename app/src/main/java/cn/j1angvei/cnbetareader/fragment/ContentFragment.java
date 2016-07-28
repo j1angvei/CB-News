@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,13 +34,13 @@ import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.ContentPresenter;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 import cn.j1angvei.cnbetareader.view.ContentView;
 
 /**
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
-    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -54,10 +54,12 @@ public class ContentFragment extends BaseFragment implements ContentView {
     WebView wvDetail;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
+    FloatingActionButton mFab;
 
     @Inject
     ContentPresenter mPresenter;
 
+    private Content mContent;
     private String mSid;
 
     public static ContentFragment newInstance(String sid) {
@@ -82,6 +84,13 @@ public class ContentFragment extends BaseFragment implements ContentView {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
         ButterKnife.bind(this, view);
         setupWebView();
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
+            }
+        });
         return view;
     }
 
@@ -144,6 +153,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Override
     public void renderItem(Content item) {
+        mContent = item;
         //title
         tvTitle.setText(item.getTitle());
         //header
@@ -157,7 +167,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
         //detail
         String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
         wvDetail.loadData(detail, "text/html;charset=utf-8", "utf-8");
-        Log.d(TAG, "renderItem: TAG" + detail);
+
     }
 
     @Override

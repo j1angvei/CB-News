@@ -9,12 +9,14 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
+import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.converter.ArticleConverter;
 import cn.j1angvei.cnbetareader.converter.BookmarkConverter;
+import cn.j1angvei.cnbetareader.converter.CommentsConverter;
 import cn.j1angvei.cnbetareader.converter.ContentConverter;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
@@ -72,6 +74,13 @@ public class DataModule {
     @Named("c_bookmark")
     Converter<Bookmark> provideBookmarkConverter(Gson gson, String baseUrl) {
         return new BookmarkConverter(gson, baseUrl);
+    }
+
+    @Provides
+    @Singleton
+    @Named("c_comments")
+    Converter<Comments> providesCommentsConverter(Gson gson) {
+        return new CommentsConverter(gson);
     }
 
     @Provides

@@ -29,18 +29,18 @@ public class MyTopicsRepository implements Repository<Article> {
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {
-                        // add to cache
+                        // add to toRAM
                     }
                 });
     }
 
     @Override
-    public void save(Article item) {
+    public void toDisk(Article item) {
 
     }
 
     @Override
-    public void cache(Article item) {
+    public void toRAM(Article item) {
 
     }
 }

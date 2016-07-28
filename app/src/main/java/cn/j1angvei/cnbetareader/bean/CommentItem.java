@@ -2,6 +2,9 @@ package cn.j1angvei.cnbetareader.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
+
 /**
  * Created by Wayne on 2016/6/13.
  */
@@ -12,12 +15,12 @@ public final class CommentItem {
     private String referenceId;
     @SerializedName("sid")
     private String articleId;
-    private String date;
+    private Date date;
     @SerializedName("name")
     private String username;
     @SerializedName("icon")
     private String headPhoto;
-    @SerializedName("hostName")
+    @SerializedName("host_name")
     private String location;
     @SerializedName("comment")
     private String content;
@@ -50,11 +53,11 @@ public final class CommentItem {
         this.articleId = articleId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

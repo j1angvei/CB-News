@@ -29,7 +29,7 @@ public interface CnbetaApi {
 
     @FormUrlEncoded
     @POST("/cmt")
-    Observable<ResponseBody> getArticleComment(@Field("csrf_token") String token, @Field("op") String op);
+    Observable<ResponseBody> getArticleComment(@Field("csrf_token") String token, @Field("op") String op);//OP format, "1,sid,sn"
 
 
 }

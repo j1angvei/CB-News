@@ -40,7 +40,8 @@ public final class DateUtil {
 
     public enum DateFormatType {
         CNBETA("yyyy-MM-dd HH:mm:ss"),
-        SHORT("yyyy-MM-dd");
+        MEDIUM("yyyy-MM-dd"),
+        SHORT("MM-dd");
         private String type;
 
         DateFormatType(String type) {

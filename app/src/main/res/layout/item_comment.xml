@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CBTheme.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_org_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/in_comment_org_header"
+            layout="@layout/include_comment_header"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/in_comment_org_header"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_comment_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="User photo"
+                android:paddingTop="4dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/fake_topic_album"/>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_comment_ref"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_comment_ref"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <include
+                        android:id="@+id/in_comment_ref_header"
+                        layout="@layout/include_comment_header"/>
+
+                    <TextView
+                        android:id="@+id/tv_comment_ref_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reference comment"/>
+
+                    <include
+                        android:id="@+id/in_comment_ref_action"
+                        layout="@layout/include_comment_action"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_comment_org_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Original comment"/>
+
+                <include
+                    android:id="@+id/in_org_comment_action"
+                    layout="@layout/include_comment_action"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

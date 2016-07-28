@@ -2,6 +2,10 @@ package cn.j1angvei.cnbetareader.data.remote;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.converter.Converter;
 import okhttp3.ResponseBody;
@@ -11,8 +15,10 @@ import rx.functions.Func1;
 /**
  * Created by Wayne on 2016/7/23.
  */
+@Singleton
 public class CommentsRemoteSource extends RemoteSource<Comments> {
-    public CommentsRemoteSource(CnbetaApi api, Converter<Comments> converter) {
+    @Inject
+    public CommentsRemoteSource(CnbetaApi api, @Named("c_comments") Converter<Comments> converter) {
         super(api, converter);
     }
 

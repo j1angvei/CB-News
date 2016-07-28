@@ -9,4 +9,9 @@
     <color name="textSecondary">#8A000000</color>
     <color name="textHint">#61000000</color>
     <color name="dividers">#1F000000</color>
+
+    <!--color in comment-->
+    <color name="bgCommentRef">#FFFFEE</color>
+    <color name="bgCommentRefBorder">#999999</color>
+    <color name="numberComment">#CC004A</color>
 </resources>

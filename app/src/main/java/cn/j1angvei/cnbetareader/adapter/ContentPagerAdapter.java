@@ -18,8 +18,6 @@ import cn.j1angvei.cnbetareader.fragment.ContentFragment;
  */
 @PerActivity
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
-    private static final String TAG = "ContentPagerAdapter";
-
     private ContentActivity mActivity;
     private List<String> allSid;
 

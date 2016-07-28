@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.di.component;
 
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.NestedTopicsFragment;
@@ -18,4 +19,6 @@ public interface FragmentComponent {
     void inject(NestedTopicsFragment fragment);
 
     void inject(ContentFragment fragment);
+
+    void inject(CommentsFragment fragment);
 }

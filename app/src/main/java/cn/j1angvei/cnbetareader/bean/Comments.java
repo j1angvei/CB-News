@@ -10,10 +10,10 @@ import java.util.Map;
  */
 public final class Comments {
     private String token;
-    private boolean open;
+    private boolean open;//see if comments are closed, true if open
     private String sid;
-    private String joinNum;
-    private String commentNum;
+    private String joinNum;//available comments, some are deleted
+    private String commentNum;//all comments
     private String page;
 
     private List<String> hotIds;

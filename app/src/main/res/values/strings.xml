@@ -14,7 +14,7 @@
     <string name="nav_exit">Exit</string>
     <string name="topic_thumb" translatable="false">Topic thumb</string>
     <!--news content-->
-    <string name="ph_news_content_header">Pubtime: %1$s\t Source: %2$s </string>
+    <string name="ph_news_content_header">Pubtime: %1$s    Source: %2$s </string>
     <string name="ph_news_content_detail" translatable="false"><![CDATA[<html><head><meta name="viewport" content="width=device-width,user-scalable=no"></head><body style="text-align:justify">%1$s</body></html>]]></string>
     <string name="ph_bookmark_time">Bookmarked at %1$s</string>
     <string name="title_activity_content">Article Content</string>
@@ -28,4 +28,11 @@
     <string name="behavior_fab" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior</string>
     <string name="behavior_fab_up_down" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
     <string name="behavior_appbar_layout" translatable="false">cn.j1angvei.cnbetareader.animation.AppBarLayoutScrollableBehavior</string>
+    <!--comment-->
+    <string name="cmt_header">%1$s from %2$s</string>
+    <string name="cmt_action_down_vote">Agree(%1$s)</string>
+    <string name="cmt_action_up_vote">Against(%1$s)</string>
+    <string name="title_activity_comments">Comments</string>
+
+
 </resources>

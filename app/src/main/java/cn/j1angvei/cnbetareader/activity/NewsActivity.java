@@ -66,7 +66,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         //navigation view
         mNavigationView.setNavigationItemSelectedListener(this);
         //add init fragment
-        mFragmentManager.beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance("all"), "all").commit();
+        String tag = Source.LATEST_NEWS.getValue();
+        mFragmentManager.beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance(tag), tag).commit();
         setTitle(R.string.nav_latest_news);
     }
 

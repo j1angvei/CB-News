@@ -24,18 +24,18 @@ public class NewsRepository<T> implements Repository<T> {
                 .doOnNext(new Action1<T>() {
                     @Override
                     public void call(T t) {
-                        //save to cache
+                        //toDisk to toRAM
                     }
                 });
     }
 
     @Override
-    public void save(T item) {
+    public void toDisk(T item) {
 
     }
 
     @Override
-    public void cache(T item) {
+    public void toRAM(T item) {
 
     }
 }

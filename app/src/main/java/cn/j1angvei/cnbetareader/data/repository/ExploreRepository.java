@@ -28,12 +28,12 @@ public class ExploreRepository implements Repository<Topic> {
     }
 
     @Override
-    public void save(Topic item) {
+    public void toDisk(Topic item) {
 
     }
 
     @Override
-    public void cache(Topic item) {
+    public void toRAM(Topic item) {
 
     }
 }
