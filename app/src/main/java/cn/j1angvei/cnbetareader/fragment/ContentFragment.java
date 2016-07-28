@@ -5,12 +5,14 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,6 +40,7 @@ import cn.j1angvei.cnbetareader.view.ContentView;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
+    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -84,7 +87,9 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
+        //need to implement WebViewClient later to deal with link in WebView
         wvDetail.setWebViewClient(new WebViewClient());
+        wvDetail.setWebChromeClient(new WebChromeClient());
         WebSettings settings = wvDetail.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadsImagesAutomatically(true);
@@ -152,6 +157,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
         //detail
         String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
         wvDetail.loadData(detail, "text/html;charset=utf-8", "utf-8");
+        Log.d(TAG, "renderItem: TAG" + detail);
     }
 
     @Override

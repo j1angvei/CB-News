@@ -54,15 +54,9 @@ public class ContentConverter implements Converter<Content> {
         for (Element e : elementContent.select("a[href]")) {
             e.attr("href", e.absUrl("href"));
         }
-        //add attr to img tag
-        for (Element e : elementContent.getElementsByTag("img")) {
-            e.attr("width", "100%");
-        }
-        //modify attr of embed
-        for (Element e : elementContent.getElementsByTag("embed")) {
-            e.attr("width", "100%");
-            e.removeAttr("height");
-        }
+        //modify width and height attr in img embed iframe tag.
+        modifyTagsWidth(elementContent, "img", "embed", "iframe");
+
         String detail = elementContent.html();
         content.setDetail(StringUtil.removeTailingBlanks(detail));
         //parse sid, sn and token
@@ -100,6 +94,19 @@ public class ContentConverter implements Converter<Content> {
 //        String src = doc.select(".introduction img").attr("src");
         content.setTopicPhoto(src);
         return content;
+    }
+
+    private void modifyTagsWidth(Element container, String... tags) {
+        for (String tag : tags) {
+            modifyTagWidth(container, tag);
+        }
+    }
+
+    private void modifyTagWidth(Element container, String tag) {
+        for (Element e : container.getElementsByTag(tag)) {
+            e.attr("width", "100%");
+            e.removeAttr("height");
+        }
     }
 
     @Override
