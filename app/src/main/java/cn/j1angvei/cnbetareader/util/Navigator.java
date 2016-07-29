@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import java.util.ArrayList;
 
@@ -40,5 +41,16 @@ public final class Navigator {
             context.startActivity(intent);
         }
 
+    }
+
+    public static void toBroswer(String sid, boolean mobileFirst, Context context) {
+        if (context != null) {
+            String pc = "http://www.cnbeta.com/articles/SID.htm";
+            String mobile = "http://m.cnbeta.com/view/SID.htm";
+            String url = mobileFirst ? mobile.replace("SID", sid) : pc.replace("SID", sid);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
+        }
     }
 }

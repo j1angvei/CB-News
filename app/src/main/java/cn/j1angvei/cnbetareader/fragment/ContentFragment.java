@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +41,7 @@ import cn.j1angvei.cnbetareader.view.ContentView;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
+    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -54,7 +55,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     WebView wvDetail;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-    FloatingActionButton mFab;
 
     @Inject
     ContentPresenter mPresenter;
@@ -78,19 +78,13 @@ public class ContentFragment extends BaseFragment implements ContentView {
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_content, container, false);
         ButterKnife.bind(this, view);
         setupWebView();
-        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
-            }
-        });
         return view;
     }
 
@@ -111,24 +105,27 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_content, menu);
+        inflater.inflate(R.menu.menu_fragment_content, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_content_add_comment:
-                MessageUtil.shortToast("add comment", getActivity());
+            case R.id.menu_content_to_comments:
+                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
                 return true;
-            case R.id.menu_content_all_comments:
-                MessageUtil.shortToast("all comment", getActivity());
+            case R.id.menu_content_share:
+                MessageUtil.shortToast("share", getActivity());
                 return true;
             case R.id.menu_content_bookmark:
                 MessageUtil.shortToast("bookmark", getActivity());
                 return true;
-            case R.id.menu_content_share:
-                MessageUtil.shortToast("share", getActivity());
+            case R.id.menu_content_open_mobile:
+                Navigator.toBroswer(mContent.getSid(), true, getActivity());
+                return true;
+            case R.id.menu_content_open_pc:
+                Navigator.toBroswer(mContent.getSid(), false, getActivity());
                 return true;
         }
         return false;
@@ -139,6 +136,11 @@ public class ContentFragment extends BaseFragment implements ContentView {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         mPresenter.retrieveContent(mSid);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
@@ -167,7 +169,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
         //detail
         String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
         wvDetail.loadData(detail, "text/html;charset=utf-8", "utf-8");
-
     }
 
     @Override
@@ -178,6 +179,5 @@ public class ContentFragment extends BaseFragment implements ContentView {
     protected void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
-
 
 }

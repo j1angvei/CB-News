@@ -65,7 +65,7 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_explore, menu);
+        inflater.inflate(R.menu.menu_fragment_explore, menu);
         MenuItem item = menu.findItem(R.id.menu_spinner);
         mSpinner = (Spinner) item.getActionView();
         setupViewInMenu();

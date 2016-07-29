@@ -73,7 +73,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_news_list, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_news_list, menu);
         return true;
     }
 

@@ -18,6 +18,8 @@
     <string name="ph_news_content_detail" translatable="false"><![CDATA[<html><head><meta name="viewport" content="width=device-width,user-scalable=no"></head><body style="text-align:justify">%1$s</body></html>]]></string>
     <string name="ph_bookmark_time">Bookmarked at %1$s</string>
     <string name="title_activity_content">Article Content</string>
+    <string name="menu_open_in_mobile_site">Open in mobile site</string>
+    <string name="menu_open_in_pc_site">Open in PC site</string>
     <!--bookmarks news-->
     <string name="menu_mini_card">Mini card</string>
     <string name="menu_all_comments">All comments</string>
@@ -33,6 +35,5 @@
     <string name="cmt_action_down_vote">Agree(%1$s)</string>
     <string name="cmt_action_up_vote">Against(%1$s)</string>
     <string name="title_activity_comments">Comments</string>
-
 
 </resources>

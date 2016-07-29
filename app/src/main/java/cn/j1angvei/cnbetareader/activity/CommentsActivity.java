@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import javax.inject.Inject;
@@ -70,5 +71,16 @@ public class CommentsActivity extends BaseActivity {
         });
         //load fragment
         mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(mCsrfToken, mOp)).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

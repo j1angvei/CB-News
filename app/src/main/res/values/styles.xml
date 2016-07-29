@@ -131,5 +131,9 @@
     <style name="CBTheme.ImageView"/>
     <!--ProgressBar style-->
     <style name="CBTheme.ProgressBar"/>
+    <!--Button style-->
+    <style name="CBTheme.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
 
 </resources>

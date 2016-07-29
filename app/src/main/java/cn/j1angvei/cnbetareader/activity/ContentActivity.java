@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -61,7 +62,12 @@ public class ContentActivity extends BaseActivity {
         actionBar.setTitle(R.string.title_activity_content);
         //viewpager
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+        });
         mViewPager.setCurrentItem(mInitPos);
     }
 
