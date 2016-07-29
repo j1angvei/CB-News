@@ -1,9 +1,12 @@
 package cn.j1angvei.cnbetareader.converter;
 
 
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Tag;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -20,6 +23,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 public class ContentConverter implements Converter<Content> {
+    private static final String TAG = "ContentConverter";
     private final String mBaseUrl;
 
     public ContentConverter(String baseUrl) {
@@ -50,15 +54,25 @@ public class ContentConverter implements Converter<Content> {
         content.setSummary(StringUtil.removeBlanks(introduction));
         //parse detail
         Element elementContent = doc.getElementsByClass("content").first();
+        Log.d(TAG, "to: elementContent before " + elementContent.outerHtml());
         //convert relative url to absolute url
         for (Element e : elementContent.select("a[href]")) {
             e.attr("href", e.absUrl("href"));
         }
-        //modify width and height attr in img embed iframe tag.
-        modifyTagsWidth(elementContent, "img", "embed", "iframe");
-
-        String detail = elementContent.html();
-        content.setDetail(StringUtil.removeTailingBlanks(detail));
+        //modify width to fit device width
+        elementContent.select("[width]").attr("width", "100%");
+        //remove height
+        elementContent.select("[height]").removeAttr("height");
+        //make image to fit device width
+        elementContent.select("img").attr("width", "100%");
+        //generate new element to wrap content
+        Element container = new Element(Tag.valueOf("html"), "");
+        //viewport makes content adjusts to content width,justify style makes content justify
+        container.html("<head><meta name=\"viewport\" content=\"width=device-width,user-scalable=no\"></head><body style=\"text-align:justify\"></body>");
+        //modify width in javascript to 100%
+        String detail = elementContent.html().replaceAll("\"width\":\"\\d+\"", "\"width\":\"100%\"");
+        container.getElementsByTag("body").first().html(detail);
+        content.setDetail(StringUtil.removeTailingBlanks(container.outerHtml()));
         //parse sid, sn and token
         Pattern pattern;
         Matcher matcher;

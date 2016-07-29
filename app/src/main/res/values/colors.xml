@@ -13,5 +13,5 @@
     <!--color in comment-->
     <color name="bgCommentRef">#FFFFEE</color>
     <color name="bgCommentRefBorder">#999999</color>
-    <color name="numberComment">#CC004A</color>
+    <color name="numberComment">#CC0000</color>
 </resources>

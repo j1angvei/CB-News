@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -88,6 +87,11 @@ public class ContentFragment extends BaseFragment implements ContentView {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         //need to implement WebViewClient later to deal with link in WebView
@@ -139,11 +143,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
     public void showLoading() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
@@ -167,8 +166,8 @@ public class ContentFragment extends BaseFragment implements ContentView {
         //thumb
         Glide.with(getActivity()).load(item.getTopicPhoto()).into(ivThumb);
         //detail
-        String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
-        wvDetail.loadData(detail, "text/html;charset=utf-8", "utf-8");
+//        String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
+        wvDetail.loadData(item.getDetail(), "text/html;charset=utf-8", "utf-8");
     }
 
     @Override

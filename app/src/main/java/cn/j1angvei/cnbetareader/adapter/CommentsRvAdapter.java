@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +50,43 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
-        holder.llContainerRef.setVisibility(View.GONE);
         //header
         String header = String.format(resources.getString(R.string.cmt_header), item.getUsername(), item.getLocation());
         holder.tvHeaderOrg.setText(header);
-        holder.tvTimeOrg.setText(DateUtil.toTime(item.getDate(), context));
+        String timeOrg = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(item.getDate(), context));
+        holder.tvTimeOrg.setText(timeOrg);
         holder.tvContentOrg.setText(item.getContent());
+        //button number color
         String upVoteOrg = String.format(resources.getString(R.string.cmt_action_up_vote), item.getUpVote());
         holder.btnUpVoteOrg.setText(upVoteOrg);
         String downVoteOrg = String.format(resources.getString(R.string.cmt_action_down_vote), item.getDownVote());
         holder.btnDownVoteOrg.setText(downVoteOrg);
+        //if has reference comment, set it
+        String idRef = item.getReferenceId();
+        if (idRef.equals("0")) {
+            holder.llContainerRef.setVisibility(View.GONE);
+        } else {
+            CommentItem refItem = null;
+            for (CommentItem i : mCommentItems) {
+                if (i.getCommentId().equals(idRef)) {
+                    refItem = i;
+                    break;
+                }
+            }
+            if (refItem != null) {
+                holder.llContainerRef.setVisibility(View.VISIBLE);
+                String headerRef = String.format(resources.getString(R.string.cmt_header), refItem.getUsername(), refItem.getLocation());
+                holder.tvHeaderRef.setText(headerRef);
+                String timeRef = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(refItem.getDate(), context));
+                holder.tvTimeRef.setText(timeRef);
+                holder.tvContentRef.setText(refItem.getContent());
+                String upVoteRef = String.format(resources.getString(R.string.cmt_action_up_vote), refItem.getUpVote());
+                holder.btnUpVoteRef.setText(upVoteRef);
+                String downVoteRef = String.format(resources.getString(R.string.cmt_action_down_vote), refItem.getDownVote());
+                holder.btnDownVoteRef.setText(downVoteRef);
+
+            }
+        }
     }
 
     @Override

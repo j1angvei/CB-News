@@ -28,7 +28,7 @@
                 android:contentDescription="User photo"
                 android:paddingTop="4dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/fake_topic_album"/>
+                android:src="@drawable/ic_anonymous"/>
 
             <Space
                 android:layout_width="4dp"
@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="8"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_comment_ref"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <include
                         android:id="@+id/in_comment_ref_header"
