@@ -3,11 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_content_to_comments"
-        android:icon="@drawable/ic_group_comments_white"
-        android:title="@string/menu_all_comments"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/menu_content_share"
         android:icon="@drawable/ic_share_white"
         android:title="@string/menu_share_this_article"
@@ -16,15 +11,15 @@
         android:id="@+id/menu_content_bookmark"
         android:icon="@drawable/ic_star_border_white"
         android:title="@string/menu_bookmark_this_article"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_content_open_mobile"
         android:icon="@drawable/ic_phone_iphone_white_24dp"
         android:title="@string/menu_open_in_mobile_site"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_content_open_pc"
         android:icon="@drawable/ic_laptop_windows_white_24dp"
         android:title="@string/menu_open_in_pc_site"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 </menu>

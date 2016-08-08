@@ -56,13 +56,14 @@ public class CommentsActivity extends BaseActivity {
         setContentView(R.layout.activity_news_comments);
         ButterKnife.bind(this);
         //toolbar
-        //toolbar
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle(R.string.title_activity_comments);
+        //fab
+        mFab.setImageResource(R.drawable.ic_add_white);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

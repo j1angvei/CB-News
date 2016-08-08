@@ -23,12 +23,12 @@
             <ImageView
                 android:id="@+id/iv_comment_photo"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="User photo"
                 android:paddingTop="4dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/ic_anonymous"/>
+                android:src="@drawable/deaves"/>
 
             <Space
                 android:layout_width="4dp"

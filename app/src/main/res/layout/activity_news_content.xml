@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,13 +11,14 @@
         android:id="@+id/appbar_layout"
         style="@style/CBTheme.AppBarOverlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/behavior_appbar_layout">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/include_toolbar_content"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/include_viewpager"/>
+
+    <include layout="@layout/include_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>

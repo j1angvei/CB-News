@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,7 +41,6 @@ import cn.j1angvei.cnbetareader.view.ContentView;
  * Created by Wayne on 2016/7/21.
  */
 public class ContentFragment extends BaseFragment implements ContentView {
-    private static final String TAG = "ContentFragment";
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -57,6 +57,8 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Inject
     ContentPresenter mPresenter;
+
+    FloatingActionButton mFab;
 
     private Content mContent;
     private String mSid;
@@ -90,6 +92,7 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -116,9 +119,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_content_to_comments:
-                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
-                return true;
             case R.id.menu_content_share:
                 MessageUtil.shortToast("share", getActivity());
                 return true;
@@ -154,6 +154,13 @@ public class ContentFragment extends BaseFragment implements ContentView {
 
     @Override
     public void renderItem(Content item) {
+        //set fab jump to comments
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
+            }
+        });
         mContent = item;
         //title
         tvTitle.setText(item.getTitle());

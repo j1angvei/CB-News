@@ -8,6 +8,6 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     app:contentInsetStartWithNavigation="0dp"
-    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+    app:layout_scrollFlags="scroll|enterAlways|snap">
 
 </android.support.v7.widget.Toolbar>

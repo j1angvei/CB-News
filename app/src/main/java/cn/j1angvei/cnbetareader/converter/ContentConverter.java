@@ -1,8 +1,5 @@
 package cn.j1angvei.cnbetareader.converter;
 
-
-import android.util.Log;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +20,6 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 public class ContentConverter implements Converter<Content> {
-    private static final String TAG = "ContentConverter";
     private final String mBaseUrl;
 
     public ContentConverter(String baseUrl) {
@@ -54,7 +50,6 @@ public class ContentConverter implements Converter<Content> {
         content.setSummary(StringUtil.removeBlanks(introduction));
         //parse detail
         Element elementContent = doc.getElementsByClass("content").first();
-        Log.d(TAG, "to: elementContent before " + elementContent.outerHtml());
         //convert relative url to absolute url
         for (Element e : elementContent.select("a[href]")) {
             e.attr("href", e.absUrl("href"));

@@ -28,6 +28,8 @@ public class ContentActivity extends BaseActivity {
     ViewPager mViewPager;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
     @Inject
     ContentPagerAdapter mAdapter;
 
@@ -60,12 +62,15 @@ public class ContentActivity extends BaseActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle(R.string.title_activity_content);
+        //fab
+        mFab.setImageResource(R.drawable.ic_group_comments_white);
         //viewpager
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
+
             }
         });
         mViewPager.setCurrentItem(mInitPos);
