@@ -25,13 +25,15 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
     public ContentPagerAdapter(FragmentManager fm, Activity activity) {
         super(fm);
         mActivity = (ContentActivity) activity;
-        allSid = mActivity.getAllSid();
-
+        allSid = mActivity.getSids();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ContentFragment.newInstance(allSid.get(position));
+        String sid = allSid.get(position);
+        ContentFragment fragment = ContentFragment.newInstance(sid);
+        mActivity.getContent(fragment, sid);
+        return fragment;
     }
 
     @Override

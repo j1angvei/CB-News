@@ -5,7 +5,8 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
-import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 import cn.j1angvei.cnbetareader.view.ContentView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -14,7 +15,8 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/21.
  */
-@PerFragment
+//@PerFragment
+@PerActivity
 public class ContentPresenter implements BasePresenter<ContentView> {
     private final ContentRepository mRepository;
     private ContentView mView;
@@ -29,7 +31,7 @@ public class ContentPresenter implements BasePresenter<ContentView> {
         mView = view;
     }
 
-    public void retrieveContent(String sid) {
+    public void retrieveContent(final ContentFragment fragment, String sid) {
         mView.showLoading();
         mRepository.get(0, sid)
                 .subscribeOn(Schedulers.io())
@@ -47,7 +49,8 @@ public class ContentPresenter implements BasePresenter<ContentView> {
 
                     @Override
                     public void onNext(Content content) {
-                        mView.renderItem(content);
+                        mView.setContent(fragment, content);
+                        mView.saveContent(content);
                     }
                 });
     }

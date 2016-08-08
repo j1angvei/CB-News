@@ -19,6 +19,8 @@
 
     <include layout="@layout/include_viewpager"/>
 
+    <include layout="@layout/include_progress_bar"/>
+
     <include layout="@layout/include_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>

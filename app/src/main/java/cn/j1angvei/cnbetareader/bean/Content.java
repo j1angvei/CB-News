@@ -1,15 +1,17 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Content {
+public final class Content implements Parcelable {
 
     private String title;
     private Date date;
-
     private String source;//where
     private String summary;//introduction
     private String detail;
@@ -103,5 +105,50 @@ public final class Content {
                 ", \ntoken='" + token + '\'' +
                 ", \ntopicPhoto='" + topicPhoto + '\'' +
                 '}';
+    }
+
+    public Content() {
+    }
+
+    private Content(Parcel in) {
+        title = in.readString();
+        date = new Date(in.readLong());
+        source = in.readString();
+        summary = in.readString();
+        detail = in.readString();
+        sid = in.readString();
+        sn = in.readString();
+        token = in.readString();
+        topicPhoto = in.readString();
+    }
+
+    public static final Creator<Content> CREATOR = new Creator<Content>() {
+        @Override
+        public Content createFromParcel(Parcel parcel) {
+            return new Content(parcel);
+        }
+
+        @Override
+        public Content[] newArray(int i) {
+            return new Content[i];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeLong(date.getTime());
+        parcel.writeString(source);
+        parcel.writeString(summary);
+        parcel.writeString(detail);
+        parcel.writeString(summary);
+        parcel.writeString(sn);
+        parcel.writeString(token);
+        parcel.writeString(topicPhoto);
     }
 }

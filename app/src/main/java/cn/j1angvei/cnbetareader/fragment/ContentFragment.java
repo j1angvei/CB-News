@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,10 +16,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 
 import javax.inject.Inject;
 
@@ -35,12 +34,11 @@ import cn.j1angvei.cnbetareader.presenter.ContentPresenter;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
-import cn.j1angvei.cnbetareader.view.ContentView;
 
 /**
  * Created by Wayne on 2016/7/21.
  */
-public class ContentFragment extends BaseFragment implements ContentView {
+public class ContentFragment extends BaseFragment {
     private static final String NEWS_ID = "ContentFragment.news_id";
     @BindView(R.id.tv_content_title)
     TextView tvTitle;
@@ -52,16 +50,10 @@ public class ContentFragment extends BaseFragment implements ContentView {
     ImageView ivThumb;
     @BindView(R.id.wv_content_detail)
     WebView wvDetail;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
 
     @Inject
     ContentPresenter mPresenter;
-
-    FloatingActionButton mFab;
-
     private Content mContent;
-    private String mSid;
 
     public static ContentFragment newInstance(String sid) {
         ContentFragment fragment = new ContentFragment();
@@ -75,10 +67,8 @@ public class ContentFragment extends BaseFragment implements ContentView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mSid = getArguments().getString(NEWS_ID);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
-
 
     @Nullable
     @Override
@@ -87,12 +77,6 @@ public class ContentFragment extends BaseFragment implements ContentView {
         ButterKnife.bind(this, view);
         setupWebView();
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -135,32 +119,32 @@ public class ContentFragment extends BaseFragment implements ContentView {
         return false;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.setView(this);
-        mPresenter.retrieveContent(mSid);
-    }
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        mPresenter.setView(this);
+//        mPresenter.retrieveContent(mSid);
+//    }
 
-    @Override
-    public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void showLoading() {
+//        mProgressBar.setVisibility(View.VISIBLE);
+//    }
+//
+//    @Override
+//    public void hideLoading() {
+//        mProgressBar.setVisibility(View.GONE);
+//    }
 
-    @Override
-    public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
+//    @Override
     public void renderItem(Content item) {
         //set fab jump to comments
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
-            }
-        });
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
+//            }
+//        });
         mContent = item;
         //title
         tvTitle.setText(item.getTitle());
@@ -177,13 +161,28 @@ public class ContentFragment extends BaseFragment implements ContentView {
         wvDetail.loadData(item.getDetail(), "text/html;charset=utf-8", "utf-8");
     }
 
-    @Override
-    public void clearItems() {
-    }
+//    @Override
+//    public void clearItems() {
+//    }
 
     @Override
     protected void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
+
+//    @Override
+//    public List<String> getSids() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void retrieveContent(String sid) {
+//
+//    }
+//
+//    @Override
+//    public void renderContent(ContentFragment fragment, Content content) {
+//
+//    }
 
 }
