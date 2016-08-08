@@ -39,5 +39,9 @@
     <string name="cmt_action_up_vote">Agree (%1$s) </string>
     <string name="cmt_action_down_vote">Against (%1$s) </string>
     <string name="title_activity_comments">Comments</string>
+    <string name="action_comment_reply">Reply</string>
+    <string name="action_comment_report">Report</string>
+    <string name="menu_comment_ordered_by_time">Ordered by time</string>
+    <string name="menu_comment_switch">Popular comments</string>
 
 </resources>

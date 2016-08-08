@@ -3,9 +3,11 @@ package cn.j1angvei.cnbetareader.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -46,7 +49,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
@@ -61,7 +64,13 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         holder.btnUpVoteOrg.setText(upVoteOrg);
         String downVoteOrg = String.format(resources.getString(R.string.cmt_action_down_vote), item.getDownVote());
         holder.btnDownVoteOrg.setText(downVoteOrg);
-        //if has reference comment, set it
+        holder.btnPopupOrg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(holder.btnPopupOrg);
+            }
+        });
+        //if has reference comment, set it visible
         String idRef = item.getReferenceId();
         if (idRef.equals("0")) {
             holder.llContainerRef.setVisibility(View.GONE);
@@ -84,9 +93,35 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 holder.btnUpVoteRef.setText(upVoteRef);
                 String downVoteRef = String.format(resources.getString(R.string.cmt_action_down_vote), refItem.getDownVote());
                 holder.btnDownVoteRef.setText(downVoteRef);
-
+                holder.btnPopupRef.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPopupMenu(holder.btnPopupRef);
+                    }
+                });
             }
         }
+    }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popup = new PopupMenu(mActivity, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_comment_reply:
+                        MessageUtil.shortToast("reply comment", mActivity);
+                        return true;
+                    case R.id.action_comment_report:
+                        MessageUtil.shortToast("report comment", mActivity);
+                        return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
     }
 
     @Override
@@ -134,8 +169,10 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         TextView tvTimeRef;
         Button btnUpVoteOrg;
         Button btnUpVoteRef;
+        Button btnPopupOrg;
         Button btnDownVoteOrg;
         Button btnDownVoteRef;
+        Button btnPopupRef;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -148,9 +185,11 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             //four buttons of org comment
             btnUpVoteOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_up_vote);
             btnDownVoteOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_down_vote);
+            btnPopupOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_popup);
             //four buttons of ref comment
             btnUpVoteRef = (Button) inActionRef.findViewById(R.id.btn_comment_up_vote);
             btnDownVoteRef = (Button) inActionRef.findViewById(R.id.btn_comment_down_vote);
+            btnPopupRef = (Button) inActionRef.findViewById(R.id.btn_comment_popup);
         }
     }
 }

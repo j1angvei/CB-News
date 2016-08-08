@@ -6,6 +6,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,11 +27,12 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class CommentsFragment extends BaseFragment {
     private static final String COMMENTS = "CommentsFragment.comments";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -60,6 +64,7 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mComments = getArguments().getParcelable(COMMENTS);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
@@ -71,16 +76,42 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //refresh content
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        renderItem(mComments);
+        renderComments(mComments);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_comment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_comment_time_order:
+                MessageUtil.shortToast("time order", getActivity());
+                return true;
+            case R.id.menu_comment_switch_comment:
+                MessageUtil.shortToast("popular comment", getActivity());
+                return true;
+            case R.id.menu_comment_mini_card:
+                MessageUtil.shortToast("mini card", getActivity());
+                return true;
+        }
+        return true;
+    }
 
     @Override
     public void onDestroyView() {
@@ -89,7 +120,7 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
     }
 
-    public void renderItem(Comments item) {
+    public void renderComments(Comments item) {
         List<String> all = item.getAllIds();
         List<CommentItem> items = new ArrayList<>();
         for (String id : all) {
@@ -99,9 +130,5 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
         mAdapter.add(items);
     }
 
-    @Override
-    public void onRefresh() {
-        mAdapter.clear();
-    }
 
 }
