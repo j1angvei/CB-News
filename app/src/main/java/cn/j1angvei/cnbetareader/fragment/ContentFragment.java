@@ -119,32 +119,8 @@ public class ContentFragment extends BaseFragment {
         return false;
     }
 
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        mPresenter.setView(this);
-//        mPresenter.retrieveContent(mSid);
-//    }
 
-//    @Override
-//    public void showLoading() {
-//        mProgressBar.setVisibility(View.VISIBLE);
-//    }
-//
-//    @Override
-//    public void hideLoading() {
-//        mProgressBar.setVisibility(View.GONE);
-//    }
-
-//    @Override
     public void renderItem(Content item) {
-        //set fab jump to comments
-//        mFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigator.toComments(mContent.getSid(), mContent.getToken(), mContent.getSn(), getActivity());
-//            }
-//        });
         mContent = item;
         //title
         tvTitle.setText(item.getTitle());
@@ -161,28 +137,9 @@ public class ContentFragment extends BaseFragment {
         wvDetail.loadData(item.getDetail(), "text/html;charset=utf-8", "utf-8");
     }
 
-//    @Override
-//    public void clearItems() {
-//    }
-
     @Override
     protected void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
-
-//    @Override
-//    public List<String> getSids() {
-//        return null;
-//    }
-//
-//    @Override
-//    public void retrieveContent(String sid) {
-//
-//    }
-//
-//    @Override
-//    public void renderContent(ContentFragment fragment, Content content) {
-//
-//    }
 
 }

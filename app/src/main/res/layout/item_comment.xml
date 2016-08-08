@@ -8,7 +8,10 @@
     <RelativeLayout
         android:id="@+id/rl_org_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp">
 
         <include
             android:id="@+id/in_comment_org_header"
@@ -22,11 +25,9 @@
 
             <ImageView
                 android:id="@+id/iv_comment_photo"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="User photo"
-                android:paddingTop="4dp"
                 android:scaleType="fitStart"
                 android:src="@drawable/deaves"/>
 
@@ -35,18 +36,21 @@
                 android:layout_height="match_parent"/>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/ll_comment_ref"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
                     android:background="@drawable/bg_comment_ref"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="4dp"
+                    android:visibility="visible">
 
                     <include
                         android:id="@+id/in_comment_ref_header"
@@ -56,7 +60,8 @@
                         android:id="@+id/tv_comment_ref_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Reference comment"/>
+                        android:text="Reference comment"
+                        android:textSize="@dimen/text_size_small"/>
 
                     <include
                         android:id="@+id/in_comment_ref_action"
@@ -67,7 +72,9 @@
                     android:id="@+id/tv_comment_org_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Original comment"/>
+                    android:text="Original comment"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/text_size_medium"/>
 
                 <include
                     android:id="@+id/in_org_comment_action"

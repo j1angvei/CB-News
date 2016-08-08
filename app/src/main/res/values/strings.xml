@@ -14,8 +14,12 @@
     <string name="nav_quick_entry">Quick entry</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_exit">Exit</string>
-    <string name="topic_thumb" translatable="false">Topic thumb</string>
+    <!--scroll behavior-->
+    <string name="behavior_fab" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior</string>
+    <string name="behavior_fab_up_down" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
+    <string name="behavior_appbar_layout" translatable="false">cn.j1angvei.cnbetareader.animation.AppBarLayoutScrollableBehavior</string>
     <!--news content-->
+    <string name="topic_thumb" translatable="false">Topic thumb</string>
     <string name="ph_news_content_header">Pubtime: %1$s    Source: %2$s </string>
     <string name="ph_news_content_detail" translatable="false"><![CDATA[<html><head><meta name="viewport" content="width=device-width,user-scalable=no"></head><body style="text-align:justify">%1$s</body></html>]]></string>
     <string name="ph_bookmark_time">Bookmarked at %1$s</string>
@@ -28,15 +32,12 @@
     <string name="menu_add_comment">Add comment</string>
     <string name="menu_bookmark_this_article">Bookmark this</string>
     <string name="menu_share_this_article">Share this</string>
-    <!--scroll behavior-->
-    <string name="behavior_fab" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior</string>
-    <string name="behavior_fab_up_down" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
-    <string name="behavior_appbar_layout" translatable="false">cn.j1angvei.cnbetareader.animation.AppBarLayoutScrollableBehavior</string>
+
     <!--comment-->
     <string name="cmt_header">%1$s from %2$s</string>
     <string name="cmt_time">Post at %1$s</string>
-    <string name="cmt_action_up_vote">Agree(%1$s)</string>
-    <string name="cmt_action_down_vote">Against(%1$s)</string>
+    <string name="cmt_action_up_vote">Agree (%1$s) </string>
+    <string name="cmt_action_down_vote">Against (%1$s) </string>
     <string name="title_activity_comments">Comments</string>
 
 </resources>
