@@ -1,6 +1,8 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 
+import android.graphics.Bitmap;
+
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,5 +33,15 @@ public interface CnbetaApi {
     @POST("/cmt")
     Observable<ResponseBody> getArticleComment(@Field("csrf_token") String token, @Field("op") String op);//OP format, "1,sid,sn"
 
+    @FormUrlEncoded
+    @POST("/comment")
+    Observable<ResponseBody> actOnComment(@Field("csrf_token") String token, @Field("op") String op, @Field("sid") String sid, @Field("tid") String tid);// op as "support against report reply"
+
+    @FormUrlEncoded
+    @POST("/comment")
+    Observable<ResponseBody> publishComment(@Field("csrf_token") String token, @Field("op") String op, @Field("content") String content, @Field("seccode") String captcha, @Field("sid") String sid, @Field("pid") String pid);//op as "publish", pid should be '0'
+
+    @GET("/captcha.htm")
+    Observable<Bitmap> getCaptcha(@Query("refresh") String refresh, @Query("csrf_token") String token, @Query("_") long timestamp);
 
 }
