@@ -93,12 +93,12 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
     }
 
     @Override
-    public void renderItem(Article item) {
+    public void renderArticle(Article item) {
         mAdapter.add(item);
     }
 
     @Override
-    public void clearItems() {
+    public void clearArticles() {
         mPage = 1;
         mAdapter.clear();
     }
@@ -110,7 +110,7 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
 
     @Override
     public void onRefresh() {
-        clearItems();
+        clearArticles();
         mPresenter.retrieveMyTopics(mPage++, mTopicId);
 
     }

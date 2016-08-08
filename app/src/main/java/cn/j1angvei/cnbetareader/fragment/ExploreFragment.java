@@ -125,18 +125,18 @@ public class ExploreFragment extends BaseFragment implements ExploreView, SwipeR
     }
 
     @Override
-    public void renderItem(Topic item) {
+    public void renderTopic(Topic item) {
         mAdapter.add(item);
     }
 
     @Override
-    public void clearItems() {
+    public void clearTopics() {
         mAdapter.clear();
     }
 
     @Override
     public void onRefresh() {
-        clearItems();
+        clearTopics();
         mPresenter.retrieveTopics(mPage);
     }
 

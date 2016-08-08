@@ -44,7 +44,7 @@ public class ExplorePresenter implements BasePresenter<ExploreView> {
 
                     @Override
                     public void onNext(Topic topic) {
-                        mView.renderItem(topic);
+                        mView.renderTopic(topic);
                     }
                 });
     }

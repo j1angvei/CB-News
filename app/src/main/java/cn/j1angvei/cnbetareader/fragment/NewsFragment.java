@@ -93,19 +93,19 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
     }
 
     @Override
-    public void renderItem(T item) {
+    public void renderNews(T item) {
         mAdapter.add(item);
     }
 
     @Override
-    public void clearItems() {
+    public void clearNewses() {
         mPage = 1;
         mAdapter.clear();
     }
 
     @Override
     public void onRefresh() {
-        clearItems();
+        clearNewses();
         retrieveItem();
     }
 

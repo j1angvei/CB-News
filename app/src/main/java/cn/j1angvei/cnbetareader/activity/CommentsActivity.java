@@ -6,21 +6,25 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
+import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.view.CommentsView;
 
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsActivity extends BaseActivity {
+public class CommentsActivity extends BaseActivity implements CommentsView {
     public static final String NEWS_SID = "CommentsActivity.news_sid";
     public static final String NEWS_SN = "CommentsActivity.news_sn";
     public static final String NEWS_TOKEN = "CommentsActivity.news_token";
@@ -28,8 +32,13 @@ public class CommentsActivity extends BaseActivity {
     Toolbar mToolbar;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+
     @Inject
     FragmentManager mFragmentManager;
+    @Inject
+    CommentsPresenter mPresenter;
 
     private String mCsrfToken;
     private String mOp;
@@ -53,7 +62,9 @@ public class CommentsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mPresenter.setView(this);
         setContentView(R.layout.activity_news_comments);
+
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
@@ -71,7 +82,7 @@ public class CommentsActivity extends BaseActivity {
             }
         });
         //load fragment
-        mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(mCsrfToken, mOp)).commit();
+        getComments();
     }
 
     @Override
@@ -84,4 +95,29 @@ public class CommentsActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void getComments() {
+        mPresenter.retrieveComments(mCsrfToken, mOp);
+    }
+
+    @Override
+    public void setComments(Comments comments) {
+        if (comments != null) {
+            mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(comments)).commit();
+        } else {
+            MessageUtil.shortToast("comments is null", this);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
 }

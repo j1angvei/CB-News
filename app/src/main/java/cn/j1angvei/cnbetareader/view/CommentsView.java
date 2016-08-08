@@ -5,6 +5,9 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 /**
  * Created by Wayne on 2016/7/28.
  */
-public interface CommentsView extends BaseView<Comments> {
+public interface CommentsView extends BaseView {
+    void getComments();
+
+    void setComments(Comments comments);
 
 }

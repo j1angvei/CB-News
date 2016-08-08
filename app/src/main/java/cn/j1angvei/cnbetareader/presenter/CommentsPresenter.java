@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
-import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import cn.j1angvei.cnbetareader.view.CommentsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -13,7 +13,8 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/28.
  */
-@PerFragment
+//@PerFragment
+@PerActivity
 public class CommentsPresenter implements BasePresenter<CommentsView> {
     private final CommentsRepository mRepository;
     private CommentsView mView;
@@ -46,12 +47,9 @@ public class CommentsPresenter implements BasePresenter<CommentsView> {
 
                     @Override
                     public void onNext(Comments comments) {
-                        mView.renderItem(comments);
+                        mView.setComments(comments);
                     }
                 });
     }
 
-    public void operation() {
-
-    }
 }

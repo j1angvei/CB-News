@@ -123,14 +123,6 @@ public class ContentActivity extends BaseActivity implements ContentView {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void renderItem(Content item) {
-    }
-
-    @Override
-    public void clearItems() {
-
-    }
 
     public List<String> getSids() {
         return mSids;

@@ -1,5 +1,8 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Comments {
+public final class Comments implements Parcelable {
     private String token;
     private boolean open;//see if comments are closed, true if open
     private String sid;
@@ -111,6 +114,49 @@ public final class Comments {
                 ", allIds=" + allIds +
                 ", commentMap=" + commentMap +
                 '}';
+    }
+
+    private Comments(Parcel in) {
+        this();
+        token = in.readString();
+        open = in.readByte() != 0;
+        sid = in.readString();
+        joinNum = in.readString();
+        commentNum = in.readString();
+        page = in.readString();
+        in.readStringList(hotIds);
+        in.readStringList(allIds);
+        in.readMap(commentMap, Comments.class.getClassLoader());
+    }
+
+    public static final Creator<Comments> CREATOR = new Creator<Comments>() {
+        @Override
+        public Comments createFromParcel(Parcel parcel) {
+            return new Comments(parcel);
+        }
+
+        @Override
+        public Comments[] newArray(int i) {
+            return new Comments[i];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(token);
+        parcel.writeByte((byte) (open ? 1 : 0));
+        parcel.writeString(sid);
+        parcel.writeString(joinNum);
+        parcel.writeString(commentNum);
+        parcel.writeString(page);
+        parcel.writeStringList(hotIds);
+        parcel.writeStringList(allIds);
+        parcel.writeMap(commentMap);
     }
 }
 

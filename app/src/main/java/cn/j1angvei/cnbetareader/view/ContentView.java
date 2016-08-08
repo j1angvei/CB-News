@@ -6,7 +6,7 @@ import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 /**
  * Created by Wayne on 2016/7/21.
  */
-public interface ContentView extends BaseView<Content> {
+public interface ContentView extends BaseView {
 
     void getContent(ContentFragment fragment, String sid);
 

@@ -39,7 +39,7 @@ public class NewsPresenter<N> implements BasePresenter<NewsView<N>> {
 
                     @Override
                     public void onNext(N n) {
-                        mView.renderItem(n);
+                        mView.renderNews(n);
                     }
                 });
     }

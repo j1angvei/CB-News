@@ -47,7 +47,7 @@ public class NestedTopicsPresenter implements BasePresenter<NestedTopicsView> {
 
                     @Override
                     public void onNext(Article article) {
-                        mView.renderItem(article);
+                        mView.renderArticle(article);
                     }
                 });
 

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +24,12 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
-import cn.j1angvei.cnbetareader.view.CommentsView;
 
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsFragment extends BaseFragment implements CommentsView, SwipeRefreshLayout.OnRefreshListener {
-    private static final String COMMENTS_TOKEN = "CommentsFragment.comments_token";
-    private static final String COMMENTS_OP = "CommentsFragment.comments_op";
+public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+    private static final String COMMENTS = "CommentsFragment.comments";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -45,14 +42,12 @@ public class CommentsFragment extends BaseFragment implements CommentsView, Swip
     @Inject
     CommentsPresenter mPresenter;
 
-    private String mToken;
-    private String mOp;
+    private Comments mComments;
 
-    public static CommentsFragment newInstance(String token, String op) {
+    public static CommentsFragment newInstance(Comments comments) {
         CommentsFragment fragment = new CommentsFragment();
         Bundle args = new Bundle();
-        args.putString(COMMENTS_TOKEN, token);
-        args.putString(COMMENTS_OP, op);
+        args.putParcelable(COMMENTS, comments);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,14 +55,12 @@ public class CommentsFragment extends BaseFragment implements CommentsView, Swip
     @Override
     protected void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mToken = getArguments().getString(COMMENTS_TOKEN);
-        mOp = getArguments().getString(COMMENTS_OP);
+        mComments = getArguments().getParcelable(COMMENTS);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
@@ -85,9 +78,9 @@ public class CommentsFragment extends BaseFragment implements CommentsView, Swip
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.setView(this);
-        onRefresh();
+        renderItem(mComments);
     }
+
 
     @Override
     public void onDestroyView() {
@@ -96,17 +89,6 @@ public class CommentsFragment extends BaseFragment implements CommentsView, Swip
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
     }
 
-    @Override
-    public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hideLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
     public void renderItem(Comments item) {
         List<String> all = item.getAllIds();
         List<CommentItem> items = new ArrayList<>();
@@ -118,13 +100,8 @@ public class CommentsFragment extends BaseFragment implements CommentsView, Swip
     }
 
     @Override
-    public void clearItems() {
+    public void onRefresh() {
         mAdapter.clear();
     }
 
-    @Override
-    public void onRefresh() {
-        mAdapter.clear();
-        mPresenter.retrieveComments(mToken, mOp);
-    }
 }

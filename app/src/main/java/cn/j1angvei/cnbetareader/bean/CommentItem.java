@@ -1,5 +1,8 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -8,7 +11,7 @@ import java.util.Date;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class CommentItem {
+public final class CommentItem implements Parcelable {
     @SerializedName("tid")
     private String commentId;
     @SerializedName("pid")
@@ -124,4 +127,52 @@ public final class CommentItem {
                 ", downVote='" + downVote + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.commentId);
+        dest.writeString(this.referenceId);
+        dest.writeString(this.articleId);
+        dest.writeLong(this.date != null ? this.date.getTime() : -1);
+        dest.writeString(this.username);
+        dest.writeString(this.headPhoto);
+        dest.writeString(this.location);
+        dest.writeString(this.content);
+        dest.writeString(this.upVote);
+        dest.writeString(this.downVote);
+    }
+
+    public CommentItem() {
+    }
+
+    protected CommentItem(Parcel in) {
+        this.commentId = in.readString();
+        this.referenceId = in.readString();
+        this.articleId = in.readString();
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.username = in.readString();
+        this.headPhoto = in.readString();
+        this.location = in.readString();
+        this.content = in.readString();
+        this.upVote = in.readString();
+        this.downVote = in.readString();
+    }
+
+    public static final Parcelable.Creator<CommentItem> CREATOR = new Parcelable.Creator<CommentItem>() {
+        @Override
+        public CommentItem createFromParcel(Parcel source) {
+            return new CommentItem(source);
+        }
+
+        @Override
+        public CommentItem[] newArray(int size) {
+            return new CommentItem[size];
+        }
+    };
 }
