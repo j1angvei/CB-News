@@ -8,17 +8,9 @@ public final class StringUtil {
         return input.replaceAll("\\s+", "");
     }
 
-    public static String removeSpaces(String input) {
-        return input.replaceAll(" ", "");
-    }
-
     public static String removeTailingBlanks(String input) {
         return input.replaceAll("\\s+$", "");
     }
 
-    public static String cleanParagraphs(String input) {
-        String str1 = removeSpaces(input);
-        return removeTailingBlanks(str1);
-    }
 }
 

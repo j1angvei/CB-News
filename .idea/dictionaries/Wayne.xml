@@ -9,6 +9,7 @@
       <w>jsoncallback</w>
       <w>jsonp</w>
       <w>pubtime</w>
+      <w>referer</w>
       <w>seccode</w>
       <w>vert</w>
     </words>

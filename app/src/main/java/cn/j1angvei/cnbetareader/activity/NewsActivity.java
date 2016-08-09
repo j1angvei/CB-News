@@ -106,8 +106,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
-        Fragment fragment = null;
-        String tag = null;
+        Fragment fragment;
+        String tag;
         switch (item.getItemId()) {
             case R.id.nav_latest_news:
                 tag = Source.LATEST_NEWS.getValue();
