@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.view;
+package cn.j1angvei.cnbetareader.contract;
 
 /**
  * Created by Wayne on 2016/6/16.

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.j1angvei.cnbetareader.fragment.NestedTopicsFragment;
+import cn.j1angvei.cnbetareader.fragment.NestedMyTopicsFragment;
 
 /**
  * Created by Wayne on 2016/7/6.
@@ -23,7 +23,7 @@ public class MyTopicsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return NestedTopicsFragment.newInstance(mTopicIds.get(position));
+        return NestedMyTopicsFragment.newInstance(mTopicIds.get(position));
     }
 
     @Override

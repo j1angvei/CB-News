@@ -3,9 +3,9 @@ package cn.j1angvei.cnbetareader.presenter;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
-import cn.j1angvei.cnbetareader.view.CommentsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -13,11 +13,10 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/28.
  */
-//@PerFragment
 @PerActivity
-public class CommentsPresenter implements BasePresenter<CommentsView> {
+public class CommentsPresenter implements CommentsContract.Presenter {
     private final CommentsRepository mRepository;
-    private CommentsView mView;
+    private CommentsContract.View mView;
 
     @Inject
     public CommentsPresenter(CommentsRepository repository) {
@@ -25,10 +24,11 @@ public class CommentsPresenter implements BasePresenter<CommentsView> {
     }
 
     @Override
-    public void setView(CommentsView view) {
+    public void setView(CommentsContract.View view) {
         mView = view;
     }
 
+    @Override
     public void retrieveComments(String token, String op) {
         mView.showLoading();
         mRepository.get(0, token, op)
@@ -51,5 +51,4 @@ public class CommentsPresenter implements BasePresenter<CommentsView> {
                     }
                 });
     }
-
 }

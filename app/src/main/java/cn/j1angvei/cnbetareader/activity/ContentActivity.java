@@ -19,18 +19,18 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.adapter.ContentPagerAdapter;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.contract.ContentContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 import cn.j1angvei.cnbetareader.presenter.ContentPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
-import cn.j1angvei.cnbetareader.view.ContentView;
 
 /**
  * Created by Wayne on 2016/7/5.
  */
-public class ContentActivity extends BaseActivity implements ContentView {
+public class ContentActivity extends BaseActivity implements ContentContract.View {
     public static final String NEWS_POSITION = "ContentActivity.news_position";
     public static final String NEWS_SIDS = "ContentActivity.news_source";
 

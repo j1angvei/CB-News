@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
-import cn.j1angvei.cnbetareader.view.NewsView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -9,18 +9,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NewsPresenter<N> implements BasePresenter<NewsView<N>> {
-    NewsView<N> mView;
+public class NewsPresenter<N> implements NewsContract.Presenter<N> {
+    NewsContract.View<N> mView;
     NewsRepository<N> mRepository;
 
     public NewsPresenter(NewsRepository<N> repository) {
         mRepository = repository;
     }
 
-    public void setView(NewsView<N> newsView) {
-        mView = newsView;
-    }
-
+    @Override
     public void retrieveNews(String type, int page) {
         mView.showLoading();
         mRepository.get(page, type)
@@ -44,4 +41,8 @@ public class NewsPresenter<N> implements BasePresenter<NewsView<N>> {
                 });
     }
 
+    @Override
+    public void setView(NewsContract.View<N> view) {
+        mView = view;
+    }
 }

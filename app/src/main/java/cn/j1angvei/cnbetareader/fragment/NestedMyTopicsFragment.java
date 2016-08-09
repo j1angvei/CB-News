@@ -18,16 +18,16 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.NestedTopicsPresenter;
-import cn.j1angvei.cnbetareader.view.NestedTopicsView;
+import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
 
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NestedTopicsFragment extends BaseFragment implements NestedTopicsView, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TOPIC_ID = "NestedTopicsFragment.topic_id";
+public class NestedMyTopicsFragment extends BaseFragment implements MyTopicsContract.View, SwipeRefreshLayout.OnRefreshListener {
+    private static final String TOPIC_ID = "NestedMyTopicsFragment.topic_id";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -37,13 +37,13 @@ public class NestedTopicsFragment extends BaseFragment implements NestedTopicsVi
     @Inject
     ArticlesRvAdapter mAdapter;
     @Inject
-    NestedTopicsPresenter mPresenter;
+    MyTopicsPresenter mPresenter;
 
     private int mPage = 1;
     private String mTopicId;
 
-    public static NestedTopicsFragment newInstance(String topicId) {
-        NestedTopicsFragment fragment = new NestedTopicsFragment();
+    public static NestedMyTopicsFragment newInstance(String topicId) {
+        NestedMyTopicsFragment fragment = new NestedMyTopicsFragment();
         Bundle args = new Bundle();
         args.putString(TOPIC_ID, topicId);
         fragment.setArguments(args);

@@ -14,17 +14,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
 import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
-import cn.j1angvei.cnbetareader.view.CommentsView;
 
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsActivity extends BaseActivity implements CommentsView {
+public class CommentsActivity extends BaseActivity implements CommentsContract.View {
     public static final String NEWS_SID = "CommentsActivity.news_sid";
     public static final String NEWS_SN = "CommentsActivity.news_sn";
     public static final String NEWS_TOKEN = "CommentsActivity.news_token";

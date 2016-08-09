@@ -4,9 +4,9 @@ package cn.j1angvei.cnbetareader.presenter;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.view.ExploreView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -15,8 +15,8 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/15.
  */
 @PerFragment
-public class ExplorePresenter implements BasePresenter<ExploreView> {
-    ExploreView mView;
+public class ExplorePresenter implements ExploreContract.Presenter {
+    ExploreContract.View mView;
     ExploreRepository mRepository;
 
     @Inject
@@ -24,6 +24,7 @@ public class ExplorePresenter implements BasePresenter<ExploreView> {
         mRepository = repository;
     }
 
+    @Override
     public void retrieveTopics(int index) {
         //convert number 1-26 to letter a-z
         String letter = "" + (char) ('a' + index - 1);
@@ -50,7 +51,8 @@ public class ExplorePresenter implements BasePresenter<ExploreView> {
     }
 
     @Override
-    public void setView(ExploreView view) {
+    public void setView(ExploreContract.View view) {
         mView = view;
+
     }
 }

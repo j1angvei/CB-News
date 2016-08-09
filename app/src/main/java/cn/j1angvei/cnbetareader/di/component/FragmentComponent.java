@@ -5,7 +5,7 @@ import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
-import cn.j1angvei.cnbetareader.fragment.NestedTopicsFragment;
+import cn.j1angvei.cnbetareader.fragment.NestedMyTopicsFragment;
 import dagger.Subcomponent;
 
 /**
@@ -16,7 +16,7 @@ import dagger.Subcomponent;
 public interface FragmentComponent {
     void inject(ExploreFragment fragment);
 
-    void inject(NestedTopicsFragment fragment);
+    void inject(NestedMyTopicsFragment fragment);
 
     void inject(ContentFragment fragment);
 
