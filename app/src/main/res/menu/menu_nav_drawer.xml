@@ -19,6 +19,15 @@
             android:title="@string/nav_past_headlines"/>
 
         <item
+            android:id="@+id/nav_explore"
+            android:icon="@drawable/ic_nav_explore"
+            android:title="@string/nav_explore"/>
+    </group>
+    <group
+        android:id="@+id/user_block"
+        android:checkableBehavior="single">
+
+        <item
             android:id="@+id/nav_my_topics"
             android:icon="@drawable/ic_nav_my_topics"
             android:title="@string/nav_my_topics"/>
@@ -27,9 +36,9 @@
             android:icon="@drawable/ic_nav_bookmarks"
             android:title="@string/nav_bookmarks"/>
         <item
-            android:id="@+id/nav_explore"
-            android:icon="@drawable/ic_nav_explore"
-            android:title="@string/nav_explore"/>
+            android:id="@+id/nav_download"
+            android:icon="@drawable/ic_file_download_black_24dp"
+            android:title="@string/nav_download"/>
     </group>
     <group
         android:id="@+id/quick_entry"
