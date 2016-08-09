@@ -153,8 +153,17 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                     fragment = BookmarkFragment.newInstance(tag);
                 }
                 break;
+            case R.id.nav_download:
+                MessageUtil.shortToast("download", this);
+                return true;
+            case R.id.nav_settings:
+                MessageUtil.shortToast("setting", this);
+                return true;
+            case R.id.nav_exit:
+                MessageUtil.shortToast("exit", this);
+                return true;
             default:
-                break;
+                return true;
         }
         assert fragment != null;
         mFragmentManager.beginTransaction()
