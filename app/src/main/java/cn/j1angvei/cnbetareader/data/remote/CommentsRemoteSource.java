@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
+import cn.j1angvei.cnbetareader.data.remote.response.CommentResponse;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -38,6 +40,20 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                         return null;
                     }
                 });
+    }
+
+    public Observable<Boolean> operateComment(String token, String op, String sid, String tid) {
+        return mCnbetaApi.actOnComment(token, op, sid, tid)
+                .map(new Func1<BaseResponse, Boolean>() {
+                    @Override
+                    public Boolean call(BaseResponse baseResponse) {
+                        return "success".equals(baseResponse.getState());
+                    }
+                });
+    }
+
+    public Observable<CommentResponse> publishComment(String token, String op, String content, String captcha, String sid, String pid) {
+        return mCnbetaApi.publishComment(token, op, content, captcha, sid, pid);
     }
 
 }

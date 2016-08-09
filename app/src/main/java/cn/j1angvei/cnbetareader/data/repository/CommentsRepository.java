@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.data.local.CommentsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.CommentsRemoteSource;
+import cn.j1angvei.cnbetareader.data.remote.response.CommentResponse;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -43,4 +44,13 @@ public class CommentsRepository implements Repository<Comments> {
     public void toRAM(Comments item) {
 
     }
+
+    public Observable<Boolean> operateComment(String token, String op, String sid, String tid) {
+        return mRemoteSource.operateComment(token, op, sid, tid);
+    }
+
+    public Observable<CommentResponse> publishComment(String token, String op, String content, String captcha, String sid, String pid) {
+        return mRemoteSource.publishComment(token, op, content, captcha, sid, pid);
+    }
+
 }

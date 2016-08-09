@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.data.remote;
 
 
 import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
+import cn.j1angvei.cnbetareader.data.remote.response.CommentResponse;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -39,7 +40,7 @@ public interface CnbetaApi {
 
     @FormUrlEncoded
     @POST("/comment")
-    Observable<BaseResponse> publishComment(@Field("csrf_token") String token, @Field("op") String op, @Field("content") String content, @Field("seccode") String captcha, @Field("sid") String sid, @Field("pid") String pid);//op as "publish", pid should be '0'
+    Observable<CommentResponse> publishComment(@Field("csrf_token") String token, @Field("op") String op, @Field("content") String content, @Field("seccode") String captcha, @Field("sid") String sid, @Field("pid") String pid);//op as "publish", pid should be '0'
 
     @GET("/captcha.htm")
     Observable<ResponseBody> getCaptchaAddress(@Query("refresh") String refresh, @Query("csrf_token") String token, @Query("_") long timestamp);
