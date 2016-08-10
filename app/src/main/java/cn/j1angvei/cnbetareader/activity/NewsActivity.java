@@ -7,8 +7,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -16,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Source;
+import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
@@ -24,12 +28,19 @@ import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.PrefsUtil;
+import okhttp3.ResponseBody;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Wayne on 2016/7/4.
  */
 public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "NewsActivity";
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
     @BindView(R.id.nav_view)
@@ -39,6 +50,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Inject
     FragmentManager mFragmentManager;
+    @Inject
+    CnbetaApi mCnbetaApi;
+    @Inject
+    PrefsUtil mPrefsUtil;
 
     @Override
     protected void parseIntent() {
@@ -51,6 +66,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
+        checkToken();
     }
 
     @Override
@@ -175,5 +191,42 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
+    private void checkToken() {
+        if (mCnbetaApi == null) {
+            Log.d(TAG, "checkToken: api is null");
+            return;
+        }
+        if (mPrefsUtil == null) {
+            Log.d(TAG, "checkToken: prefUtil is null");
+            return;
+        }
+        if (mPrefsUtil.readToken().isEmpty()) {
+            mCnbetaApi.getCsrfToken()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ResponseBody>() {
+                        @Override
+                        public void onCompleted() {
+                            //broadcast that app is ready to get news with token
+                        }
 
+                        @Override
+                        public void onError(Throwable e) {
+                            //check network connection or report to author
+                        }
+
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
+                            try {
+                                String token = ApiUtil.parseToken(responseBody.string());
+                                Log.d(TAG, "onNext: getToken>>>>>>>>>>>>> " + token);
+                                mPrefsUtil.writeToken(token);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                //something wrong with response
+                            }
+                        }
+                    });
+        }
+    }
 }

@@ -23,6 +23,7 @@ import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -80,7 +81,7 @@ public class ApplicationModule {
                 .cache(cache)
                 .addInterceptor(new AddHeaderInterceptor())
                 .addInterceptor(new JsonpInterceptor())
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
                 .build();
     }
 
