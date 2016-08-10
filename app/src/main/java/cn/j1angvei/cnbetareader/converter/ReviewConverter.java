@@ -9,6 +9,7 @@ import java.util.List;
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Observable;
 
 /**
@@ -27,7 +28,7 @@ public class ReviewConverter extends NewsConverter<Review> {
 
     @Override
     public List<Review> toList(String jsonp) {
-        String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
+        String json = ApiUtil.removeJsonpWrapper(jsonp);
         ExposedResponse<RawReview> response = mGson.fromJson(json, new TypeToken<ExposedResponse<RawReview>>() {
         }.getType());
         List<RawReview> rawReviews = response.getResult();

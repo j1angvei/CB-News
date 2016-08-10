@@ -66,6 +66,11 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         checkToken();
     }
 
@@ -207,7 +212,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                         @Override
                         public void onError(Throwable e) {
                             //check network connection or report to author
-                            Log.d(TAG, "onError: ");
+                            Log.e(TAG, "onError: checkToken ", e);
                         }
 
                         @Override
@@ -217,8 +222,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                                 Log.d(TAG, "onNext: getToken " + token);
                                 mPrefsUtil.writeToken(token);
                             } catch (IOException e) {
-                                e.printStackTrace();
                                 //something wrong with response
+                                Log.e(TAG, "onNext: " + responseBody, e);
                             }
                         }
                     });

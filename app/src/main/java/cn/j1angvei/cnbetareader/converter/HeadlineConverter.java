@@ -12,6 +12,7 @@ import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RelatedItem;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.StringUtil;
 import rx.Observable;
 
@@ -30,7 +31,7 @@ public class HeadlineConverter extends NewsConverter<Headline> {
 
     @Override
     public List<Headline> toList(String jsonp) {
-        String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
+        String json = ApiUtil.removeJsonpWrapper(jsonp);
         ExposedResponse<RawHeadline> response = mGson.fromJson(json, new TypeToken<ExposedResponse<RawHeadline>>() {
         }.getType());
         List<RawHeadline> rawHeadlines = response.getResult();

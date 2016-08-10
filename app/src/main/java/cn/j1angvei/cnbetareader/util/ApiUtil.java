@@ -43,6 +43,10 @@ public class ApiUtil {
         return "" + (char) ('a' + page - 1);
     }
 
+    public static String removeJsonpWrapper(String jsonp) {
+        return jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
+    }
+
     public static Map<String, String> getNewsParam(String type, int page) {
         Map<String, String> map = new HashMap<>();
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
