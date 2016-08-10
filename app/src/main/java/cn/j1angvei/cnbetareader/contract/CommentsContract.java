@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.contract;
 
-import android.content.Context;
-
 import cn.j1angvei.cnbetareader.bean.Comments;
 
 /**
@@ -9,24 +7,22 @@ import cn.j1angvei.cnbetareader.bean.Comments;
  */
 public interface CommentsContract {
     interface View extends BaseView {
-        void fetchComments();
 
+        /**
+         * child fragment's adapter to call this
+         */
+        void refreshComments();
+
+        /**
+         * child fragment's adapter render comments
+         *
+         * @param comments contain CommentsItem
+         */
         void showComments(Comments comments);
-
-        Context getContext();
-
-        void beforeOperateComment(String action, int position);
-
-        void afterOperateSuccess(int position);
-
-        void afterOperateFail();
 
     }
 
     interface Presenter extends BasePresenter<CommentsContract.View> {
         void retrieveComments(String token, String op);
-
-        void operateComment(int position, String... param);//token,action,sid,tid
-
     }
 }

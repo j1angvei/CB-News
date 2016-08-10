@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.Map;
+
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
 import rx.Observable;
@@ -18,13 +20,12 @@ public class NewsRepository<T> implements Repository<T> {
     }
 
     @Override
-    public Observable<T> get(int page, String... str) {
-        //when it comes to bookmarks, use LocalSource
-        return mRemoteSource.getItem(page, str)
+    public Observable<T> getData(String extra, Map<String, String> param) {
+        return mRemoteSource.getData(extra, param)
                 .doOnNext(new Action1<T>() {
                     @Override
                     public void call(T t) {
-                        //toDisk to toRAM
+                        //save to disk or cache
                     }
                 });
     }

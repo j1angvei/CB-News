@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +15,7 @@ import rx.functions.Func1;
 
 /**
  * Created by Wayne on 2016/7/24.
+ * get topics by letter from web
  */
 @Singleton
 public class ExploreRemoteSource extends RemoteSource<Topic> {
@@ -23,8 +25,7 @@ public class ExploreRemoteSource extends RemoteSource<Topic> {
     }
 
     @Override
-    public Observable<Topic> getItem(int page, String... str) {
-        String letter = str[0];
+    public Observable<Topic> getData(String letter, Map<String, String> param) {
         return mCnbetaApi.getTopics(letter)
                 .flatMap(new Func1<ResponseBody, Observable<Topic>>() {
                     @Override
@@ -38,4 +39,5 @@ public class ExploreRemoteSource extends RemoteSource<Topic> {
                     }
                 });
     }
+
 }

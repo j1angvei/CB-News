@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,8 +26,8 @@ public class ContentRepository implements Repository<Content> {
     }
 
     @Override
-    public Observable<Content> get(int page, String... str) {
-        return mRemoteSource.getItem(page, str)
+    public Observable<Content> getData(String sid, Map<String, String> param) {
+        return mRemoteSource.getData(sid, param)
                 .doOnNext(new Action1<Content>() {
                     @Override
                     public void call(Content content) {

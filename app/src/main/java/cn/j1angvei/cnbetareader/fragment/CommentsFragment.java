@@ -126,9 +126,12 @@ public class CommentsFragment extends BaseFragment {
         mAdapter.add(items);
     }
 
-    public void notifyCommentItemChanged(int position) {
+    public void notifyItemChanged(int position) {
         mAdapter.notifyItemChanged(position);
     }
 
+    public void notifyDataSetChanged() {
+        mAdapter.notifyDataSetChanged();
+    }
 
 }

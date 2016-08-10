@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
+import java.util.Map;
+
 import cn.j1angvei.cnbetareader.converter.Converter;
 import rx.Observable;
 
@@ -15,5 +17,5 @@ public abstract class RemoteSource<T> {
         mConverter = converter;
     }
 
-    public abstract Observable<T> getItem(int page, String... str);
+    public abstract Observable<T> getData(String extra, Map<String, String> param);
 }

@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.activity;
 
-import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
@@ -83,8 +82,8 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
                 MessageUtil.shortToast("add comments", view.getContext());
             }
         });
-        //load fragment
-        fetchComments();
+        //load data aka comments
+        mPresenter.retrieveComments(mToken, mOp);
     }
 
     @Override
@@ -99,51 +98,52 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     }
 
     @Override
-    public void fetchComments() {
-        mPresenter.retrieveComments(mToken, mOp);
+    public void refreshComments() {
+
     }
 
     @Override
     public void showComments(Comments comments) {
         if (comments != null) {
             mComments = comments;
-            mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(comments), TAG_ALL_COMMENTS).commit();
+            Fragment fragment = mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS);
+            if (fragment == null) {
+                fragment = CommentsFragment.newInstance(comments);
+                mFragmentManager.beginTransaction().add(R.id.fl_container, fragment, TAG_ALL_COMMENTS).commit();
+            } else {
+                ((CommentsFragment) fragment).notifyDataSetChanged();
+            }
         } else {
             MessageUtil.shortToast("comments is null", this);
         }
     }
 
-    @Override
-    public Context getContext() {
-        return this;
-    }
-
-    @Override
-    public void beforeOperateComment(String action, int position) {
-        CommentItem item = getCommentItem(position);
-        mPresenter.operateComment(position, mToken, action, item.getArticleId(), item.getCommentId());
-    }
-
-    private CommentItem getCommentItem(int position) {
-        String sid = mComments.getAllIds().get(position);
-        return mComments.getCommentMap().get(sid);
-    }
-
-    @Override
-    public void afterOperateSuccess(int position) {
-        MessageUtil.shortToast("operate success", this);
-        CommentItem item = getCommentItem(position);
-        item.setUpVote(item.getUpVote() + "1");
-        //if pop comment fragment not visible, change count in all comments
-        ((CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS)).notifyCommentItemChanged(position);
-
-        //number should add 1
-    }
-
-    @Override
-    public void afterOperateFail() {
-        MessageUtil.shortToast("operate failed", this);
-    }
+//    @Override
+//    public void beforeOperateComment(String action, int position) {
+//        CommentItem item = getCommentItem(position);
+//        mPresenter.operateComment(position, mToken, action, item.getArticleId(), item.getCommentId());
+//    }
+//
+//    private CommentItem getCommentItem(int position) {
+//        String sid = mComments.getAllIds().get(position);
+//        return mComments.getCommentMap().get(sid);
+//    }
+//
+//    @Override
+//    public void afterOperateSuccess(int position) {
+//        MessageUtil.shortToast("operate success", this);
+//        CommentItem item = getCommentItem(position);
+//        item.setUpVote(item.getUpVote() + "1");
+//        //if pop comment fragment not visible, change count in all comments
+//        ((CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS)).notifyCommentItemChanged(position);
+//
+//        //number should add 1
+//    }
+//
+//    @Override
+//    public void afterOperateFail() {
+//        MessageUtil.shortToast("operate failed", this);
+//    }
 
     @Override
     public void showLoading() {

@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -8,7 +9,6 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.converter.Converter;
-import cn.j1angvei.cnbetareader.util.JsonpUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -25,11 +25,8 @@ public class MyTopicsRemoteSource extends RemoteSource<Article> {
     }
 
     @Override
-    public Observable<Article> getItem(int page, String... str) {
-        String topicId = str[0];
-        String callback = JsonpUtil.getParameter();
-        long timeStamp = JsonpUtil.getInitTime() + page;
-        return mCnbetaApi.getTopicNews(callback, topicId, page, timeStamp)
+    public Observable<Article> getData(String extra, Map<String, String> param) {
+        return mCnbetaApi.getTopicNews(param)
                 .flatMap(new Func1<ResponseBody, Observable<Article>>() {
                     @Override
                     public Observable<Article> call(ResponseBody responseBody) {

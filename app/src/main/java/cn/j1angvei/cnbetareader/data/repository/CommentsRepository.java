@@ -1,12 +1,13 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.data.local.CommentsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.CommentsRemoteSource;
-import cn.j1angvei.cnbetareader.data.remote.response.CommentResponse;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -25,8 +26,8 @@ public class CommentsRepository implements Repository<Comments> {
     }
 
     @Override
-    public Observable<Comments> get(int page, String... str) {
-        return mRemoteSource.getItem(page, str)
+    public Observable<Comments> getData(String referer, Map<String, String> param) {
+        return mRemoteSource.getData(referer, param)
                 .doOnNext(new Action1<Comments>() {
                     @Override
                     public void call(Comments comments) {
@@ -43,10 +44,6 @@ public class CommentsRepository implements Repository<Comments> {
     @Override
     public void toRAM(Comments item) {
 
-    }
-
-    public Observable<Boolean> operateComment(String... param) {
-        return mRemoteSource.operateComment(param);
     }
 
 }

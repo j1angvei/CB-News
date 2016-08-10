@@ -32,7 +32,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     @Override
     public void retrieveComments(String token, String op) {
         mView.showLoading();
-        mRepository.get(0, token, op)
+        mRepository.getData(0, token, op)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Comments>() {
@@ -49,31 +49,6 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     @Override
                     public void onNext(Comments comments) {
                         mView.showComments(comments);
-                    }
-                });
-    }
-
-    @Override
-    public void operateComment(final int position, String... param) {
-        mRepository.operateComment(param)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-                        //change value in adapter, like support add 1
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-                        if (aBoolean) {
-                            mView.afterOperateSuccess(position);
-                        } else mView.afterOperateFail();
                     }
                 });
     }

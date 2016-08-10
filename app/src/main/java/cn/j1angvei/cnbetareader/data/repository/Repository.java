@@ -1,12 +1,14 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.Map;
+
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/23.
  */
 public interface Repository<T> {
-    Observable<T> get(int page, String... str);
+    Observable<T> getData(String extra, Map<String, String> param);
 
     void toDisk(T item);
 

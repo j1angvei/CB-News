@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +15,7 @@ import rx.functions.Func1;
 
 /**
  * Created by Wayne on 2016/7/23.
+ * get content from web
  */
 @Singleton
 public class ContentRemoteSource extends RemoteSource<Content> {
@@ -23,9 +25,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
     }
 
     @Override
-    public Observable<Content> getItem(int page, String... str) {
-        assert str[0] != null;
-        String sid = str[0];
+    public Observable<Content> getData(String sid, Map<String, String> param) {
         return mCnbetaApi.getArticleContent(sid)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {
                     @Override
@@ -39,4 +39,5 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                     }
                 });
     }
+
 }

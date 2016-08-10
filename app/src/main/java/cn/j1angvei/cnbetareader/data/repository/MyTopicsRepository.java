@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,12 +26,12 @@ public class MyTopicsRepository implements Repository<Article> {
     }
 
     @Override
-    public Observable<Article> get(int page, String... str) {
-        return mRemoteSource.getItem(page, str)
+    public Observable<Article> getData(String extra, Map<String, String> param) {
+        return mRemoteSource.getData(extra, param)
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {
-                        // add to toRAM
+                        //save to cache or disk
                     }
                 });
     }

@@ -39,6 +39,10 @@ public class ApiUtil {
         return token;
     }
 
+    public String pageToLetter(int page) {
+        return "" + (char) ('a' + page - 1);
+    }
+
     public static Map<String, String> getNewsParam(String jsoncallback, String type, int page, long timestamp) {
         Map<String, String> map = new HashMap<>();
         map.put(KEY_CALLBACK, jsoncallback);
