@@ -26,7 +26,6 @@ import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
@@ -43,9 +42,6 @@ public class CommentsFragment extends BaseFragment {
     LinearLayoutManager mLinearLayoutManager;
     @Inject
     CommentsRvAdapter mAdapter;
-    @Inject
-    CommentsPresenter mPresenter;
-
     private Comments mComments;
 
     public static CommentsFragment newInstance(Comments comments) {

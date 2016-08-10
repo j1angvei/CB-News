@@ -43,6 +43,8 @@ public class HeaderUtil {
     private static final String KEY_CACHE = "Cache-Control";
     private static final String VALUE_CACHE_MAX = "max-age=0";
     private static final String VALUE_CACHE_NO = "no-cache";
+    private static final String KEY_PRAGMA = "Pragma";
+    private static final String VALUE_PRAGMA = "no-cache";
 
     //response is json format
     public static final String HEADER_ACCEPT_JSON = KEY_ACCEPT + ":" + VALUE_ACCEPT_JSON;
@@ -53,7 +55,7 @@ public class HeaderUtil {
     //maximum cache,such as in all topics
     public static final String HEADER_CACHE_MAX = KEY_CACHE + ":" + VALUE_CACHE_MAX;
     public static final String HEADER_CACHE_NO = KEY_CACHE + ":" + VALUE_CACHE_NO;
-
+    public static final String HEADER_PRAGMA = KEY_PRAGMA + ":" + VALUE_PRAGMA;
     /**
      * Headers must be handled by okhttp
      */
