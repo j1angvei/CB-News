@@ -24,7 +24,8 @@ public class ArticleConverter extends NewsConverter<Article> {
     }
 
     @Override
-    public List<Article> toList(String json) {
+    public List<Article> toList(String jsonp) {
+        String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
         WrappedResponse<Article> response = mGson.fromJson(json, new TypeToken<WrappedResponse<Article>>() {
         }.getType());
         return response.getResult().getList();

@@ -192,14 +192,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void checkToken() {
-        if (mCnbetaApi == null) {
-            Log.d(TAG, "checkToken: api is null");
-            return;
-        }
-        if (mPrefsUtil == null) {
-            Log.d(TAG, "checkToken: prefUtil is null");
-            return;
-        }
+        Log.d(TAG, "checkToken: start");
         if (mPrefsUtil.readToken().isEmpty()) {
             mCnbetaApi.getCsrfToken()
                     .subscribeOn(Schedulers.io())
@@ -207,19 +200,21 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                     .subscribe(new Subscriber<ResponseBody>() {
                         @Override
                         public void onCompleted() {
+                            Log.d(TAG, "onCompleted: ");
                             //broadcast that app is ready to get news with token
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             //check network connection or report to author
+                            Log.d(TAG, "onError: ");
                         }
 
                         @Override
                         public void onNext(ResponseBody responseBody) {
                             try {
                                 String token = ApiUtil.parseToken(responseBody.string());
-                                Log.d(TAG, "onNext: getToken>>>>>>>>>>>>> " + token);
+                                Log.d(TAG, "onNext: getToken " + token);
                                 mPrefsUtil.writeToken(token);
                             } catch (IOException e) {
                                 e.printStackTrace();

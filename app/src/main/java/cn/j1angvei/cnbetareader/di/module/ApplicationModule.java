@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -15,15 +16,12 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor;
-import cn.j1angvei.cnbetareader.data.remote.interceptor.JsonpInterceptor;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -69,19 +67,18 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    CookieJar provideCookieJar(Application application) {
+    ClearableCookieJar provideCookieJar(Application application) {
         return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient(CookieJar cookieJar, Cache cache) {
+    OkHttpClient provideOkhttpClient(ClearableCookieJar cookieJar, Cache cache) {
         return new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .cache(cache)
                 .addInterceptor(new AddHeaderInterceptor())
-                .addInterceptor(new JsonpInterceptor())
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
                 .build();
     }
 

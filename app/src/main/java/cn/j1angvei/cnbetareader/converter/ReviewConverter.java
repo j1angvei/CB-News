@@ -26,7 +26,8 @@ public class ReviewConverter extends NewsConverter<Review> {
     }
 
     @Override
-    public List<Review> toList(String json) {
+    public List<Review> toList(String jsonp) {
+        String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
         ExposedResponse<RawReview> response = mGson.fromJson(json, new TypeToken<ExposedResponse<RawReview>>() {
         }.getType());
         List<RawReview> rawReviews = response.getResult();

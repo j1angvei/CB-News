@@ -29,7 +29,8 @@ public class HeadlineConverter extends NewsConverter<Headline> {
     }
 
     @Override
-    public List<Headline> toList(String json) {
+    public List<Headline> toList(String jsonp) {
+        String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
         ExposedResponse<RawHeadline> response = mGson.fromJson(json, new TypeToken<ExposedResponse<RawHeadline>>() {
         }.getType());
         List<RawHeadline> rawHeadlines = response.getResult();
