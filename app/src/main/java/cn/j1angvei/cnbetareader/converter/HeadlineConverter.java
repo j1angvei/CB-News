@@ -19,8 +19,8 @@ import rx.Observable;
  * Created by Wayne on 2016/7/22.
  */
 public class HeadlineConverter extends NewsConverter<Headline> {
-    public HeadlineConverter(Gson gson, String baseUrl) {
-        super(gson, baseUrl);
+    public HeadlineConverter(Gson gson) {
+        super(gson);
     }
 
     @Override

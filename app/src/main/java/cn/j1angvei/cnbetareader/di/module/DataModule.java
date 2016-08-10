@@ -31,28 +31,29 @@ import dagger.Provides;
 
 /**
  * Created by Wayne on 2016/7/23.
+ * store reference of converter, dataSource and repository.
  */
 @Module
 public class DataModule {
     @Provides
     @Singleton
     @Named("c_article")
-    Converter<Article> provideArticleConverter(Gson gson, String url) {
-        return new ArticleConverter(gson, url);
+    Converter<Article> provideArticleConverter(Gson gson) {
+        return new ArticleConverter(gson);
     }
 
     @Provides
     @Singleton
     @Named("c_review")
-    Converter<Review> provideReviewConverter(Gson gson, String url) {
-        return new ReviewConverter(gson, url);
+    Converter<Review> provideReviewConverter(Gson gson) {
+        return new ReviewConverter(gson);
     }
 
     @Provides
     @Singleton
     @Named("c_headline")
-    Converter<Headline> provideHeadlineConverter(Gson gson, String url) {
-        return new HeadlineConverter(gson, url);
+    Converter<Headline> provideHeadlineConverter(Gson gson) {
+        return new HeadlineConverter(gson);
     }
 
     @Provides
@@ -65,15 +66,15 @@ public class DataModule {
     @Provides
     @Singleton
     @Named("c_content")
-    Converter<Content> provideContentConverter(String baseUrl) {
-        return new ContentConverter(baseUrl);
+    Converter<Content> provideContentConverter() {
+        return new ContentConverter();
     }
 
     @Provides
     @Singleton
     @Named("c_bookmark")
-    Converter<Bookmark> provideBookmarkConverter(Gson gson, String baseUrl) {
-        return new BookmarkConverter(gson, baseUrl);
+    Converter<Bookmark> provideBookmarkConverter(Gson gson) {
+        return new BookmarkConverter(gson);
     }
 
     @Provides

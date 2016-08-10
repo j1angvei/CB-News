@@ -20,24 +20,19 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 public class ContentConverter implements Converter<Content> {
-    private final String mBaseUrl;
-
-    public ContentConverter(String baseUrl) {
-        mBaseUrl = baseUrl;
-    }
 
     @Override
     public Content to(String html) {
         Content content = new Content();
 
-        Document doc = Jsoup.parse(html, mBaseUrl);
+        Document doc = Jsoup.parse(html, DateUtil.DATE_FORMAT_CB);
         //parse title
         String title = doc.getElementById("news_title").text();
         content.setTitle(StringUtil.removeBlanks(title));
         //parse date
         String dateString = doc.getElementsByClass("date").first().text();
         try {
-            Date date = DateUtil.toDate(dateString, DateUtil.DateFormatType.CNBETA);
+            Date date = DateUtil.toDate(dateString, DateUtil.DATE_FORMAT_CB);
             content.setDate(date);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -103,19 +98,6 @@ public class ContentConverter implements Converter<Content> {
 //        String src = doc.select(".introduction img").attr("src");
         content.setTopicPhoto(src);
         return content;
-    }
-
-    private void modifyTagsWidth(Element container, String... tags) {
-        for (String tag : tags) {
-            modifyTagWidth(container, tag);
-        }
-    }
-
-    private void modifyTagWidth(Element container, String tag) {
-        for (Element e : container.getElementsByTag(tag)) {
-            e.attr("width", "100%");
-            e.removeAttr("height");
-        }
     }
 
     @Override

@@ -14,8 +14,8 @@ import rx.Observable;
  */
 public class ArticleConverter extends NewsConverter<Article> {
 
-    public ArticleConverter(Gson gson, String baseUrl) {
-        super(gson, baseUrl);
+    public ArticleConverter(Gson gson) {
+        super(gson);
     }
 
     @Override

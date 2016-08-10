@@ -16,8 +16,8 @@ import rx.Observable;
  */
 public class ReviewConverter extends NewsConverter<Review> {
 
-    public ReviewConverter(Gson gson, String baseUrl) {
-        super(gson, baseUrl);
+    public ReviewConverter(Gson gson) {
+        super(gson);
     }
 
     @Override

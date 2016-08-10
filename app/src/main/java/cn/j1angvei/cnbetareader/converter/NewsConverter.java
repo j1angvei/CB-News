@@ -7,10 +7,8 @@ import com.google.gson.Gson;
  */
 public abstract class NewsConverter<T> implements Converter<T> {
     final Gson mGson;
-    final String mBaseUrl;
 
-    public NewsConverter(Gson gson, String baseUrl) {
+    public NewsConverter(Gson gson) {
         mGson = gson;
-        mBaseUrl = baseUrl;
     }
 }

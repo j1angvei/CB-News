@@ -53,7 +53,7 @@ public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.V
         holder.tvTitle.setText(bookmark.getTitle());
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
-        String time = String.format(resources.getString(R.string.ph_bookmark_time), DateUtil.toLongDatePlusTime(bookmark.getTime(), context));
+        String time = String.format(resources.getString(R.string.ph_bookmark_time), DateUtil.toLongDatePlusTime(bookmark.getDate(), context));
         holder.tvTime.setText(time);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

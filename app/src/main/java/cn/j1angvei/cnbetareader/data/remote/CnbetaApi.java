@@ -10,7 +10,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -47,5 +46,8 @@ public interface CnbetaApi {
 
     @GET("/captcha.htm")
     Observable<ResponseBody> getCaptchaImage(@Query("v") String v);
+
+    @GET("/deliver")
+    Observable<ResponseBody> getCsrfToken();
 
 }

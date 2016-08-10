@@ -12,7 +12,9 @@ import java.util.Date;
  * Created by Wayne on 2016/6/18.
  */
 public final class DateUtil {
-    private static final String TAG = "DateUtil";
+    public static final String DATE_FORMAT_CB = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_MEDIUM = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_SHORT = "MM-dd";
 
     public static String toShortDatePlusTime(Date date, Context context) {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
@@ -28,28 +30,9 @@ public final class DateUtil {
         return android.text.format.DateFormat.getTimeFormat(context).format(date);
     }
 
-    public static Date toDate(String dateString, DateFormatType type) throws ParseException {
+    public static Date toDate(String dateString, String format) throws ParseException {
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat(type.getType());
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.parse(dateString);
-    }
-
-    public static Date currentDate() {
-        return new Date();
-    }
-
-    public enum DateFormatType {
-        CNBETA("yyyy-MM-dd HH:mm:ss"),
-        MEDIUM("yyyy-MM-dd"),
-        SHORT("MM-dd");
-        private String type;
-
-        DateFormatType(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return type;
-        }
     }
 }

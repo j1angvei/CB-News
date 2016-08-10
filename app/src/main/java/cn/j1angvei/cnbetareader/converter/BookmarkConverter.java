@@ -2,19 +2,19 @@ package cn.j1angvei.cnbetareader.converter;
 
 import com.google.gson.Gson;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.News;
-import cn.j1angvei.cnbetareader.util.DateUtil;
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/26.
  */
 public class BookmarkConverter extends NewsConverter<Bookmark> {
-    public BookmarkConverter(Gson gson, String baseUrl) {
-        super(gson, baseUrl);
+    public BookmarkConverter(Gson gson) {
+        super(gson);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class BookmarkConverter extends NewsConverter<Bookmark> {
         Bookmark bookmark = new Bookmark();
         bookmark.setId(news.getSid());
         bookmark.setTitle(news.getTitle());
-        bookmark.setTime(DateUtil.currentDate());
+        bookmark.setDate(new Date());
         return bookmark;
     }
 

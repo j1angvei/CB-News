@@ -11,7 +11,7 @@ public final class Bookmark {
     private String title;
     @SerializedName("sid")
     private String id;
-    private Date time;
+    private Date date;
 
     public String getTitle() {
         return title;
@@ -29,11 +29,11 @@ public final class Bookmark {
         this.id = id;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

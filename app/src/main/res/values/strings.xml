@@ -41,7 +41,7 @@
     <string name="title_activity_comments">Comments</string>
     <string name="action_comment_reply">Reply</string>
     <string name="action_comment_report">Report</string>
-    <string name="menu_comment_ordered_by_time">Ordered by time</string>
+    <string name="menu_comment_ordered_by_time">Ordered by date</string>
     <string name="menu_comment_switch">Popular comments</string>
 
 </resources>
