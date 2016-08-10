@@ -13,7 +13,7 @@ public interface ExploreContract {
     }
 
     interface Presenter extends BasePresenter<ExploreContract.View> {
-        void retrieveTopics(int index);
+        void retrieveTopics(int page);
     }
 
 }

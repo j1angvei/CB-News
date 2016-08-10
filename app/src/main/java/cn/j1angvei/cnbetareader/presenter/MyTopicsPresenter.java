@@ -1,11 +1,16 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import android.util.Log;
+
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -15,6 +20,7 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class MyTopicsPresenter implements MyTopicsContract.Presenter {
+    private static final String TAG = "MyTopicsPresenter";
     private MyTopicsContract.View mView;
     private MyTopicsRepository mRepository;
 
@@ -26,7 +32,8 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
     @Override
     public void retrieveMyTopics(int page, String topicId) {
         mView.showLoading();
-        mRepository.get(page, topicId)
+        Map<String, String> param = ApiUtil.getTopicsNewsParam(topicId, page);
+        mRepository.getData(null, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Article>() {
@@ -37,7 +44,7 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "onError: ", e);
                     }
 
                     @Override

@@ -23,6 +23,6 @@ public interface CommentsContract {
     }
 
     interface Presenter extends BasePresenter<CommentsContract.View> {
-        void retrieveComments(String token, String op);
+        void retrieveComments(String token, String sid, String sn);
     }
 }

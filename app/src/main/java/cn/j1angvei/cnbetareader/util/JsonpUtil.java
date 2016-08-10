@@ -8,19 +8,15 @@ public final class JsonpUtil {
     private static final String JQUERY = "jQuery";
     private static final String JQUERY_VERSION = "1.8.0";
     private static String PARAMETER;
-    private static long INIT_TIME;
 
     static {
-        INIT_TIME = System.currentTimeMillis();
+        long initTime = System.currentTimeMillis();
         String randomString = JQUERY_VERSION + Math.random();
-        PARAMETER = String.format("%s%s_%s", JQUERY, randomString.replaceAll("\\D", ""), INIT_TIME);
+        PARAMETER = String.format("%s%s_%s", JQUERY, randomString.replaceAll("\\D", ""), initTime);
     }
 
     public static String getParameter() {
         return PARAMETER;
     }
 
-    public static long getInitTime() {
-        return INIT_TIME;
-    }
 }

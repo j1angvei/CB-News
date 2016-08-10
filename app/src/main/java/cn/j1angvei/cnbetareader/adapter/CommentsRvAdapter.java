@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.CommentAction;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
@@ -71,20 +70,20 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         //button number color
         String supportO = String.format(resources.getString(R.string.cmt_action_up_vote), item.getUpVote());
         holder.btnSupportO.setText(supportO);
-        holder.btnSupportO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mView.beforeOperateComment(CommentAction.SUPPORT.toString(), holder.getAdapterPosition());
-            }
-        });
+//        holder.btnSupportO.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mView.beforeOperateComment(CommentAction.SUPPORT.toString(), holder.getAdapterPosition());
+//            }
+//        });
         String againstO = String.format(resources.getString(R.string.cmt_action_down_vote), item.getDownVote());
         holder.btnAgainstO.setText(againstO);
-        holder.btnAgainstO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mView.beforeOperateComment(CommentAction.AGAINST.toString(), holder.getAdapterPosition());
-            }
-        });
+//        holder.btnAgainstO.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mView.beforeOperateComment(CommentAction.AGAINST.toString(), holder.getAdapterPosition());
+//            }
+//        });
         holder.btnPopupO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,20 +115,20 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 String upVoteR = String.format(resources.getString(R.string.cmt_action_up_vote), refItem.getUpVote());
                 holder.btnSupportR.setText(upVoteR);
                 final int finalRefPosition = refPosition;
-                holder.btnSupportR.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mView.beforeOperateComment(CommentAction.SUPPORT.toString(), finalRefPosition);
-                    }
-                });
+//                holder.btnSupportR.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        mView.beforeOperateComment(CommentAction.SUPPORT.toString(), finalRefPosition);
+//                    }
+//                });
                 String downVoteR = String.format(resources.getString(R.string.cmt_action_down_vote), refItem.getDownVote());
                 holder.btnAgainstR.setText(downVoteR);
-                holder.btnAgainstR.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mView.beforeOperateComment(CommentAction.AGAINST.toString(), finalRefPosition);
-                    }
-                });
+//                holder.btnAgainstR.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        mView.beforeOperateComment(CommentAction.AGAINST.toString(), finalRefPosition);
+//                    }
+//                });
                 holder.btnPopupR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -152,7 +151,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                         MessageUtil.shortToast("reply comment", mActivity);
                         return true;
                     case R.id.action_comment_report:
-                        mView.beforeOperateComment(CommentAction.REPORT.toString(), position);
+//                        mView.beforeOperateComment(CommentAction.REPORT.toString(), position);
                         MessageUtil.shortToast("report comment", mActivity);
                         return true;
                 }

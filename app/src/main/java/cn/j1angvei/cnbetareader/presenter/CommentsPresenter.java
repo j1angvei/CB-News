@@ -1,11 +1,17 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import android.util.Log;
+
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
+import cn.j1angvei.cnbetareader.util.HeaderUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -16,6 +22,7 @@ import rx.schedulers.Schedulers;
  */
 @PerActivity
 public class CommentsPresenter implements CommentsContract.Presenter {
+    private static final String TAG = "CommentsPresenter";
     private final CommentsRepository mRepository;
     private CommentsContract.View mView;
 
@@ -30,9 +37,11 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     }
 
     @Override
-    public void retrieveComments(String token, String op) {
+    public void retrieveComments(String token, String sid, String sn) {
         mView.showLoading();
-        mRepository.getData(0, token, op)
+        String referer = HeaderUtil.getRefererValue(sid);
+        Map<String, String> param = ApiUtil.getCommentsParam(token, sid, sn);
+        mRepository.getData(referer, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Comments>() {
@@ -43,7 +52,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "onError: ", e);
                     }
 
                     @Override
@@ -52,5 +61,4 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     }
                 });
     }
-
 }

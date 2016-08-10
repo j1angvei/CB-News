@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.converter;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,6 +15,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/22.
  */
 public class ArticleConverter extends NewsConverter<Article> {
+    private static final String TAG = "ArticleConverter";
 
     public ArticleConverter(Gson gson) {
         super(gson);
@@ -25,6 +28,7 @@ public class ArticleConverter extends NewsConverter<Article> {
 
     @Override
     public List<Article> toList(String jsonp) {
+        Log.d(TAG, "toList>>>>>>\n: " + jsonp);
         String json = jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
         WrappedResponse<Article> response = mGson.fromJson(json, new TypeToken<WrappedResponse<Article>>() {
         }.getType());

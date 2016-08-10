@@ -1,12 +1,15 @@
 package cn.j1angvei.cnbetareader.presenter;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -16,6 +19,7 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class ExplorePresenter implements ExploreContract.Presenter {
+    private static final String TAG = "ExplorePresenter";
     ExploreContract.View mView;
     ExploreRepository mRepository;
 
@@ -25,11 +29,10 @@ public class ExplorePresenter implements ExploreContract.Presenter {
     }
 
     @Override
-    public void retrieveTopics(int index) {
-        //convert number 1-26 to letter a-z
-        String letter = "" + (char) ('a' + index - 1);
+    public void retrieveTopics(int page) {
         mView.showLoading();
-        mRepository.get(0, letter)
+        String letter = ApiUtil.pageToLetter(page);
+        mRepository.getData(letter, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Topic>() {
@@ -40,7 +43,7 @@ public class ExplorePresenter implements ExploreContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "onError: ", e);
                     }
 
                     @Override

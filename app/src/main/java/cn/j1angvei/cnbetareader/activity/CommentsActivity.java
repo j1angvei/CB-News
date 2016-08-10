@@ -41,16 +41,14 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     FragmentManager mFragmentManager;
     @Inject
     CommentsPresenter mPresenter;
-    private String mToken;
-    private String mOp;
+    private String mToken, mSid, mSn;
     private Comments mComments;
 
     @Override
     protected void parseIntent() {
         mToken = getIntent().getStringExtra(NEWS_TOKEN);
-        String sid = getIntent().getStringExtra(NEWS_SID);
-        String sn = getIntent().getStringExtra(NEWS_SN);
-        mOp = String.format("1,%s,%s", sid, sn);
+        mSid = getIntent().getStringExtra(NEWS_SID);
+        mSn = getIntent().getStringExtra(NEWS_SN);
     }
 
     @Override
@@ -83,7 +81,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
             }
         });
         //load data aka comments
-        mPresenter.retrieveComments(mToken, mOp);
+        refreshComments();
     }
 
     @Override
@@ -99,7 +97,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 
     @Override
     public void refreshComments() {
-
+        mPresenter.retrieveComments(mToken, mSid, mSn);
     }
 
     @Override

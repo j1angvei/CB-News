@@ -39,25 +39,25 @@ public class ApiUtil {
         return token;
     }
 
-    public String pageToLetter(int page) {
+    public static String pageToLetter(int page) {
         return "" + (char) ('a' + page - 1);
     }
 
-    public static Map<String, String> getNewsParam(String jsoncallback, String type, int page, long timestamp) {
+    public static Map<String, String> getNewsParam(String type, int page) {
         Map<String, String> map = new HashMap<>();
-        map.put(KEY_CALLBACK, jsoncallback);
+        map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_TYPE, type);
         map.put(KEY_PAGE, String.valueOf(page));
-        map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
+        map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
 
-    public static Map<String, String> getTopicsNewsParam(String jsoncallback, String id, int page, long timestamp) {
+    public static Map<String, String> getTopicsNewsParam(String id, int page) {
         Map<String, String> map = new HashMap<>();
-        map.put(KEY_CALLBACK, jsoncallback);
+        map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_ID, id);
         map.put(KEY_PAGE, String.valueOf(page));
-        map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
+        map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
 
