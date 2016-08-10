@@ -7,10 +7,10 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -36,17 +36,16 @@ public interface CnbetaApi {
 
     @FormUrlEncoded
     @POST("/comment")
-    Observable<BaseResponse> actOnComment(@Field("csrf_token") String token, @Field("op") String op, @Field("sid") String sid, @Field("tid") String tid);// op as "support against report reply"
+    Observable<BaseResponse> operateComment(@Field("csrf_token") String token, @Field("op") String action, @Field("sid") String sid, @Field("tid") String tid);// op as "support against report"
 
     @FormUrlEncoded
     @POST("/comment")
-    Observable<CommentResponse> publishComment(@Field("csrf_token") String token, @Field("op") String op, @Field("content") String content, @Field("seccode") String captcha, @Field("sid") String sid, @Field("pid") String pid);//op as "publish", pid should be '0'
+    Observable<CommentResponse> publishComment(@Field("csrf_token") String token, @Field("op") String action, @Field("content") String content, @Field("seccode") String captcha, @Field("sid") String sid, @Field("pid") String pid);//op as "publish"
 
     @GET("/captcha.htm")
     Observable<ResponseBody> getCaptchaAddress(@Query("refresh") String refresh, @Query("csrf_token") String token, @Query("_") long timestamp);
 
-    //    @Headers("Accept: image/png, image/svg+xml, image/jxr, image/*;q=0.8, */*;q=0.5")
     @GET("/captcha.htm")
-    Observable<ResponseBody> getCaptchaImage(@Header("Accept") String headerImg, @Header("Referer") String referer, @Query("v") String v);
+    Observable<ResponseBody> getCaptchaImage(@Query("v") String v);
 
 }

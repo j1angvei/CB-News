@@ -42,8 +42,9 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                 });
     }
 
-    public Observable<Boolean> operateComment(String token, String op, String sid, String tid) {
-        return mCnbetaApi.actOnComment(token, op, sid, tid)
+    public Observable<Boolean> operateComment(String... param) {
+        String token = param[0], action = param[1], sid = param[2], tid = param[3];
+        return mCnbetaApi.operateComment(token, action, sid, tid)
                 .map(new Func1<BaseResponse, Boolean>() {
                     @Override
                     public Boolean call(BaseResponse baseResponse) {
@@ -52,8 +53,9 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                 });
     }
 
-    public Observable<CommentResponse> publishComment(String token, String op, String content, String captcha, String sid, String pid) {
-        return mCnbetaApi.publishComment(token, op, content, captcha, sid, pid);
+    public Observable<CommentResponse> publishComment(String... param) {
+        String token = param[0], action = param[1], content = param[2], captcha = param[3], sid = param[4], pid = param[5];
+        return mCnbetaApi.publishComment(token, action, content, captcha, sid, pid);
     }
 
 }

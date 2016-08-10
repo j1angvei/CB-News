@@ -28,10 +28,5 @@ public class ContentLocalSource extends LocalSource<Content> {
 
     }
 
-    public void saveOperation(String token, String op, String sid, String tid) {
-    }
 
-    public void savePublication(String token, String op, String content, String captcha, String sid, String pid) {
-        //captcha needs to be refreshed
-    }
 }

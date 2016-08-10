@@ -12,6 +12,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by Wayne on 2016/7/28.
+ * presenter in mvp
  */
 @PerActivity
 public class CommentsPresenter implements CommentsContract.Presenter {
@@ -47,8 +48,34 @@ public class CommentsPresenter implements CommentsContract.Presenter {
 
                     @Override
                     public void onNext(Comments comments) {
-                        mView.setComments(comments);
+                        mView.showComments(comments);
                     }
                 });
     }
+
+    @Override
+    public void operateComment(final int position, String... param) {
+        mRepository.operateComment(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+                        //change value in adapter, like support add 1
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            mView.afterOperateSuccess(position);
+                        } else mView.afterOperateFail();
+                    }
+                });
+    }
+
 }

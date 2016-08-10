@@ -23,22 +23,31 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.CommentAction;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
+import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
+ * O means original comment, R means referenced comment.
  */
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.ViewHolder> implements BaseAdapter<List<CommentItem>> {
     private final Activity mActivity;
     private final List<CommentItem> mCommentItems;
+    private CommentsContract.View mView;
 
     @Inject
     public CommentsRvAdapter(Activity activity) {
         mActivity = activity;
+        if (activity instanceof CommentsContract.View) {
+            mView = (CommentsContract.View) activity;
+        } else {
+            throw new ClassCastException(activity.toString() + "must implement  CommentsContract.View");
+        }
         mCommentItems = new ArrayList<>();
     }
 
@@ -50,71 +59,100 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        CommentItem item = mCommentItems.get(position);
+        final CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
         //header
         String header = String.format(resources.getString(R.string.cmt_header), item.getUsername(), item.getLocation());
-        holder.tvHeaderOrg.setText(header);
-        String timeOrg = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(item.getDate(), context));
-        holder.tvTimeOrg.setText(timeOrg);
-        holder.tvContentOrg.setText(item.getContent());
+        holder.tvHeaderO.setText(header);
+        String timeO = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(item.getDate(), context));
+        holder.tvTimeO.setText(timeO);
+        holder.tvContentO.setText(item.getContent());
         //button number color
-        String upVoteOrg = String.format(resources.getString(R.string.cmt_action_up_vote), item.getUpVote());
-        holder.btnUpVoteOrg.setText(upVoteOrg);
-        String downVoteOrg = String.format(resources.getString(R.string.cmt_action_down_vote), item.getDownVote());
-        holder.btnDownVoteOrg.setText(downVoteOrg);
-        holder.btnPopupOrg.setOnClickListener(new View.OnClickListener() {
+        String supportO = String.format(resources.getString(R.string.cmt_action_up_vote), item.getUpVote());
+        holder.btnSupportO.setText(supportO);
+        holder.btnSupportO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.btnPopupOrg);
+                mView.beforeOperateComment(CommentAction.SUPPORT.toString(), holder.getAdapterPosition());
             }
         });
-        //if has reference comment, set it visible
-        String idRef = item.getReferenceId();
-        if (idRef.equals("0")) {
-            holder.llContainerRef.setVisibility(View.GONE);
+        String againstO = String.format(resources.getString(R.string.cmt_action_down_vote), item.getDownVote());
+        holder.btnAgainstO.setText(againstO);
+        holder.btnAgainstO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mView.beforeOperateComment(CommentAction.AGAINST.toString(), holder.getAdapterPosition());
+            }
+        });
+        holder.btnPopupO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(holder.getAdapterPosition(), holder.btnPopupO);
+            }
+        });
+        //if has no reference comment aka pid==0, set it invisible
+        String idR = item.getReferenceId();
+        if (idR.equals("0")) {
+            holder.llContainerR.setVisibility(View.GONE);
         } else {
             CommentItem refItem = null;
-            for (CommentItem i : mCommentItems) {
-                if (i.getCommentId().equals(idRef)) {
-                    refItem = i;
+            int refPosition = 0;
+            for (int i = 0; i < mCommentItems.size(); i++) {
+                CommentItem tmpItem = mCommentItems.get(i);
+                if (tmpItem.getCommentId().equals(idR)) {
+                    refItem = tmpItem;
+                    refPosition = i;
                     break;
                 }
             }
             if (refItem != null) {
-                holder.llContainerRef.setVisibility(View.VISIBLE);
-                String headerRef = String.format(resources.getString(R.string.cmt_header), refItem.getUsername(), refItem.getLocation());
-                holder.tvHeaderRef.setText(headerRef);
-                String timeRef = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(refItem.getDate(), context));
-                holder.tvTimeRef.setText(timeRef);
-                holder.tvContentRef.setText(refItem.getContent());
-                String upVoteRef = String.format(resources.getString(R.string.cmt_action_up_vote), refItem.getUpVote());
-                holder.btnUpVoteRef.setText(upVoteRef);
-                String downVoteRef = String.format(resources.getString(R.string.cmt_action_down_vote), refItem.getDownVote());
-                holder.btnDownVoteRef.setText(downVoteRef);
-                holder.btnPopupRef.setOnClickListener(new View.OnClickListener() {
+                holder.llContainerR.setVisibility(View.VISIBLE);
+                String headerR = String.format(resources.getString(R.string.cmt_header), refItem.getUsername(), refItem.getLocation());
+                holder.tvHeaderR.setText(headerR);
+                String timeR = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(refItem.getDate(), context));
+                holder.tvTimeR.setText(timeR);
+                holder.tvContentR.setText(refItem.getContent());
+                String upVoteR = String.format(resources.getString(R.string.cmt_action_up_vote), refItem.getUpVote());
+                holder.btnSupportR.setText(upVoteR);
+                final int finalRefPosition = refPosition;
+                holder.btnSupportR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showPopupMenu(holder.btnPopupRef);
+                        mView.beforeOperateComment(CommentAction.SUPPORT.toString(), finalRefPosition);
+                    }
+                });
+                String downVoteR = String.format(resources.getString(R.string.cmt_action_down_vote), refItem.getDownVote());
+                holder.btnAgainstR.setText(downVoteR);
+                holder.btnAgainstR.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mView.beforeOperateComment(CommentAction.AGAINST.toString(), finalRefPosition);
+                    }
+                });
+                holder.btnPopupR.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPopupMenu(finalRefPosition, holder.btnPopupR);
                     }
                 });
             }
         }
     }
 
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(final int position, View view) {
         PopupMenu popup = new PopupMenu(mActivity, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
                         MessageUtil.shortToast("reply comment", mActivity);
                         return true;
                     case R.id.action_comment_report:
+                        mView.beforeOperateComment(CommentAction.REPORT.toString(), position);
                         MessageUtil.shortToast("report comment", mActivity);
                         return true;
                 }
@@ -145,51 +183,52 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.in_comment_org_header)
-        View inHeaderOrg;
+        View inHeaderO;
         @BindView(R.id.iv_comment_photo)
         ImageView ivPhoto;
         @BindView(R.id.ll_comment_ref)
-        LinearLayout llContainerRef;
+        LinearLayout llContainerR;
         @BindView(R.id.in_comment_ref_header)
-        View inHeaderRef;
+        View inHeaderR;
         @BindView(R.id.tv_comment_ref_content)
-        TextView tvContentRef;
+        TextView tvContentR;
         @BindView(R.id.in_comment_ref_action)
-        View inActionRef;
+        View inActionR;
         @BindView(R.id.tv_comment_org_content)
-        TextView tvContentOrg;
+        TextView tvContentO;
         @BindView(R.id.in_org_comment_action)
-        View inActionOrg;
+        View inActionO;
 
         View itemView;
         //specific view in include tag
-        TextView tvHeaderOrg;
-        TextView tvHeaderRef;
-        TextView tvTimeOrg;
-        TextView tvTimeRef;
-        Button btnUpVoteOrg;
-        Button btnUpVoteRef;
-        Button btnPopupOrg;
-        Button btnDownVoteOrg;
-        Button btnDownVoteRef;
-        Button btnPopupRef;
+        TextView tvHeaderO;
+        TextView tvHeaderR;
+        TextView tvTimeO;
+        TextView tvTimeR;
+        Button btnSupportO;
+        Button btnSupportR;
+        Button btnPopupO;
+        Button btnAgainstO;
+        Button btnAgainstR;
+        Button btnPopupR;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
             ButterKnife.bind(this, itemView);
-            tvHeaderOrg = (TextView) inHeaderOrg.findViewById(R.id.tv_comment_user);
-            tvHeaderRef = (TextView) inHeaderRef.findViewById(R.id.tv_comment_user);
-            tvTimeOrg = (TextView) inHeaderOrg.findViewById(R.id.tv_comment_date);
-            tvTimeRef = (TextView) inHeaderRef.findViewById(R.id.tv_comment_date);
+            tvHeaderO = (TextView) inHeaderO.findViewById(R.id.tv_comment_user);
+            tvHeaderR = (TextView) inHeaderR.findViewById(R.id.tv_comment_user);
+            tvTimeO = (TextView) inHeaderO.findViewById(R.id.tv_comment_date);
+            tvTimeR = (TextView) inHeaderR.findViewById(R.id.tv_comment_date);
             //four buttons of org comment
-            btnUpVoteOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_up_vote);
-            btnDownVoteOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_down_vote);
-            btnPopupOrg = (Button) inActionOrg.findViewById(R.id.btn_comment_popup);
+            btnSupportO = (Button) inActionO.findViewById(R.id.btn_comment_up_vote);
+            btnAgainstO = (Button) inActionO.findViewById(R.id.btn_comment_down_vote);
+            btnPopupO = (Button) inActionO.findViewById(R.id.btn_comment_popup);
             //four buttons of ref comment
-            btnUpVoteRef = (Button) inActionRef.findViewById(R.id.btn_comment_up_vote);
-            btnDownVoteRef = (Button) inActionRef.findViewById(R.id.btn_comment_down_vote);
-            btnPopupRef = (Button) inActionRef.findViewById(R.id.btn_comment_popup);
+            btnSupportR = (Button) inActionR.findViewById(R.id.btn_comment_up_vote);
+            btnAgainstR = (Button) inActionR.findViewById(R.id.btn_comment_down_vote);
+            btnPopupR = (Button) inActionR.findViewById(R.id.btn_comment_popup);
         }
     }
+
 }

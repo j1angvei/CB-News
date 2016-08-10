@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
@@ -23,32 +25,33 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
+ * activity to handle comments relevant stuff
  */
 public class CommentsActivity extends BaseActivity implements CommentsContract.View {
     public static final String NEWS_SID = "CommentsActivity.news_sid";
     public static final String NEWS_SN = "CommentsActivity.news_sn";
     public static final String NEWS_TOKEN = "CommentsActivity.news_token";
+    private static final String TAG_ALL_COMMENTS = "CommentsActivity_all";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-
     @Inject
     FragmentManager mFragmentManager;
     @Inject
     CommentsPresenter mPresenter;
-
-    private String mCsrfToken;
+    private String mToken;
     private String mOp;
+    private Comments mComments;
 
     @Override
     protected void parseIntent() {
+        mToken = getIntent().getStringExtra(NEWS_TOKEN);
         String sid = getIntent().getStringExtra(NEWS_SID);
         String sn = getIntent().getStringExtra(NEWS_SN);
         mOp = String.format("1,%s,%s", sid, sn);
-        mCsrfToken = getIntent().getStringExtra(NEWS_TOKEN);
     }
 
     @Override
@@ -64,7 +67,6 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     protected void initView() {
         mPresenter.setView(this);
         setContentView(R.layout.activity_news_comments);
-
         ButterKnife.bind(this);
         //toolbar
         setSupportActionBar(mToolbar);
@@ -82,7 +84,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
             }
         });
         //load fragment
-        getComments();
+        fetchComments();
     }
 
     @Override
@@ -97,17 +99,50 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     }
 
     @Override
-    public void getComments() {
-        mPresenter.retrieveComments(mCsrfToken, mOp);
+    public void fetchComments() {
+        mPresenter.retrieveComments(mToken, mOp);
     }
 
     @Override
-    public void setComments(Comments comments) {
+    public void showComments(Comments comments) {
         if (comments != null) {
-            mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(comments)).commit();
+            mComments = comments;
+            mFragmentManager.beginTransaction().add(R.id.fl_container, CommentsFragment.newInstance(comments), TAG_ALL_COMMENTS).commit();
         } else {
             MessageUtil.shortToast("comments is null", this);
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void beforeOperateComment(String action, int position) {
+        CommentItem item = getCommentItem(position);
+        mPresenter.operateComment(position, mToken, action, item.getArticleId(), item.getCommentId());
+    }
+
+    private CommentItem getCommentItem(int position) {
+        String sid = mComments.getAllIds().get(position);
+        return mComments.getCommentMap().get(sid);
+    }
+
+    @Override
+    public void afterOperateSuccess(int position) {
+        MessageUtil.shortToast("operate success", this);
+        CommentItem item = getCommentItem(position);
+        item.setUpVote(item.getUpVote() + "1");
+        //if pop comment fragment not visible, change count in all comments
+        ((CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS)).notifyCommentItemChanged(position);
+
+        //number should add 1
+    }
+
+    @Override
+    public void afterOperateFail() {
+        MessageUtil.shortToast("operate failed", this);
     }
 
     @Override
