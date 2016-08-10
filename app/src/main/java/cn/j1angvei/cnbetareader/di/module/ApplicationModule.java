@@ -2,6 +2,9 @@ package cn.j1angvei.cnbetareader.di.module;
 
 import android.app.Application;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,6 +16,7 @@ import cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor;
 import cn.j1angvei.cnbetareader.data.remote.interceptor.JsonpInterceptor;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -54,8 +58,15 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient() {
+    CookieJar provideCookieJar(Application application) {
+        return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkhttpClient(CookieJar cookieJar) {
         return new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
                 .addInterceptor(new AddHeaderInterceptor())
                 .addInterceptor(new JsonpInterceptor())
 //                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
