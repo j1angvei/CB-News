@@ -10,14 +10,12 @@ import java.util.Date;
 
 /**
  * Created by Wayne on 2016/6/13.
+ * represent one comment item
  */
 public final class CommentItem implements Parcelable {
-    @SerializedName("tid")
-    private String commentId;
-    @SerializedName("pid")
-    private String referenceId;
-    @SerializedName("sid")
-    private String articleId;
+    private String tid;
+    private String pid;
+    private String sid;
     private Date date;
     @SerializedName("name")
     private String username;
@@ -28,32 +26,32 @@ public final class CommentItem implements Parcelable {
     @SerializedName("comment")
     private String content;
     @SerializedName("score")
-    private String upVote;
+    private String support;
     @SerializedName("reason")
-    private String downVote;
+    private String against;
 
-    public String getCommentId() {
-        return commentId;
+    public String getTid() {
+        return tid;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
-    public String getReferenceId() {
-        return referenceId;
+    public String getPid() {
+        return pid;
     }
 
-    public void setReferenceId(String referenceId) {
-        this.referenceId = referenceId;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
-    public String getArticleId() {
-        return articleId;
+    public String getSid() {
+        return sid;
     }
 
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 
     public Date getDate() {
@@ -96,36 +94,20 @@ public final class CommentItem implements Parcelable {
         this.content = content;
     }
 
-    public String getUpVote() {
-        return upVote;
+    public String getSupport() {
+        return support;
     }
 
-    public void setUpVote(String upVote) {
-        this.upVote = upVote;
+    public void setSupport(String support) {
+        this.support = support;
     }
 
-    public String getDownVote() {
-        return downVote;
+    public String getAgainst() {
+        return against;
     }
 
-    public void setDownVote(String downVote) {
-        this.downVote = downVote;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentItem{" +
-                "commentId='" + commentId + '\'' +
-                ", referenceId='" + referenceId + '\'' +
-                ", articleId='" + articleId + '\'' +
-                ", date='" + date + '\'' +
-                ", username='" + username + '\'' +
-                ", headPhoto='" + headPhoto + '\'' +
-                ", location='" + location + '\'' +
-                ", content='" + content + '\'' +
-                ", upVote='" + upVote + '\'' +
-                ", downVote='" + downVote + '\'' +
-                '}';
+    public void setAgainst(String against) {
+        this.against = against;
     }
 
     @Override
@@ -135,33 +117,33 @@ public final class CommentItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.commentId);
-        dest.writeString(this.referenceId);
-        dest.writeString(this.articleId);
+        dest.writeString(this.tid);
+        dest.writeString(this.pid);
+        dest.writeString(this.sid);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeString(this.username);
         dest.writeString(this.headPhoto);
         dest.writeString(this.location);
         dest.writeString(this.content);
-        dest.writeString(this.upVote);
-        dest.writeString(this.downVote);
+        dest.writeString(this.support);
+        dest.writeString(this.against);
     }
 
     public CommentItem() {
     }
 
     protected CommentItem(Parcel in) {
-        this.commentId = in.readString();
-        this.referenceId = in.readString();
-        this.articleId = in.readString();
+        this.tid = in.readString();
+        this.pid = in.readString();
+        this.sid = in.readString();
         long tmpDate = in.readLong();
         this.date = tmpDate == -1 ? null : new Date(tmpDate);
         this.username = in.readString();
         this.headPhoto = in.readString();
         this.location = in.readString();
         this.content = in.readString();
-        this.upVote = in.readString();
-        this.downVote = in.readString();
+        this.support = in.readString();
+        this.against = in.readString();
     }
 
     public static final Parcelable.Creator<CommentItem> CREATOR = new Parcelable.Creator<CommentItem>() {

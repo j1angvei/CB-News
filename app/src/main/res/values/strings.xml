@@ -36,7 +36,7 @@
     <!--comment-->
     <string name="cmt_header">%1$s from %2$s</string>
     <string name="cmt_time">Post at %1$s</string>
-    <string name="cmt_action_up_vote">Agree (%1$s) </string>
+    <string name="cmt_action_up_vote">Support (%1$s) </string>
     <string name="cmt_action_down_vote">Against (%1$s) </string>
     <string name="title_activity_comments">Comments</string>
     <string name="action_comment_reply">Reply</string>

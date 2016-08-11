@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_comment_ref"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_comment_ref"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_comment_header"/>
+
+    <include layout="@layout/include_comment_content"/>
+
+    <include layout="@layout/include_comment_action"/>
+</LinearLayout>

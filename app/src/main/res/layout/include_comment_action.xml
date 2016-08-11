@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.ButtonBarLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="end">
+    android:gravity="end"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
 
-    <Button
-        android:id="@+id/btn_comment_up_vote"
-        style="?android:attr/buttonBarButtonStyle"
+    <TextView
+        android:id="@+id/tv_comment_support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="2dp"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:text="Agree"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Support"
+        android:textAllCaps="true"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/text_size_small"/>
 
-    <Button
-        android:id="@+id/btn_comment_down_vote"
-        style="?android:attr/buttonBarButtonStyle"
+    <TextView
+        android:id="@+id/tv_comment_against"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:text="Against"
+        android:textAllCaps="true"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/text_size_small"/>
 
-    <Button
-        android:id="@+id/btn_comment_popup"
-        style="?android:attr/buttonBarButtonStyle"
+    <TextView
+        android:id="@+id/tv_comment_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:text="@string/vertical_ellipsis"
-        android:textColor="@color/textSecondary"
-        android:textSize="@dimen/text_size_small"
-        android:textStyle="bold"/>
-
-</android.support.v7.widget.ButtonBarLayout>
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_comment_more_action"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"/>
+</LinearLayout>

@@ -117,7 +117,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 //    @Override
 //    public void beforeOperateComment(String action, int position) {
 //        CommentItem item = getCommentItem(position);
-//        mPresenter.operateComment(position, mToken, action, item.getArticleId(), item.getCommentId());
+//        mPresenter.operateComment(position, mToken, action, item.getSid(), item.getTid());
 //    }
 //
 //    private CommentItem getCommentItem(int position) {
@@ -129,7 +129,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 //    public void afterOperateSuccess(int position) {
 //        MessageUtil.toast("operate success", this);
 //        CommentItem item = getCommentItem(position);
-//        item.setUpVote(item.getUpVote() + "1");
+//        item.setSupport(item.getSupport() + "1");
 //        //if pop comment fragment not visible, change count in all comments
 //        ((CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS)).notifyCommentItemChanged(position);
 //

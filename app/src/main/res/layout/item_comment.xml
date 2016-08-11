@@ -27,9 +27,8 @@
                 android:id="@+id/iv_comment_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="User photo"
                 android:scaleType="fitStart"
-                android:src="@drawable/deaves"/>
+                android:src="@drawable/ic_anonymous"/>
 
             <Space
                 android:layout_width="4dp"
@@ -40,45 +39,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_comment_ref"
+                <ViewStub
+                    android:id="@+id/vs_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/bg_comment_ref"
-                    android:orientation="vertical"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="4dp"
-                    android:visibility="gone">
+                    android:inflatedId="@id/ll_comment_ref"
+                    android:layout="@layout/include_comment_ref"/>
 
-                    <include
-                        android:id="@+id/in_comment_ref_header"
-                        layout="@layout/include_comment_header"/>
+                <include layout="@layout/include_comment_content"/>
 
-                    <TextView
-                        android:id="@+id/tv_comment_ref_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Reference comment"
-                        android:textSize="@dimen/text_size_small"/>
-
-                    <include
-                        android:id="@+id/in_comment_ref_action"
-                        layout="@layout/include_comment_action"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_comment_org_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Original comment"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_size_medium"/>
-
-                <include
-                    android:id="@+id/in_org_comment_action"
-                    layout="@layout/include_comment_action"/>
+                <include layout="@layout/include_comment_action"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
