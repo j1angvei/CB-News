@@ -29,7 +29,6 @@ import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.BookmarkFragment;
-import cn.j1angvei.cnbetareader.fragment.ErrorFragment;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
@@ -72,7 +71,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Inject
     PrefsUtil mPrefsUtil;
     Fragment mErrorFragment;
-    boolean mIsTokenValid = false;
+    boolean mIsTokenValid;
 
     @Override
     protected void parseIntent() {
@@ -85,6 +84,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
+        mIsTokenValid = !TextUtils.isEmpty(mPrefsUtil.readToken());
     }
 
     @Override
@@ -99,17 +99,9 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         //navigation view
         mNavigationView.setNavigationItemSelectedListener(this);
-        //add error fragment but is invisible
-//        addErrorFragment();
-//
-//        //check if token is ready
-//        updateTokenFlag();
-//        if (mIsTokenValid) {
-//        } else {
-//            updateTokenFlag();
-//        }
+        //load init fragment aka latest news
         String title = getResources().getString(R.string.nav_latest_news);
-        loadNewsFragment(ALL, title);
+        checkToken(ALL, title);
     }
 
     @Override
@@ -179,7 +171,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
             default:
                 return true;
         }
-        loadNewsFragment(source, item.getTitle());
+        checkToken(source, item.getTitle());
         return true;
     }
 
@@ -214,72 +206,27 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .replace(R.id.fl_container, fragment, type)
                 .addToBackStack(null)
                 .commit();
-
     }
 
-    private void updateTokenFlag() {
+    /**
+     * Load specific fragment only if csrf_token is valid
+     *
+     * @param source represents news source
+     * @param title  after fragment is loaded, change the toolbar title
+     */
+    private void checkToken(final Source source, final CharSequence title) {
         //check if token already stored
-        if (mIsTokenValid || !TextUtils.isEmpty(mPrefsUtil.readToken())) {
-            mIsTokenValid = true;
+        if (mIsTokenValid) {
+            loadNewsFragment(source, title);
             return;
         }
-
         //token not set, retrieve it now
         showLoading();
         mCnbetaApi.getCsrfToken()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-                        hideLoading();
-                        mIsTokenValid = true;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        MessageUtil.snackWithAction(mCoordinatorLayout, R.string.snack_info_connection_error,
-                                R.string.snack_action_retry, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        MessageUtil.toast("test action", view.getContext());
-//                                        updateTokenFlag();
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            String token = ApiUtil.parseToken(responseBody.string());
-                            MessageUtil.snack(mCoordinatorLayout, token);
-                            mPrefsUtil.writeToken(token);
-                        } catch (IOException e) {
-                            //something wrong with response
-                            Log.e(TAG, "onNext: " + responseBody, e);
-                        }
-                    }
-                });
-
+                .subscribe(new CsrfTokenSubscriber(source, title));
     }
-
-    private void addErrorFragment() {
-        mErrorFragment = mFragmentManager.findFragmentByTag("error");
-        if (mErrorFragment == null) {
-            mErrorFragment = new ErrorFragment();
-        }
-        if (!mErrorFragment.isAdded()) {
-            mFragmentManager.beginTransaction().add(R.id.fl_container, mErrorFragment).commit();
-        }
-    }
-
-    private void removeErrorFragment() {
-        if (mErrorFragment.isVisible()) {
-            mFragmentManager.beginTransaction().remove(mErrorFragment).commit();
-        }
-    }
-
 
     @Override
     public void showLoading() {
@@ -289,5 +236,46 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void hideLoading() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    private class CsrfTokenSubscriber extends Subscriber<ResponseBody> {
+        private final Source source;
+        private final CharSequence title;
+
+        CsrfTokenSubscriber(Source source, CharSequence title) {
+            this.source = source;
+            this.title = title;
+        }
+
+        @Override
+        public void onCompleted() {
+            hideLoading();
+            mIsTokenValid = true;
+            loadNewsFragment(source, title);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideLoading();
+            MessageUtil.snackWithAction(mCoordinatorLayout, R.string.snack_info_connection_error,
+                    R.string.snack_action_retry, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            checkToken(source, title);
+                        }
+                    });
+        }
+
+        @Override
+        public void onNext(ResponseBody body) {
+            try {
+                String token = ApiUtil.parseToken(body.string());
+                MessageUtil.snack(mCoordinatorLayout, token);
+                mPrefsUtil.writeToken(token);
+            } catch (IOException e) {
+                //something wrong with response
+                Log.e(TAG, "onNext: " + body, e);
+            }
+        }
     }
 }
