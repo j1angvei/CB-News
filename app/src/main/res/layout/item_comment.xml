@@ -27,24 +27,21 @@
                 android:id="@+id/iv_comment_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:scaleType="fitStart"
                 android:src="@drawable/ic_anonymous"/>
 
             <Space
-                android:layout_width="4dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"/>
 
             <LinearLayout
+                android:id="@+id/insert_point_ref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ViewStub
-                    android:id="@+id/vs_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inflatedId="@id/ll_comment_ref"
-                    android:layout="@layout/include_comment_ref"/>
+                <!--<include layout="@layout/include_comment_ref"/>-->
 
                 <include layout="@layout/include_comment_content"/>
 

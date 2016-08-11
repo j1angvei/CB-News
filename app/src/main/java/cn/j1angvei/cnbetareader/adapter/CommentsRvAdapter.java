@@ -6,12 +6,12 @@ import android.content.res.Resources;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +35,7 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  */
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.ViewHolder> implements BaseAdapter<List<CommentItem>> {
+    private static final String TAG = "CommentsRvAdapter";
     private final Activity mActivity;
     private final List<CommentItem> mCommentItems;
     private CommentsContract.View mView;
@@ -52,12 +53,14 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder: ");
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: " + holder.toString() + " pos " + position);
         final CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
         holder.cvgOrigin.setComment(item, context, holder.getAdapterPosition());
@@ -75,12 +78,17 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 }
             }
             if (itemReference != null) {
-                View parentView = holder.vsReference.inflate();
-                holder.cvgReference.findViews(parentView);
-                holder.cvgReference.setComment(itemReference, context, positionReference);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewReference = inflater.inflate(R.layout.include_comment_ref, null);
+                holder.cvgReference.findViews(viewReference);
+                holder.cvgReference.setComment(itemReference, holder.itemView.getContext(), positionReference);
+                ViewGroup parentView = (ViewGroup) holder.itemView.findViewById(R.id.insert_point_ref);
+                parentView.addView(viewReference, 0, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                holder.setIsRecyclable(false);
             }
         }
     }
+
 
     private static void showPopupMenu(final int position, final View view) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
@@ -94,7 +102,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                         MessageUtil.toast("reply comment" + position, view.getContext());
                         return true;
                     case R.id.action_comment_report:
-//                        mView.beforeOperateComment(CommentAction.REPORT.toString(), position);
                         MessageUtil.toast("report comment" + position, view.getContext());
                         return true;
                 }
@@ -126,27 +133,26 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
     static class ViewHolder extends RecyclerView.ViewHolder {
         CommentViewGroup cvgOrigin;
         CommentViewGroup cvgReference;
-        ViewStub vsReference;
         View itemView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            Log.d(TAG, "ViewHolder: " + isRecyclable() + "  " + toString());
             this.itemView = itemView;
             cvgOrigin = new CommentViewGroup();
             cvgOrigin.findViews(itemView);
             cvgReference = new CommentViewGroup();
-            vsReference = (ViewStub) itemView.findViewById(R.id.vs_comment);
         }
     }
 
     private static class CommentViewGroup {
-        TextView tvUser;
-        TextView tvDate;
-        TextView tvContent;
-        TextView tvSupport;
-        TextView tvAgainst;
-        TextView tvPopup;
-        ImageView ivPhoto;
+        private TextView tvUser;
+        private TextView tvDate;
+        private TextView tvContent;
+        private TextView tvSupport;
+        private TextView tvAgainst;
+        private TextView tvPopup;
+        private ImageView ivPhoto;
 
         public void findViews(View view) {
             tvUser = (TextView) view.findViewById(R.id.tv_comment_user);
