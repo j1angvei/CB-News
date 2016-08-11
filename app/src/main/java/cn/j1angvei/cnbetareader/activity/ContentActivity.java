@@ -29,6 +29,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/5.
+ * display news content
  */
 public class ContentActivity extends BaseActivity implements ContentContract.View {
     public static final String NEWS_POSITION = "ContentActivity.news_position";
@@ -91,7 +92,7 @@ public class ContentActivity extends BaseActivity implements ContentContract.Vie
                     public void onClick(View view) {
                         Content content = mContentMap.get(mSids.get(position));
                         if (content != null) {
-                            Navigator.toComments(content.getSid(), content.getToken(), content.getSn(), view.getContext());
+                            Navigator.toComments(content.getSid(), content.getSn(), view.getContext());
                         } else {
                             MessageUtil.toast("content is null", view.getContext());
                         }

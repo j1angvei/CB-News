@@ -70,7 +70,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     CnbetaApi mCnbetaApi;
     @Inject
     PrefsUtil mPrefsUtil;
-    Fragment mErrorFragment;
     boolean mIsTokenValid;
 
     @Override

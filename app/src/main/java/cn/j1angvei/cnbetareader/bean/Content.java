@@ -17,7 +17,6 @@ public final class Content implements Parcelable {
     private String detail;
     private String sid;
     private String sn;
-    private String token;
     private String topicPhoto;//src
 
     public String getTitle() {
@@ -76,35 +75,12 @@ public final class Content implements Parcelable {
         this.sn = sn;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getTopicPhoto() {
         return topicPhoto;
     }
 
     public void setTopicPhoto(String topicPhoto) {
         this.topicPhoto = topicPhoto;
-    }
-
-    @Override
-    public String toString() {
-        return "Content{" +
-                "\ntitle='" + title + '\'' +
-                ",\n date='" + date + '\'' +
-                ",\n source='" + source + '\'' +
-                ",\n summary='" + summary + '\'' +
-                ", \ndetail='" + detail + '\'' +
-                ", \nsid='" + sid + '\'' +
-                ", \nsn='" + sn + '\'' +
-                ", \ntoken='" + token + '\'' +
-                ", \ntopicPhoto='" + topicPhoto + '\'' +
-                '}';
     }
 
     public Content() {
@@ -118,7 +94,6 @@ public final class Content implements Parcelable {
         detail = in.readString();
         sid = in.readString();
         sn = in.readString();
-        token = in.readString();
         topicPhoto = in.readString();
     }
 
@@ -148,7 +123,6 @@ public final class Content implements Parcelable {
         parcel.writeString(detail);
         parcel.writeString(summary);
         parcel.writeString(sn);
-        parcel.writeString(token);
         parcel.writeString(topicPhoto);
     }
 }

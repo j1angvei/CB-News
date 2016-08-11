@@ -32,18 +32,17 @@ public final class Navigator {
 
     }
 
-    public static void toComments(String sid, String token, String sn, Context context) {
+    public static void toComments(String sid, String sn, Context context) {
         if (context != null) {
             Intent intent = new Intent(context, CommentsActivity.class);
             intent.putExtra(CommentsActivity.NEWS_SID, sid);
-            intent.putExtra(CommentsActivity.NEWS_TOKEN, token);
             intent.putExtra(CommentsActivity.NEWS_SN, sn);
             context.startActivity(intent);
         }
 
     }
 
-    public static void toBroswer(String sid, boolean mobileFirst, Context context) {
+    public static void toBrowser(String sid, boolean mobileFirst, Context context) {
         if (context != null) {
             String pc = "http://www.cnbeta.com/articles/SID.htm";
             String mobile = "http://m.cnbeta.com/view/SID.htm";

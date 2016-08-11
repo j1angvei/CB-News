@@ -17,6 +17,7 @@ import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
 import cn.j1angvei.cnbetareader.di.module.DataModule;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
 
@@ -52,5 +53,7 @@ public interface ApplicationComponent {
     CnbetaApi cnbetaApi();
 
     PrefsUtil prefUtil();
+
+    ApiUtil apiUtil();
 
 }

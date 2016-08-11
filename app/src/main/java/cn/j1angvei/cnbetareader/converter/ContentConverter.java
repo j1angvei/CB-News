@@ -84,18 +84,8 @@ public class ContentConverter implements Converter<Content> {
             sn = sn.substring(sn.indexOf('"') + 1, sn.lastIndexOf('"'));
         }
         content.setSn(sn);
-        //parse token
-        String token = "";
-        pattern = Pattern.compile("TOKEN:\".+?\"");
-        matcher = pattern.matcher(html);
-        if (matcher.find()) {
-            token = matcher.group();
-            token = token.substring(token.indexOf('"') + 1, token.lastIndexOf('"'));
-        }
-        content.setToken(token);
         //parse topic image url
         String src = doc.select(".introduction > div > a > img").attr("src");
-//        String src = doc.select(".introduction img").attr("src");
         content.setTopicPhoto(src);
         return content;
     }

@@ -18,15 +18,17 @@ public class NewsPresenter<N> implements NewsContract.Presenter<N> {
     public static final String TAG = "NewsPresenter";
     NewsContract.View<N> mView;
     NewsRepository<N> mRepository;
+    final ApiUtil mApiUtil;
 
-    public NewsPresenter(NewsRepository<N> repository) {
+    public NewsPresenter(NewsRepository<N> repository, ApiUtil apiUtil) {
         mRepository = repository;
+        mApiUtil = apiUtil;
     }
 
     @Override
     public void retrieveNews(String type, int page) {
         mView.showLoading();
-        Map<String, String> param = ApiUtil.getNewsParam(type, page);
+        Map<String, String> param = mApiUtil.getNewsParam(type, page);
         mRepository.getData(type, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

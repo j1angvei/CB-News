@@ -6,12 +6,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by Wayne on 2016/8/10.
  */
+@Singleton
 public class ApiUtil {
     public static final String BASE_URL = "http://www.cnbeta.com";
-
     //parameter in request
     private static final String KEY_CALLBACK = "jsoncallback";
     private static final String KEY_TYPE = "type";
@@ -28,6 +31,13 @@ public class ApiUtil {
     private static final String KEY_REFRESH = "refresh";
     public static final String KEY_V = "v";
     public static final String KEY_LETTER = "letter";
+
+    final PrefsUtil mPrefsUtil;
+
+    @Inject
+    public ApiUtil(PrefsUtil prefsUtil) {
+        mPrefsUtil = prefsUtil;
+    }
 
     public static String parseToken(String html) {
         Pattern pattern = Pattern.compile("TOKEN:\".+?\"");
@@ -48,48 +58,50 @@ public class ApiUtil {
         return jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
     }
 
-    public static Map<String, String> getNewsParam(String type, int page) {
+    public Map<String, String> getNewsParam(String type, int page) {
         Map<String, String> map = new HashMap<>();
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_TYPE, type);
         map.put(KEY_PAGE, String.valueOf(page));
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
 
-    public static Map<String, String> getTopicsNewsParam(String id, int page) {
+    public Map<String, String> getTopicsNewsParam(String topicId, int page) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
-        map.put(KEY_ID, id);
+        map.put(KEY_ID, topicId);
         map.put(KEY_PAGE, String.valueOf(page));
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
 
-    public static Map<String, String> getCommentsParam(String token, String sid, String sn) {
+    public Map<String, String> getCommentsParam(String sid, String sn) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, token);
-        String op = getCommentsOp(sid, sn);
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        String op = assembleCommentsOp(sid, sn);
         map.put(KEY_OP, op);
         return map;
     }
 
-    private static String getCommentsOp(String sid, String sn) {
+    private static String assembleCommentsOp(String sid, String sn) {
         return String.format("1,%s,%s", sid, sn);
     }
 
-    public static Map<String, String> getOperateCommentParam(String token, String action, String sid, String tid) {
+    public Map<String, String> getOperateCommentParam(String action, String sid, String tid) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, token);
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
         map.put(KEY_OP, action);
         map.put(KEY_SID, sid);
         map.put(KEY_TID, tid);
         return map;
     }
 
-    public static Map<String, String> getPublishCommentParam(String token, String action, String content, String captcha, String sid, String pid) {
+    public Map<String, String> getPublishCommentParam(String action, String content, String captcha, String sid, String pid) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, token);
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
         map.put(KEY_OP, action);
         map.put(KEY_CONTENT, content);
         map.put(KEY_CAPTCHA, captcha);
@@ -98,12 +110,12 @@ public class ApiUtil {
         return map;
     }
 
-    public static Map<String, String> getCaptchaUrlParam(String token, long timestamp, String refresh) {
+    public Map<String, String> getCaptchaUrlParam(long timestamp) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, token);
+        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
         //refresh are always "1"
-        map.put(KEY_REFRESH, refresh);
+        map.put(KEY_REFRESH, "1");
         return map;
     }
 

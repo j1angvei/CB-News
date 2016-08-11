@@ -29,7 +29,6 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 public class CommentsActivity extends BaseActivity implements CommentsContract.View {
     public static final String NEWS_SID = "CommentsActivity.news_sid";
     public static final String NEWS_SN = "CommentsActivity.news_sn";
-    public static final String NEWS_TOKEN = "CommentsActivity.news_token";
     private static final String TAG_ALL_COMMENTS = "CommentsActivity_all";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -41,12 +40,11 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     FragmentManager mFragmentManager;
     @Inject
     CommentsPresenter mPresenter;
-    private String mToken, mSid, mSn;
+    private String mSid, mSn;
     private Comments mComments;
 
     @Override
     protected void parseIntent() {
-        mToken = getIntent().getStringExtra(NEWS_TOKEN);
         mSid = getIntent().getStringExtra(NEWS_SID);
         mSn = getIntent().getStringExtra(NEWS_SN);
     }
@@ -97,7 +95,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 
     @Override
     public void refreshComments() {
-        mPresenter.retrieveComments(mToken, mSid, mSn);
+        mPresenter.retrieveComments(mSid, mSn);
     }
 
     @Override

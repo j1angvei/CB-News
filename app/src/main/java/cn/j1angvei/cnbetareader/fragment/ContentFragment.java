@@ -110,10 +110,10 @@ public class ContentFragment extends BaseFragment {
                 MessageUtil.toast("bookmark", getActivity());
                 return true;
             case R.id.menu_content_open_mobile:
-                Navigator.toBroswer(mContent.getSid(), true, getActivity());
+                Navigator.toBrowser(mContent.getSid(), true, getActivity());
                 return true;
             case R.id.menu_content_open_pc:
-                Navigator.toBroswer(mContent.getSid(), false, getActivity());
+                Navigator.toBrowser(mContent.getSid(), false, getActivity());
                 return true;
         }
         return false;

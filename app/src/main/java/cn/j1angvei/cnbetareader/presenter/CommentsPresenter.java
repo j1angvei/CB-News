@@ -25,10 +25,12 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     private static final String TAG = "CommentsPresenter";
     private final CommentsRepository mRepository;
     private CommentsContract.View mView;
+    private final ApiUtil mApiUtil;
 
     @Inject
-    public CommentsPresenter(CommentsRepository repository) {
+    public CommentsPresenter(CommentsRepository repository, ApiUtil apiUtil) {
         mRepository = repository;
+        mApiUtil = apiUtil;
     }
 
     @Override
@@ -37,10 +39,10 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     }
 
     @Override
-    public void retrieveComments(String token, String sid, String sn) {
+    public void retrieveComments(String sid, String sn) {
         mView.showLoading();
         String referer = HeaderUtil.getRefererValue(sid);
-        Map<String, String> param = ApiUtil.getCommentsParam(token, sid, sn);
+        Map<String, String> param = mApiUtil.getCommentsParam(sid, sn);
         mRepository.getData(referer, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

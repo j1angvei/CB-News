@@ -23,16 +23,18 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
     private static final String TAG = "MyTopicsPresenter";
     private MyTopicsContract.View mView;
     private MyTopicsRepository mRepository;
+    private ApiUtil mApiUtil;
 
     @Inject
-    public MyTopicsPresenter(MyTopicsRepository repository) {
+    public MyTopicsPresenter(MyTopicsRepository repository, ApiUtil apiUtil) {
         mRepository = repository;
+        mApiUtil = apiUtil;
     }
 
     @Override
     public void retrieveMyTopics(int page, String topicId) {
         mView.showLoading();
-        Map<String, String> param = ApiUtil.getTopicsNewsParam(topicId, page);
+        Map<String, String> param = mApiUtil.getTopicsNewsParam(topicId, page);
         mRepository.getData(null, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
