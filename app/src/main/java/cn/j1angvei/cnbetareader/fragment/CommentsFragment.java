@@ -97,13 +97,13 @@ public class CommentsFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_comment_time_order:
-                MessageUtil.shortToast("time order", getActivity());
+                MessageUtil.toast("time order", getActivity());
                 return true;
             case R.id.menu_comment_switch_comment:
-                MessageUtil.shortToast("popular comment", getActivity());
+                MessageUtil.toast("popular comment", getActivity());
                 return true;
             case R.id.menu_comment_mini_card:
-                MessageUtil.shortToast("mini card", getActivity());
+                MessageUtil.toast("mini card", getActivity());
                 return true;
         }
         return true;

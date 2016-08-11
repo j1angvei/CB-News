@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.util;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class ApiUtil {
     }
 
     public static Map<String, String> getTopicsNewsParam(String id, int page) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_ID, id);
         map.put(KEY_PAGE, String.valueOf(page));
@@ -66,7 +67,7 @@ public class ApiUtil {
     }
 
     public static Map<String, String> getCommentsParam(String token, String sid, String sn) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, token);
         String op = getCommentsOp(sid, sn);
         map.put(KEY_OP, op);
@@ -78,7 +79,7 @@ public class ApiUtil {
     }
 
     public static Map<String, String> getOperateCommentParam(String token, String action, String sid, String tid) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, token);
         map.put(KEY_OP, action);
         map.put(KEY_SID, sid);
@@ -87,7 +88,7 @@ public class ApiUtil {
     }
 
     public static Map<String, String> getPublishCommentParam(String token, String action, String content, String captcha, String sid, String pid) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, token);
         map.put(KEY_OP, action);
         map.put(KEY_CONTENT, content);
@@ -98,7 +99,7 @@ public class ApiUtil {
     }
 
     public static Map<String, String> getCaptchaUrlParam(String token, long timestamp, String refresh) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, token);
         map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
         //refresh are always "1"

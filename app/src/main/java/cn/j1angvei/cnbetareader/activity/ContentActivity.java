@@ -93,7 +93,7 @@ public class ContentActivity extends BaseActivity implements ContentContract.Vie
                         if (content != null) {
                             Navigator.toComments(content.getSid(), content.getToken(), content.getSn(), view.getContext());
                         } else {
-                            MessageUtil.shortToast("content is null", view.getContext());
+                            MessageUtil.toast("content is null", view.getContext());
                         }
                     }
                 });

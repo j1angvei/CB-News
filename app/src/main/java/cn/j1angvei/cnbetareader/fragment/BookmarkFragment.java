@@ -25,7 +25,6 @@ public class BookmarkFragment extends NewsFragment<Bookmark, BookmarkRvAdapter.V
 
     @Override
     public void onClick(View view) {
-        MessageUtil.longToast("bookmark", getActivity());
-        MessageUtil.longSnack(view);
+        MessageUtil.toast("bookmark", getActivity());
     }
 }

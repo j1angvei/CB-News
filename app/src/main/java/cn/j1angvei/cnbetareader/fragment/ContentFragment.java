@@ -104,10 +104,10 @@ public class ContentFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_content_share:
-                MessageUtil.shortToast("share", getActivity());
+                MessageUtil.toast("share", getActivity());
                 return true;
             case R.id.menu_content_bookmark:
-                MessageUtil.shortToast("bookmark", getActivity());
+                MessageUtil.toast("bookmark", getActivity());
                 return true;
             case R.id.menu_content_open_mobile:
                 Navigator.toBroswer(mContent.getSid(), true, getActivity());

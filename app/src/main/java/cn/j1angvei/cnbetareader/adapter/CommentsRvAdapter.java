@@ -148,11 +148,11 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
-                        MessageUtil.shortToast("reply comment", mActivity);
+                        MessageUtil.toast("reply comment", mActivity);
                         return true;
                     case R.id.action_comment_report:
 //                        mView.beforeOperateComment(CommentAction.REPORT.toString(), position);
-                        MessageUtil.shortToast("report comment", mActivity);
+                        MessageUtil.toast("report comment", mActivity);
                         return true;
                 }
                 return false;

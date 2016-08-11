@@ -77,7 +77,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageUtil.shortToast("add comments", view.getContext());
+                MessageUtil.toast("add comments", view.getContext());
             }
         });
         //load data aka comments
@@ -112,7 +112,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
                 ((CommentsFragment) fragment).notifyDataSetChanged();
             }
         } else {
-            MessageUtil.shortToast("comments is null", this);
+            MessageUtil.toast("comments is null", this);
         }
     }
 
@@ -129,7 +129,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 //
 //    @Override
 //    public void afterOperateSuccess(int position) {
-//        MessageUtil.shortToast("operate success", this);
+//        MessageUtil.toast("operate success", this);
 //        CommentItem item = getCommentItem(position);
 //        item.setUpVote(item.getUpVote() + "1");
 //        //if pop comment fragment not visible, change count in all comments
@@ -140,7 +140,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 //
 //    @Override
 //    public void afterOperateFail() {
-//        MessageUtil.shortToast("operate failed", this);
+//        MessageUtil.toast("operate failed", this);
 //    }
 
     @Override

@@ -43,5 +43,7 @@
     <string name="action_comment_report">Report</string>
     <string name="menu_comment_ordered_by_time">Ordered by date</string>
     <string name="menu_comment_switch">Popular comments</string>
-
+    <!--snack-->
+    <string name="snack_info_connection_error">Connection Error!</string>
+    <string name="snack_action_retry">Retry</string>
 </resources>

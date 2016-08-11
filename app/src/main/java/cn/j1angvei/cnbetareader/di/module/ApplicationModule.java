@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -21,6 +20,7 @@ import cn.j1angvei.cnbetareader.util.DateUtil;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
+import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -67,13 +67,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    ClearableCookieJar provideCookieJar(Application application) {
+    CookieJar provideCookieJar(Application application) {
         return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient(ClearableCookieJar cookieJar, Cache cache) {
+    OkHttpClient provideOkhttpClient(CookieJar cookieJar, Cache cache) {
         return new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .cache(cache)

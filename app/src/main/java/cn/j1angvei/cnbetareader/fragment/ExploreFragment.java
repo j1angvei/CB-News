@@ -75,7 +75,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_spinner:
-                MessageUtil.shortToast("spinner", getActivity());
+                MessageUtil.toast("spinner", getActivity());
                 break;
             default:
                 break;
@@ -158,7 +158,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                MessageUtil.shortToast("nothing  selected", getActivity());
+                MessageUtil.toast("nothing  selected", getActivity());
             }
         });
     }

@@ -51,7 +51,7 @@ public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHo
         holder.ivThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageUtil.shortToast("to topic in future", mActivity);
+                MessageUtil.toast("to topic in future", mActivity);
             }
         });
         holder.tvName.setText(topic.getTitle());
@@ -66,10 +66,10 @@ public class ExploreRvAdapter extends NewsAdapter<Topic, ExploreRvAdapter.ViewHo
 //                    public boolean onMenuItemClick(MenuItem item) {
 //                        switch (item.getItemId()) {
 //                            case R.id.action_topic_add_to_my_topics:
-//                                MessageUtil.shortToast("add to my topic", mActivity);
+//                                MessageUtil.toast("add to my topic", mActivity);
 //                                return true;
 //                            case R.id.action_topic_open_topic_articles:
-//                                MessageUtil.shortToast("open topic articles", mActivity);
+//                                MessageUtil.toast("open topic articles", mActivity);
 //                                return true;
 //                        }
 //                        return false;

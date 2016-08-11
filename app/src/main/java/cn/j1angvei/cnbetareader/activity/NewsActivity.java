@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 
@@ -19,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Source;
+import cn.j1angvei.cnbetareader.contract.BaseView;
 import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
@@ -39,7 +43,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, BaseView {
     private static final String TAG = "NewsActivity";
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -47,7 +51,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.coordinator_layout)
+    CoordinatorLayout mCoordinatorLayout;
     @Inject
     FragmentManager mFragmentManager;
     @Inject
@@ -69,12 +76,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        checkToken();
-    }
-
-    @Override
     protected void initView() {
         setContentView(R.layout.activity_news_list);
         ButterKnife.bind(this);
@@ -88,6 +89,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         mNavigationView.setNavigationItemSelectedListener(this);
         //add init fragment
         String tag = Source.LATEST_NEWS.getValue();
+        checkToken();
         mFragmentManager.beginTransaction().add(R.id.fl_container, ArticlesFragment.newInstance(tag), tag).commit();
         setTitle(R.string.nav_latest_news);
     }
@@ -102,10 +104,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                MessageUtil.shortToast("search", this);
+                MessageUtil.toast("search", this);
                 break;
             case R.id.menu_mini_card:
-                MessageUtil.shortToast("mini card", this);
+                MessageUtil.toast("mini card", this);
                 break;
             default:
                 break;
@@ -175,13 +177,13 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.nav_download:
-                MessageUtil.shortToast("download", this);
+                MessageUtil.toast("download", this);
                 return true;
             case R.id.nav_settings:
-                MessageUtil.shortToast("setting", this);
+                MessageUtil.toast("setting", this);
                 return true;
             case R.id.nav_exit:
-                MessageUtil.shortToast("exit", this);
+                MessageUtil.toast("exit", this);
                 return true;
             default:
                 return true;
@@ -197,7 +199,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void checkToken() {
-        Log.d(TAG, "checkToken: start");
+        showLoading();
         if (mPrefsUtil.readToken().isEmpty()) {
             mCnbetaApi.getCsrfToken()
                     .subscribeOn(Schedulers.io())
@@ -206,11 +208,19 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                         @Override
                         public void onCompleted() {
                             Log.d(TAG, "onCompleted: ");
+                            hideLoading();
                             //broadcast that app is ready to get news with token
                         }
 
                         @Override
                         public void onError(Throwable e) {
+                            hideLoading();
+                            MessageUtil.snackWithAction(mCoordinatorLayout, R.string.snack_info_connection_error, R.string.snack_action_retry, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    MessageUtil.toast("test action", view.getContext());
+                                }
+                            });
                             //check network connection or report to author
                             Log.e(TAG, "onError: checkToken ", e);
                         }
@@ -219,7 +229,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                         public void onNext(ResponseBody responseBody) {
                             try {
                                 String token = ApiUtil.parseToken(responseBody.string());
-                                Log.d(TAG, "onNext: getToken " + token);
+                                MessageUtil.snack(mCoordinatorLayout, token);
                                 mPrefsUtil.writeToken(token);
                             } catch (IOException e) {
                                 //something wrong with response
@@ -227,6 +237,20 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                             }
                         }
                     });
+        } else {
+            hideLoading();
+            MessageUtil.snack(mCoordinatorLayout, mPrefsUtil.readToken());
+            Log.d(TAG, "checkToken: " + mPrefsUtil.readToken());
         }
+    }
+
+    @Override
+    public void showLoading() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        mProgressBar.setVisibility(View.GONE);
     }
 }

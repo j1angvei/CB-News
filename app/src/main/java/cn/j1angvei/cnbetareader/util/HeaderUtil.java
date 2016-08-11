@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.util;
 
 /**
  * Created by Wayne on 2016/8/9.
+ * manage all Headers in HTTP request
  */
 public class HeaderUtil {
     /**
@@ -16,8 +17,8 @@ public class HeaderUtil {
     public static final String KEY_HOST = "Host";
     public static final String VALUE_HOST = "www.cnbeta.com";
 
-    public static final String KEY_UA = " User-Agent";
-    public static final String VALUE_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36";
+    public static final String KEY_UA = "User-Agent";
+    public static final String VALUE_UA = "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30O) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
 
     /**
      * Cookie will automatically handled by {@link okhttp3.CookieJar}
@@ -57,7 +58,7 @@ public class HeaderUtil {
     public static final String HEADER_CACHE_NO = KEY_CACHE + ":" + VALUE_CACHE_NO;
     public static final String HEADER_PRAGMA = KEY_PRAGMA + ":" + VALUE_PRAGMA;
     /**
-     * Headers must be handled by okhttp
+     * Headers handled by okhttp
      */
     private static final String KEY_ENCODING = "Accept-Encoding";
     private static final String VALUE_ENCODING = "gzip, deflate";
