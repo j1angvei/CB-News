@@ -63,7 +63,7 @@ public class ApiUtil {
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_TYPE, type);
         map.put(KEY_PAGE, String.valueOf(page));
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
@@ -73,14 +73,14 @@ public class ApiUtil {
         map.put(KEY_CALLBACK, JsonpUtil.getParameter());
         map.put(KEY_ID, topicId);
         map.put(KEY_PAGE, String.valueOf(page));
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         return map;
     }
 
     public Map<String, String> getCommentsParam(String sid, String sn) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         String op = assembleCommentsOp(sid, sn);
         map.put(KEY_OP, op);
         return map;
@@ -92,7 +92,7 @@ public class ApiUtil {
 
     public Map<String, String> getOperateCommentParam(String action, String sid, String tid) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_OP, action);
         map.put(KEY_SID, sid);
         map.put(KEY_TID, tid);
@@ -101,7 +101,7 @@ public class ApiUtil {
 
     public Map<String, String> getPublishCommentParam(String action, String content, String captcha, String sid, String pid) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_OP, action);
         map.put(KEY_CONTENT, content);
         map.put(KEY_CAPTCHA, captcha);
@@ -112,7 +112,7 @@ public class ApiUtil {
 
     public Map<String, String> getCaptchaUrlParam(long timestamp) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CSRF_TOKEN, mPrefsUtil.readToken());
+        map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
         //refresh are always "1"
         map.put(KEY_REFRESH, "1");
@@ -121,5 +121,9 @@ public class ApiUtil {
 
     public static String parseCaptchaParamV(String json) {
         return json.substring(json.lastIndexOf('='), json.lastIndexOf('"'));
+    }
+
+    private String readToken() {
+        return mPrefsUtil.readString(PrefsUtil.CSRF_TOKEN);
     }
 }

@@ -23,7 +23,7 @@ import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
 import cn.j1angvei.cnbetareader.converter.ReviewConverter;
 import cn.j1angvei.cnbetareader.converter.TopicConverter;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
-import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import dagger.Module;

@@ -53,14 +53,12 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: ");
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: " + holder.toString() + " pos " + position);
         final CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
         holder.cvgOrigin.setComment(item, context, holder.getAdapterPosition());
@@ -137,7 +135,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            Log.d(TAG, "ViewHolder: " + isRecyclable() + "  " + toString());
             this.itemView = itemView;
             cvgOrigin = new CommentViewGroup();
             cvgOrigin.findViews(itemView);

@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.data.remote;
 import java.util.Map;
 
 import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import rx.Observable;
 
 /**

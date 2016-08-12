@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.data.remote;
+package cn.j1angvei.cnbetareader.data.remote.api;
 
 import java.util.Map;
 

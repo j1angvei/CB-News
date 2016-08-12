@@ -1,12 +1,15 @@
 package cn.j1angvei.cnbetareader.util;
 
+import cn.j1angvei.cnbetareader.data.remote.api.AddHeaderInterceptor;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+
 /**
  * Created by Wayne on 2016/8/9.
  * manage all Headers in HTTP request
  */
 public class HeaderUtil {
     /**
-     * These Headers will be added using {@link cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor}
+     * These Headers will be added using {@link AddHeaderInterceptor}
      */
     public static final String KEY_CONNECTION = "Connection";
     public static final String VALUE_CONNECTION = "keep-alive";
@@ -21,12 +24,15 @@ public class HeaderUtil {
     public static final String VALUE_UA = "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30O) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
 
     /**
-     * Cookie will automatically handled by {@link okhttp3.CookieJar}
+     * Cookie will automatically handled by {@link cn.j1angvei.cnbetareader.data.remote.api.CnBetaCookieJar}
      */
+    private static final String PH_COOKIE = "j1angvei_ph_cookie";
     public static final String KEY_COOKIE = "Cookie";
+    private static final String VALUE_COOKIE = "csrf_token=" + PH_COOKIE;
+
 
     /**
-     * If no header in request, this will add to the request in {@link cn.j1angvei.cnbetareader.data.remote.interceptor.AddHeaderInterceptor}
+     * If no header in request, this will add to the request in {@link AddHeaderInterceptor}
      */
     public static final String KEY_REFERER = "Referer";
     public static final String VALUE_REFER = "http://www.cnbeta.com/";
@@ -35,7 +41,7 @@ public class HeaderUtil {
     public static final String VALUE_ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
 
     /**
-     * Specific Headers, which are added in {@link cn.j1angvei.cnbetareader.data.remote.CnbetaApi}
+     * Specific Headers, which are added in {@link CnbetaApi}
      */
     private static final String KEY_AJAX = "X-Requested-With";
     private static final String VALUE_AJAX = "XMLHttpRequest";

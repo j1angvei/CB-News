@@ -2,6 +2,9 @@ package cn.j1angvei.cnbetareader.util;
 
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -11,7 +14,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class PrefsUtil {
-    private static final String CSRF_TOKEN = "csrf_token";
+    public static final String CSRF_TOKEN = "csrf_token";
+    public static final String COOKIE_TOKEN = "cookie_token";
+    public static final String COOKIE_SESSION = "cookie_session";
     SharedPreferences prefs;
 
     @Inject
@@ -19,11 +24,19 @@ public class PrefsUtil {
         this.prefs = prefs;
     }
 
-    public String readToken() {
-        return prefs.getString(CSRF_TOKEN, "");
+    public String readString(String key) {
+        return prefs.getString(key, "");
     }
 
-    public void writeToken(String token) {
-        prefs.edit().putString(CSRF_TOKEN, token).apply();
+    public void writeString(String key, String value) {
+        prefs.edit().putString(key, value).apply();
+    }
+
+    public Set<String> readStringSet(String key) {
+        return prefs.getStringSet(key, new HashSet<String>());
+    }
+
+    public void writeStringSet(String key, Set<String> set) {
+        prefs.edit().putStringSet(key, set).apply();
     }
 }

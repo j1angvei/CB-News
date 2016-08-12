@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;

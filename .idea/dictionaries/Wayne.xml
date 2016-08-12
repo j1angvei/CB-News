@@ -10,6 +10,7 @@
       <w>jsonp</w>
       <w>khtml</w>
       <w>mozilla</w>
+      <w>phpsessid</w>
       <w>pubtime</w>
       <w>referer</w>
       <w>seccode</w>

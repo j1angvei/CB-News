@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Source;
 import cn.j1angvei.cnbetareader.contract.BaseView;
-import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
@@ -53,7 +52,6 @@ import static cn.j1angvei.cnbetareader.bean.Source.MY_TOPICS;
  * control child fragment to display different {@link Source} news
  */
 public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, BaseView {
-    private static final String TAG = "NewsActivity";
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
     @BindView(R.id.nav_view)
@@ -83,7 +81,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
-        mIsTokenValid = !TextUtils.isEmpty(mPrefsUtil.readToken());
+        mIsTokenValid = !TextUtils.isEmpty(mPrefsUtil.readString(PrefsUtil.CSRF_TOKEN));
     }
 
     @Override
@@ -270,10 +268,9 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
             try {
                 String token = ApiUtil.parseToken(body.string());
                 MessageUtil.snack(mCoordinatorLayout, token);
-                mPrefsUtil.writeToken(token);
+                mPrefsUtil.writeString(PrefsUtil.CSRF_TOKEN, token);
             } catch (IOException e) {
                 //something wrong with response
-                Log.e(TAG, "onNext: " + body, e);
             }
         }
     }

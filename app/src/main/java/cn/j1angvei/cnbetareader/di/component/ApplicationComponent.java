@@ -9,7 +9,7 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
-import cn.j1angvei.cnbetareader.data.remote.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;

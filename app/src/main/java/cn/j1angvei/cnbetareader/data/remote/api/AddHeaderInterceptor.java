@@ -1,4 +1,4 @@
-package cn.j1angvei.cnbetareader.data.remote.interceptor;
+package cn.j1angvei.cnbetareader.data.remote.api;
 
 import java.io.IOException;
 
