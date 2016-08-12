@@ -1,12 +1,12 @@
 package cn.j1angvei.cnbetareader.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.CommentAction;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
@@ -36,13 +37,11 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.ViewHolder> implements BaseAdapter<List<CommentItem>> {
     private static final String TAG = "CommentsRvAdapter";
-    private final Activity mActivity;
-    private final List<CommentItem> mCommentItems;
-    private CommentsContract.View mView;
+    private static List<CommentItem> mCommentItems;
+    private static CommentsContract.View mView;
 
     @Inject
     public CommentsRvAdapter(Activity activity) {
-        mActivity = activity;
         if (activity instanceof CommentsContract.View) {
             mView = (CommentsContract.View) activity;
         } else {
@@ -77,6 +76,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             }
             if (itemReference != null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                @SuppressLint("InflateParams")
                 View viewReference = inflater.inflate(R.layout.include_comment_ref, null);
                 holder.cvgReference.findViews(viewReference);
                 holder.cvgReference.setComment(itemReference, holder.itemView.getContext(), positionReference);
@@ -86,7 +86,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             }
         }
     }
-
 
     private static void showPopupMenu(final int position, final View view) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
@@ -101,6 +100,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                         return true;
                     case R.id.action_comment_report:
                         MessageUtil.toast("report comment" + position, view.getContext());
+                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), position);
                         return true;
                 }
                 return false;
@@ -174,6 +174,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate support comment
+                    mView.prepareJudgeComment(CommentAction.SUPPORT.toString(), position);
                 }
             });
             tvPopup.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +189,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate against comment
+                    mView.prepareJudgeComment(CommentAction.AGAINST.toString(), position);
                 }
             });
             if (!TextUtils.isEmpty(item.getHeadPhoto())) {

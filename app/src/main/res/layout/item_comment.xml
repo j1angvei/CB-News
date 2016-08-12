@@ -9,9 +9,7 @@
         android:id="@+id/rl_org_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="4dp">
+        android:padding="4dp">
 
         <include
             android:id="@+id/in_comment_org_header"

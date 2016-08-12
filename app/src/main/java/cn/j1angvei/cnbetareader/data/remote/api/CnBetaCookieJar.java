@@ -16,7 +16,7 @@ import okhttp3.HttpUrl;
 
 /**
  * Created by Wayne on 2016/8/12.
- * handle cookies from request and response
+ * handle cookies from request and response，as only 2 cookies matters, csrf_token and PHPSESSID
  */
 @Singleton
 public class CnBetaCookieJar implements CookieJar {

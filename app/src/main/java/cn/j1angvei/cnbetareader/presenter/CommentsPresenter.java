@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Map;
@@ -8,6 +9,8 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -26,11 +29,13 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     private final CommentsRepository mRepository;
     private CommentsContract.View mView;
     private final ApiUtil mApiUtil;
+    private final CnbetaApi mApi;
 
     @Inject
-    public CommentsPresenter(CommentsRepository repository, ApiUtil apiUtil) {
+    public CommentsPresenter(CommentsRepository repository, ApiUtil apiUtil, CnbetaApi api) {
         mRepository = repository;
         mApiUtil = apiUtil;
+        mApi = api;
     }
 
     @Override
@@ -63,4 +68,36 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void judgeComment(final String action, String sid, String tid, final int position) {
+        String referer = HeaderUtil.getRefererValue(sid);
+        Map<String, String> param = mApiUtil.getJudgeCommentParam(action, sid, tid);
+        mApi.judgeComment(referer, param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        //operation already done in onNext
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onJudgeFail();
+                        Log.e(TAG, "onError: ", e);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        Log.d(TAG, "onNext: " + baseResponse);
+                        if (TextUtils.equals(baseResponse.getState(), "success")) {
+                            mView.onJudgeSuccess(action, position);
+                        } else {
+                            mView.onJudgeFail();
+                        }
+                    }
+                });
+    }
+
 }

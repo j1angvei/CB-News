@@ -26,10 +26,7 @@ public class HeaderUtil {
     /**
      * Cookie will automatically handled by {@link cn.j1angvei.cnbetareader.data.remote.api.CnBetaCookieJar}
      */
-    private static final String PH_COOKIE = "j1angvei_ph_cookie";
     public static final String KEY_COOKIE = "Cookie";
-    private static final String VALUE_COOKIE = "csrf_token=" + PH_COOKIE;
-
 
     /**
      * If no header in request, this will add to the request in {@link AddHeaderInterceptor}

@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 
 /**
  * Created by Wayne on 2016/8/10.
+ * api relevant operation, parse String, assemble parameter Map
  */
 @Singleton
 public class ApiUtil {
@@ -90,7 +91,7 @@ public class ApiUtil {
         return String.format("1,%s,%s", sid, sn);
     }
 
-    public Map<String, String> getOperateCommentParam(String action, String sid, String tid) {
+    public Map<String, String> getJudgeCommentParam(String action, String sid, String tid) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_OP, action);

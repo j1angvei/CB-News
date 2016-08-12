@@ -44,6 +44,9 @@
     <string name="menu_comment_ordered_by_time">Ordered by date</string>
     <string name="menu_comment_switch">Popular comments</string>
     <!--snack-->
-    <string name="snack_info_connection_error">Connection Error!</string>
-    <string name="snack_action_retry">Retry</string>
+    <string name="info_connection_error">Connection Error!</string>
+    <string name="action_retry">Retry</string>
+    <string name="info_cmt_judge_success">Judge comment success!</string>
+    <string name="info_cmt_judge_fail">Judge comment fail!</string>
+
 </resources>

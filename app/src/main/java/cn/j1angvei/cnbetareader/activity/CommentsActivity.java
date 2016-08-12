@@ -1,10 +1,12 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -14,6 +16,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
@@ -36,6 +39,8 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     FloatingActionButton mFab;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
+    @BindView(R.id.coordinator_layout)
+    CoordinatorLayout mCoordinatorLayout;
     @Inject
     FragmentManager mFragmentManager;
     @Inject
@@ -114,32 +119,36 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
         }
     }
 
-//    @Override
-//    public void beforeOperateComment(String action, int position) {
-//        CommentItem item = getCommentItem(position);
-//        mPresenter.operateComment(position, mToken, action, item.getSid(), item.getTid());
-//    }
-//
-//    private CommentItem getCommentItem(int position) {
-//        String sid = mComments.getAllIds().get(position);
-//        return mComments.getCommentMap().get(sid);
-//    }
-//
-//    @Override
-//    public void afterOperateSuccess(int position) {
-//        MessageUtil.toast("operate success", this);
-//        CommentItem item = getCommentItem(position);
-//        item.setSupport(item.getSupport() + "1");
-//        //if pop comment fragment not visible, change count in all comments
-//        ((CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS)).notifyCommentItemChanged(position);
-//
-//        //number should add 1
-//    }
-//
-//    @Override
-//    public void afterOperateFail() {
-//        MessageUtil.toast("operate failed", this);
-//    }
+    private CommentItem getComment(int position) {
+        String sid = mComments.getAllIds().get(position);
+        return mComments.getCommentMap().get(sid);
+    }
+
+    @Override
+    public void prepareJudgeComment(String action, int position) {
+        CommentItem item = getComment(position);
+        mPresenter.judgeComment(action, item.getSid(), item.getTid(), position);
+    }
+
+    @Override
+    public void onJudgeSuccess(String action, int position) {
+        CommentItem item = getComment(position);
+        if (TextUtils.equals(action, "support")) {
+            int num = 1 + Integer.parseInt(item.getSupport());
+            item.setSupport(String.valueOf(num));
+        } else if (TextUtils.equals(action, "against")) {
+            int num = 1 + Integer.parseInt(item.getAgainst());
+            item.setAgainst(String.valueOf(num));
+        }
+        CommentsFragment fragment = (CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS);
+        fragment.notifyItemChanged(position);
+        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_success);
+    }
+
+    @Override
+    public void onJudgeFail() {
+        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_fail);
+    }
 
     @Override
     public void showLoading() {

@@ -56,7 +56,7 @@ public interface CnbetaApi {
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @FormUrlEncoded
     @POST("/comment")
-    Observable<BaseResponse> operateComment(@Header(KEY_REFERER) String refer, @FieldMap Map<String, String> operateCommentParam);
+    Observable<BaseResponse> judgeComment(@Header(KEY_REFERER) String refer, @FieldMap Map<String, String> operateCommentParam);
 
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @FormUrlEncoded

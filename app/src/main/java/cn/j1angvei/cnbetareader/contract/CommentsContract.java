@@ -20,9 +20,20 @@ public interface CommentsContract {
          */
         void showComments(Comments comments);
 
+        /**
+         * child fragment's adapter call this method
+         */
+        void prepareJudgeComment(String action, int position);
+
+        void onJudgeSuccess(String action, int position);
+
+        void onJudgeFail();
     }
 
     interface Presenter extends BasePresenter<CommentsContract.View> {
         void retrieveComments(String sid, String sn);
+
+        void judgeComment(String action, String sid, String tid, int position);
     }
+
 }
