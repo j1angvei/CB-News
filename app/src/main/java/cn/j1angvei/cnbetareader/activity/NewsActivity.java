@@ -255,7 +255,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         public void onError(Throwable e) {
             hideLoading();
             MessageUtil.snackWithAction(mCoordinatorLayout, R.string.info_connection_error,
-                    R.string.action_retry, new View.OnClickListener() {
+                    R.string.info_retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             checkToken(source, title);

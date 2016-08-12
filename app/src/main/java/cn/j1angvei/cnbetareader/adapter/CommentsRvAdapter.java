@@ -28,7 +28,6 @@ import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
-import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -36,7 +35,6 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  */
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.ViewHolder> implements BaseAdapter<List<CommentItem>> {
-    private static final String TAG = "CommentsRvAdapter";
     private static List<CommentItem> mCommentItems;
     private static CommentsContract.View mView;
 
@@ -52,7 +50,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment_all, parent, false);
         return new ViewHolder(view);
     }
 
@@ -60,18 +58,14 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final CommentItem item = mCommentItems.get(position);
         Context context = holder.itemView.getContext();
-        holder.cvgOrigin.setComment(item, context, holder.getAdapterPosition());
+        holder.cvgOrigin.setComment(item, context);
         //if has no reference comment aka pid==0, set it invisible
-        String idR = item.getPid();
-        if (!idR.equals("0")) {
+        String pid = item.getPid();
+        if (!TextUtils.equals(pid, "0")) {
             CommentItem itemReference = null;
-            int positionReference = 0;
-            for (int i = 0; i < mCommentItems.size(); i++) {
-                CommentItem tmpItem = mCommentItems.get(i);
-                if (tmpItem.getTid().equals(idR)) {
-                    itemReference = tmpItem;
-                    positionReference = i;
-                    break;
+            for (CommentItem commentItem : mCommentItems) {
+                if (TextUtils.equals(commentItem.getTid(), pid)) {
+                    itemReference = commentItem;
                 }
             }
             if (itemReference != null) {
@@ -79,7 +73,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @SuppressLint("InflateParams")
                 View viewReference = inflater.inflate(R.layout.include_comment_ref, null);
                 holder.cvgReference.findViews(viewReference);
-                holder.cvgReference.setComment(itemReference, holder.itemView.getContext(), positionReference);
+                holder.cvgReference.setComment(itemReference, holder.itemView.getContext());
                 ViewGroup parentView = (ViewGroup) holder.itemView.findViewById(R.id.insert_point_ref);
                 parentView.addView(viewReference, 0, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 holder.setIsRecyclable(false);
@@ -87,7 +81,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         }
     }
 
-    private static void showPopupMenu(final int position, final View view) {
+    private static void showPopupMenu(final String tid, final View view) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
@@ -96,11 +90,10 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
-                        MessageUtil.toast("reply comment" + position, view.getContext());
+                        mView.preparePublishComment(tid);
                         return true;
                     case R.id.action_comment_report:
-                        MessageUtil.toast("report comment" + position, view.getContext());
-                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), position);
+                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), tid);
                         return true;
                 }
                 return false;
@@ -161,7 +154,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             ivPhoto = (ImageView) view.findViewById(R.id.iv_comment_photo);
         }
 
-        public void setComment(CommentItem item, Context context, final int position) {
+        public void setComment(final CommentItem item, Context context) {
             Resources resources = context.getResources();
             String user = String.format(resources.getString(R.string.cmt_header), item.getUsername(), item.getLocation());
             tvUser.setText(user);
@@ -174,13 +167,13 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate support comment
-                    mView.prepareJudgeComment(CommentAction.SUPPORT.toString(), position);
+                    mView.prepareJudgeComment(CommentAction.SUPPORT.toString(), item.getTid());
                 }
             });
             tvPopup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopupMenu(position, view);
+                    showPopupMenu(item.getTid(), view);
                 }
             });
             String against = String.format(resources.getString(R.string.cmt_action_down_vote), item.getAgainst());
@@ -189,7 +182,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate against comment
-                    mView.prepareJudgeComment(CommentAction.AGAINST.toString(), position);
+                    mView.prepareJudgeComment(CommentAction.AGAINST.toString(), item.getTid());
                 }
             });
             if (!TextUtils.isEmpty(item.getHeadPhoto())) {

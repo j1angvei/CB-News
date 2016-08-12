@@ -14,26 +14,34 @@ public interface CommentsContract {
         void refreshComments();
 
         /**
-         * child fragment's adapter render comments
-         *
-         * @param comments contain CommentsItem
+         * initiate fragment {@link cn.j1angvei.cnbetareader.fragment.CommentsFragment}to render comments
          */
         void showComments(Comments comments);
 
         /**
-         * child fragment's adapter call this method
+         * judge comment item, such as support, against, report,
+         * publish comment can be add new comment, reply comment
          */
-        void prepareJudgeComment(String action, int position);
+        void prepareJudgeComment(String action, String tid);
 
-        void onJudgeSuccess(String action, int position);
+        void onJudgeSuccess(String action, String tid);
 
         void onJudgeFail();
+
+        void preparePublishComment(String tid);
+
+        /**
+         * load dialog to publish comment
+         */
+        void showPublishComment(boolean isAdd, String quote);
     }
 
     interface Presenter extends BasePresenter<CommentsContract.View> {
         void retrieveComments(String sid, String sn);
 
-        void judgeComment(String action, String sid, String tid, int position);
+        void judgeComment(String action, String sid, String tid);
+
+        void publishComment();
     }
 
 }

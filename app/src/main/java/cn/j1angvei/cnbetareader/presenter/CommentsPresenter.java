@@ -70,7 +70,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     }
 
     @Override
-    public void judgeComment(final String action, String sid, String tid, final int position) {
+    public void judgeComment(final String action, String sid, final String tid) {
         String referer = HeaderUtil.getRefererValue(sid);
         Map<String, String> param = mApiUtil.getJudgeCommentParam(action, sid, tid);
         mApi.judgeComment(referer, param)
@@ -92,12 +92,17 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     public void onNext(BaseResponse baseResponse) {
                         Log.d(TAG, "onNext: " + baseResponse);
                         if (TextUtils.equals(baseResponse.getState(), "success")) {
-                            mView.onJudgeSuccess(action, position);
+                            mView.onJudgeSuccess(action, tid);
                         } else {
                             mView.onJudgeFail();
                         }
                     }
                 });
+    }
+
+    @Override
+    public void publishComment() {
+
     }
 
 }

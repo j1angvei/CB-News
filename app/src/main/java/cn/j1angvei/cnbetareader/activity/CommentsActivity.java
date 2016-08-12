@@ -21,6 +21,7 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.dialog.PublishCommentDialog;
 import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
 import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
@@ -30,9 +31,11 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  * activity to handle comments relevant stuff
  */
 public class CommentsActivity extends BaseActivity implements CommentsContract.View {
+    private static final String TAG = "CommentsActivity";
     public static final String NEWS_SID = "CommentsActivity.news_sid";
     public static final String NEWS_SN = "CommentsActivity.news_sn";
     private static final String TAG_ALL_COMMENTS = "CommentsActivity_all";
+    private static final String TAG_ADD_COMMENTS = "CommentsActivity_add";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
@@ -80,7 +83,8 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageUtil.toast("add comments", view.getContext());
+                //add comment, had no reference comment, set pid as "0"
+                preparePublishComment("0");
             }
         });
         //load data aka comments
@@ -119,20 +123,15 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
         }
     }
 
-    private CommentItem getComment(int position) {
-        String sid = mComments.getAllIds().get(position);
-        return mComments.getCommentMap().get(sid);
+    @Override
+    public void prepareJudgeComment(String action, String tid) {
+        CommentItem item = mComments.getCommentMap().get(tid);
+        mPresenter.judgeComment(action, item.getSid(), tid);
     }
 
     @Override
-    public void prepareJudgeComment(String action, int position) {
-        CommentItem item = getComment(position);
-        mPresenter.judgeComment(action, item.getSid(), item.getTid(), position);
-    }
-
-    @Override
-    public void onJudgeSuccess(String action, int position) {
-        CommentItem item = getComment(position);
+    public void onJudgeSuccess(String action, String tid) {
+        CommentItem item = mComments.getCommentMap().get(tid);
         if (TextUtils.equals(action, "support")) {
             int num = 1 + Integer.parseInt(item.getSupport());
             item.setSupport(String.valueOf(num));
@@ -141,13 +140,29 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
             item.setAgainst(String.valueOf(num));
         }
         CommentsFragment fragment = (CommentsFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS);
-        fragment.notifyItemChanged(position);
+        fragment.notifyDataSetChanged();
         MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_success);
     }
 
     @Override
     public void onJudgeFail() {
         MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_fail);
+    }
+
+    @Override
+    public void preparePublishComment(String tid) {
+        if ((TextUtils.equals(tid, "0"))) {
+            showPublishComment(true, "Fake title, later get from content");
+        } else {
+            showPublishComment(false, mComments.getCommentMap().get(tid).getContent());
+        }
+        //get captcha, pass to dialog
+    }
+
+    @Override
+    public void showPublishComment(boolean isAdd, String quote) {
+        PublishCommentDialog dialog = PublishCommentDialog.newInstance(isAdd, quote);
+        dialog.show(mFragmentManager, TAG_ADD_COMMENTS);
     }
 
     @Override

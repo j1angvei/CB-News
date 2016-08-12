@@ -100,9 +100,11 @@ public class ApiUtil {
         return map;
     }
 
-    public Map<String, String> getPublishCommentParam(String action, String content, String captcha, String sid, String pid) {
+    public Map<String, String> getPublishCommentParam(String content, String captcha, String sid, String pid) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, readToken());
+        //action always to be publish
+        String action = "publish";
         map.put(KEY_OP, action);
         map.put(KEY_CONTENT, content);
         map.put(KEY_CAPTCHA, captcha);
@@ -116,7 +118,8 @@ public class ApiUtil {
         map.put(KEY_CSRF_TOKEN, readToken());
         map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
         //refresh are always "1"
-        map.put(KEY_REFRESH, "1");
+        String refresh = "1";
+        map.put(KEY_REFRESH, refresh);
         return map;
     }
 
