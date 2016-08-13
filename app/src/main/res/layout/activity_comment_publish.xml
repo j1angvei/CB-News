@@ -23,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
@@ -32,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:paddingLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:clickable="false"
             android:text="@string/header_publish_cmt_news_title"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_small"/>
@@ -49,41 +50,64 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/text_size_medium"/>
 
-        <android.support.design.widget.TextInputLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp">
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="8dp"
+            android:clickable="false"
+            android:text="Your comment"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_small"/>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_publish_cmt_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_publish_comment_content"
-                android:contextClickable="true"
-                android:hint="Input comment"
-                android:imeOptions="actionSend"
-                android:inputType="textMultiLine"
-                android:lineSpacingMultiplier="1.2"
-                android:maxLines="5"
-                android:minLines="2"/>
-        </android.support.design.widget.TextInputLayout>
+        <EditText
+            android:id="@+id/et_publish_cmt_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_publish_comment_content"
+            android:contextClickable="true"
+            android:hint="Say something ..."
+            android:imeOptions="actionSend"
+            android:inputType="textMultiLine"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="5"
+            android:minLines="3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="8dp"
+            android:clickable="false"
+            android:text="Captcha"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_small"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/et_publish_cmt_captcha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_horizontal"
+                android:hint="Input right letters"
+                android:lines="1"
+                android:maxLength="4"/>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="4dp"
                 android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_publish_cmt_captcha"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="40dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
@@ -99,22 +123,22 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                app:errorEnabled="true">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_publish_cmt_captcha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:hint="Input captcha"
-                    android:lines="1"
-                    android:maxLength="4"/>
-
-            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_publish_cmt_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                android:text="Send"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
