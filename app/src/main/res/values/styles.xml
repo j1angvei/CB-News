@@ -10,6 +10,13 @@
 
     <style name="CBTheme" parent="AppTheme"/>
 
+    <style name="CBTheme.Dialog" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <!--Less use widget style-->
     <style name="CBTheme.AppBarOverlay">
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>

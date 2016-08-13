@@ -51,5 +51,8 @@
     <!--add comment-->
     <string name="title_publish_cmt_add">Publish comment</string>
     <string name="title_publish_cmt_reply">Reply comment</string>
-
+    <string name="action_publish_cmt_send">Send</string>
+    <string name="action_publish_cmt_cancel">Cancel</string>
+    <string name="header_publish_cmt_news_title">News title</string>
+    <string name="header_publish_cmt_origin_cmt">Original comment</string>
 </resources>

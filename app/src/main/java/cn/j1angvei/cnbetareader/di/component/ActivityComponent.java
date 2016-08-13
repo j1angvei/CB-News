@@ -5,6 +5,7 @@ import android.app.Activity;
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.NewsActivity;
+import cn.j1angvei.cnbetareader.activity.PublishCommentActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
@@ -26,6 +27,8 @@ public interface ActivityComponent {
     void inject(ContentActivity activity);
 
     void inject(CommentsActivity activity);
+
+    void inject(PublishCommentActivity activity);
 
     //expose variable to sub-graph
     Activity activity();

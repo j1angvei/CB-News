@@ -73,7 +73,7 @@ public class HeaderUtil {
     private static final String PH_SID = "sid";
     private static final String VALUE_REFERER_CONTENT = "http://www.cnbeta.com/articles/" + PH_SID + ".htm";
 
-    public static String getRefererValue(String sid) {
+    public static String assembleRefererValue(String sid) {
         return VALUE_REFERER_CONTENT.replace(PH_SID, sid);
     }
 }

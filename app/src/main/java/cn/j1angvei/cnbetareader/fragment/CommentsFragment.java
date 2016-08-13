@@ -31,7 +31,7 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsFragment extends BaseFragment {
+public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String COMMENTS = "CommentsFragment.comments";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -72,12 +72,7 @@ public class CommentsFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //refresh content
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
@@ -126,12 +121,11 @@ public class CommentsFragment extends BaseFragment {
         mAdapter.add(items);
     }
 
-    public void notifyItemChanged(int position) {
-        mAdapter.notifyItemChanged(position);
-    }
-
     public void notifyDataSetChanged() {
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onRefresh() {
+    }
 }

@@ -28,6 +28,7 @@ import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -81,7 +82,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         }
     }
 
-    private static void showPopupMenu(final String tid, final View view) {
+    private static void showPopupMenu(final CommentItem item, final View view) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
@@ -90,10 +91,10 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
-                        mView.preparePublishComment(tid);
+                        Navigator.toPublishComment(false, item.getContent(), item.getSid(), item.getTid(), view.getContext());
                         return true;
                     case R.id.action_comment_report:
-                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), tid);
+                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), item.getTid());
                         return true;
                 }
                 return false;
@@ -173,7 +174,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             tvPopup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopupMenu(item.getTid(), view);
+                    showPopupMenu(item, view);
                 }
             });
             String against = String.format(resources.getString(R.string.cmt_action_down_vote), item.getAgainst());

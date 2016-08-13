@@ -113,10 +113,10 @@ public class ApiUtil {
         return map;
     }
 
-    public Map<String, String> getCaptchaUrlParam(long timestamp) {
+    public Map<String, String> getCaptchaUrlParam() {
         Map<String, String> map = new LinkedHashMap<>();
         map.put(KEY_CSRF_TOKEN, readToken());
-        map.put(KEY_TIMESTAMP, String.valueOf(timestamp));
+        map.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         //refresh are always "1"
         String refresh = "1";
         map.put(KEY_REFRESH, refresh);

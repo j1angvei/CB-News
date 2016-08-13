@@ -92,7 +92,7 @@ public class ContentActivity extends BaseActivity implements ContentContract.Vie
                     public void onClick(View view) {
                         Content content = mContentMap.get(mSids.get(position));
                         if (content != null) {
-                            Navigator.toComments(content.getSid(), content.getSn(), view.getContext());
+                            Navigator.toComments(content, view.getContext());
                         } else {
                             MessageUtil.toast("content is null", view.getContext());
                         }

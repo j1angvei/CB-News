@@ -16,26 +16,25 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.bean.CommentAction;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.dialog.PublishCommentDialog;
 import cn.j1angvei.cnbetareader.fragment.CommentsFragment;
 import cn.j1angvei.cnbetareader.presenter.CommentsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/28.
  * activity to handle comments relevant stuff
  */
 public class CommentsActivity extends BaseActivity implements CommentsContract.View {
-    private static final String TAG = "CommentsActivity";
-    public static final String NEWS_SID = "CommentsActivity.news_sid";
-    public static final String NEWS_SN = "CommentsActivity.news_sn";
+    public static final String NEWS = "CommentsActivity.news";
     private static final String TAG_ALL_COMMENTS = "CommentsActivity_all";
-    private static final String TAG_ADD_COMMENTS = "CommentsActivity_add";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
@@ -48,13 +47,12 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     FragmentManager mFragmentManager;
     @Inject
     CommentsPresenter mPresenter;
-    private String mSid, mSn;
+    private Content mContent;
     private Comments mComments;
 
     @Override
     protected void parseIntent() {
-        mSid = getIntent().getStringExtra(NEWS_SID);
-        mSn = getIntent().getStringExtra(NEWS_SN);
+        mContent = getIntent().getParcelableExtra(NEWS);
     }
 
     @Override
@@ -83,8 +81,8 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //add comment, had no reference comment, set pid as "0"
-                preparePublishComment("0");
+                //add comment, set pid "0"
+                Navigator.toPublishComment(true, mContent.getTitle(), mContent.getSid(), "0", view.getContext());
             }
         });
         //load data aka comments
@@ -104,7 +102,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 
     @Override
     public void refreshComments() {
-        mPresenter.retrieveComments(mSid, mSn);
+        mPresenter.retrieveComments(mContent.getSid(), mContent.getSn());
     }
 
     @Override
@@ -132,10 +130,10 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void onJudgeSuccess(String action, String tid) {
         CommentItem item = mComments.getCommentMap().get(tid);
-        if (TextUtils.equals(action, "support")) {
+        if (TextUtils.equals(action, CommentAction.SUPPORT.toString())) {
             int num = 1 + Integer.parseInt(item.getSupport());
             item.setSupport(String.valueOf(num));
-        } else if (TextUtils.equals(action, "against")) {
+        } else if (TextUtils.equals(action, CommentAction.AGAINST.toString())) {
             int num = 1 + Integer.parseInt(item.getAgainst());
             item.setAgainst(String.valueOf(num));
         }
@@ -147,22 +145,6 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void onJudgeFail() {
         MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_fail);
-    }
-
-    @Override
-    public void preparePublishComment(String tid) {
-        if ((TextUtils.equals(tid, "0"))) {
-            showPublishComment(true, "Fake title, later get from content");
-        } else {
-            showPublishComment(false, mComments.getCommentMap().get(tid).getContent());
-        }
-        //get captcha, pass to dialog
-    }
-
-    @Override
-    public void showPublishComment(boolean isAdd, String quote) {
-        PublishCommentDialog dialog = PublishCommentDialog.newInstance(isAdd, quote);
-        dialog.show(mFragmentManager, TAG_ADD_COMMENTS);
     }
 
     @Override

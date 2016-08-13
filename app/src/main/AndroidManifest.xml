@@ -37,7 +37,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.PublishCommentActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/CBTheme.Dialog"/>
     </application>
-
 </manifest>

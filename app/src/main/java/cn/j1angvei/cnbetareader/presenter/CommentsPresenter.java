@@ -46,7 +46,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     @Override
     public void retrieveComments(String sid, String sn) {
         mView.showLoading();
-        String referer = HeaderUtil.getRefererValue(sid);
+        String referer = HeaderUtil.assembleRefererValue(sid);
         Map<String, String> param = mApiUtil.getCommentsParam(sid, sn);
         mRepository.getData(referer, param)
                 .subscribeOn(Schedulers.io())
@@ -71,7 +71,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
 
     @Override
     public void judgeComment(final String action, String sid, final String tid) {
-        String referer = HeaderUtil.getRefererValue(sid);
+        String referer = HeaderUtil.assembleRefererValue(sid);
         Map<String, String> param = mApiUtil.getJudgeCommentParam(action, sid, tid);
         mApi.judgeComment(referer, param)
                 .subscribeOn(Schedulers.io())
@@ -99,10 +99,4 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     }
                 });
     }
-
-    @Override
-    public void publishComment() {
-
-    }
-
 }

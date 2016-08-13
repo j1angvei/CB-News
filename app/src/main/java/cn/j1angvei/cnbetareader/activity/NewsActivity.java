@@ -34,6 +34,7 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -111,10 +112,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                MessageUtil.toast("search", this);
+                Navigator.toPublishComment(false, "reply", "sid", "12345", this);
                 break;
             case R.id.menu_mini_card:
-                MessageUtil.toast("mini card", this);
+                Navigator.toPublishComment(true, "add", "sid", "54321", this);
                 break;
             default:
                 break;

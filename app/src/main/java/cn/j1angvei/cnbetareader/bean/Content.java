@@ -121,7 +121,7 @@ public final class Content implements Parcelable {
         parcel.writeString(source);
         parcel.writeString(summary);
         parcel.writeString(detail);
-        parcel.writeString(summary);
+        parcel.writeString(sid);
         parcel.writeString(sn);
         parcel.writeString(topicPhoto);
     }
