@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -47,6 +49,8 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
     ProgressBar mProgressBar;
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.btn_publish_cmt_send)
+    Button btnSend;
     private boolean mIsAdd;
     private String mQuoteContent;
     private String mPid;
@@ -97,6 +101,22 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
                 mPresenter.getCaptchaImage(mSid);
             }
         });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = etContent.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    MessageUtil.toast("no comment", view.getContext());
+                    return;
+                }
+                String captcha = etCaptcha.getText().toString();
+                if (TextUtils.isEmpty(captcha)) {
+                    MessageUtil.toast("no captcha", view.getContext());
+                    return;
+                }
+                mPresenter.sendComment(etContent.getText().toString(), etCaptcha.getText().toString(), mSid, mPid);
+            }
+        });
     }
 
     @Override
@@ -119,13 +139,23 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
     }
 
     @Override
-    public void loadCaptcha(Bitmap bitmap) {
+    public void showCaptcha(Bitmap bitmap) {
         ivCaptcha.setImageBitmap(bitmap);
     }
 
     @Override
-    public void onLoadFail() {
+    public void onShowCaptchaFail() {
         MessageUtil.snack(mCoordinatorLayout, "load captcha fail");
+    }
+
+    @Override
+    public void showInfo(String message) {
+        MessageUtil.snack(mCoordinatorLayout, message);
+    }
+
+    @Override
+    public void onSendFail() {
+        MessageUtil.snack(mCoordinatorLayout, "Send failed");
     }
 
     @Override

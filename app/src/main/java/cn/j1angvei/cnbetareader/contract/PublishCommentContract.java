@@ -7,12 +7,19 @@ import android.graphics.Bitmap;
  */
 public interface PublishCommentContract {
     interface View extends BaseView {
-        void loadCaptcha(Bitmap bitmap);
+        void showCaptcha(Bitmap bitmap);
 
-        void onLoadFail();
+        void onShowCaptchaFail();
+
+        void showInfo(String message);
+
+        void onSendFail();
+
     }
 
     interface Presenter extends BasePresenter<View> {
         void getCaptchaImage(String sid);
+
+        void sendComment(String content, String captcha, String sid, String pid);
     }
 }

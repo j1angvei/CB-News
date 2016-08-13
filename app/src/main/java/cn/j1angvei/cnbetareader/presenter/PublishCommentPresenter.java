@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.contract.PublishCommentContract;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.response.PublishCommentResponse;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.HeaderUtil;
@@ -73,12 +74,37 @@ public class PublishCommentPresenter implements PublishCommentContract.Presenter
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.onLoadFail();
+                        mView.onShowCaptchaFail();
                     }
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        mView.loadCaptcha(bitmap);
+                        mView.showCaptcha(bitmap);
+                    }
+                });
+    }
+
+    @Override
+    public void sendComment(String content, String captcha, String sid, final String pid) {
+        String refer = HeaderUtil.assembleRefererValue(sid);
+        Map<String, String> param = mApiUtil.getPublishCommentParam(content, captcha, sid, pid);
+        mApi.publishComment(refer, param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<PublishCommentResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onSendFail();
+                    }
+
+                    @Override
+                    public void onNext(PublishCommentResponse response) {
+                        mView.showInfo(response.getInfo() + response.getState());
                     }
                 });
     }
