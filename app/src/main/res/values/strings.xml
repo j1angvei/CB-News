@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="ph_review_location">Anonymous user from %1$s comment on</string>
-    <string name="vertical_ellipsis">&#8942;</string>
+    <string name="vertical_ellipsis" translatable="false">&#8942;</string>
     <!--navigation drawer-->
     <string name="nav_latest_news">Latest news</string>
     <string name="nav_top_comments">Top comments</string>
@@ -51,8 +51,14 @@
     <!--add comment-->
     <string name="title_publish_cmt_add">Publish comment</string>
     <string name="title_publish_cmt_reply">Reply comment</string>
-    <string name="action_publish_cmt_save">Send</string>
+    <string name="action_publish_cmt_save">Save</string>
+    <string name="action_publish_cmt_send">Send</string>
     <string name="action_publish_cmt_cancel">Cancel</string>
     <string name="header_publish_cmt_news_title">News title</string>
     <string name="header_publish_cmt_origin_cmt">Original comment</string>
+    <string name="hint_say_something">Say something …</string>
+    <string name="publish_comment_captcha">Captcha</string>
+    <string name="hint_input_right_letters">Input right letters</string>
+    <string name="publish_cmt_reference_comment">Reference comment</string>
+    <string name="publish_cmt_your_comment">Your comment</string>
 </resources>

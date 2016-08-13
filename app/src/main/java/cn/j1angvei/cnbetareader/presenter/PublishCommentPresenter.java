@@ -43,6 +43,7 @@ public class PublishCommentPresenter implements PublishCommentContract.Presenter
 
     @Override
     public void getCaptchaImage(String sid) {
+        mView.showLoading();
         final String referer = HeaderUtil.assembleRefererValue(sid);
         Map<String, String> param = mApiUtil.getCaptchaUrlParam();
         mApi.getCaptchaUrl(referer, param)

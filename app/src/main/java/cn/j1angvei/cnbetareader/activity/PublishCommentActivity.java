@@ -96,7 +96,6 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
         ivCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoading();
                 ivCaptcha.setImageDrawable(null);
                 mPresenter.getCaptchaImage(mSid);
             }
@@ -117,6 +116,7 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
                 mPresenter.sendComment(etContent.getText().toString(), etCaptcha.getText().toString(), mSid, mPid);
             }
         });
+        mPresenter.getCaptchaImage(mSid);
     }
 
     @Override
