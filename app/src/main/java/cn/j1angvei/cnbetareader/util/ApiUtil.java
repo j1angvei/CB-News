@@ -14,7 +14,7 @@ import javax.inject.Singleton;
  * api relevant operation, parse String, assemble parameter Map
  */
 @Singleton
-public class ApiUtil {
+public final class ApiUtil {
     public static final String BASE_URL = "http://www.cnbeta.com";
     //parameter in request
     private static final String KEY_CALLBACK = "jsoncallback";
@@ -33,7 +33,7 @@ public class ApiUtil {
     public static final String KEY_V = "v";
     public static final String KEY_LETTER = "letter";
 
-    final PrefsUtil mPrefsUtil;
+    private final PrefsUtil mPrefsUtil;
 
     @Inject
     public ApiUtil(PrefsUtil prefsUtil) {

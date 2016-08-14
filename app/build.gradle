@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -36,7 +36,6 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.5'
     compile 'com.google.dagger:dagger:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
-//    apt 'com.squareup:javapoet:1.7.0'
     //jsoup
     compile 'org.jsoup:jsoup:1.9.2'
     //retrofit
@@ -46,8 +45,6 @@ dependencies {
     //okhttp
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.4.1'
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.4.1'
-    //okhttp 3rd party helper
-//    compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
     //butterknife
     compile group: 'com.jakewharton', name: 'butterknife', version: '8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
@@ -56,6 +53,7 @@ dependencies {
     compile group: 'io.reactivex', name: 'rxandroid', version: '1.2.1'
     //glide
     compile group: 'com.github.bumptech.glide', name: 'glide', version: '3.7.0'
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     //glide transformation
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'

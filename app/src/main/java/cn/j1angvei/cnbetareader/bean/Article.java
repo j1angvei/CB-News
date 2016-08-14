@@ -75,21 +75,6 @@ public final class Article extends News {
     public void setSource(String source) {
         this.source = source;
     }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "sid='" + getSid() + '\'' +
-                ", title='" + getTitle() + '\'' +
-                ", topic='" + topic + '\'' +
-                ", summary='" + summary + '\'' +
-                ", commentNum='" + commentNum + '\'' +
-                ", counterNum='" + counterNum + '\'' +
-                ", time='" + time + '\'' +
-                ", thumb='" + thumb + '\'' +
-                ", source='" + source + '\'' +
-                '}';
-    }
 }
 
 

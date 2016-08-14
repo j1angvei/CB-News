@@ -32,14 +32,4 @@ public final class Review extends News {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "sid='" + getSid() + '\'' +
-                ", commentId='" + commentId + '\'' +
-                ", title='" + getTitle() + '\'' +
-                ", comment='" + comment + '\'' +
-                ", location='" + location + '\'' +
-                '}';
-    }
 }

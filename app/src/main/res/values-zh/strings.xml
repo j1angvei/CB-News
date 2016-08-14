@@ -6,7 +6,7 @@
     <string name="action_publish_cmt_cancel">取消</string>
     <string name="action_publish_cmt_save">保存</string>
     <string name="cmt_action_down_vote">反对 (%1$s)</string>
-    <string name="cmt_action_up_vote">举报 (%1$s)</string>
+    <string name="cmt_action_up_vote">支持 (%1$s)</string>
     <string name="cmt_time">评论于 %1$s</string>
     <string name="header_publish_cmt_news_title">新闻标题</string>
     <string name="header_publish_cmt_origin_cmt">原评论</string>

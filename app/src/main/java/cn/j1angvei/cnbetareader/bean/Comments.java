@@ -101,21 +101,6 @@ public final class Comments implements Parcelable {
         this.commentMap = commentMap;
     }
 
-    @Override
-    public String toString() {
-        return "Comments{" +
-                "token='" + token + '\'' +
-                ", open=" + open +
-                ", sid='" + sid + '\'' +
-                ", joinNum='" + joinNum + '\'' +
-                ", commentNum='" + commentNum + '\'' +
-                ", page='" + page + '\'' +
-                ", hotIds=" + hotIds +
-                ", allIds=" + allIds +
-                ", commentMap=" + commentMap +
-                '}';
-    }
-
     private Comments(Parcel in) {
         this();
         token = in.readString();

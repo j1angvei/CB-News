@@ -31,14 +31,4 @@ public final class Topic {
     public void setCover(String cover) {
         this.cover = cover;
     }
-
-    @Override
-    public String toString() {
-        return "Topic{" +
-                "sid='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", cover='" + cover + '\'' +
-                '}' +
-                "\n";
-    }
 }
