@@ -15,6 +15,14 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#test wayne
+#-dontobfuscate
+-keepclassmembers class cn.j1angvei.cnbetareader.bean.*{
+private <fields>;
+}
+-keepclassmembers class cn.j1angvei.cnbetareader.data.remote.response.*{
+private <fields>;
+}
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
@@ -70,15 +78,17 @@
    long producerIndex;
    long consumerIndex;
 }
-
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
-
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 ##---------------End: proguard configuration for rxJava  ----------
 
 ##---------------Begin: proguard configuration for Rxjava-promises---------
+-keeppackagenames org.jsoup.nodes
+#-keep public class org.jsoup.** {
+#public *;
+#}
 ##---------------Begin: proguard configuration for Rxjava-promises----------

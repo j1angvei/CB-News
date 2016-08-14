@@ -15,10 +15,4 @@ public class BaseResponse {
         this.state = state;
     }
 
-    @Override
-    public String toString() {
-        return "BaseResponse{" +
-                "state='" + state + '\'' +
-                '}';
-    }
 }
