@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -95,17 +96,12 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                 MessageUtil.toast("test " + i, getContext());
             }
         });
-        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MessageUtil.toast("long test " + i, getContext());
-                return true;
-            }
-        });
+        //set context action mode
+        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        mGridView.setMultiChoiceModeListener(new TopicCABListener());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //fab
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-//        mFab.setVisibility(View.GONE);
         mFab.hide();
         return view;
     }
@@ -120,7 +116,6 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        mFab.setVisibility(View.VISIBLE);
         mFab.show();
     }
 
@@ -177,5 +172,59 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                 MessageUtil.toast("nothing  selected", getActivity());
             }
         });
+    }
+
+    private class TopicCABListener implements GridView.MultiChoiceModeListener {
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                              long id, boolean checked) {
+            // Here you can do something when items are selected/de-selected,
+            // such as update the title in the CAB
+            int count = mGridView.getCheckedItemCount();
+            if (count == 1) {
+                mode.setTitle(count + " topic selected");
+            } else if (count > 1) {
+                mode.setTitle(count + " topics selected");
+            }
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            // Respond to clicks on the actions in the CAB
+            switch (item.getItemId()) {
+                case R.id.menu_context_explore_select_all:
+                    for (int i = 0; i < mGridView.getCount(); i++) {
+                        mGridView.setItemChecked(i, true);
+                    }
+                    return true;
+                case R.id.menu_context_explore_add:
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate the menu for the CAB
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_context_explore, menu);
+            mode.setTitle("Select topics");
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            // Here you can make any necessary updates to the activity when
+            // the CAB is removed. By default, selected items are deselected/unchecked.
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Here you can perform updates to the CAB due to
+            // an invalidate() request
+            return true;
+        }
     }
 }

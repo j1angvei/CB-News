@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/activatedBackgroundIndicator">
 
         <ImageView
             android:id="@+id/iv_topic_thumb"
@@ -24,11 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_topic_thumb"
-            android:ellipsize="marquee"
             android:gravity="center"
             android:lines="1"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
             android:text="Google 谷歌"/>
 
     </RelativeLayout>
