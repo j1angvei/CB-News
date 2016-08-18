@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.app.Application;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -12,19 +10,29 @@ import rx.Observable;
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
-public class CommentsLocalSource extends LocalSource<Comments> {
+public class CommentsLocalSource implements LocalSource<Comments> {
     @Inject
-    public CommentsLocalSource(Application context) {
-        super(context);
+    public CommentsLocalSource() {
+
     }
 
     @Override
-    Observable<Comments> get() {
+    public void add(Comments item) {
+
+    }
+
+    @Override
+    public Observable<Comments> query() {
         return null;
     }
 
     @Override
-    void save(Comments item) {
+    public void update(Comments item) {
+
+    }
+
+    @Override
+    public void delete(Comments item) {
 
     }
 }

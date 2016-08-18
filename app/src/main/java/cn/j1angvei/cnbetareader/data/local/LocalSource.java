@@ -1,21 +1,18 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.app.Application;
-import android.content.Context;
-
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/23.
  */
-public abstract class LocalSource<T> {
-    final Context mContext;
+public interface LocalSource<T> {
 
-    public LocalSource(Application context) {
-        mContext = context;
-    }
+    void add(T item);
 
-    abstract Observable<T> get();
+    Observable<T> query();
 
-    abstract void save(T item);
+    void update(T item);
+
+    void delete(T item);
+
 }

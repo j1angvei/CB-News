@@ -32,6 +32,7 @@ public class MyTopicsRepository implements Repository<Article> {
                     @Override
                     public void call(Article article) {
                         //save to cache or disk
+                        toDisk(article);
                     }
                 });
     }

@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.di.module;
 
-import android.app.Application;
-
 import com.google.gson.Gson;
 
 import javax.inject.Named;
@@ -23,8 +21,8 @@ import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
 import cn.j1angvei.cnbetareader.converter.ReviewConverter;
 import cn.j1angvei.cnbetareader.converter.TopicConverter;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
+import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import dagger.Module;
 import dagger.Provides;
@@ -87,29 +85,29 @@ public class DataModule {
     @Provides
     @Singleton
     @Named("l_article")
-    NewsLocalSource<Article> provideArticleNewsLocalSource(Application application) {
-        return new NewsLocalSource<>(application);
+    NewsLocalSource<Article> provideArticleNewsLocalSource() {
+        return new NewsLocalSource<>();
     }
 
     @Provides
     @Singleton
     @Named("l_review")
-    NewsLocalSource<Review> provideReviewNewsLocalSource(Application application) {
-        return new NewsLocalSource<>(application);
+    NewsLocalSource<Review> provideReviewNewsLocalSource() {
+        return new NewsLocalSource<>();
     }
 
     @Provides
     @Singleton
     @Named("l_headline")
-    NewsLocalSource<Headline> provideHeadlineNewsLocalSource(Application application) {
-        return new NewsLocalSource<>(application);
+    NewsLocalSource<Headline> provideHeadlineNewsLocalSource() {
+        return new NewsLocalSource<>();
     }
 
     @Provides
     @Singleton
     @Named("l_bookmark")
-    NewsLocalSource<Bookmark> provideBookmarkLocalSource(Application application) {
-        return new NewsLocalSource<>(application);
+    NewsLocalSource<Bookmark> provideBookmarkLocalSource() {
+        return new NewsLocalSource<>();
     }
 
     @Provides

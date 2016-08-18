@@ -3,8 +3,6 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.Spinner;
 
 import javax.inject.Inject;
@@ -21,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.ExploreRvAdapter;
+import cn.j1angvei.cnbetareader.adapter.ExploreAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -36,15 +35,13 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     private static final String PAGE = "ExploreFragment.page";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.grid_view)
+    GridView mGridView;
     @Inject
-    GridLayoutManager mGridLayoutManager;
-    @Inject
-    ExploreRvAdapter mAdapter;
+    ExploreAdapter mAdapter;
     @Inject
     ExplorePresenter mPresenter;
-    Spinner mSpinner;
+    private Spinner mSpinner;
     private int mPage;
 
     public static ExploreFragment newInstance(int page) {
@@ -88,8 +85,14 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
         ButterKnife.bind(this, view);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mGridLayoutManager);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MessageUtil.toast("test " + i, getContext());
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
@@ -98,14 +101,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        onRefresh();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mRecyclerView.setAdapter(null);
-        mRecyclerView.setLayoutManager(null);
+//        onRefresh();
     }
 
     @Override

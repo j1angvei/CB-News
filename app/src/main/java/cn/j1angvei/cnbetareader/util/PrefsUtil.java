@@ -17,7 +17,7 @@ public class PrefsUtil {
     public static final String CSRF_TOKEN = "csrf_token";
     public static final String COOKIE_TOKEN = "cookie_token";
     public static final String COOKIE_SESSION = "cookie_session";
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
 
     @Inject
     public PrefsUtil(SharedPreferences prefs) {

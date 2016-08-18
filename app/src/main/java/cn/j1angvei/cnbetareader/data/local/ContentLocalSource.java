@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.app.Application;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -12,21 +10,29 @@ import rx.Observable;
  * Created by Wayne on 2016/7/25.
  */
 @Singleton
-public class ContentLocalSource extends LocalSource<Content> {
+public class ContentLocalSource implements LocalSource<Content> {
     @Inject
-    public ContentLocalSource(Application context) {
-        super(context);
+    public ContentLocalSource() {
     }
 
     @Override
-    Observable<Content> get() {
+    public void add(Content item) {
+
+    }
+
+    @Override
+    public Observable<Content> query() {
         return null;
     }
 
     @Override
-    void save(Content item) {
+    public void update(Content item) {
 
     }
 
+    @Override
+    public void delete(Content item) {
+
+    }
 
 }

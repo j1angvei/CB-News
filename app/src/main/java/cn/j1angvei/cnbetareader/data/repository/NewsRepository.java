@@ -25,6 +25,7 @@ public class NewsRepository<T> implements Repository<T> {
                 .doOnNext(new Action1<T>() {
                     @Override
                     public void call(T t) {
+                        toDisk(t);
                         //save to disk or cache
                     }
                 });
@@ -37,6 +38,5 @@ public class NewsRepository<T> implements Repository<T> {
 
     @Override
     public void toRAM(T item) {
-
     }
 }
