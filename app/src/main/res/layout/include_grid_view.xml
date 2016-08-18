@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:columnWidth="90dp"
     android:gravity="center"
-    android:horizontalSpacing="10dp"
+    android:horizontalSpacing="@dimen/card_margin"
     android:numColumns="auto_fit"
     android:stretchMode="columnWidth"
-    android:verticalSpacing="10dp">
+    android:verticalSpacing="@dimen/card_margin">
 
 </GridView>

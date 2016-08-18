@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,7 +43,9 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Inject
     ExplorePresenter mPresenter;
     private Spinner mSpinner;
+    private FloatingActionButton mFab;
     private int mPage;
+
 
     public static ExploreFragment newInstance(int page) {
         ExploreFragment fragment = new ExploreFragment();
@@ -86,14 +89,24 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
         ButterKnife.bind(this, view);
         mGridView.setAdapter(mAdapter);
-        mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MessageUtil.toast("test " + i, getContext());
             }
         });
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MessageUtil.toast("long test " + i, getContext());
+                return true;
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        //fab
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+//        mFab.setVisibility(View.GONE);
+        mFab.hide();
         return view;
     }
 
@@ -102,6 +115,13 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
 //        onRefresh();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        mFab.setVisibility(View.VISIBLE);
+        mFab.show();
     }
 
     @Override

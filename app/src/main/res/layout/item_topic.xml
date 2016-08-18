@@ -15,7 +15,6 @@
             android:layout_height="80dp"
             android:layout_margin="@dimen/card_margin"
             android:background="?attr/selectableItemBackground"
-            android:clickable="true"
             android:contentDescription="@string/topic_thumb"
             android:scaleType="fitCenter"
             android:src="@drawable/fake_topic_album"/>
@@ -25,7 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_topic_thumb"
+            android:ellipsize="marquee"
             android:gravity="center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             android:text="Google 谷歌"/>
 
     </RelativeLayout>
