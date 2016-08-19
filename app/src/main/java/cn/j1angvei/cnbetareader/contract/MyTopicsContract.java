@@ -10,6 +10,9 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 
 public interface MyTopicsContract {
     interface View extends BaseView {
+
+        void prepareAddTopics();
+
         void renderMyTopics(List<Topic> topics);
 
         void onMyTopicsEmpty();

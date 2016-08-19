@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.MyTopicsPagerAdapter;
+import cn.j1angvei.cnbetareader.bean.Source;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -37,6 +39,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     MyTopicsPresenter mPresenter;
     TabLayout mTabLayout;
     MyTopicsPagerAdapter mAdapter;
+    FloatingActionButton mFab;
 
     public static MyTopicsFragment newInstance(String later) {
         MyTopicsFragment fragment = new MyTopicsFragment();
@@ -57,6 +60,15 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_topics, container, false);
         ButterKnife.bind(this, view);
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        mFab.setImageResource(R.drawable.ic_add_white);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prepareAddTopics();
+            }
+        });
+        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
         return view;
     }
 
@@ -64,12 +76,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        mHint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.retrieveMyTopics();
-            }
-        });
+        mPresenter.retrieveMyTopics();
     }
 
     @Override
@@ -94,13 +101,32 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     }
 
     @Override
+    public void prepareAddTopics() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.fl_container, ExploreFragment.newInstance(1), Source.EXPLORE.toString())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void renderMyTopics(List<Topic> topics) {
-        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setVisibility(View.VISIBLE);
-        mHint.setVisibility(View.GONE);
+        if (topics.isEmpty()) {
+            mHint.setVisibility(View.VISIBLE);
+            mHint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    prepareAddTopics();
+                }
+            });
+        } else {
+            mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
+            mViewPager.setAdapter(mAdapter);
+            mTabLayout.setupWithViewPager(mViewPager);
+            mTabLayout.setVisibility(View.VISIBLE);
+            mHint.setVisibility(View.GONE);
+        }
     }
 
     @Override

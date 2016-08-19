@@ -61,4 +61,6 @@
     <string name="hint_input_right_letters">Input right letters</string>
     <string name="publish_cmt_reference_comment">Reference comment</string>
     <string name="publish_cmt_your_comment">Your comment</string>
+    <!--my topics-->
+    <string name="hint_add_my_topic">You haven\'t add any topic\nClick to add some</string>
 </resources>
