@@ -49,9 +49,12 @@ public class ExploreLocalSource implements LocalSource<Topic> {
     public void addMyTopic(Topic topic) {
         SQLiteDatabase db = mMyTopicsDbHelper.getWritableDatabase();
         db.beginTransaction();
-        ContentValues values = DbUtil.fromTopic(topic);
-        db.insertOrThrow(MyTopicsDbHelper.TABLE_TOPIC, null, values);
-        db.setTransactionSuccessful();
-        db.endTransaction();
+        try {
+            ContentValues values = DbUtil.fromTopic(topic);
+            db.insertOrThrow(MyTopicsDbHelper.TABLE_TOPIC, null, values);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 }

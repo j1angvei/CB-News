@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -49,6 +50,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Inject
     ExplorePresenter mPresenter;
     private Spinner mSpinner;
+    CoordinatorLayout mCoordinatorLayout;
     private FloatingActionButton mFab;
     private int mPage;
 
@@ -109,6 +111,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //fab
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        //coordinatorLayout
+        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
@@ -129,7 +133,6 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
 
-
     @Override
     public void showLoading() {
         mSwipeRefreshLayout.setRefreshing(true);
@@ -148,6 +151,16 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     public void clearTopics() {
         mAdapter.clear();
+    }
+
+    @Override
+    public void onAddSuccess() {
+        MessageUtil.snack(mCoordinatorLayout, "Add success!");
+    }
+
+    @Override
+    public void onAddFail() {
+        MessageUtil.snack(mCoordinatorLayout, "Added already!");
     }
 
     @Override

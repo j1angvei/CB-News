@@ -18,16 +18,16 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
+import cn.j1angvei.cnbetareader.contract.TopicNewsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
+import cn.j1angvei.cnbetareader.presenter.TopicNewsPresenter;
 
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NestedMyTopicsFragment extends BaseFragment implements MyTopicsContract.View, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TOPIC_ID = "NestedMyTopicsFragment.topic_id";
+public class TopicNewsFragment extends BaseFragment implements TopicNewsContract.View, SwipeRefreshLayout.OnRefreshListener {
+    private static final String TOPIC_ID = "TopicNewsFragment.topic_id";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -37,13 +37,13 @@ public class NestedMyTopicsFragment extends BaseFragment implements MyTopicsCont
     @Inject
     ArticlesRvAdapter mAdapter;
     @Inject
-    MyTopicsPresenter mPresenter;
+    TopicNewsPresenter mPresenter;
 
     private int mPage = 1;
     private String mTopicId;
 
-    public static NestedMyTopicsFragment newInstance(String topicId) {
-        NestedMyTopicsFragment fragment = new NestedMyTopicsFragment();
+    public static TopicNewsFragment newInstance(String topicId) {
+        TopicNewsFragment fragment = new TopicNewsFragment();
         Bundle args = new Bundle();
         args.putString(TOPIC_ID, topicId);
         fragment.setArguments(args);
@@ -111,7 +111,7 @@ public class NestedMyTopicsFragment extends BaseFragment implements MyTopicsCont
     @Override
     public void onRefresh() {
         clearArticles();
-        mPresenter.retrieveMyTopics(mPage++, mTopicId);
+        mPresenter.retrieveTopicNews(mPage++, mTopicId);
 
     }
 }

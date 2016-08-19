@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import javax.inject.Named;
+
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -30,5 +33,4 @@ public class ActivityModule {
     FragmentManager provideFragmentManager(Activity activity) {
         return ((FragmentActivity) activity).getSupportFragmentManager();
     }
-
 }

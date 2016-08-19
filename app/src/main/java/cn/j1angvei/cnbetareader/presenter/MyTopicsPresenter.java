@@ -1,64 +1,56 @@
 package cn.j1angvei.cnbetareader.presenter;
 
-import android.util.Log;
-
-import java.util.Map;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Wayne on 2016/7/10.
+ * Created by Wayne on 2016/8/19.
  */
 @PerFragment
 public class MyTopicsPresenter implements MyTopicsContract.Presenter {
-    private static final String TAG = "MyTopicsPresenter";
     private MyTopicsContract.View mView;
-    private MyTopicsRepository mRepository;
-    private ApiUtil mApiUtil;
+    private final MyTopicsRepository mRepository;
 
     @Inject
-    public MyTopicsPresenter(MyTopicsRepository repository, ApiUtil apiUtil) {
+    public MyTopicsPresenter(MyTopicsRepository repository) {
         mRepository = repository;
-        mApiUtil = apiUtil;
-    }
-
-    @Override
-    public void retrieveMyTopics(int page, String topicId) {
-        mView.showLoading();
-        Map<String, String> param = mApiUtil.getTopicsNewsParam(topicId, page);
-        mRepository.getData(null, param)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Article>() {
-                    @Override
-                    public void onCompleted() {
-                        mView.hideLoading();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: ", e);
-                    }
-
-                    @Override
-                    public void onNext(Article article) {
-                        mView.renderArticle(article);
-                    }
-                });
-
     }
 
     @Override
     public void setView(MyTopicsContract.View view) {
         mView = view;
+    }
+
+    @Override
+    public void retrieveMyTopics() {
+        mRepository.getMyTopic()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Topic>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Topic> topics) {
+                        mView.renderMyTopics(topics);
+                    }
+                })
+        ;
     }
 }

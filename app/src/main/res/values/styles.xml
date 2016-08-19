@@ -9,6 +9,7 @@
         <!--context action mode-->
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/bg_item_topic</item>
     </style>
 
     <style name="CBTheme" parent="AppTheme"/>

@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -48,7 +49,7 @@ public class MyTopicsRepository implements Repository<Article> {
 
     }
 
-    public Observable<Topic> getMyTopic() {
+    public Observable<List<Topic>> getMyTopic() {
         return mLocalSource.queryMyTopic();
     }
 }

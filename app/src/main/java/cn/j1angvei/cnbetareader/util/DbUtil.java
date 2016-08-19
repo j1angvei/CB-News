@@ -38,18 +38,21 @@ public class DbUtil {
         return values;
     }
 
-    public static Observable<Topic> toTopic(Cursor cursor) {
+    public static Observable<List<Topic>> toTopic(Cursor cursor) {
         List<Topic> topics = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            do {
-                Topic topic = new Topic();
-                topic.setId(cursor.getString(cursor.getColumnIndex(COL_ID)));
-                topic.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
-                topic.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
-                topics.add(topic);
-            } while (cursor.moveToNext());
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Topic topic = new Topic();
+                    topic.setId(cursor.getString(cursor.getColumnIndex(COL_ID)));
+                    topic.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
+                    topic.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
+                    topics.add(topic);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
-        return Observable.from(topics);
+        return Observable.just(topics);
     }
 }

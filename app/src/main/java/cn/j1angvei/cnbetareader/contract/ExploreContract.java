@@ -12,6 +12,10 @@ public interface ExploreContract {
         void renderTopic(Topic topic);
 
         void clearTopics();
+
+        void onAddSuccess();
+
+        void onAddFail();
     }
 
     interface Presenter extends BasePresenter<ExploreContract.View> {

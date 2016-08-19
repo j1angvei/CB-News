@@ -1,18 +1,21 @@
 package cn.j1angvei.cnbetareader.contract;
 
-import cn.j1angvei.cnbetareader.bean.Article;
+import java.util.List;
+
+import cn.j1angvei.cnbetareader.bean.Topic;
 
 /**
- * Created by Wayne on 2016/8/9.
+ * Created by Wayne on 2016/8/19.
  */
+
 public interface MyTopicsContract {
     interface View extends BaseView {
-        void renderArticle(Article article);
+        void renderMyTopics(List<Topic> topics);
 
-        void clearArticles();
+        void onMyTopicsEmpty();
     }
 
-    interface Presenter extends BasePresenter<MyTopicsContract.View> {
-        void retrieveMyTopics(int page, String topicId);
+    interface Presenter extends BasePresenter<View> {
+        void retrieveMyTopics();
     }
 }

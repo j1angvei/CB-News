@@ -1,8 +1,9 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -46,11 +47,9 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
     }
 
 
-
-    public Observable<Topic> queryMyTopic() {
+    public Observable<List<Topic>> queryMyTopic() {
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(MyTopicsDbHelper.TABLE_TOPIC, null, null, null, null, null, null);
         return DbUtil.toTopic(cursor);
     }
-
 }

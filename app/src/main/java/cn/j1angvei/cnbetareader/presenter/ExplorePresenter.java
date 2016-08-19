@@ -15,7 +15,6 @@ import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -61,35 +60,27 @@ public class ExplorePresenter implements ExploreContract.Presenter {
     public void saveMyTopics(List<Topic> topics) {
         Observable.from(topics)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Topic, Boolean>() {
+                .subscribe(new Subscriber<Topic>() {
                     @Override
-                    public Boolean call(Topic topic) {
-                        mRepository.saveMyTopics(topic);
-                        return true;
+                    public void onCompleted() {
+                        mView.onAddSuccess();
                     }
-                }).subscribe(new Subscriber<Boolean>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "onCompleted: ");
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "onError: ", e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onAddFail();
+                    }
 
-            @Override
-            public void onNext(Boolean aBoolean) {
-                Log.d(TAG, "onNext: " + aBoolean);
-            }
-        });
+                    @Override
+                    public void onNext(Topic topic) {
+                        mRepository.saveMyTopics(topic);
+                    }
+                });
 
     }
 
     @Override
     public void setView(ExploreContract.View view) {
         mView = view;
-
     }
 }

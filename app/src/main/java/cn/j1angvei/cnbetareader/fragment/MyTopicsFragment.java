@@ -7,21 +7,34 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
+import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.MyTopicsPagerAdapter;
+import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
 
 /**
  * Created by Wayne on 2016/7/6.
  */
-public class MyTopicsFragment extends BaseFragment {
+public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
     private static final String LATER_USE = "MyTopicsFragment.later_use";
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
-
+    @BindView(R.id.tv_my_topic_hint)
+    TextView mHint;
+    @Inject
+    MyTopicsPresenter mPresenter;
     TabLayout mTabLayout;
     MyTopicsPagerAdapter mAdapter;
 
@@ -36,21 +49,27 @@ public class MyTopicsFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager());
+        inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.include_viewpager, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_topics, container, false);
         ButterKnife.bind(this, view);
-        mViewPager.setAdapter(mAdapter);
-
-        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setVisibility(View.VISIBLE);
-
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.setView(this);
+        mHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.retrieveMyTopics();
+            }
+        });
     }
 
     @Override
@@ -61,6 +80,31 @@ public class MyTopicsFragment extends BaseFragment {
 
     @Override
     protected void inject(ActivityComponent component) {
+        component.fragmentComponent(new FragmentModule()).inject(this);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void renderMyTopics(List<Topic> topics) {
+        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setVisibility(View.VISIBLE);
+        mHint.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onMyTopicsEmpty() {
 
     }
 }
