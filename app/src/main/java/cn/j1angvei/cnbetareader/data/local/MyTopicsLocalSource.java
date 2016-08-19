@@ -1,10 +1,16 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.data.local.helper.TopicDbHelper;
+import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.data.local.helper.MyTopicsDbHelper;
+import cn.j1angvei.cnbetareader.util.DbUtil;
 import rx.Observable;
 
 /**
@@ -12,12 +18,12 @@ import rx.Observable;
  */
 @Singleton
 public class MyTopicsLocalSource implements LocalSource<Article> {
-    private TopicDbHelper mDbHelper;
-
+    private static final String TAG = "MyTopicsLocalSource";
+    private MyTopicsDbHelper mHelper;
 
     @Inject
-    public MyTopicsLocalSource(TopicDbHelper helper) {
-        mDbHelper = helper;
+    public MyTopicsLocalSource(MyTopicsDbHelper helper) {
+        mHelper = helper;
     }
 
     @Override
@@ -37,6 +43,14 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
     @Override
     public void delete(Article item) {
 
+    }
+
+
+
+    public Observable<Topic> queryMyTopic() {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor cursor = db.query(MyTopicsDbHelper.TABLE_TOPIC, null, null, null, null, null, null);
+        return DbUtil.toTopic(cursor);
     }
 
 }

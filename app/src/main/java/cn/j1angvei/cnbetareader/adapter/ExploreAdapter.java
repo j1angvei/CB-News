@@ -43,7 +43,7 @@ public class ExploreAdapter extends ArrayAdapter<Topic> {
         }
         Topic topic = getItem(position);
         if (topic != null) {
-            Glide.with(mActivity).load(topic.getCover()).into(viewHolder.ivThumb);
+            Glide.with(mActivity).load(topic.getThumb()).into(viewHolder.ivThumb);
             viewHolder.tvName.setText(topic.getTitle());
         }
         return convertView;

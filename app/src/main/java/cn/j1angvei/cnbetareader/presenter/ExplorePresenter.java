@@ -3,6 +3,8 @@ package cn.j1angvei.cnbetareader.presenter;
 
 import android.util.Log;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
@@ -10,8 +12,10 @@ import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -20,8 +24,8 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class ExplorePresenter implements ExploreContract.Presenter {
     private static final String TAG = "ExplorePresenter";
-    ExploreContract.View mView;
-    ExploreRepository mRepository;
+    private ExploreContract.View mView;
+    private ExploreRepository mRepository;
 
     @Inject
     public ExplorePresenter(ExploreRepository repository) {
@@ -51,6 +55,36 @@ public class ExplorePresenter implements ExploreContract.Presenter {
                         mView.renderTopic(topic);
                     }
                 });
+    }
+
+    @Override
+    public void saveMyTopics(List<Topic> topics) {
+        Observable.from(topics)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<Topic, Boolean>() {
+                    @Override
+                    public Boolean call(Topic topic) {
+                        mRepository.saveMyTopics(topic);
+                        return true;
+                    }
+                }).subscribe(new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+                Log.d(TAG, "onCompleted: ");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "onError: ", e);
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                Log.d(TAG, "onNext: " + aBoolean);
+            }
+        });
+
     }
 
     @Override

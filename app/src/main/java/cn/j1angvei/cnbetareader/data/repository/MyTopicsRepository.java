@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.MyTopicsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.MyTopicsRemoteSource;
 import rx.Observable;
@@ -45,5 +46,9 @@ public class MyTopicsRepository implements Repository<Article> {
     @Override
     public void toRAM(Article item) {
 
+    }
+
+    public Observable<Topic> getMyTopic() {
+        return mLocalSource.queryMyTopic();
     }
 }

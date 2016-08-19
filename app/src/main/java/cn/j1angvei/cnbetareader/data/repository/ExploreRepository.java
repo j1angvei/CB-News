@@ -45,4 +45,9 @@ public class ExploreRepository implements Repository<Topic> {
     public void toRAM(Topic item) {
 
     }
+
+
+    public void saveMyTopics(Topic topic) {
+        mLocalSource.addMyTopic(topic);
+    }
 }

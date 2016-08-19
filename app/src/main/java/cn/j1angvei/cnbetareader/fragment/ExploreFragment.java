@@ -3,7 +3,9 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -99,10 +104,11 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         //set context action mode
         mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         mGridView.setMultiChoiceModeListener(new TopicCABListener());
+        //make gridView response to coordinatorLayout scroll behavior
+        ViewCompat.setNestedScrollingEnabled(mGridView, true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //fab
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.hide();
         return view;
     }
 
@@ -116,7 +122,6 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mFab.show();
     }
 
     @Override
@@ -198,6 +203,14 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                     }
                     return true;
                 case R.id.menu_context_explore_add:
+                    List<Topic> topics = new ArrayList<>();
+                    SparseBooleanArray checked = mGridView.getCheckedItemPositions();
+                    for (int i = 0; i < mGridView.getCount(); i++) {
+                        if (checked.get(i)) {
+                            topics.add(mAdapter.getItem(i));
+                        }
+                    }
+                    mPresenter.saveMyTopics(topics);
                     mode.finish();
                     return true;
                 default:

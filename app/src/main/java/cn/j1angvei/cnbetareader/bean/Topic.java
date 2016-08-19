@@ -6,7 +6,7 @@ package cn.j1angvei.cnbetareader.bean;
 public final class Topic {
     private String id;
     private String title;
-    private String cover;
+    private String thumb;
 
     public String getId() {
         return id;
@@ -24,11 +24,11 @@ public final class Topic {
         this.title = title;
     }
 
-    public String getCover() {
-        return cover;
+    public String getThumb() {
+        return thumb;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
     }
 }

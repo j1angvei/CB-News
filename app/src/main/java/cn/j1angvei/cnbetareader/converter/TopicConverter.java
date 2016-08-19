@@ -29,7 +29,7 @@ public class TopicConverter implements Converter<Topic> {
         for (Element dl : dls) {
             Topic topic = new Topic();
             //cover
-            topic.setCover(dl.select("dt > div > a > img").attr("src"));
+            topic.setThumb(dl.select("dt > div > a > img").attr("src"));
             //elements contain id and title
             Element a = dl.select("dd > a").get(0);
             //title
