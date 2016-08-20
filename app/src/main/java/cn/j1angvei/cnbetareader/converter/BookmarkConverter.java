@@ -26,9 +26,9 @@ public class BookmarkConverter extends NewsConverter<Bookmark> {
     public Bookmark to(String json) {
         News news = mGson.fromJson(json, News.class);
         Bookmark bookmark = new Bookmark();
-        bookmark.setId(news.getSid());
+        bookmark.setSid(news.getSid());
         bookmark.setTitle(news.getTitle());
-        bookmark.setDate(new Date());
+        bookmark.setTime(new Date());
         return bookmark;
     }
 

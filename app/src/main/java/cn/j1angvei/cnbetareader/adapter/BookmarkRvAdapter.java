@@ -36,7 +36,7 @@ public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.V
     ArrayList<String> getSids() {
         ArrayList<String> sids = new ArrayList<>();
         for (Bookmark bookmark : mBookmarks) {
-            sids.add(bookmark.getId());
+            sids.add(bookmark.getSid());
         }
         return sids;
     }
@@ -53,7 +53,7 @@ public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.V
         holder.tvTitle.setText(bookmark.getTitle());
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
-        String time = String.format(resources.getString(R.string.ph_bookmark_time), DateUtil.toLongDatePlusTime(bookmark.getDate(), context));
+        String time = String.format(resources.getString(R.string.ph_bookmark_time), DateUtil.toLongDatePlusTime(bookmark.getTime(), context));
         holder.tvTime.setText(time);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

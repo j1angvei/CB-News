@@ -34,7 +34,7 @@ public interface DbHelper<T> extends BaseColumns {
     String TABLE_REVIEW = "review";
     String TABLE_CONTENT = "content";
     String TABLE_COMMENTS = "comments";
-    String TABLE_COMMENT_ITEM = "comment_item";
+    String TABLE_BOOKMARK = "bookmark";
     //column name
     //from topic
     String COL_TITLE = "title";
