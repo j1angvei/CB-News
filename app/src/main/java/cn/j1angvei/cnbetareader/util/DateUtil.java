@@ -35,4 +35,16 @@ public final class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.parse(dateString);
     }
+
+    public static String convertDefault(Date date) {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_CB);
+        return sdf.format(date);
+    }
+
+    public static Date retrieveDefault(String source) throws ParseException {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_CB);
+        return sdf.parse(source);
+    }
 }

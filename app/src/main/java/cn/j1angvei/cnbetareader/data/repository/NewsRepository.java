@@ -26,14 +26,13 @@ public class NewsRepository<T> implements Repository<T> {
                     @Override
                     public void call(T t) {
                         toDisk(t);
-                        //save to disk or cache
                     }
                 });
     }
 
     @Override
     public void toDisk(T item) {
-
+        mLocalSource.create(item);
     }
 
     @Override

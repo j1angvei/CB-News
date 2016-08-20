@@ -14,7 +14,7 @@ public final class Article extends News {
     @SerializedName("comments")
     private String commentNum;
     @SerializedName("counter")
-    private String counterNum;
+    private String viewerNum;
     @SerializedName("inputtime")
     private Date time;
     private String thumb;
@@ -44,12 +44,12 @@ public final class Article extends News {
         this.commentNum = commentNum;
     }
 
-    public String getCounterNum() {
-        return counterNum;
+    public String getViewerNum() {
+        return viewerNum;
     }
 
-    public void setCounterNum(String counterNum) {
-        this.counterNum = counterNum;
+    public void setViewerNum(String viewerNum) {
+        this.viewerNum = viewerNum;
     }
 
     public Date getTime() {

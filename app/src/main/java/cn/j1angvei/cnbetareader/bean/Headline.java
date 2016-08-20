@@ -9,10 +9,10 @@ import java.util.List;
 public final class Headline extends News {
     private String content;
     private String thumb;
-    private List<RelatedItem> relatedArticles;
+    private List<News> relatedNews;
 
     public Headline() {
-        relatedArticles = new ArrayList<>();
+        relatedNews = new ArrayList<>();
     }
 
     public String getContent() {
@@ -31,12 +31,11 @@ public final class Headline extends News {
         this.thumb = thumb;
     }
 
-    public List<RelatedItem> getRelatedArticles() {
-        return relatedArticles;
+    public List<News> getRelatedNews() {
+        return relatedNews;
     }
 
-    public void setRelatedArticles(List<RelatedItem> relatedArticles) {
-        this.relatedArticles = relatedArticles;
+    public void setRelatedNews(List<News> relatedNews) {
+        this.relatedNews = relatedNews;
     }
-
 }

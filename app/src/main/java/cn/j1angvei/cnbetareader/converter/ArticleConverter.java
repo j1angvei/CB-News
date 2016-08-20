@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.converter;
 
+import android.text.Html;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,6 +14,7 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * Created by Wayne on 2016/7/22.
@@ -39,6 +42,18 @@ public class ArticleConverter extends NewsConverter<Article> {
 
     @Override
     public Observable<Article> toObservable(String json) {
-        return Observable.from(toList(json));
+        return Observable.from(toList(json))
+                .doOnNext(new Action1<Article>() {
+                    @Override
+                    public void call(Article article) {
+                        String source = article.getSource();
+                        if (source.contains("@")) {
+                            source = source.substring(0, source.indexOf('@') - 1);
+                            article.setSource(source);
+                        }
+                        String summary = Html.fromHtml(article.getSummary()).toString();
+                        article.setSummary(summary);
+                    }
+                });
     }
 }

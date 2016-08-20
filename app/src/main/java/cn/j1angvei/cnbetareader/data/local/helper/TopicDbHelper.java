@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,6 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
 
     @Override
     public Observable<Topic> read(String query) {
-        Log.d(TAG, "read: " + query);
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
         List<Topic> topics = new ArrayList<>();
         try {
@@ -88,7 +86,6 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        Log.d(TAG, "read: " + topics);
         return Observable.from(topics);
     }
 

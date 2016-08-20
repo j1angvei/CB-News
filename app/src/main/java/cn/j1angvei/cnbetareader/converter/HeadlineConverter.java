@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.bean.RawHeadline;
-import cn.j1angvei.cnbetareader.bean.RelatedItem;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.StringUtil;
@@ -59,14 +59,16 @@ public class HeadlineConverter extends NewsConverter<Headline> {
         String content = Html.fromHtml(raw.getDescription()).toString();
         headline.setContent(StringUtil.removeBlanks(content));
 
-        ArrayList<RelatedItem> items = new ArrayList<>();
+        ArrayList<News> newses = new ArrayList<>();
         for (String relation : raw.getRelatedArticles()) {
             String sid = relation.replaceFirst("^<a href=.*/articles/", "").replaceAll("\\.htm\\\" target=\\\"_blank\\\">.*</a>$", "");
             String title = Html.fromHtml(relation).toString();
-            RelatedItem item = new RelatedItem(sid, title);
-            items.add(item);
+            News news = new News();
+            news.setSid(sid);
+            news.setTitle(title);
+            newses.add(news);
         }
-        headline.setRelatedArticles(items);
+        headline.setRelatedNews(newses);
         headline.setThumb(raw.getThumb());
         return headline;
     }

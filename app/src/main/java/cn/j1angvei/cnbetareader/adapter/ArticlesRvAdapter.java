@@ -54,7 +54,7 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
         final Article article = mArticles.get(position);
         holder.tvTitle.setText(Html.fromHtml(article.getTitle()).toString());
         holder.tvSummary.setText(Html.fromHtml(article.getSummary()).toString());
-        holder.tvViewer.setText(article.getCounterNum());
+        holder.tvViewer.setText(article.getViewerNum());
         holder.tvComments.setText(article.getCommentNum());
         Date date = article.getTime();
         holder.tvTime.setText(DateUtil.toShortDatePlusTime(date, context));

@@ -20,7 +20,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Headline;
-import cn.j1angvei.cnbetareader.bean.RelatedItem;
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
@@ -55,19 +55,19 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
             }
         });
         //relate items
-        List<RelatedItem> relatedItems = headline.getRelatedArticles();
+        List<News> newsList = headline.getRelatedNews();
         final ArrayList<String> relatedSids = new ArrayList<>();
-        for (RelatedItem item : relatedItems) {
+        for (News item : newsList) {
             relatedSids.add(item.getSid());
         }
-        if (relatedItems.size() <= 0) {
+        if (newsList.size() <= 0) {
             holder.llRelateContainer.setVisibility(View.GONE);
         } else {
             holder.llRelateContainer.setVisibility(View.VISIBLE);
             Glide.with(context).load(headline.getThumb()).into(holder.ivThumb);
-            for (int i = 0; i < relatedItems.size(); i++) {
+            for (int i = 0; i < newsList.size(); i++) {
                 TextView tv = holder.tvRelate.get(i);
-                final RelatedItem item = headline.getRelatedArticles().get(i);
+                final News item = headline.getRelatedNews().get(i);
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(item.getTitle());
                 final int finalI = i;

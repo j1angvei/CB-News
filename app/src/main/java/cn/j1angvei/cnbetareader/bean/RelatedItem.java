@@ -28,11 +28,4 @@ public final class RelatedItem {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "RelatedItem{" +
-                "sid='" + sid + '\'' +
-                ", title='" + title + '\'' +
-                '}';
-    }
 }
