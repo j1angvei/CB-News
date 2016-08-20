@@ -6,6 +6,7 @@ import rx.Observable;
 
 /**
  * Created by Wayne on 2016/8/20.
+ * Store common column names, comment methods in {@link android.database.sqlite.SQLiteOpenHelper}
  */
 
 public interface DbHelper<T> extends BaseColumns {
@@ -47,6 +48,10 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_SOURCE = "source";
     //from headline
     String COL_RELATED_NEWS = "related_news";
+    //from review
+    String COL_TID = "tid";
+    String COL_LOCATION = "location";
+    String COL_COMMENT = "comment";
 
 
     void create(T item);

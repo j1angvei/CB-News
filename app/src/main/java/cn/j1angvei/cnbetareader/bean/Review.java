@@ -4,16 +4,16 @@ package cn.j1angvei.cnbetareader.bean;
  * Created by Wayne on 2016/6/13.
  */
 public final class Review extends News {
-    private String commentId;
+    private String tid;
     private String comment;
     private String location;
 
-    public String getCommentId() {
-        return commentId;
+    public String getTid() {
+        return tid;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
     public String getComment() {

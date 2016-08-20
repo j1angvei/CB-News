@@ -23,7 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.CommentAction;
+import cn.j1angvei.cnbetareader.bean.Action;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.contract.CommentsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
@@ -61,7 +61,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                         Navigator.toPublishComment(false, item.getContent(), item.getSid(), item.getTid(), view.getContext());
                         return true;
                     case R.id.action_comment_report:
-                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), item.getTid());
+                        mView.prepareJudgeComment(Action.REPORT.toString(), item.getTid());
                         return true;
                 }
                 return false;
@@ -168,7 +168,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate support comment
-                    mView.prepareJudgeComment(CommentAction.SUPPORT.toString(), item.getTid());
+                    mView.prepareJudgeComment(Action.SUPPORT.toString(), item.getTid());
                 }
             });
             tvPopup.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +183,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     //operate against comment
-                    mView.prepareJudgeComment(CommentAction.AGAINST.toString(), item.getTid());
+                    mView.prepareJudgeComment(Action.AGAINST.toString(), item.getTid());
                 }
             });
             if (!TextUtils.isEmpty(item.getHeadPhoto())) {

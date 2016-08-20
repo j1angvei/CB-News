@@ -51,7 +51,7 @@ public class ReviewConverter extends NewsConverter<Review> {
     private Review convert(RawReview raw) {
         Review review = new Review();
 
-        review.setCommentId(raw.getFromId());
+        review.setTid(raw.getFromId());
         review.setComment(raw.getTitle());
         String description = raw.getDescription();
 

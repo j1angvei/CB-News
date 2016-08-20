@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.CommentAction;
+import cn.j1angvei.cnbetareader.bean.Action;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.Content;
@@ -130,10 +130,10 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void onJudgeSuccess(String action, String tid) {
         CommentItem item = mComments.getCommentMap().get(tid);
-        if (TextUtils.equals(action, CommentAction.SUPPORT.toString())) {
+        if (TextUtils.equals(action, Action.SUPPORT.toString())) {
             int num = 1 + Integer.parseInt(item.getSupport());
             item.setSupport(String.valueOf(num));
-        } else if (TextUtils.equals(action, CommentAction.AGAINST.toString())) {
+        } else if (TextUtils.equals(action, Action.AGAINST.toString())) {
             int num = 1 + Integer.parseInt(item.getAgainst());
             item.setAgainst(String.valueOf(num));
         }
