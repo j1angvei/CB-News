@@ -34,15 +34,19 @@ public interface DbHelper<T> extends BaseColumns {
     String TABLE_COMMENTS = "comments";
     String TABLE_COMMENT_ITEM = "comment_item";
     //column name
+    //from topic
     String COL_TITLE = "title";
     String COL_THUMB = "thumb";
     String COL_LETTER = "letter";
+    //from article
     String COL_TOPIC = "topic";
     String COL_SUMMARY = "summary";
     String COL_COMMENT_NUM = "comment_num";
     String COL_VIEWER_NUM = "viewer_num";
     String COL_TIME = "time";
     String COL_SOURCE = "source";
+    //from headline
+    String COL_RELATED_NEWS = "related_news";
 
 
     void create(T item);

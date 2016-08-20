@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Wayne on 2016/6/13.
  */
 public final class Headline extends News {
-    private String content;
+    private String summary;
     private String thumb;
     private List<News> relatedNews;
 
@@ -15,12 +15,12 @@ public final class Headline extends News {
         relatedNews = new ArrayList<>();
     }
 
-    public String getContent() {
-        return content;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getThumb() {

@@ -47,7 +47,7 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
         Context context = holder.itemView.getContext();
         final Headline headline = mHeadlines.get(position);
         holder.tvTitle.setText(headline.getTitle());
-        holder.tvDescription.setText(headline.getContent());
+        holder.tvDescription.setText(headline.getSummary());
         holder.tvDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -58,7 +58,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:layout_marginTop="2dp"
-                    android:contentDescription="News content topic thumb"
+                    android:contentDescription="News summary topic thumb"
                     android:src="@drawable/fake_topic_album"/>
 
                 <TextView

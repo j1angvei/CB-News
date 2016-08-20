@@ -68,7 +68,7 @@ public final class ApiUtil {
 
     public Map<String, String> getNewsParam(String type, int page) {
         Map<String, String> map = new HashMap<>();
-        map.put(KEY_CALLBACK, JsonpUtil.getParameter());
+        map.put(KEY_CALLBACK, getJsonp());
         map.put(KEY_TYPE, type);
         map.put(KEY_PAGE, String.valueOf(page));
         map.put(KEY_CSRF_TOKEN, readToken());
@@ -78,7 +78,7 @@ public final class ApiUtil {
 
     public Map<String, String> getTopicsNewsParam(String topicId, int page) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put(KEY_CALLBACK, JsonpUtil.getParameter());
+        map.put(KEY_CALLBACK, getJsonp());
         map.put(KEY_ID, topicId);
         map.put(KEY_PAGE, String.valueOf(page));
         map.put(KEY_CSRF_TOKEN, readToken());
@@ -128,5 +128,12 @@ public final class ApiUtil {
 
     private String readToken() {
         return mPrefsUtil.readString(PrefsUtil.CSRF_TOKEN);
+    }
+
+    private static String getJsonp() {
+        final String jQuery = "jQuery";
+        final String jqueryVersion = "1.8.0";
+        String randomString = jqueryVersion + Math.random();
+        return String.format("%s%s_%s", jQuery, randomString.replaceAll("\\D", ""), System.currentTimeMillis());
     }
 }

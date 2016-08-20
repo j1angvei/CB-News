@@ -21,7 +21,8 @@ public class HeaderUtil {
     public static final String VALUE_HOST = "www.cnbeta.com";
 
     public static final String KEY_UA = "User-Agent";
-    public static final String VALUE_UA = "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30O) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
+    public static final String VALUE_UA =
+            "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30O) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
 
     /**
      * Cookie will automatically handled by {@link cn.j1angvei.cnbetareader.data.remote.api.CnBetaCookieJar}
