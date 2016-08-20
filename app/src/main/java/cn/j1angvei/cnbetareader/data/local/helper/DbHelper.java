@@ -26,6 +26,7 @@ public interface DbHelper<T> extends BaseColumns {
     String QUOTE = "'";
     //column type
     String TYPE_TEXT = "TEXT";
+    String TYPE_INTEGER = "INTEGER";
     //table names
     String TABLE_TOPIC = "topic";
     String TABLE_ARTICLE = "article";
@@ -56,6 +57,14 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_SID = "sid";
     String COL_DETAIL = "detail";
     String COL_SN = "sn";
+    //from comments
+    String COL_TOKEN = "token";
+    String COL_IS_OPEN = "is_open";
+    String COL_JOIN_NUM = "join_num";
+    String COL_PAGE = "page";
+    String COL_HOT_TID = "hot_tid";
+    String COL_ALL_TID = "all_tid";
+    String COL_COMMENT_MAP = "comment_map";
 
 
     void create(T item);

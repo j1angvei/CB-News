@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.data.local.helper.CommentsDbHelper;
 import rx.Observable;
 
 /**
@@ -11,14 +12,16 @@ import rx.Observable;
  */
 @Singleton
 public class CommentsLocalSource implements LocalSource<Comments> {
-    @Inject
-    public CommentsLocalSource() {
+    private final CommentsDbHelper mHelper;
 
+    @Inject
+    public CommentsLocalSource(CommentsDbHelper helper) {
+        mHelper = helper;
     }
 
     @Override
     public void create(Comments item) {
-
+        mHelper.create(item);
     }
 
     @Override

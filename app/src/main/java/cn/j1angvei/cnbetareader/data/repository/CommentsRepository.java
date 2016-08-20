@@ -31,6 +31,7 @@ public class CommentsRepository implements Repository<Comments> {
                 .doOnNext(new Action1<Comments>() {
                     @Override
                     public void call(Comments comments) {
+                        toDisk(comments);
                         //toDisk to toRAM or store to local disk
                     }
                 });
@@ -38,7 +39,7 @@ public class CommentsRepository implements Repository<Comments> {
 
     @Override
     public void toDisk(Comments item) {
-
+        mLocalSource.create(item);
     }
 
     @Override
