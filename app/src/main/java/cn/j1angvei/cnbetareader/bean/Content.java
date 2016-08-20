@@ -22,26 +22,26 @@ public final class Content implements Parcelable {
         }
     };
     private String title;
-    private Date date;
+    private Date time;
     private String source;//where
     private String summary;//introduction
     private String detail;
     private String sid;
     private String sn;
-    private String topicPhoto;//src
+    private String thumb;//src, topic photo
 
     public Content() {
     }
 
     private Content(Parcel in) {
         title = in.readString();
-        date = new Date(in.readLong());
+        time = new Date(in.readLong());
         source = in.readString();
         summary = in.readString();
         detail = in.readString();
         sid = in.readString();
         sn = in.readString();
-        topicPhoto = in.readString();
+        thumb = in.readString();
     }
 
     public String getTitle() {
@@ -52,12 +52,12 @@ public final class Content implements Parcelable {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public String getSource() {
@@ -100,12 +100,12 @@ public final class Content implements Parcelable {
         this.sn = sn;
     }
 
-    public String getTopicPhoto() {
-        return topicPhoto;
+    public String getThumb() {
+        return thumb;
     }
 
-    public void setTopicPhoto(String topicPhoto) {
-        this.topicPhoto = topicPhoto;
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
     }
 
     @Override
@@ -116,12 +116,12 @@ public final class Content implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
-        parcel.writeLong(date.getTime());
+        parcel.writeLong(time.getTime());
         parcel.writeString(source);
         parcel.writeString(summary);
         parcel.writeString(detail);
         parcel.writeString(sid);
         parcel.writeString(sn);
-        parcel.writeString(topicPhoto);
+        parcel.writeString(thumb);
     }
 }

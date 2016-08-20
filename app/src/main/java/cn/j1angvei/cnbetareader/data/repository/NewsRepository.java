@@ -25,7 +25,7 @@ public class NewsRepository<T> implements Repository<T> {
                 .doOnNext(new Action1<T>() {
                     @Override
                     public void call(T t) {
-                        toDisk(t);
+//                        toDisk(t);
                     }
                 });
     }

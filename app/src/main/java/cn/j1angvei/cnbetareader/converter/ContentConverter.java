@@ -40,7 +40,7 @@ public class ContentConverter implements Converter<Content> {
         String dateString = doc.getElementsByClass("date").first().text();
         try {
             Date date = DateUtil.toDate(dateString, DateUtil.DATE_FORMAT_CB);
-            content.setDate(date);
+            content.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class ContentConverter implements Converter<Content> {
         content.setSn(sn);
         //parse topic image url
         String src = doc.select(".introduction > div > a > img").attr("src");
-        content.setTopicPhoto(src);
+        content.setThumb(src);
         return content;
     }
 

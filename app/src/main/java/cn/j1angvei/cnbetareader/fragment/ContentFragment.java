@@ -125,12 +125,12 @@ public class ContentFragment extends BaseFragment {
         tvTitle.setText(item.getTitle());
         //header
         Resources resources = getActivity().getResources();
-        String header = String.format(resources.getString(R.string.ph_news_content_header), DateUtil.toLongDatePlusTime(item.getDate(), getActivity()), item.getSource());
+        String header = String.format(resources.getString(R.string.ph_news_content_header), DateUtil.toLongDatePlusTime(item.getTime(), getActivity()), item.getSource());
         tvHeader.setText(header);
         //summary
         tvSummary.setText(item.getSummary());
         //thumb
-        Glide.with(getActivity()).load(item.getTopicPhoto()).into(ivThumb);
+        Glide.with(getActivity()).load(item.getThumb()).into(ivThumb);
         //detail
 //        String detail = String.format(resources.getString(R.string.ph_news_content_detail), item.getDetail());
         wvDetail.loadData(item.getDetail(), "text/html;charset=utf-8", "utf-8");

@@ -32,13 +32,14 @@ public class ContentRepository implements Repository<Content> {
                     @Override
                     public void call(Content content) {
                         //to toRAM or toDisk to local disk
+                        toDisk(content);
                     }
                 });
     }
 
     @Override
     public void toDisk(Content item) {
-
+        mLocalSource.create(item);
     }
 
     @Override

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.data.local.helper.ContentDbHelper;
 import rx.Observable;
 
 /**
@@ -11,13 +12,16 @@ import rx.Observable;
  */
 @Singleton
 public class ContentLocalSource implements LocalSource<Content> {
+    private final ContentDbHelper mHelper;
+
     @Inject
-    public ContentLocalSource() {
+    public ContentLocalSource(ContentDbHelper helper) {
+        mHelper = helper;
     }
 
     @Override
     public void create(Content item) {
-
+        mHelper.create(item);
     }
 
     @Override

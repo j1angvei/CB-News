@@ -42,7 +42,7 @@ public final class DateUtil {
         return sdf.format(date);
     }
 
-    public static Date retrieveDefault(String source) throws ParseException {
+    public static Date parseDefault(String source) throws ParseException {
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_CB);
         return sdf.parse(source);

@@ -52,6 +52,10 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_TID = "tid";
     String COL_LOCATION = "location";
     String COL_COMMENT = "comment";
+    //from content
+    String COL_SID = "sid";
+    String COL_DETAIL = "detail";
+    String COL_SN = "sn";
 
 
     void create(T item);

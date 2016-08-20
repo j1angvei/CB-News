@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -91,6 +93,11 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
                     article.setSummary(cursor.getString(cursor.getColumnIndex(COL_SUMMARY)));
                     article.setCommentNum(cursor.getString(cursor.getColumnIndex(COL_COMMENT_NUM)));
                     article.setViewerNum(cursor.getString(cursor.getColumnIndex(COL_VIEWER_NUM)));
+                    try {
+                        article.setTime(DateUtil.parseDefault(cursor.getString(cursor.getColumnIndex(COL_TIME))));
+                    } catch (ParseException e) {
+                        article.setTime(new Date());
+                    }
                     article.setSource(cursor.getString(cursor.getColumnIndex(COL_SOURCE)));
                     article.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
                     articles.add(article);
