@@ -3,7 +3,7 @@ package cn.j1angvei.cnbetareader.presenter;
 
 import android.util.Log;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -12,6 +12,7 @@ import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
+import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,12 +24,14 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class ExplorePresenter implements ExploreContract.Presenter {
     private static final String TAG = "ExplorePresenter";
+    private final ExploreRepository mRepository;
+    private final PrefsUtil mPrefsUtil;
     private ExploreContract.View mView;
-    private ExploreRepository mRepository;
 
     @Inject
-    public ExplorePresenter(ExploreRepository repository) {
+    public ExplorePresenter(ExploreRepository repository, PrefsUtil prefsUtil) {
         mRepository = repository;
+        mPrefsUtil = prefsUtil;
     }
 
     @Override
@@ -57,10 +60,13 @@ public class ExplorePresenter implements ExploreContract.Presenter {
     }
 
     @Override
-    public void saveMyTopics(List<Topic> topics) {
-        Observable.from(topics)
+    public void saveMyTopicIds(final Set<String> ids) {
+        //As when save prefs set, can not just put new item into retrieved set
+        //because it is still the same object, no change will apply to the prefs
+        final Set<String> originIds = mPrefsUtil.readStringSet(PrefsUtil.KEY_MY_TOPICS);
+        Observable.from(originIds)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Topic>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                         mView.onAddSuccess();
@@ -69,14 +75,16 @@ public class ExplorePresenter implements ExploreContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onAddFail();
+                        Log.e(TAG, "onError: ", e);
                     }
 
                     @Override
-                    public void onNext(Topic topic) {
-                        mRepository.saveMyTopics(topic);
+                    public void onNext(String s) {
+                        ids.add(s);
                     }
                 });
-
+        Log.d(TAG, "saveMyTopicIds: " + originIds);
+        mPrefsUtil.writeStringSet(PrefsUtil.KEY_MY_TOPICS, ids);
     }
 
     @Override

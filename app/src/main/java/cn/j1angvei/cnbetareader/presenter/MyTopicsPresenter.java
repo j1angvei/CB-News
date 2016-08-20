@@ -17,8 +17,8 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class MyTopicsPresenter implements MyTopicsContract.Presenter {
-    private MyTopicsContract.View mView;
     private final MyTopicsRepository mRepository;
+    private MyTopicsContract.View mView;
 
     @Inject
     public MyTopicsPresenter(MyTopicsRepository repository) {
@@ -35,6 +35,7 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
         mRepository.getMyTopic()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .toList()
                 .subscribe(new Subscriber<List<Topic>>() {
                     @Override
                     public void onCompleted() {

@@ -16,6 +16,9 @@ import javax.inject.Singleton;
 @Singleton
 public final class ApiUtil {
     public static final String BASE_URL = "http://www.cnbeta.com";
+    public static final String KEY_SID = "sid";
+    public static final String KEY_V = "v";
+    public static final String KEY_LETTER = "letter";
     //parameter in request
     private static final String KEY_CALLBACK = "jsoncallback";
     private static final String KEY_TYPE = "type";
@@ -24,15 +27,11 @@ public final class ApiUtil {
     private static final String KEY_ID = "id";
     private static final String KEY_CSRF_TOKEN = "csrf_token";
     private static final String KEY_OP = "op";
-    public static final String KEY_SID = "sid";
     private static final String KEY_TID = "tid";
     private static final String KEY_PID = "pid";
     private static final String KEY_CONTENT = "content";
     private static final String KEY_CAPTCHA = "seccode";
     private static final String KEY_REFRESH = "refresh";
-    public static final String KEY_V = "v";
-    public static final String KEY_LETTER = "letter";
-
     private final PrefsUtil mPrefsUtil;
 
     @Inject
@@ -57,6 +56,14 @@ public final class ApiUtil {
 
     public static String removeJsonpWrapper(String jsonp) {
         return jsonp.substring(jsonp.indexOf('{'), jsonp.lastIndexOf('}') + 1);
+    }
+
+    private static String assembleCommentsOp(String sid, String sn) {
+        return String.format("1,%s,%s", sid, sn);
+    }
+
+    public static String parseCaptchaParamV(String json) {
+        return json.substring(json.lastIndexOf('='), json.lastIndexOf('"'));
     }
 
     public Map<String, String> getNewsParam(String type, int page) {
@@ -85,10 +92,6 @@ public final class ApiUtil {
         String op = assembleCommentsOp(sid, sn);
         map.put(KEY_OP, op);
         return map;
-    }
-
-    private static String assembleCommentsOp(String sid, String sn) {
-        return String.format("1,%s,%s", sid, sn);
     }
 
     public Map<String, String> getJudgeCommentParam(String action, String sid, String tid) {
@@ -121,10 +124,6 @@ public final class ApiUtil {
         String refresh = "1";
         map.put(KEY_REFRESH, refresh);
         return map;
-    }
-
-    public static String parseCaptchaParamV(String json) {
-        return json.substring(json.lastIndexOf('='), json.lastIndexOf('"'));
     }
 
     private String readToken() {

@@ -27,9 +27,9 @@ import rx.schedulers.Schedulers;
 public class CommentsPresenter implements CommentsContract.Presenter {
     private static final String TAG = "CommentsPresenter";
     private final CommentsRepository mRepository;
-    private CommentsContract.View mView;
     private final ApiUtil mApiUtil;
     private final CnbetaApi mApi;
+    private CommentsContract.View mView;
 
     @Inject
     public CommentsPresenter(CommentsRepository repository, ApiUtil apiUtil, CnbetaApi api) {

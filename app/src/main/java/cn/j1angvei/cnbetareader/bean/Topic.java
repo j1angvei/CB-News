@@ -31,4 +31,13 @@ public final class Topic {
     public void setThumb(String thumb) {
         this.thumb = thumb;
     }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", thumb='" + thumb + '\'' +
+                '}';
+    }
 }

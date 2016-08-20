@@ -1,15 +1,10 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.data.local.helper.ExploreDbHelper;
-import cn.j1angvei.cnbetareader.data.local.helper.MyTopicsDbHelper;
-import cn.j1angvei.cnbetareader.util.DbUtil;
+import cn.j1angvei.cnbetareader.data.local.helper.TopicDbHelper;
 import rx.Observable;
 
 /**
@@ -17,22 +12,20 @@ import rx.Observable;
  */
 @Singleton
 public class ExploreLocalSource implements LocalSource<Topic> {
-    private final ExploreDbHelper mHelper;
-    private final MyTopicsDbHelper mMyTopicsDbHelper;
+    private final TopicDbHelper mHelper;
 
     @Inject
-    public ExploreLocalSource(ExploreDbHelper helper, MyTopicsDbHelper myTopicsDbHelper) {
+    public ExploreLocalSource(TopicDbHelper helper) {
         mHelper = helper;
-        mMyTopicsDbHelper = myTopicsDbHelper;
     }
 
     @Override
-    public void add(Topic item) {
-
+    public void create(Topic item) {
+        mHelper.create(item);
     }
 
     @Override
-    public Observable<Topic> query() {
+    public Observable<Topic> read() {
         return null;
     }
 
@@ -44,17 +37,5 @@ public class ExploreLocalSource implements LocalSource<Topic> {
     @Override
     public void delete(Topic item) {
 
-    }
-
-    public void addMyTopic(Topic topic) {
-        SQLiteDatabase db = mMyTopicsDbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            ContentValues values = DbUtil.fromTopic(topic);
-            db.insertOrThrow(MyTopicsDbHelper.TABLE_TOPIC, null, values);
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
     }
 }

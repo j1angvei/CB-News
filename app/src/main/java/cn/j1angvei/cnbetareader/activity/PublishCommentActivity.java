@@ -51,13 +51,12 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.btn_publish_cmt_send)
     Button btnSend;
+    @Inject
+    PublishCommentPresenter mPresenter;
     private boolean mIsAdd;
     private String mQuoteContent;
     private String mPid;
     private String mSid;
-
-    @Inject
-    PublishCommentPresenter mPresenter;
 
     @Override
     protected void parseIntent() {

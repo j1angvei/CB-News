@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-
 import javax.inject.Inject;
 
 import butterknife.BindView;

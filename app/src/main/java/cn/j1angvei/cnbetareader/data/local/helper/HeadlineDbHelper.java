@@ -1,27 +1,23 @@
 package cn.j1angvei.cnbetareader.data.local.helper;
 
 import android.app.Application;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/8/20.
  */
 
-public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
-    private static final String DB_NAME = "article.db";
+public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
+    private static final String DB_NAME = "headline.db";
     private static final int DB_VERSION = 1;
 
-    public ArticleDbHelper(Application context) {
+    public HeadlineDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    public ArticleDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
     }
 
     @Override
@@ -35,22 +31,22 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
     }
 
     @Override
-    public void create(Article item) {
+    public void create(Headline item) {
 
     }
 
     @Override
-    public Observable<Article> read(String query) {
+    public Observable<Headline> read(String query) {
         return null;
     }
 
     @Override
-    public void update(Article item) {
+    public void update(Headline item) {
 
     }
 
     @Override
-    public void delete(Article item) {
+    public void delete(Headline item) {
 
     }
 }

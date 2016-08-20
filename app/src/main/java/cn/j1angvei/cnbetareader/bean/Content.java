@@ -10,6 +10,17 @@ import java.util.Date;
  */
 public final class Content implements Parcelable {
 
+    public static final Creator<Content> CREATOR = new Creator<Content>() {
+        @Override
+        public Content createFromParcel(Parcel parcel) {
+            return new Content(parcel);
+        }
+
+        @Override
+        public Content[] newArray(int i) {
+            return new Content[i];
+        }
+    };
     private String title;
     private Date date;
     private String source;//where
@@ -18,6 +29,20 @@ public final class Content implements Parcelable {
     private String sid;
     private String sn;
     private String topicPhoto;//src
+
+    public Content() {
+    }
+
+    private Content(Parcel in) {
+        title = in.readString();
+        date = new Date(in.readLong());
+        source = in.readString();
+        summary = in.readString();
+        detail = in.readString();
+        sid = in.readString();
+        sn = in.readString();
+        topicPhoto = in.readString();
+    }
 
     public String getTitle() {
         return title;
@@ -82,32 +107,6 @@ public final class Content implements Parcelable {
     public void setTopicPhoto(String topicPhoto) {
         this.topicPhoto = topicPhoto;
     }
-
-    public Content() {
-    }
-
-    private Content(Parcel in) {
-        title = in.readString();
-        date = new Date(in.readLong());
-        source = in.readString();
-        summary = in.readString();
-        detail = in.readString();
-        sid = in.readString();
-        sn = in.readString();
-        topicPhoto = in.readString();
-    }
-
-    public static final Creator<Content> CREATOR = new Creator<Content>() {
-        @Override
-        public Content createFromParcel(Parcel parcel) {
-            return new Content(parcel);
-        }
-
-        @Override
-        public Content[] newArray(int i) {
-            return new Content[i];
-        }
-    };
 
     @Override
     public int describeContents() {

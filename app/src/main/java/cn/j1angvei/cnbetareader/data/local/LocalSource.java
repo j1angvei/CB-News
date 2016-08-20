@@ -7,9 +7,9 @@ import rx.Observable;
  */
 public interface LocalSource<T> {
 
-    void add(T item);
+    void create(T item);
 
-    Observable<T> query();
+    Observable<T> read();
 
     void update(T item);
 

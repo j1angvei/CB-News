@@ -14,10 +14,13 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class PrefsUtil {
+    //cookie keywords
     public static final String CSRF_TOKEN = "csrf_token";
     public static final String COOKIE_TOKEN = "cookie_token";
     public static final String COOKIE_SESSION = "cookie_session";
-    private SharedPreferences prefs;
+    //my_topics
+    public static final String KEY_MY_TOPICS = "my_topics";
+    private final SharedPreferences prefs;
 
     @Inject
     public PrefsUtil(SharedPreferences prefs) {

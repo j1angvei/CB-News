@@ -12,13 +12,23 @@ import java.util.Map;
  * Created by Wayne on 2016/6/13.
  */
 public final class Comments implements Parcelable {
+    public static final Creator<Comments> CREATOR = new Creator<Comments>() {
+        @Override
+        public Comments createFromParcel(Parcel parcel) {
+            return new Comments(parcel);
+        }
+
+        @Override
+        public Comments[] newArray(int i) {
+            return new Comments[i];
+        }
+    };
     private String token;
     private boolean open;//see if comments are closed, true if open
     private String sid;
     private String joinNum;//available comments, some are deleted
     private String commentNum;//all comments
     private String page;
-
     private List<String> hotIds;
     private List<String> allIds;
     private Map<String, CommentItem> commentMap;
@@ -27,6 +37,19 @@ public final class Comments implements Parcelable {
         hotIds = new ArrayList<>();
         allIds = new ArrayList<>();
         commentMap = new HashMap<>();
+    }
+
+    private Comments(Parcel in) {
+        this();
+        token = in.readString();
+        open = in.readByte() != 0;
+        sid = in.readString();
+        joinNum = in.readString();
+        commentNum = in.readString();
+        page = in.readString();
+        in.readStringList(hotIds);
+        in.readStringList(allIds);
+        in.readMap(commentMap, Comments.class.getClassLoader());
     }
 
     public String getToken() {
@@ -100,31 +123,6 @@ public final class Comments implements Parcelable {
     public void setCommentMap(Map<String, CommentItem> commentMap) {
         this.commentMap = commentMap;
     }
-
-    private Comments(Parcel in) {
-        this();
-        token = in.readString();
-        open = in.readByte() != 0;
-        sid = in.readString();
-        joinNum = in.readString();
-        commentNum = in.readString();
-        page = in.readString();
-        in.readStringList(hotIds);
-        in.readStringList(allIds);
-        in.readMap(commentMap, Comments.class.getClassLoader());
-    }
-
-    public static final Creator<Comments> CREATOR = new Creator<Comments>() {
-        @Override
-        public Comments createFromParcel(Parcel parcel) {
-            return new Comments(parcel);
-        }
-
-        @Override
-        public Comments[] newArray(int i) {
-            return new Comments[i];
-        }
-    };
 
     @Override
     public int describeContents() {

@@ -20,7 +20,9 @@ import android.widget.GridView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -49,8 +51,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     ExploreAdapter mAdapter;
     @Inject
     ExplorePresenter mPresenter;
-    private Spinner mSpinner;
     CoordinatorLayout mCoordinatorLayout;
+    private Spinner mSpinner;
     private FloatingActionButton mFab;
     private int mPage;
 
@@ -216,14 +218,23 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                     }
                     return true;
                 case R.id.menu_context_explore_add:
-                    List<Topic> topics = new ArrayList<>();
+//                    List<Topic> topics = new ArrayList<>();
+//                    List<String> topicIds = new ArrayList<>();
+                    Set<String> ids = new HashSet<>();
                     SparseBooleanArray checked = mGridView.getCheckedItemPositions();
                     for (int i = 0; i < mGridView.getCount(); i++) {
                         if (checked.get(i)) {
-                            topics.add(mAdapter.getItem(i));
+//                            topics.add(mAdapter.getItem(i));
+                            Topic topic = mAdapter.getItem(i);
+                            if (topic != null) {
+                                ids.add(topic.getId());
+//                                topicIds.add(topic.getId());
+                            }
                         }
                     }
-                    mPresenter.saveMyTopics(topics);
+                    mPresenter.saveMyTopicIds(ids);
+//                    mPresenter.saveMyTopicIds(topicIds);
+//                    mPresenter.saveMyTopics(topics);
                     mode.finish();
                     return true;
                 default:

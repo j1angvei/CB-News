@@ -21,9 +21,9 @@ import okhttp3.HttpUrl;
 @Singleton
 public class CnBetaCookieJar implements CookieJar {
     private static final String TAG = "CnBetaCookieJar";
-    private final List<Cookie> COOKIE_STORE;
     private static final String NAME_TOKEN = "csrf_token";
     private static final String NAME_SESSION = "PHPSESSID";
+    private final List<Cookie> COOKIE_STORE;
     private PrefsUtil mPrefsUtil;
 
     @Inject

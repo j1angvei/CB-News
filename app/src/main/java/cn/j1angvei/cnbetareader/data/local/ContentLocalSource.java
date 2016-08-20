@@ -16,12 +16,12 @@ public class ContentLocalSource implements LocalSource<Content> {
     }
 
     @Override
-    public void add(Content item) {
+    public void create(Content item) {
 
     }
 
     @Override
-    public Observable<Content> query() {
+    public Observable<Content> read() {
         return null;
     }
 

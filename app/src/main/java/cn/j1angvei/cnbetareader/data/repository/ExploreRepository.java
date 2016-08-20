@@ -31,6 +31,7 @@ public class ExploreRepository implements Repository<Topic> {
                 .doOnNext(new Action1<Topic>() {
                     @Override
                     public void call(Topic topic) {
+                        toDisk(topic);
                         //save to disk or cache
                     }
                 });
@@ -38,16 +39,11 @@ public class ExploreRepository implements Repository<Topic> {
 
     @Override
     public void toDisk(Topic item) {
-
+        mLocalSource.create(item);
     }
 
     @Override
     public void toRAM(Topic item) {
 
-    }
-
-
-    public void saveMyTopics(Topic topic) {
-        mLocalSource.addMyTopic(topic);
     }
 }

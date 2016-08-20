@@ -13,6 +13,17 @@ import java.util.Date;
  * represent one comment item
  */
 public final class CommentItem implements Parcelable {
+    public static final Parcelable.Creator<CommentItem> CREATOR = new Parcelable.Creator<CommentItem>() {
+        @Override
+        public CommentItem createFromParcel(Parcel source) {
+            return new CommentItem(source);
+        }
+
+        @Override
+        public CommentItem[] newArray(int size) {
+            return new CommentItem[size];
+        }
+    };
     private String tid;
     private String pid;
     private String sid;
@@ -29,6 +40,23 @@ public final class CommentItem implements Parcelable {
     private String support;
     @SerializedName("reason")
     private String against;
+
+    public CommentItem() {
+    }
+
+    protected CommentItem(Parcel in) {
+        this.tid = in.readString();
+        this.pid = in.readString();
+        this.sid = in.readString();
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.username = in.readString();
+        this.headPhoto = in.readString();
+        this.location = in.readString();
+        this.content = in.readString();
+        this.support = in.readString();
+        this.against = in.readString();
+    }
 
     public String getTid() {
         return tid;
@@ -128,33 +156,4 @@ public final class CommentItem implements Parcelable {
         dest.writeString(this.support);
         dest.writeString(this.against);
     }
-
-    public CommentItem() {
-    }
-
-    protected CommentItem(Parcel in) {
-        this.tid = in.readString();
-        this.pid = in.readString();
-        this.sid = in.readString();
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        this.username = in.readString();
-        this.headPhoto = in.readString();
-        this.location = in.readString();
-        this.content = in.readString();
-        this.support = in.readString();
-        this.against = in.readString();
-    }
-
-    public static final Parcelable.Creator<CommentItem> CREATOR = new Parcelable.Creator<CommentItem>() {
-        @Override
-        public CommentItem createFromParcel(Parcel source) {
-            return new CommentItem(source);
-        }
-
-        @Override
-        public CommentItem[] newArray(int size) {
-            return new CommentItem[size];
-        }
-    };
 }

@@ -49,6 +49,27 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         mCommentItems = new ArrayList<>();
     }
 
+    private static void showPopupMenu(final CommentItem item, final View view) {
+        PopupMenu popup = new PopupMenu(view.getContext(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_comment_reply:
+                        Navigator.toPublishComment(false, item.getContent(), item.getSid(), item.getTid(), view.getContext());
+                        return true;
+                    case R.id.action_comment_report:
+                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), item.getTid());
+                        return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment_all, parent, false);
@@ -80,27 +101,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 holder.setIsRecyclable(false);
             }
         }
-    }
-
-    private static void showPopupMenu(final CommentItem item, final View view) {
-        PopupMenu popup = new PopupMenu(view.getContext(), view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.action_comment_reply:
-                        Navigator.toPublishComment(false, item.getContent(), item.getSid(), item.getTid(), view.getContext());
-                        return true;
-                    case R.id.action_comment_report:
-                        mView.prepareJudgeComment(CommentAction.REPORT.toString(), item.getTid());
-                        return true;
-                }
-                return false;
-            }
-        });
-        popup.show();
     }
 
     @Override

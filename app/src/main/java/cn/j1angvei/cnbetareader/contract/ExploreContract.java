@@ -1,6 +1,6 @@
 package cn.j1angvei.cnbetareader.contract;
 
-import java.util.List;
+import java.util.Set;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
 
@@ -21,7 +21,7 @@ public interface ExploreContract {
     interface Presenter extends BasePresenter<ExploreContract.View> {
         void retrieveTopics(int page);
 
-        void saveMyTopics(List<Topic> topics);
+        void saveMyTopicIds(Set<String> ids);
     }
 
 }

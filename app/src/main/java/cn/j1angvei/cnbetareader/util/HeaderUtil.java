@@ -42,23 +42,22 @@ public class HeaderUtil {
      */
     private static final String KEY_AJAX = "X-Requested-With";
     private static final String VALUE_AJAX = "XMLHttpRequest";
-    private static final String VALUE_ACCEPT_JSON = "application/json, text/javascript, */*; q=0.01";
-    private static final String VALUE_ACCEPT_IMG = "image/webp,image/*,*/*;q=0.8";
-    private static final String KEY_CACHE = "Cache-Control";
-    private static final String VALUE_CACHE_MAX = "max-age=0";
-    private static final String VALUE_CACHE_NO = "no-cache";
-    private static final String KEY_PRAGMA = "Pragma";
-    private static final String VALUE_PRAGMA = "no-cache";
-
-    //response is json format
-    public static final String HEADER_ACCEPT_JSON = KEY_ACCEPT + ":" + VALUE_ACCEPT_JSON;
-    //response is image format
-    public static final String HEADER_ACCEPT_IMG = KEY_ACCEPT + ":" + VALUE_ACCEPT_IMG;
     //request is ajax format
     public static final String HEADER_AJAX = KEY_AJAX + ":" + VALUE_AJAX;
+    private static final String VALUE_ACCEPT_JSON = "application/json, text/javascript, */*; q=0.01";
+    //response is json format
+    public static final String HEADER_ACCEPT_JSON = KEY_ACCEPT + ":" + VALUE_ACCEPT_JSON;
+    private static final String VALUE_ACCEPT_IMG = "image/webp,image/*,*/*;q=0.8";
+    //response is image format
+    public static final String HEADER_ACCEPT_IMG = KEY_ACCEPT + ":" + VALUE_ACCEPT_IMG;
+    private static final String KEY_CACHE = "Cache-Control";
+    private static final String VALUE_CACHE_MAX = "max-age=0";
     //maximum cache,such as in all topics
     public static final String HEADER_CACHE_MAX = KEY_CACHE + ":" + VALUE_CACHE_MAX;
+    private static final String VALUE_CACHE_NO = "no-cache";
     public static final String HEADER_CACHE_NO = KEY_CACHE + ":" + VALUE_CACHE_NO;
+    private static final String KEY_PRAGMA = "Pragma";
+    private static final String VALUE_PRAGMA = "no-cache";
     public static final String HEADER_PRAGMA = KEY_PRAGMA + ":" + VALUE_PRAGMA;
     /**
      * Headers handled by okhttp

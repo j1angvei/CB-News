@@ -17,12 +17,12 @@ public class CommentsLocalSource implements LocalSource<Comments> {
     }
 
     @Override
-    public void add(Comments item) {
+    public void create(Comments item) {
 
     }
 
     @Override
-    public Observable<Comments> query() {
+    public Observable<Comments> read() {
         return null;
     }
 

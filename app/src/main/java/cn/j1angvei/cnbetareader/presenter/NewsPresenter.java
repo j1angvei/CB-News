@@ -16,9 +16,9 @@ import rx.schedulers.Schedulers;
  */
 public class NewsPresenter<N> implements NewsContract.Presenter<N> {
     public static final String TAG = "NewsPresenter";
+    private final ApiUtil mApiUtil;
     private NewsContract.View<N> mView;
     private NewsRepository<N> mRepository;
-    private final ApiUtil mApiUtil;
 
     public NewsPresenter(NewsRepository<N> repository, ApiUtil apiUtil) {
         mRepository = repository;
