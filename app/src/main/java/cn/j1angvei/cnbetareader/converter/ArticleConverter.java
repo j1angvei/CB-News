@@ -5,6 +5,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.remote.response.WrappedResponse;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -13,8 +16,10 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/22.
  */
+@Singleton
 public class ArticleConverter extends NewsConverter<Article> {
 
+    @Inject
     public ArticleConverter(Gson gson) {
         super(gson);
     }

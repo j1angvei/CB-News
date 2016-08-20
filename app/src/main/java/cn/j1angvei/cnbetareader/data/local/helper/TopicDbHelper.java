@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
 import rx.Observable;
 
 /**
@@ -24,10 +23,11 @@ import rx.Observable;
 public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_TOPIC + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+            COL_LETTER + BLANK + TYPE_TEXT + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
@@ -58,6 +58,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
         try {
             ContentValues values = new ContentValues();
             values.put(_ID, item.getId());
+            values.put(COL_LETTER, item.getLetter());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_THUMB, item.getThumb());
             db.insertOrThrow(TABLE_TOPIC, null, values);
@@ -77,6 +78,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
                 do {
                     Topic topic = new Topic();
                     topic.setId(cursor.getString(cursor.getColumnIndex(_ID)));
+                    topic.setLetter(cursor.getString(cursor.getColumnIndex(COL_LETTER)));
                     topic.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     topic.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
                     topics.add(topic);

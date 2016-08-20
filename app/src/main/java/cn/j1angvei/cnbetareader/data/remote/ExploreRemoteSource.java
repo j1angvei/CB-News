@@ -9,9 +9,11 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.converter.TopicConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import okhttp3.ResponseBody;
 import rx.Observable;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -21,12 +23,12 @@ import rx.functions.Func1;
 @Singleton
 public class ExploreRemoteSource extends RemoteSource<Topic> {
     @Inject
-    public ExploreRemoteSource(CnbetaApi api, @Named("c_topic") Converter<Topic> converter) {
+    public ExploreRemoteSource(CnbetaApi api, TopicConverter converter) {
         super(api, converter);
     }
 
     @Override
-    public Observable<Topic> getData(String letter, Map<String, String> param) {
+    public Observable<Topic> getData(final String letter, Map<String, String> param) {
         return mCnbetaApi.getTopics(letter)
                 .flatMap(new Func1<ResponseBody, Observable<Topic>>() {
                     @Override
@@ -37,6 +39,11 @@ public class ExploreRemoteSource extends RemoteSource<Topic> {
                             e.printStackTrace();
                         }
                         return null;
+                    }
+                }).doOnNext(new Action1<Topic>() {
+                    @Override
+                    public void call(Topic topic) {
+                        topic.setLetter(letter);
                     }
                 });
     }

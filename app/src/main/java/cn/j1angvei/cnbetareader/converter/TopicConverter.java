@@ -8,13 +8,20 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Topic;
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/23.
  */
+@Singleton
 public class TopicConverter implements Converter<Topic> {
+    @Inject
+    public TopicConverter() {
+    }
 
     @Override
     public Topic to(String json) {

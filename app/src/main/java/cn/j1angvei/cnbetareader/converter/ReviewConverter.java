@@ -6,6 +6,9 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.RawReview;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.remote.response.ExposedResponse;
@@ -15,8 +18,9 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/22.
  */
+@Singleton
 public class ReviewConverter extends NewsConverter<Review> {
-
+    @Inject
     public ReviewConverter(Gson gson) {
         super(gson);
     }

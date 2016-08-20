@@ -23,13 +23,6 @@ public interface DbHelper<T> extends BaseColumns {
     String OR = "OR";
     String AND = "AND";
     String QUOTE = "'";
-    //database name
-//    String DB_TOPIC = "topic.db";
-//    String DB_ARTICLE = "article.db";
-//    String DB_REVIEW = "review.db";
-//    String DB_HEADLINE = "headline.db";
-//    String DB_CONTENT = "content.db";
-//    String DB_COMMENTS = "comments.db";
     //column type
     String TYPE_TEXT = "TEXT";
     //table names
@@ -43,6 +36,7 @@ public interface DbHelper<T> extends BaseColumns {
     //column name
     String COL_TITLE = "title";
     String COL_THUMB = "thumb";
+    String COL_LETTER = "letter";
     String COL_SUMMARY = "summary";
     String COL_COMMENT_NUM = "comment_num";
     String COL_VIEWER_NUM = "viewer_num";

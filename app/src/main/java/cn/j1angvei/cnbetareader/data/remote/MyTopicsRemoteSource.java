@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.converter.ArticleConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -21,7 +20,7 @@ import rx.functions.Func1;
 public class MyTopicsRemoteSource extends RemoteSource<Article> {
 
     @Inject
-    public MyTopicsRemoteSource(CnbetaApi api, @Named("c_article") Converter<Article> converter) {
+    public MyTopicsRemoteSource(CnbetaApi api, ArticleConverter converter) {
         super(api, converter);
     }
 

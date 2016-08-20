@@ -4,14 +4,18 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by Wayne on 2016/8/20.
  */
-
+@Singleton
 public class CommentsDbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "comments.db";
     private static final int DB_VERSION = 1;
 
+    @Inject
     public CommentsDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

@@ -15,7 +15,7 @@ public class NewsLocalSource<T> implements LocalSource<T> {
 
     @Override
     public void create(T item) {
-
+        mHelper.create(item);
     }
 
     @Override

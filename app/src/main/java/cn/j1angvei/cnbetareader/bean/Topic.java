@@ -7,6 +7,7 @@ public final class Topic {
     private String id;
     private String title;
     private String thumb;
+    private String letter;
 
     public String getId() {
         return id;
@@ -32,12 +33,12 @@ public final class Topic {
         this.thumb = thumb;
     }
 
-    @Override
-    public String toString() {
-        return "Topic{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", thumb='" + thumb + '\'' +
-                '}';
+    public String getLetter() {
+        return letter;
     }
+
+    public void setLetter(String letter) {
+        this.letter = letter;
+    }
+
 }

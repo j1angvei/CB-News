@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
-import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.converter.ContentConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -21,7 +20,7 @@ import rx.functions.Func1;
 @Singleton
 public class ContentRemoteSource extends RemoteSource<Content> {
     @Inject
-    public ContentRemoteSource(CnbetaApi api, @Named("c_content") Converter<Content> converter) {
+    public ContentRemoteSource(CnbetaApi api, ContentConverter converter) {
         super(api, converter);
     }
 

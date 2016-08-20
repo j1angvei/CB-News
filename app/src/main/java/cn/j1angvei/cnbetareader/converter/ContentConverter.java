@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.StringUtil;
@@ -19,7 +22,11 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/23.
  */
+@Singleton
 public class ContentConverter implements Converter<Content> {
+    @Inject
+    public ContentConverter() {
+    }
 
     @Override
     public Content to(String html) {

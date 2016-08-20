@@ -5,6 +5,9 @@ import com.google.gson.Gson;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.News;
 import rx.Observable;
@@ -12,7 +15,9 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/26.
  */
+@Singleton
 public class BookmarkConverter extends NewsConverter<Bookmark> {
+    @Inject
     public BookmarkConverter(Gson gson) {
         super(gson);
     }

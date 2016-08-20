@@ -32,5 +32,4 @@ public class ArticleModule {
     NewsPresenter<Article> articlesPresenter(@Named("d_article") NewsRepository<Article> repository, ApiUtil apiUtil) {
         return new NewsPresenter<>(repository, apiUtil);
     }
-
 }

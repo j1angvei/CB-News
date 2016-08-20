@@ -16,10 +16,8 @@ import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
-import cn.j1angvei.cnbetareader.di.module.ConverterModule;
-import cn.j1angvei.cnbetareader.di.module.DbHelperModule;
 import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
-import cn.j1angvei.cnbetareader.di.module.SourceModule;
+import cn.j1angvei.cnbetareader.di.module.DataSourceModule;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
@@ -28,7 +26,7 @@ import dagger.Component;
  * Created by Wayne on 2016/6/15.
  */
 @Singleton
-@Component(modules = {ApplicationModule.class, ConverterModule.class, RepositoryModule.class, SourceModule.class, DbHelperModule.class})
+@Component(modules = {ApplicationModule.class, RepositoryModule.class, DataSourceModule.class})
 public interface ApplicationComponent {
     //expose to sub activity graph
     Application application();

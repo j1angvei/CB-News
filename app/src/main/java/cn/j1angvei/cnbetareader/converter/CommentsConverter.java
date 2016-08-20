@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import rx.Observable;
@@ -19,9 +22,11 @@ import rx.Observable;
  * convert response to comments
  * Created by Wayne on 2016/7/23.
  */
+@Singleton
 public class CommentsConverter implements Converter<Comments> {
     final private Gson mGson;
 
+    @Inject
     public CommentsConverter(Gson gson) {
         mGson = gson;
     }

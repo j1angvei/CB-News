@@ -4,18 +4,21 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Bookmark;
-import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/8/20.
  */
-
+@Singleton
 public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
     private static final int DB_VERSION = 1;
 
+    @Inject
     public BookmarkDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

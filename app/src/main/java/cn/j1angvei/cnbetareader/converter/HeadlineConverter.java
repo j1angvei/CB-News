@@ -8,6 +8,9 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.RawHeadline;
 import cn.j1angvei.cnbetareader.bean.RelatedItem;
@@ -19,7 +22,9 @@ import rx.Observable;
 /**
  * Created by Wayne on 2016/7/22.
  */
+@Singleton
 public class HeadlineConverter extends NewsConverter<Headline> {
+    @Inject
     public HeadlineConverter(Gson gson) {
         super(gson);
     }

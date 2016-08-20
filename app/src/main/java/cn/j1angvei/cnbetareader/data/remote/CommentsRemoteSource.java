@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
-import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.converter.CommentsConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -20,7 +19,7 @@ import rx.functions.Func1;
 @Singleton
 public class CommentsRemoteSource extends RemoteSource<Comments> {
     @Inject
-    public CommentsRemoteSource(CnbetaApi api, @Named("c_comments") Converter<Comments> converter) {
+    public CommentsRemoteSource(CnbetaApi api, CommentsConverter converter) {
         super(api, converter);
     }
 

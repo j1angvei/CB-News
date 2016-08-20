@@ -7,9 +7,15 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
-import cn.j1angvei.cnbetareader.converter.Converter;
+import cn.j1angvei.cnbetareader.converter.ArticleConverter;
+import cn.j1angvei.cnbetareader.converter.BookmarkConverter;
+import cn.j1angvei.cnbetareader.converter.HeadlineConverter;
+import cn.j1angvei.cnbetareader.converter.ReviewConverter;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
-import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
+import cn.j1angvei.cnbetareader.data.local.helper.ArticleDbHelper;
+import cn.j1angvei.cnbetareader.data.local.helper.BookmarkDbHelper;
+import cn.j1angvei.cnbetareader.data.local.helper.HeadlineDbHelper;
+import cn.j1angvei.cnbetareader.data.local.helper.ReviewDbHelper;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import dagger.Module;
@@ -19,60 +25,60 @@ import dagger.Provides;
  * Created by Wayne on 2016/8/20.
  */
 @Module
-public class SourceModule {
+public class DataSourceModule {
     @Provides
     @Singleton
     @Named("l_article")
-    NewsLocalSource<Article> provideArticleNewsLocalSource(@Named("h_article") DbHelper<Article> helper) {
+    NewsLocalSource<Article> provideArticleNewsLocalSource(ArticleDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
     @Named("l_review")
-    NewsLocalSource<Review> provideReviewNewsLocalSource(@Named("h_review") DbHelper<Review> helper) {
+    NewsLocalSource<Review> provideReviewNewsLocalSource(ReviewDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
     @Named("l_headline")
-    NewsLocalSource<Headline> provideHeadlineNewsLocalSource(@Named("h_headline") DbHelper<Headline> helper) {
+    NewsLocalSource<Headline> provideHeadlineNewsLocalSource(HeadlineDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
     @Named("l_bookmark")
-    NewsLocalSource<Bookmark> provideBookmarkLocalSource(@Named("h_bookmark") DbHelper<Bookmark> helper) {
+    NewsLocalSource<Bookmark> provideBookmarkLocalSource(BookmarkDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
     @Named("r_article")
-    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CnbetaApi api, @Named("c_article") Converter<Article> converter) {
+    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CnbetaApi api, ArticleConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("r_review")
-    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CnbetaApi api, @Named("c_review") Converter<Review> converter) {
+    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CnbetaApi api, ReviewConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("r_headline")
-    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CnbetaApi api, @Named("c_headline") Converter<Headline> converter) {
+    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CnbetaApi api, HeadlineConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
     @Named("r_bookmark")
-    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CnbetaApi api, @Named("c_bookmark") Converter<Bookmark> converter) {
+    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CnbetaApi api, BookmarkConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 }
