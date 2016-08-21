@@ -72,7 +72,7 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
             values.put(COL_ALL_TID, mDbUtil.convertStringList(item.getAllIds()));
             values.put(COL_HOT_TID, mDbUtil.convertStringList(item.getHotIds()));
             values.put(COL_COMMENT_MAP, mDbUtil.convertCommentMap(item.getCommentMap()));
-            db.insertOrThrow(TABLE_COMMENTS, null, values);
+            db.insertWithOnConflict(TABLE_COMMENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

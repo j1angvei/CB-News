@@ -22,7 +22,7 @@ import rx.Observable;
 public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_TOPIC + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
@@ -60,7 +60,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
             values.put(COL_LETTER, item.getLetter());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_THUMB, item.getThumb());
-            db.insertOrThrow(TABLE_TOPIC, null, values);
+            db.insertWithOnConflict(TABLE_TOPIC, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

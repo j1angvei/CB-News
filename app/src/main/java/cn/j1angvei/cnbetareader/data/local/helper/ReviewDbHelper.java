@@ -61,7 +61,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             values.put(COL_TID, item.getTid());
             values.put(COL_COMMENT, item.getComment());
             values.put(COL_LOCATION, item.getLocation());
-            db.insertOrThrow(TABLE_REVIEW, null, values);
+            db.insertWithOnConflict(TABLE_REVIEW, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

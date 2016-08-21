@@ -24,7 +24,7 @@ import rx.Observable;
 @Singleton
 public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
     private static final String DB_NAME = "article.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_ARTICLE + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
@@ -72,7 +72,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             values.put(COL_SOURCE, item.getSource());
             values.put(COL_THUMB, item.getThumb());
-            db.insertOrThrow(TABLE_ARTICLE, null, values);
+            db.insertWithOnConflict(TABLE_ARTICLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

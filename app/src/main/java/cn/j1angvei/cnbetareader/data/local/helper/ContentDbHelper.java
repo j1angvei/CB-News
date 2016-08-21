@@ -72,7 +72,7 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
             values.put(COL_DETAIL, item.getDetail());
             values.put(COL_SN, item.getSn());
             values.put(COL_THUMB, item.getThumb());
-            db.insertOrThrow(TABLE_CONTENT, null, values);
+            db.insertWithOnConflict(TABLE_CONTENT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

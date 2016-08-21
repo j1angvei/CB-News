@@ -60,7 +60,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             values.put(_ID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
-            db.insertOrThrow(TABLE_BOOKMARK, null, values);
+            db.insertWithOnConflict(TABLE_BOOKMARK, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
