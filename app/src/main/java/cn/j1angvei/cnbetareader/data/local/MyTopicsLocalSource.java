@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import android.util.Log;
-
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -19,7 +17,6 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.OR;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.QUOTE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.TABLE_TOPIC;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
 
 /**
@@ -62,7 +59,9 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
             return Observable.empty();
         }
         StringBuilder builder = new StringBuilder();
-        builder.append(SELECT_FROM + BLANK + TABLE_TOPIC + BLANK + WHERE + BLANK);
+        builder.append(SELECT_FROM + BLANK)
+                .append(mHelper.getTableName())
+                .append(BLANK + WHERE + BLANK);
         for (String id : topicIds) {
             builder.append(_ID + BLANK + LIKE + BLANK + QUOTE)
                     .append(id)
@@ -72,7 +71,6 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
                     .append(BLANK);
         }
         String query = builder.toString();
-        Log.d(TAG, "readMyTopics: " + query);
         return mHelper.read(query.substring(0, query.length() - 4));
     }
 }

@@ -27,14 +27,6 @@ public interface DbHelper<T> extends BaseColumns {
     //column type
     String TYPE_TEXT = "TEXT";
     String TYPE_INTEGER = "INTEGER";
-    //table names
-    String TABLE_TOPIC = "topic";
-    String TABLE_ARTICLE = "article";
-    String TABLE_HEADLINE = "headline";
-    String TABLE_REVIEW = "review";
-    String TABLE_CONTENT = "content";
-    String TABLE_COMMENTS = "comments";
-    String TABLE_BOOKMARK = "bookmark";
     //column name
     //from topic
     String COL_TITLE = "title";
@@ -74,5 +66,7 @@ public interface DbHelper<T> extends BaseColumns {
     void update(T item);
 
     void delete(T item);
+
+    String getTableName();
 
 }

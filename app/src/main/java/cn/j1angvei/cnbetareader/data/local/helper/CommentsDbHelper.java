@@ -23,7 +23,8 @@ import rx.Observable;
 public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
     private static final String DB_NAME = "comments.db";
     private static final int DB_VERSION = 1;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_COMMENTS + BLANK +
+    private static final String TABLE_NAME = "comments";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_TOKEN + BLANK + TYPE_TEXT + COMMA +
@@ -35,7 +36,7 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
             COL_ALL_TID + BLANK + TYPE_TEXT + COMMA +
             COL_COMMENT_MAP + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_COMMENTS;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
     private final DbUtil mDbUtil;
 
     @Inject
@@ -72,7 +73,7 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
             values.put(COL_ALL_TID, mDbUtil.convertStringList(item.getAllIds()));
             values.put(COL_HOT_TID, mDbUtil.convertStringList(item.getHotIds()));
             values.put(COL_COMMENT_MAP, mDbUtil.convertCommentMap(item.getCommentMap()));
-            db.insertWithOnConflict(TABLE_COMMENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -114,5 +115,10 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
     @Override
     public void delete(Comments item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

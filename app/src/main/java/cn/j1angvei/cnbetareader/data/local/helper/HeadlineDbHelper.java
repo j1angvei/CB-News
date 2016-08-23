@@ -23,7 +23,8 @@ import rx.Observable;
 public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
     private static final String DB_NAME = "headline.db";
     private static final int DB_VERSION = 2;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_HEADLINE + BLANK +
+    private static final String TABLE_NAME = "headline";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
@@ -31,7 +32,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +
             COL_RELATED_NEWS + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_HEADLINE;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
     private final DbUtil mDbUtil;
 
     @Inject
@@ -64,7 +65,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             values.put(COL_SUMMARY, item.getSummary());
             values.put(COL_THUMB, item.getThumb());
             values.put(COL_RELATED_NEWS, mDbUtil.convertNewsList(item.getRelatedNews()));
-            db.insertWithOnConflict(TABLE_HEADLINE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -102,5 +103,10 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
     @Override
     public void delete(Headline item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

@@ -20,12 +20,14 @@ import rx.Observable;
 
 /**
  * Created by Wayne on 2016/8/20.
+ * Store all articles from latest articles or topic articles
  */
 @Singleton
 public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
     private static final String DB_NAME = "article.db";
     private static final int DB_VERSION = 4;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_ARTICLE + BLANK +
+    private static final String TABLE_NAME = "article";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
@@ -37,7 +39,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +
             COL_SOURCE + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_ARTICLE;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public ArticleDbHelper(Application context) {
@@ -72,7 +74,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             values.put(COL_SOURCE, item.getSource());
             values.put(COL_THUMB, item.getThumb());
-            db.insertWithOnConflict(TABLE_ARTICLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -118,5 +120,10 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
     @Override
     public void delete(Article item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

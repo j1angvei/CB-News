@@ -25,13 +25,14 @@ import rx.Observable;
 public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
     private static final int DB_VERSION = 1;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_BOOKMARK + BLANK +
+    private static final String TABLE_NAME = "bookmark";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TIME + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_BOOKMARK;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public BookmarkDbHelper(Application context) {
@@ -60,7 +61,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             values.put(_ID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
-            db.insertWithOnConflict(TABLE_BOOKMARK, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -100,5 +101,10 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
     @Override
     public void delete(Bookmark item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

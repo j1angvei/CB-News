@@ -23,14 +23,15 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
     private static final int DB_VERSION = 3;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_TOPIC + BLANK +
+    private static final String TABLE_NAME = "article";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_LETTER + BLANK + TYPE_TEXT + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_TOPIC;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public TopicDbHelper(Application context) {
@@ -60,7 +61,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
             values.put(COL_LETTER, item.getLetter());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_THUMB, item.getThumb());
-            db.insertWithOnConflict(TABLE_TOPIC, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -97,5 +98,10 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     @Override
     public void delete(Topic item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

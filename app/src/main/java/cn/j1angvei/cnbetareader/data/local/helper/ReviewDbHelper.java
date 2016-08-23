@@ -22,7 +22,8 @@ import rx.Observable;
 public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review> {
     private static final String DB_NAME = "review.db";
     private static final int DB_VERSION = 1;
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_REVIEW + BLANK +
+    private static final String TABLE_NAME = "review";
+    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
@@ -30,7 +31,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
             COL_LOCATION + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_REVIEW;
+    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public ReviewDbHelper(Application context) {
@@ -61,7 +62,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             values.put(COL_TID, item.getTid());
             values.put(COL_COMMENT, item.getComment());
             values.put(COL_LOCATION, item.getLocation());
-            db.insertWithOnConflict(TABLE_REVIEW, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -99,5 +100,10 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
     @Override
     public void delete(Review item) {
 
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }
