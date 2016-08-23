@@ -9,6 +9,7 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.MyTopicsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.MyTopicsRemoteSource;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -16,12 +17,13 @@ import rx.functions.Action1;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class MyTopicsRepository implements Repository<Article> {
+public class MyTopicsRepository extends Repository<Article> {
     private final MyTopicsLocalSource mLocalSource;
     private final MyTopicsRemoteSource mRemoteSource;
 
     @Inject
-    public MyTopicsRepository(MyTopicsLocalSource localSource, MyTopicsRemoteSource remoteSource) {
+    public MyTopicsRepository(MyTopicsLocalSource localSource, MyTopicsRemoteSource remoteSource, NetworkUtil util) {
+        super(util);
         mLocalSource = localSource;
         mRemoteSource = remoteSource;
     }

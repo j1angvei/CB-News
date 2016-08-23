@@ -15,6 +15,9 @@ import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
+import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
+
+
 /**
  * Created by Wayne on 2016/7/22.
  */
@@ -29,7 +32,7 @@ public class ReviewModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Review> reviewsPresenter(@Named("d_review") NewsRepository<Review> repository, ApiUtil apiUtil) {
+    NewsPresenter<Review> reviewsPresenter(@Named(REVIEW) NewsRepository<Review> repository, ApiUtil apiUtil) {
         return new NewsPresenter<>(repository, apiUtil);
     }
 

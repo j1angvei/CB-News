@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.ExploreLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.ExploreRemoteSource;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -15,12 +16,13 @@ import rx.functions.Action1;
  * Created by Wayne on 2016/7/24.
  */
 @Singleton
-public class ExploreRepository implements Repository<Topic> {
+public class ExploreRepository extends Repository<Topic> {
     private final ExploreLocalSource mLocalSource;
     private final ExploreRemoteSource mRemoteSource;
 
     @Inject
-    public ExploreRepository(ExploreLocalSource localSource, ExploreRemoteSource remoteSource) {
+    public ExploreRepository(ExploreLocalSource localSource, ExploreRemoteSource remoteSource, NetworkUtil networkUtil) {
+        super(networkUtil);
         mLocalSource = localSource;
         mRemoteSource = remoteSource;
     }

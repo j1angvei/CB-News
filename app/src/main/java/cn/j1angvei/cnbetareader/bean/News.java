@@ -20,6 +20,14 @@ public class News {
     }
 
     public void setTitle(String title) {
+
         this.title = title;
+    }
+
+    public static class Type {
+        public static final String ARTICLE = "article";
+        public static final String HEADLINE = "headline";
+        public static final String REVIEW = "review";
+        public static final String BOOKMARK = "bookmark";
     }
 }

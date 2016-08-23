@@ -15,6 +15,8 @@ import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
+import static cn.j1angvei.cnbetareader.bean.News.Type.ARTICLE;
+
 /**
  * Created by Wayne on 2016/7/22.
  */
@@ -29,7 +31,7 @@ public class ArticleModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Article> articlesPresenter(@Named("d_article") NewsRepository<Article> repository, ApiUtil apiUtil) {
+    NewsPresenter<Article> articlesPresenter(@Named(ARTICLE) NewsRepository<Article> repository, ApiUtil apiUtil) {
         return new NewsPresenter<>(repository, apiUtil);
     }
 }

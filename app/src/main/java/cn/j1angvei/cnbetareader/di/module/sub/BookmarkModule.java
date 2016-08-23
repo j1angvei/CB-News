@@ -14,6 +14,7 @@ import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
+import static cn.j1angvei.cnbetareader.bean.News.Type.BOOKMARK;
 
 /**
  * Created by Wayne on 2016/7/26.
@@ -28,7 +29,7 @@ public class BookmarkModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Bookmark> bookmarkPresenter(@Named("d_bookmark") NewsRepository<Bookmark> repository, ApiUtil apiUtil) {
+    NewsPresenter<Bookmark> bookmarkPresenter(@Named(BOOKMARK) NewsRepository<Bookmark> repository, ApiUtil apiUtil) {
         return new NewsPresenter<>(repository, apiUtil);
     }
 }

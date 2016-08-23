@@ -10,8 +10,14 @@ import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import dagger.Module;
 import dagger.Provides;
+
+import static cn.j1angvei.cnbetareader.bean.News.Type.ARTICLE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.BOOKMARK;
+import static cn.j1angvei.cnbetareader.bean.News.Type.HEADLINE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 
 /**
  * Created by Wayne on 2016/8/20.
@@ -20,30 +26,29 @@ import dagger.Provides;
 public class RepositoryModule {
     @Provides
     @Singleton
-    @Named("d_article")
-    NewsRepository<Article> provideArticleRepository(@Named("l_article") NewsLocalSource<Article> local, @Named("r_article") NewsRemoteSource<Article> remote) {
-        return new NewsRepository<>(local, remote);
+    @Named(ARTICLE)
+    NewsRepository<Article> provideArticleRepository(@Named(ARTICLE) NewsLocalSource<Article> local, @Named(ARTICLE) NewsRemoteSource<Article> remote, NetworkUtil util) {
+        return new NewsRepository<>(local, remote, util);
     }
 
     @Provides
     @Singleton
-    @Named("d_review")
-    NewsRepository<Review> provideReviewRepository(@Named("l_review") NewsLocalSource<Review> local, @Named("r_review") NewsRemoteSource<Review> remote) {
-        return new NewsRepository<>(local, remote);
+    @Named(REVIEW)
+    NewsRepository<Review> provideReviewRepository(@Named(REVIEW) NewsLocalSource<Review> local, @Named(REVIEW) NewsRemoteSource<Review> remote, NetworkUtil util) {
+        return new NewsRepository<>(local, remote, util);
     }
 
     @Provides
     @Singleton
-    @Named("d_headline")
-    NewsRepository<Headline> provideHeadlineRepository(@Named("l_headline") NewsLocalSource<Headline> local, @Named("r_headline") NewsRemoteSource<Headline> remote) {
-        return new NewsRepository<>(local, remote);
+    @Named(HEADLINE)
+    NewsRepository<Headline> provideHeadlineRepository(@Named(HEADLINE) NewsLocalSource<Headline> local, @Named(HEADLINE) NewsRemoteSource<Headline> remote, NetworkUtil util) {
+        return new NewsRepository<>(local, remote, util);
     }
 
     @Provides
     @Singleton
-    @Named("d_bookmark")
-    NewsRepository<Bookmark> provideBookmarkRepository(@Named("l_bookmark") NewsLocalSource<Bookmark> local, @Named("r_bookmark") NewsRemoteSource<Bookmark> remote) {
-        return new NewsRepository<>(local, remote);
+    @Named(BOOKMARK)
+    NewsRepository<Bookmark> provideBookmarkRepository(@Named(BOOKMARK) NewsLocalSource<Bookmark> local, @Named(BOOKMARK) NewsRemoteSource<Bookmark> remote, NetworkUtil util) {
+        return new NewsRepository<>(local, remote, util);
     }
-
 }

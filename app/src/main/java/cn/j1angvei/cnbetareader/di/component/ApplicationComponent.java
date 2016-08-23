@@ -16,11 +16,16 @@ import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
-import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
 import cn.j1angvei.cnbetareader.di.module.DataSourceModule;
+import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
+
+import static cn.j1angvei.cnbetareader.bean.News.Type.ARTICLE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.BOOKMARK;
+import static cn.j1angvei.cnbetareader.bean.News.Type.HEADLINE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 
 /**
  * Created by Wayne on 2016/6/15.
@@ -31,16 +36,16 @@ public interface ApplicationComponent {
     //expose to sub activity graph
     Application application();
 
-    @Named("d_article")
+    @Named(ARTICLE)
     NewsRepository<Article> articleRepository();
 
-    @Named("d_review")
+    @Named(REVIEW)
     NewsRepository<Review> reviewRepository();
 
-    @Named("d_headline")
+    @Named(HEADLINE)
     NewsRepository<Headline> headlineRepository();
 
-    @Named("d_bookmark")
+    @Named(BOOKMARK)
     NewsRepository<Bookmark> bookmarkRepository();
 
     MyTopicsRepository myTopicsRepository();

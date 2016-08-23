@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +23,22 @@ import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 
 /**
  * Created by Wayne on 2016/7/9.
+ * abstract class display news like Article Headline Review
  */
 public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+    private static final String TAG = "NewsFragment";
     private static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
     NewsAdapter<T, VH> mAdapter;
     @Inject
     NewsPresenter<T> mPresenter;
-
     FloatingActionButton mFab;
-
     private String mType;
     private int mPage = 1;
 
@@ -51,6 +51,7 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         mType = getArguments().getString(NEWS_TYPE);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
@@ -69,6 +70,7 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated: ");
         super.onViewCreated(view, savedInstanceState);
         mFab.setOnClickListener(this);
         mPresenter.setView(this);

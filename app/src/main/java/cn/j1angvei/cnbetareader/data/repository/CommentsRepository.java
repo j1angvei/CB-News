@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.data.local.CommentsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.CommentsRemoteSource;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -15,12 +16,13 @@ import rx.functions.Action1;
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
-public class CommentsRepository implements Repository<Comments> {
+public class CommentsRepository extends Repository<Comments> {
     private final CommentsLocalSource mLocalSource;
     private final CommentsRemoteSource mRemoteSource;
 
     @Inject
-    public CommentsRepository(CommentsLocalSource localSource, CommentsRemoteSource remoteSource) {
+    public CommentsRepository(CommentsLocalSource localSource, CommentsRemoteSource remoteSource, NetworkUtil networkUtil) {
+        super(networkUtil);
         mLocalSource = localSource;
         mRemoteSource = remoteSource;
     }
@@ -44,7 +46,6 @@ public class CommentsRepository implements Repository<Comments> {
 
     @Override
     public void toRAM(Comments item) {
-
     }
 
 }

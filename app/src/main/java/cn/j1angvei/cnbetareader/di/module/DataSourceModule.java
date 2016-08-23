@@ -21,6 +21,11 @@ import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import dagger.Module;
 import dagger.Provides;
 
+import static cn.j1angvei.cnbetareader.bean.News.Type.ARTICLE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.BOOKMARK;
+import static cn.j1angvei.cnbetareader.bean.News.Type.HEADLINE;
+import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
+
 /**
  * Created by Wayne on 2016/8/20.
  */
@@ -28,56 +33,56 @@ import dagger.Provides;
 public class DataSourceModule {
     @Provides
     @Singleton
-    @Named("l_article")
+    @Named(ARTICLE)
     NewsLocalSource<Article> provideArticleNewsLocalSource(ArticleDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
-    @Named("l_review")
+    @Named(REVIEW)
     NewsLocalSource<Review> provideReviewNewsLocalSource(ReviewDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
-    @Named("l_headline")
+    @Named(HEADLINE)
     NewsLocalSource<Headline> provideHeadlineNewsLocalSource(HeadlineDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
-    @Named("l_bookmark")
+    @Named(BOOKMARK)
     NewsLocalSource<Bookmark> provideBookmarkLocalSource(BookmarkDbHelper helper) {
         return new NewsLocalSource<>(helper);
     }
 
     @Provides
     @Singleton
-    @Named("r_article")
+    @Named(ARTICLE)
     NewsRemoteSource<Article> provideArticleNewsRemoteSource(CnbetaApi api, ArticleConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
-    @Named("r_review")
+    @Named(REVIEW)
     NewsRemoteSource<Review> provideReviewNewsRemoteSource(CnbetaApi api, ReviewConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
-    @Named("r_headline")
+    @Named(HEADLINE)
     NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CnbetaApi api, HeadlineConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }
 
     @Provides
     @Singleton
-    @Named("r_bookmark")
+    @Named(BOOKMARK)
     NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CnbetaApi api, BookmarkConverter converter) {
         return new NewsRemoteSource<>(api, converter);
     }

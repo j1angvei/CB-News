@@ -15,6 +15,9 @@ import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
+import static cn.j1angvei.cnbetareader.bean.News.Type.HEADLINE;
+
+
 /**
  * Created by Wayne on 2016/7/22.
  */
@@ -28,7 +31,7 @@ public class HeadlineModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Headline> headlinesPresenter(@Named("d_headline") NewsRepository<Headline> repository, ApiUtil apiUtil) {
+    NewsPresenter<Headline> headlinesPresenter(@Named(HEADLINE) NewsRepository<Headline> repository, ApiUtil apiUtil) {
         return new NewsPresenter<>(repository, apiUtil);
     }
 }
