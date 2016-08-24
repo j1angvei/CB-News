@@ -11,4 +11,13 @@ public class NoNetworkException extends Exception {
     public NoNetworkException(String message) {
         super(message);
     }
+
+    public NoNetworkException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NoNetworkException(Throwable cause) {
+        super(cause);
+    }
+
 }

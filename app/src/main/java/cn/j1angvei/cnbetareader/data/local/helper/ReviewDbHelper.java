@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import rx.Observable;
 
 /**
@@ -21,7 +22,7 @@ import rx.Observable;
 @Singleton
 public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review> {
     private static final String DB_NAME = "review.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String TABLE_NAME = "review";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
@@ -29,6 +30,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TID + BLANK + TYPE_TEXT + COMMA +
             COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
+            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
             COL_LOCATION + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
     private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
@@ -90,6 +92,9 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
         } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
+        }
+        if (reviews.isEmpty()) {
+            return Observable.error(new NoLocalItemException());
         }
         return Observable.from(reviews);
     }

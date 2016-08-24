@@ -11,4 +11,12 @@ public class NoLocalItemException extends Exception {
     public NoLocalItemException(String message) {
         super(message);
     }
+
+    public NoLocalItemException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NoLocalItemException(Throwable cause) {
+        super(cause);
+    }
 }

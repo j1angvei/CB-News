@@ -62,7 +62,7 @@
     <string name="publish_cmt_reference_comment">Reference comment</string>
     <string name="publish_cmt_your_comment">Your comment</string>
     <!--my topics-->
-    <string name="hint_add_my_topic">You haven\'t add any topic\nClick to add some</string>
+    <string name="hint_add_my_topic">You haven\'t add any topic\nGo to \"Explore more\" to add</string>
     <!--error info-->
     <string name="error_generic">Error happened!</string>
     <string name="error_no_network">No network connection!</string>

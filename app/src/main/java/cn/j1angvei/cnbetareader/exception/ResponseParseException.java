@@ -11,4 +11,12 @@ public class ResponseParseException extends Exception {
     public ResponseParseException(String message) {
         super(message);
     }
+
+    public ResponseParseException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ResponseParseException(Throwable cause) {
+        super(cause);
+    }
 }

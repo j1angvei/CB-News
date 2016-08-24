@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Headline;
+import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import cn.j1angvei.cnbetareader.util.DbUtil;
 import rx.Observable;
 
@@ -22,7 +23,7 @@ import rx.Observable;
 @Singleton
 public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
     private static final String DB_NAME = "headline.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String TABLE_NAME = "headline";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
@@ -30,6 +31,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +
+            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
             COL_RELATED_NEWS + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
     private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
@@ -94,7 +96,11 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return Observable.from(headlines);
+        if (headlines.isEmpty()) {
+            return Observable.error(new NoLocalItemException());
+        } else {
+            return Observable.from(headlines);
+        }
     }
 
     @Override

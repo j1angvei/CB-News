@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import rx.Observable;
 
@@ -112,7 +113,10 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return Observable.from(articles);
+        if (articles.isEmpty())
+            return Observable.error(new NoLocalItemException());
+        else
+            return Observable.from(articles);
     }
 
     @Override

@@ -33,7 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_content_title"
-                android:text="Pubtime: 2015.06.25 17:25 Source: cnBeta.COM"/>
+                android:text="Pubtime: 2015.06.25 17:25 Source: cnBeta.COM"
+                />
 
             <RelativeLayout
                 android:id="@+id/ll_content_summary"

@@ -5,4 +5,18 @@ package cn.j1angvei.cnbetareader.exception;
  */
 
 public class MyTopicEmptyException extends Exception {
+    public MyTopicEmptyException() {
+    }
+
+    public MyTopicEmptyException(String message) {
+        super(message);
+    }
+
+    public MyTopicEmptyException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public MyTopicEmptyException(Throwable cause) {
+        super(cause);
+    }
 }

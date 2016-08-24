@@ -41,6 +41,7 @@ public class NewsRepository<T extends News> extends Repository<T> {
 
     @Override
     public void toDisk(T item) {
+        mLocalSource.create(item);
     }
 
     @Override

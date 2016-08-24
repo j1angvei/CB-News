@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Bookmark;
+import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import rx.Observable;
 
@@ -92,7 +93,10 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return Observable.from(bookmarks);
+        if (bookmarks.isEmpty())
+            return Observable.error(new NoLocalItemException());
+        else
+            return Observable.from(bookmarks);
     }
 
     @Override
