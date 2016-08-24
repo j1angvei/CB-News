@@ -41,7 +41,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static cn.j1angvei.cnbetareader.bean.Source.ALL;
-import static cn.j1angvei.cnbetareader.bean.Source.BOOKMARKS;
+import static cn.j1angvei.cnbetareader.bean.Source.BOOKMARK;
 import static cn.j1angvei.cnbetareader.bean.Source.EDITORCOMMEND;
 import static cn.j1angvei.cnbetareader.bean.Source.EXPLORE;
 import static cn.j1angvei.cnbetareader.bean.Source.JHCOMMENT;
@@ -152,7 +152,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 source = EXPLORE;
                 break;
             case R.id.nav_bookmarks:
-                source = BOOKMARKS;
+                source = BOOKMARK;
                 break;
             case R.id.nav_download:
                 return true;
@@ -168,34 +168,34 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void loadNewsFragment(Source source, CharSequence title) {
-        String type = "" + source;
-        Fragment fragment = mFragmentManager.findFragmentByTag(type);
+        String sourceType = "" + source;
+        Fragment fragment = mFragmentManager.findFragmentByTag(sourceType);
         if (fragment == null) {
             switch (source) {
                 case ALL:
-                    fragment = ArticlesFragment.newInstance(type);
+                    fragment = ArticlesFragment.newInstance(sourceType);
                     break;
                 case JHCOMMENT:
-                    fragment = ReviewFragment.newInstance(type);
+                    fragment = ReviewFragment.newInstance(sourceType);
                     break;
                 case EDITORCOMMEND:
-                    fragment = HeadlineFragment.newInstance(type);
+                    fragment = HeadlineFragment.newInstance(sourceType);
                     break;
                 case EXPLORE:
                     fragment = ExploreFragment.newInstance(1);
                     break;
                 case MY_TOPICS:
-                    fragment = MyTopicsFragment.newInstance(type);
+                    fragment = MyTopicsFragment.newInstance(sourceType);
                     break;
-                case BOOKMARKS:
-                    fragment = BookmarkFragment.newInstance(type);
+                case BOOKMARK:
+                    fragment = BookmarkFragment.newInstance(sourceType);
                     break;
             }
         }
         setTitle(title);
         mFragmentManager.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.fl_container, fragment, type)
+                .replace(R.id.fl_container, fragment, sourceType)
                 .addToBackStack(null)
                 .commit();
     }

@@ -13,16 +13,25 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class NetworkUtil {
-    private final Application mApplication;
+    private final ConnectivityManager mConnMgr;
 
     @Inject
     public NetworkUtil(Application application) {
-        mApplication = application;
+        mConnMgr = (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    public boolean isNetworkOn() {
+        NetworkInfo activeNetworkInfo = mConnMgr.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    public boolean isWifiOn() {
+        return isNetworkOn() && mConnMgr.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
+    }
+
+    public boolean isDataOn() {
+        NetworkInfo activeNetworkInfo = mConnMgr.getActiveNetworkInfo();
+        return isNetworkOn() && mConnMgr.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE;
+
     }
 }

@@ -25,7 +25,7 @@ public class ContentLocalSource implements LocalSource<Content> {
     }
 
     @Override
-    public Observable<Content> read() {
+    public Observable<Content> read(String... args) {
         return null;
     }
 

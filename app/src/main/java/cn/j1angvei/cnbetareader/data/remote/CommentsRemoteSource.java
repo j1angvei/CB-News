@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.converter.CommentsConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -32,9 +33,8 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                         try {
                             return mConverter.toObservable(responseBody.string());
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            return Observable.error(new ResponseParseException());
                         }
-                        return null;
                     }
                 });
     }

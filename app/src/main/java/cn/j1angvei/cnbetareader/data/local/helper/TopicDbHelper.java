@@ -23,7 +23,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
     private static final int DB_VERSION = 3;
-    private static final String TABLE_NAME = "article";
+    private static final String TABLE_NAME = "topic";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +

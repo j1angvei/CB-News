@@ -47,5 +47,5 @@
     <string name="title_publish_cmt_reply">回复评论</string>
     <string name="cmt_header">%1$s 来自 %2$s</string>
     <string name="action_publish_cmt_send">发送</string>
-    <string name="hint_add_my_topic">你尚未添加任何主题\\n点击此处添加</string>
+    <string name="hint_add_my_topic">你尚未添加任何主题\n点击此处添加</string>
 </resources>

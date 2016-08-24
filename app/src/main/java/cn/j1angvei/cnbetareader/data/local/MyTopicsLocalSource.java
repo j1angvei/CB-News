@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.helper.TopicDbHelper;
+import cn.j1angvei.cnbetareader.exception.MyTopicEmptyException;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Observable;
 
@@ -39,7 +40,7 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
     }
 
     @Override
-    public Observable<Article> read() {
+    public Observable<Article> read(String... args) {
         return null;
     }
 
@@ -54,14 +55,12 @@ public class MyTopicsLocalSource implements LocalSource<Article> {
     }
 
     public Observable<Topic> readMyTopics() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(SELECT_FROM + BLANK).append(mHelper.getTableName()).append(BLANK + WHERE + BLANK);
         Set<String> topicIds = mPrefsUtil.readStringSet(PrefsUtil.KEY_MY_TOPICS);
         if (topicIds.isEmpty()) {
-            return Observable.empty();
+            return Observable.error(new MyTopicEmptyException());
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append(SELECT_FROM + BLANK)
-                .append(mHelper.getTableName())
-                .append(BLANK + WHERE + BLANK);
         for (String id : topicIds) {
             builder.append(_ID + BLANK + LIKE + BLANK + QUOTE)
                     .append(id)

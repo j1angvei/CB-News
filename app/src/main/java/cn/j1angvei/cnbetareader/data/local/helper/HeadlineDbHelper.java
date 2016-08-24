@@ -64,6 +64,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_SUMMARY, item.getSummary());
             values.put(COL_THUMB, item.getThumb());
+            values.put(COL_SOURCE_TYPE, item.getSourceType());
             values.put(COL_RELATED_NEWS, mDbUtil.convertNewsList(item.getRelatedNews()));
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
@@ -84,6 +85,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
                     headline.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     headline.setSummary(cursor.getString(cursor.getColumnIndex(COL_SUMMARY)));
                     headline.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
+                    headline.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     headline.setRelatedNews(mDbUtil.parseNewsList(cursor.getString(cursor.getColumnIndex(COL_RELATED_NEWS))));
                     headlines.add(headline);
                 } while (cursor.moveToNext());

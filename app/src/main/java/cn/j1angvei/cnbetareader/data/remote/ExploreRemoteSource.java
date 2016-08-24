@@ -1,16 +1,14 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.converter.Converter;
 import cn.j1angvei.cnbetareader.converter.TopicConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Action1;
@@ -22,6 +20,8 @@ import rx.functions.Func1;
  */
 @Singleton
 public class ExploreRemoteSource extends RemoteSource<Topic> {
+    private static final String TAG = "ExploreRemoteSource";
+
     @Inject
     public ExploreRemoteSource(CnbetaApi api, TopicConverter converter) {
         super(api, converter);
@@ -35,10 +35,9 @@ public class ExploreRemoteSource extends RemoteSource<Topic> {
                     public Observable<Topic> call(ResponseBody responseBody) {
                         try {
                             return mConverter.toObservable(responseBody.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            return Observable.error(new ResponseParseException());
                         }
-                        return null;
                     }
                 }).doOnNext(new Action1<Topic>() {
                     @Override

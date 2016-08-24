@@ -60,6 +60,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             ContentValues values = new ContentValues();
             values.put(_ID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
+            values.put(COL_SOURCE_TYPE, item.getSourceType());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
@@ -78,6 +79,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
                     Bookmark bookmark = new Bookmark();
                     bookmark.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
                     bookmark.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
+                    bookmark.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     try {
                         bookmark.setTime(DateUtil.parseDefault(cursor.getString(cursor.getColumnIndex(COL_TIME))));
                     } catch (ParseException e) {

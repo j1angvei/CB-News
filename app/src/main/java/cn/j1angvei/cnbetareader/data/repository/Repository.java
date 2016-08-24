@@ -10,11 +10,9 @@ import rx.Observable;
  */
 public abstract class Repository<T> {
     private final NetworkUtil mNetworkUtil;
-    boolean mInitLoad;
 
     public Repository(NetworkUtil networkUtil) {
         mNetworkUtil = networkUtil;
-        mInitLoad = true;
     }
 
     abstract Observable<T> getData(String extra, Map<String, String> param);
@@ -23,7 +21,7 @@ public abstract class Repository<T> {
 
     abstract void toRAM(T item);
 
-    boolean connected() {
-        return mNetworkUtil.isNetworkAvailable();
+    boolean isConnected() {
+        return mNetworkUtil.isNetworkOn();
     }
 }

@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.converter.ContentConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -34,8 +35,8 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                             return mConverter.toObservable(responseBody.string());
                         } catch (IOException e) {
                             e.printStackTrace();
+                            return Observable.error(new ResponseParseException());
                         }
-                        return null;
                     }
                 });
     }

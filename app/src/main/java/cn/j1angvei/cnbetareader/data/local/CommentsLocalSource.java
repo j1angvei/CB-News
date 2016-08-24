@@ -25,7 +25,7 @@ public class CommentsLocalSource implements LocalSource<Comments> {
     }
 
     @Override
-    public Observable<Comments> read() {
+    public Observable<Comments> read(String... args) {
         return null;
     }
 

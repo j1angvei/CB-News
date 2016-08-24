@@ -5,7 +5,17 @@ package cn.j1angvei.cnbetareader.bean;
  */
 
 public enum Source {
-    ALL, JHCOMMENT, EDITORCOMMEND, MY_TOPICS, EXPLORE, BOOKMARKS, POPULAR, SOFTWARE, INDUSTRY, INTERACT;
+    //Article
+    ALL,
+    POPULAR, SOFTWARE, INDUSTRY, INTERACT,
+    MY_TOPICS,
+    BOOKMARK,
+    //Headline
+    EDITORCOMMEND,
+    //Review
+    JHCOMMENT,
+    //Topic
+    EXPLORE;
 
     @Override
     public String toString() {

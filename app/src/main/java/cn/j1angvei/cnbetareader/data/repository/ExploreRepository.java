@@ -17,6 +17,7 @@ import rx.functions.Action1;
  */
 @Singleton
 public class ExploreRepository extends Repository<Topic> {
+    private static final String TAG = "ExploreRepository";
     private final ExploreLocalSource mLocalSource;
     private final ExploreRemoteSource mRemoteSource;
 
@@ -28,15 +29,15 @@ public class ExploreRepository extends Repository<Topic> {
     }
 
     @Override
-    public Observable<Topic> getData(String letter, Map<String, String> param) {
-        return mRemoteSource.getData(letter, param)
-                .doOnNext(new Action1<Topic>() {
-                    @Override
-                    public void call(Topic topic) {
-                        toDisk(topic);
-                        //save to disk or cache
-                    }
-                });
+    public Observable<Topic> getData(final String letter, final Map<String, String> param) {
+        return mLocalSource.read(letter)
+                .switchIfEmpty(mRemoteSource.getData(letter, param)
+                        .doOnNext(new Action1<Topic>() {
+                            @Override
+                            public void call(Topic topic) {
+                                toDisk(topic);
+                            }
+                        }));
     }
 
     @Override
@@ -46,6 +47,5 @@ public class ExploreRepository extends Repository<Topic> {
 
     @Override
     public void toRAM(Topic item) {
-
     }
 }

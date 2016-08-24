@@ -25,7 +25,7 @@ import rx.Observable;
 @Singleton
 public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
     private static final String DB_NAME = "article.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String TABLE_NAME = "article";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
@@ -37,6 +37,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             COL_VIEWER_NUM + BLANK + TYPE_TEXT + COMMA +
             COL_TIME + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +
+            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
             COL_SOURCE + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
     private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
@@ -73,6 +74,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_VIEWER_NUM, item.getViewerNum());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             values.put(COL_SOURCE, item.getSource());
+            values.put(COL_SOURCE_TYPE, item.getSourceType());
             values.put(COL_THUMB, item.getThumb());
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
@@ -101,6 +103,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
                         article.setTime(new Date());
                     }
                     article.setSource(cursor.getString(cursor.getColumnIndex(COL_SOURCE)));
+                    article.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     article.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
                     articles.add(article);
                 } while (cursor.moveToNext());

@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.NewsAdapter;
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 
@@ -25,7 +26,7 @@ import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
  * Created by Wayne on 2016/7/9.
  * abstract class display news like Article Headline Review
  */
-public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final String TAG = "NewsFragment";
     private static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
@@ -114,6 +115,4 @@ public abstract class NewsFragment<T, VH extends RecyclerView.ViewHolder> extend
     protected void retrieveItem() {
         mPresenter.retrieveNews(mType, mPage++);
     }
-
-
 }

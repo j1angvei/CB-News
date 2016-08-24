@@ -6,6 +6,7 @@ package cn.j1angvei.cnbetareader.bean;
 public class News {
     private String sid;
     private String title;
+    private String sourceType;
 
     public String getSid() {
         return sid;
@@ -20,8 +21,15 @@ public class News {
     }
 
     public void setTitle(String title) {
-
         this.title = title;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 
     public static class Type {

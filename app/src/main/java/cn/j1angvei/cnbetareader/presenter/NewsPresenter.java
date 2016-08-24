@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.Map;
 
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -14,7 +15,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/7/9.
  */
-public class NewsPresenter<N> implements NewsContract.Presenter<N> {
+public class NewsPresenter<N extends News> implements NewsContract.Presenter<N> {
     public static final String TAG = "NewsPresenter";
     private final ApiUtil mApiUtil;
     private NewsContract.View<N> mView;

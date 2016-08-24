@@ -57,6 +57,8 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_HOT_TID = "hot_tid";
     String COL_ALL_TID = "all_tid";
     String COL_COMMENT_MAP = "comment_map";
+    //use to judge the sourceType
+    String COL_SOURCE_TYPE = "source_type";
 
 
     void create(T item);
