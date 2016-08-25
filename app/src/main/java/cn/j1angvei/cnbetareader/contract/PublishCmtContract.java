@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * Created by Wayne on 2016/8/13.
  */
-public interface PublishCommentContract {
+public interface PublishCmtContract {
     interface View extends BaseView {
         void showCaptcha(Bitmap bitmap);
 

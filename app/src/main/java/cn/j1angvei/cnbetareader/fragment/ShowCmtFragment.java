@@ -1,7 +1,9 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -22,32 +21,36 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.CommentsRvAdapter;
-import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.presenter.ShowCmtPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
  */
-public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String COMMENTS = "CommentsFragment.comments";
+public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.View {
+    private static final String NEWS_CONTENT = "ShowCmtFragment.news_content";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-
+    CoordinatorLayout mCoordinatorLayout;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
+    ShowCmtPresenter mPresenter;
+    @Inject
     CommentsRvAdapter mAdapter;
-    private Comments mComments;
+    private Content mContent;
 
-    public static CommentsFragment newInstance(Comments comments) {
-        CommentsFragment fragment = new CommentsFragment();
+    public static ShowCmtFragment newInstance(Content content) {
+        ShowCmtFragment fragment = new ShowCmtFragment();
         Bundle args = new Bundle();
-        args.putParcelable(COMMENTS, comments);
+        args.putParcelable(NEWS_CONTENT, content);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +64,8 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mComments = getArguments().getParcelable(COMMENTS);
+        setRetainInstance(true);
+        mContent = getArguments().getParcelable(NEWS_CONTENT);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
@@ -72,14 +76,21 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshComments();
+            }
+        });
+        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        renderComments(mComments);
+        mPresenter.setView(this);
+        refreshComments();
     }
 
     @Override
@@ -108,24 +119,48 @@ public class CommentsFragment extends BaseFragment implements SwipeRefreshLayout
     public void onDestroyView() {
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-    }
-
-    public void renderComments(Comments item) {
-        List<String> all = item.getAllIds();
-        List<CommentItem> items = new ArrayList<>();
-        for (String id : all) {
-            CommentItem commentItem = item.getCommentMap().get(id);
-            items.add(commentItem);
-        }
-        mAdapter.add(items);
-    }
-
-    public void notifyDataSetChanged() {
-        mAdapter.notifyDataSetChanged();
+        mRecyclerView.setLayoutManager(null);
     }
 
     @Override
-    public void onRefresh() {
+    public void refreshComments() {
+        mPresenter.retrieveComments(mContent.getSid(), mContent.getSn());
+    }
+
+    @Override
+    public void renderComments(Comments comments) {
+        mAdapter.add(comments);
+    }
+
+    @Override
+    public void toJudgeComment(String action, String tid) {
+        mPresenter.judgeComment(action, mContent.getSid(), tid);
+    }
+
+    @Override
+    public void onJudgeSuccess() {
+        MessageUtil.snack(mCoordinatorLayout, "judge success");
+    }
+
+    @Override
+    public void onJudgeFail() {
+        MessageUtil.snack(mCoordinatorLayout, "judge fail");
+
+    }
+
+    @Override
+    public void showLoading() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        mSwipeRefreshLayout.setRefreshing(false);
+
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getActivity();
     }
 }

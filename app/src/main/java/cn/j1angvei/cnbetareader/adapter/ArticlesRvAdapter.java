@@ -25,7 +25,6 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by Wayne on 2016/7/4.
@@ -58,9 +57,7 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
         holder.tvComments.setText(article.getCommentNum());
         Date date = article.getTime();
         holder.tvTime.setText(DateUtil.toShortDatePlusTime(date, context));
-        Glide.with(context).load(article.getThumb())
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(holder.ivThumb);
+        Glide.with(context).load(article.getThumb()).into(holder.ivThumb);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

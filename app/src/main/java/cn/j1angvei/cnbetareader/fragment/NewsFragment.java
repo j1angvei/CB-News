@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -110,6 +111,11 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     public void onRefresh() {
         clearNewses();
         retrieveItem();
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getActivity();
     }
 
     protected void retrieveItem() {

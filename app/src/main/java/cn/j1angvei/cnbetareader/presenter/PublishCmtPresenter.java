@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.contract.PublishCommentContract;
+import cn.j1angvei.cnbetareader.contract.PublishCmtContract;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.response.PublishCommentResponse;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
@@ -25,19 +25,19 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/8/13.
  */
 @PerActivity
-public class PublishCommentPresenter implements PublishCommentContract.Presenter {
+public class PublishCmtPresenter implements PublishCmtContract.Presenter {
     private final CnbetaApi mApi;
     private final ApiUtil mApiUtil;
-    private PublishCommentContract.View mView;
+    private PublishCmtContract.View mView;
 
     @Inject
-    public PublishCommentPresenter(CnbetaApi api, ApiUtil apiUtil) {
+    public PublishCmtPresenter(CnbetaApi api, ApiUtil apiUtil) {
         mApi = api;
         mApiUtil = apiUtil;
     }
 
     @Override
-    public void setView(PublishCommentContract.View view) {
+    public void setView(PublishCmtContract.View view) {
         mView = view;
     }
 

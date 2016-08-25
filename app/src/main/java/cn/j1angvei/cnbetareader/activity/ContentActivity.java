@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -122,6 +123,11 @@ public class ContentActivity extends BaseActivity implements ContentContract.Vie
     @Override
     public void hideLoading() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return null;
     }
 
 

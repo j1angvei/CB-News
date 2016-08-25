@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -98,6 +99,11 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getActivity();
     }
 
     @Override

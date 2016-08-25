@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
@@ -19,16 +20,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.contract.PublishCommentContract;
+import cn.j1angvei.cnbetareader.contract.PublishCmtContract;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
-import cn.j1angvei.cnbetareader.presenter.PublishCommentPresenter;
+import cn.j1angvei.cnbetareader.presenter.PublishCmtPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/8/13.
  */
-public class PublishCommentActivity extends BaseActivity implements PublishCommentContract.View {
+public class PublishCommentActivity extends BaseActivity implements PublishCmtContract.View {
     public static final String IS_ADD = "PublishCommentActivity.is_add";
     public static final String QUOTE = "PublishCommentActivity.quote";
     public static final String PID = "PublishCommentActivity.pid";
@@ -52,7 +53,7 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
     @BindView(R.id.btn_publish_cmt_send)
     Button btnSend;
     @Inject
-    PublishCommentPresenter mPresenter;
+    PublishCmtPresenter mPresenter;
     private boolean mIsAdd;
     private String mQuoteContent;
     private String mPid;
@@ -165,5 +166,10 @@ public class PublishCommentActivity extends BaseActivity implements PublishComme
     @Override
     public void hideLoading() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return null;
     }
 }

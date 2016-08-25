@@ -8,11 +8,11 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
-import cn.j1angvei.cnbetareader.contract.CommentsContract;
+import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
-import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.HeaderUtil;
 import rx.Subscriber;
@@ -23,23 +23,23 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/28.
  * presenter in mvp
  */
-@PerActivity
-public class CommentsPresenter implements CommentsContract.Presenter {
-    private static final String TAG = "CommentsPresenter";
+@PerFragment
+public class ShowCmtPresenter implements ShowCmtContract.Presenter {
+    private static final String TAG = "ShowCmtPresenter";
     private final CommentsRepository mRepository;
     private final ApiUtil mApiUtil;
     private final CnbetaApi mApi;
-    private CommentsContract.View mView;
+    private ShowCmtContract.View mView;
 
     @Inject
-    public CommentsPresenter(CommentsRepository repository, ApiUtil apiUtil, CnbetaApi api) {
+    public ShowCmtPresenter(CommentsRepository repository, ApiUtil apiUtil, CnbetaApi api) {
         mRepository = repository;
         mApiUtil = apiUtil;
         mApi = api;
     }
 
     @Override
-    public void setView(CommentsContract.View view) {
+    public void setView(ShowCmtContract.View view) {
         mView = view;
     }
 
@@ -64,7 +64,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
 
                     @Override
                     public void onNext(Comments comments) {
-                        mView.showComments(comments);
+                        mView.renderComments(comments);
                     }
                 });
     }
@@ -92,7 +92,8 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     public void onNext(BaseResponse baseResponse) {
                         Log.d(TAG, "onNext: " + baseResponse);
                         if (TextUtils.equals(baseResponse.getState(), "success")) {
-                            mView.onJudgeSuccess(action, tid);
+//                            mView.onJudgeSuccess(action, tid);
+                            mView.onJudgeSuccess();
                         } else {
                             mView.onJudgeFail();
                         }

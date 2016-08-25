@@ -48,4 +48,8 @@
     <string name="cmt_header">%1$s 来自 %2$s</string>
     <string name="action_publish_cmt_send">发送</string>
     <string name="hint_add_my_topic">你尚未添加任何主题\n前往“探索更多”添加</string>
+    <string name="label_all_comments">所有评论</string>
+    <string name="label_popular_comments">热门评论</string>
+    <string name="label_all_comments_no">所有评论：暂无评论</string>
+    <string name="label_popular_comments_no">热门评论：暂无热评</string>
 </resources>

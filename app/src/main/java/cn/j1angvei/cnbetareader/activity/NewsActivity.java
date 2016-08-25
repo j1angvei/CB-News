@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,7 +14,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
@@ -136,7 +137,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         Source source;
         switch (item.getItemId()) {
@@ -232,6 +233,11 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void hideLoading() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return this;
     }
 
     private class CsrfTokenSubscriber extends Subscriber<ResponseBody> {

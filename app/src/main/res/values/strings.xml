@@ -68,4 +68,10 @@
     <string name="error_no_network">No network connection!</string>
     <string name="error_no_local_item">No local item found!</string>
     <string name="error_response_parse_fail">Response body parse string error!</string>
+    <!--label-->
+    <string name="label_all_comments">All comments</string>
+    <string name="label_all_comments_no">All comments: no comment yet</string>
+    <string name="label_popular_comments">Popular comments</string>
+    <string name="label_popular_comments_no">Popular comments: no popular comments</string>
+
 </resources>
