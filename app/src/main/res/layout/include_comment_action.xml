@@ -19,7 +19,7 @@
         android:text="Support"
         android:textAllCaps="true"
         android:textColor="@color/textSecondary"
-        android:textSize="@dimen/text_size_small"/>
+        android:textSize="@dimen/text_size_extra_small"/>
 
     <TextView
         android:id="@+id/tv_comment_against"
@@ -34,7 +34,7 @@
         android:text="Against"
         android:textAllCaps="true"
         android:textColor="@color/textSecondary"
-        android:textSize="@dimen/text_size_small"/>
+        android:textSize="@dimen/text_size_extra_small"/>
 
     <TextView
         android:id="@+id/tv_comment_popup"
@@ -44,6 +44,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:drawableLeft="@drawable/ic_comment_more_action"
+        android:drawableStart="@drawable/ic_comment_more_action"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"/>
 </LinearLayout>

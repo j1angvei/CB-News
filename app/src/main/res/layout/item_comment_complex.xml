@@ -9,10 +9,12 @@
         android:id="@+id/rl_org_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp">
 
         <include
-            android:id="@+id/in_comment_org_header"
+            android:id="@+id/inc_comment_header"
             layout="@layout/include_comment_header"/>
 
         <LinearLayout
@@ -30,18 +32,22 @@
                 android:src="@drawable/ic_anonymous"/>
 
             <Space
-                android:layout_width="8dp"
+                android:layout_width="6dp"
                 android:layout_height="match_parent"/>
 
             <LinearLayout
-                android:id="@+id/insert_point_ref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/include_comment_content"/>
+                <include
+                    android:id="@+id/inc_comment_ref"
+                    layout="@layout/include_comment_ref"/>
 
-                <include layout="@layout/include_comment_action"/>
+                <include
+                    android:id="@+id/inc_comment_detail"
+                    layout="@layout/include_comment_detail"/>
+
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

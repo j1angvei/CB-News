@@ -94,7 +94,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 @SuppressLint("InflateParams")
                 View viewReference = inflater.inflate(R.layout.include_comment_ref, null);
-                holder.cvgReference.findViews(viewReference);
+                holder.cvgReference.findViews(viewReference, true);
                 holder.cvgReference.setComment(itemReference, holder.itemView.getContext());
                 ViewGroup parentView = (ViewGroup) holder.itemView.findViewById(R.id.insert_point_ref);
                 parentView.addView(viewReference, 0, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -122,6 +122,35 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         notifyItemRangeInserted(0, item.size());
     }
 
+    static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        CommentViewGroup vgOrigin;
+        ImageView ivHead;
+        View itemView;
+
+        public SimpleViewHolder(View itemView) {
+            super(itemView);
+            vgOrigin = new CommentViewGroup();
+            vgOrigin.findViews(itemView, true);
+            ivHead = (ImageView) itemView.findViewById(R.id.iv_comment_photo);
+            this.itemView = itemView;
+        }
+    }
+
+    static class ComplexViewHolder extends RecyclerView.ViewHolder {
+        CommentViewGroup vgOrigin;
+        CommentViewGroup vgReference;
+        ImageView ivHead;
+        View itemView;
+
+        public ComplexViewHolder(View itemView) {
+            super(itemView);
+            vgOrigin = new CommentViewGroup();
+            vgReference = new CommentViewGroup();
+            ivHead = (ImageView) itemView.findViewById(R.id.iv_comment_photo);
+            this.itemView = itemView;
+        }
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         CommentViewGroup cvgOrigin;
         CommentViewGroup cvgReference;
@@ -131,7 +160,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
             super(itemView);
             this.itemView = itemView;
             cvgOrigin = new CommentViewGroup();
-            cvgOrigin.findViews(itemView);
+            cvgOrigin.findViews(itemView, true);
             cvgReference = new CommentViewGroup();
         }
     }
@@ -143,16 +172,29 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
         private TextView tvSupport;
         private TextView tvAgainst;
         private TextView tvPopup;
-        private ImageView ivPhoto;
 
-        public void findViews(View view) {
-            tvUser = (TextView) view.findViewById(R.id.tv_comment_user);
-            tvDate = (TextView) view.findViewById(R.id.tv_comment_date);
-            tvContent = (TextView) view.findViewById(R.id.tv_comment_content);
-            tvSupport = (TextView) view.findViewById(R.id.tv_comment_support);
-            tvAgainst = (TextView) view.findViewById(R.id.tv_comment_against);
-            tvPopup = (TextView) view.findViewById(R.id.tv_comment_popup);
-            ivPhoto = (ImageView) view.findViewById(R.id.iv_comment_photo);
+        public void findViews(View view, boolean isBundled) {
+            //if simple viewHolder or reference viewGroup in complex viewHolder
+            //passed view should be direct parent view
+            if (isBundled) {
+                tvUser = (TextView) view.findViewById(R.id.tv_comment_user);
+                tvDate = (TextView) view.findViewById(R.id.tv_comment_date);
+                tvContent = (TextView) view.findViewById(R.id.tv_comment_content);
+                tvSupport = (TextView) view.findViewById(R.id.tv_comment_support);
+                tvAgainst = (TextView) view.findViewById(R.id.tv_comment_against);
+                tvPopup = (TextView) view.findViewById(R.id.tv_comment_popup);
+            }
+            // origin viewGroup in complex viewHolder
+            else {
+                View header = view.findViewById(R.id.inc_comment_header);
+                tvUser = (TextView) header.findViewById(R.id.tv_content_header);
+                tvDate = (TextView) header.findViewById(R.id.tv_comment_date);
+                View detail = view.findViewById(R.id.inc_comment_detail);
+                tvContent = (TextView) detail.findViewById(R.id.tv_comment_content);
+                tvSupport = (TextView) detail.findViewById(R.id.tv_comment_support);
+                tvAgainst = (TextView) detail.findViewById(R.id.tv_comment_against);
+                tvPopup = (TextView) detail.findViewById(R.id.tv_comment_popup);
+            }
         }
 
         public void setComment(final CommentItem item, Context context) {
@@ -186,9 +228,9 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<CommentsRvAdapter.Vi
                     mView.prepareJudgeComment(Action.AGAINST.toString(), item.getTid());
                 }
             });
-            if (!TextUtils.isEmpty(item.getHeadPhoto())) {
-                Glide.with(context).load(item.getHeadPhoto()).into(ivPhoto);
-            }
+//            if (!TextUtils.isEmpty(item.getHeadPhoto())) {
+//                Glide.with(context).load(item.getHeadPhoto()).into(ivPhoto);
+//            }
         }
     }
 

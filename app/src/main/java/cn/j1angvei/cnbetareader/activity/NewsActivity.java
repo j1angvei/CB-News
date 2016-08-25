@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -111,8 +113,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
+                Navigator.toPublishComment(true, "quote content", "12345", "54321", this);
                 break;
             case R.id.menu_mini_card:
+                Navigator.toPublishComment(false, "quote content no add", "12345", "54321", this);
                 break;
             default:
                 break;

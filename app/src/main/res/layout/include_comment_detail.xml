@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tv_comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comment summary"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/text_size_small">
+
+    </TextView>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_comment_support"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:text="Support"
+            android:textAllCaps="true"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_extra_small"/>
+
+        <TextView
+            android:id="@+id/tv_comment_against"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:text="Against"
+            android:textAllCaps="true"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_extra_small"/>
+
+        <TextView
+            android:id="@+id/tv_comment_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_comment_more_action"
+            android:drawableStart="@drawable/ic_comment_more_action"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+    </LinearLayout>
+</merge>
