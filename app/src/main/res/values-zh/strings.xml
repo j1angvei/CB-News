@@ -10,10 +10,10 @@
     <string name="cmt_time">评论于 %1$s</string>
     <string name="header_publish_cmt_news_title">新闻标题</string>
     <string name="header_publish_cmt_origin_cmt">原评论</string>
-    <string name="hint_input_right_letters">输入右侧字母</string>
-    <string name="hint_say_something">说点什么吧...</string>
-    <string name="info_cmt_judge_fail">点评失败！</string>
-    <string name="info_cmt_judge_success">点评成功！</string>
+    <string name="hint_input_captcha">输入验证码</string>
+    <string name="hint_input_comment">输入评论</string>
+    <string name="info_cmt_fail">评论失败！</string>
+    <string name="info_cmt_success">评论成功！</string>
     <string name="info_connection_error">连接失败！</string>
     <string name="info_retry">重试</string>
     <string name="menu_add_comment">添加评论</string>
@@ -50,6 +50,14 @@
     <string name="hint_add_my_topic">你尚未添加任何主题\n前往“探索更多”添加</string>
     <string name="label_all_comments">所有评论</string>
     <string name="label_popular_comments">热门评论</string>
-    <string name="label_all_comments_no">所有评论：暂无评论</string>
-    <string name="label_popular_comments_no">热门评论：暂无热评</string>
+    <string name="label_all_comments_no">所有评论：无</string>
+    <string name="label_popular_comments_no">热门评论： 无</string>
+    <string name="info_get_captcha_fail">获取验证码失败！</string>
+    <string name="error_no_comment">评论内容为空</string>
+    <string name="error_no_captcha">验证码为空</string>
+    <string name="error_no_local_item">缓存为空</string>
+    <string name="error_no_network">没有网络连接</string>
+    <string name="error_response_parse_fail">返回内容格式错误</string>
+    <string name="error_wrong_captcha">输入验证码不正确</string>
+    <string name="error_generic">出现错误</string>
 </resources>

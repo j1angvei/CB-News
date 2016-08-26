@@ -12,11 +12,11 @@ import android.widget.Toast;
 public final class MessageUtil {
 
     public static void toast(String message, Context context) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     public static void toast(int infoId, Context context) {
-        Toast.makeText(context, infoId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, infoId, Toast.LENGTH_LONG).show();
     }
 
     public static void snack(View view, int stringId) {

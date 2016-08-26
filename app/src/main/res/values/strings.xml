@@ -43,11 +43,12 @@
     <string name="action_comment_report">Report</string>
     <string name="menu_comment_ordered_by_time">Ordered by time</string>
     <string name="menu_comment_switch">Popular comments</string>
-    <!--snack-->
+    <!--info-->
+    <string name="info_get_captcha_fail">Fail to load captcha</string>
     <string name="info_connection_error">Connection error!</string>
     <string name="info_retry">Retry</string>
-    <string name="info_cmt_judge_success">Judge comment success!</string>
-    <string name="info_cmt_judge_fail">Judge comment fail!</string>
+    <string name="info_cmt_success">Judge comment success!</string>
+    <string name="info_cmt_fail">Judge comment fail!</string>
     <!--add comment-->
     <string name="title_publish_cmt_add">Publish comment</string>
     <string name="title_publish_cmt_reply">Reply comment</string>
@@ -56,22 +57,26 @@
     <string name="action_publish_cmt_cancel">Cancel</string>
     <string name="header_publish_cmt_news_title">News title</string>
     <string name="header_publish_cmt_origin_cmt">Original comment</string>
-    <string name="hint_say_something">Say something …</string>
     <string name="publish_comment_captcha">Captcha</string>
-    <string name="hint_input_right_letters">Input right letters</string>
     <string name="publish_cmt_reference_comment">Reference comment</string>
     <string name="publish_cmt_your_comment">Your comment</string>
     <!--my topics-->
     <string name="hint_add_my_topic">You haven\'t add any topic\nGo to \"Explore more\" to add</string>
-    <!--error info-->
+    <!--error-->
     <string name="error_generic">Error happened!</string>
     <string name="error_no_network">No network connection!</string>
     <string name="error_no_local_item">No local item found!</string>
     <string name="error_response_parse_fail">Response body parse string error!</string>
+    <string name="error_no_comment">No comment input!</string>
+    <string name="error_no_captcha">No captcha input!</string>
+    <string name="error_wrong_captcha">Wrong captcha!</string>
+    <!--hint-->
+    <string name="hint_input_comment">Input comment</string>
+    <string name="hint_input_captcha">Input captcha</string>
     <!--label-->
     <string name="label_all_comments">All comments</string>
-    <string name="label_all_comments_no">All comments: no comment yet</string>
+    <string name="label_all_comments_no">All comments: empty</string>
     <string name="label_popular_comments">Popular comments</string>
-    <string name="label_popular_comments_no">Popular comments: no popular comments</string>
+    <string name="label_popular_comments_no">Popular comments: empty</string>
 
 </resources>

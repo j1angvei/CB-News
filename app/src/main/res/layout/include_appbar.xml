@@ -26,7 +26,7 @@
 
     <include layout="@layout/include_container"/>
 
-    <include layout="@layout/include_progress_bar"/>
+    <include layout="@layout/include_progress_bar_large"/>
 
     <include layout="@layout/include_fab"/>
 </android.support.design.widget.CoordinatorLayout>

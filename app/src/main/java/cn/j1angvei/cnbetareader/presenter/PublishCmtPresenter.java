@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import cn.j1angvei.cnbetareader.contract.PublishCmtContract;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.data.remote.response.PublishCommentResponse;
-import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.HeaderUtil;
 import okhttp3.ResponseBody;
@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Wayne on 2016/8/13.
  */
-@PerActivity
+@PerFragment
 public class PublishCmtPresenter implements PublishCmtContract.Presenter {
     private final CnbetaApi mApi;
     private final ApiUtil mApiUtil;
@@ -75,7 +75,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.onShowCaptchaFail();
+                        mView.onShowFail();
                     }
 
                     @Override
@@ -95,7 +95,6 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
                 .subscribe(new Subscriber<PublishCommentResponse>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
@@ -105,7 +104,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
 
                     @Override
                     public void onNext(PublishCommentResponse response) {
-                        mView.showInfo(response.getInfo() + response.getState());
+                        mView.onSendSuccess(response.getInfo());
                     }
                 });
     }

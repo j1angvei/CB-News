@@ -11,6 +11,6 @@
     android:paddingRight="4dp"
     android:text="@string/publish_cmt_your_comment"
     android:textColor="@color/colorPrimary"
-    android:textSize="@dimen/text_size_medium">
+    android:textSize="@dimen/text_size_small">
 
 </TextView>

@@ -125,11 +125,6 @@ public class ContentActivity extends BaseActivity implements ContentContract.Vie
         mProgressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public Context getViewContext() {
-        return null;
-    }
-
 
     public List<String> getSids() {
         return mSids;

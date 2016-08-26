@@ -102,11 +102,6 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     }
 
     @Override
-    public Context getViewContext() {
-        return getActivity();
-    }
-
-    @Override
     public void prepareAddTopics() {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()

@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.activity;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,8 +14,8 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.dialog.PublishCmtDialog;
 import cn.j1angvei.cnbetareader.fragment.ShowCmtFragment;
-import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -65,7 +66,7 @@ public class CommentsActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 //add comment, set pid "0"
-                Navigator.toPublishComment(true, mContent.getTitle(), mContent.getSid(), "0", view.getContext());
+                showPublishCmtDialog(true, mContent.getTitle(), mContent.getSid(), "0");
             }
         });
         //load show comments fragment
@@ -81,6 +82,11 @@ public class CommentsActivity extends BaseActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showPublishCmtDialog(boolean isAdd, String quote, String sid, String pid) {
+        DialogFragment dialog = PublishCmtDialog.newInstance(isAdd, quote, sid, pid);
+        dialog.show(getSupportFragmentManager(), PUBLISH_CMT);
     }
 
 //

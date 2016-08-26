@@ -113,11 +113,6 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         retrieveItem();
     }
 
-    @Override
-    public Context getViewContext() {
-        return getActivity();
-    }
-
     protected void retrieveItem() {
         mPresenter.retrieveNews(mType, mPage++);
     }

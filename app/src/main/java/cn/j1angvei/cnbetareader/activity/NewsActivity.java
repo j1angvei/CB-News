@@ -1,6 +1,5 @@
 package cn.j1angvei.cnbetareader.activity;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -36,7 +35,6 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
-import cn.j1angvei.cnbetareader.util.Navigator;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -114,10 +112,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                Navigator.toPublishComment(true, "quote content", "12345", "54321", this);
                 break;
             case R.id.menu_mini_card:
-                Navigator.toPublishComment(false, "quote content no add", "12345", "54321", this);
                 break;
             default:
                 break;
@@ -233,11 +229,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void hideLoading() {
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public Context getViewContext() {
-        return this;
     }
 
     private class CsrfTokenSubscriber extends Subscriber<ResponseBody> {

@@ -147,11 +147,6 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     }
 
     @Override
-    public Context getViewContext() {
-        return getActivity();
-    }
-
-    @Override
     public void renderTopic(Topic item) {
         mAdapter.add(item);
     }

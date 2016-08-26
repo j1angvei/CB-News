@@ -13,4 +13,8 @@
     <dimen name="cv_menu_width">20dp</dimen>
     <dimen name="cv_menu_height">30dp</dimen>
     <dimen name="cv_menu_margin_top">10dp</dimen>
+    <!--dialog-->
+    <dimen name="dialog_margin_up">20dp</dimen>
+    <dimen name="dialog_margin_horz">24dp</dimen>
+    <dimen name="dialog_margin_bottom">8dp</dimen>
 </resources>

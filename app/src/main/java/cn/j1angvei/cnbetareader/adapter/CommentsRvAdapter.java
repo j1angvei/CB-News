@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
@@ -29,7 +30,6 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
-import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -42,10 +42,12 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<String> mTids;
     private int mPosLabelAll = 1, mPosLabelHot = 0;
     private Map<String, CommentItem> mCommentMap;
-    private static final int COMMENT_SIMPLE = 0, COMMENT_COMPLEX = 1, LABEL_ALL = 2, LABEL_HOT = 3;
+    private static final int CMT_SIMPLE = 0, CMT_COMPLEX = 1, LABEL_ALL = 2, LABEL_HOT = 3;
+    private CommentsActivity mActivity;
 
     @Inject
-    public CommentsRvAdapter(FragmentManager fm) {
+    public CommentsRvAdapter(FragmentManager fm, Activity activity) {
+        mActivity = (CommentsActivity) activity;
         mView = (ShowCmtContract.View) fm.findFragmentByTag(CommentsActivity.SHOW_CMT);
         mTids = new ArrayList<>();
     }
@@ -64,7 +66,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private int getCommentViewType(String sid) {
-        return TextUtils.equals("0", mCommentMap.get(sid).getPid()) ? COMMENT_SIMPLE : COMMENT_COMPLEX;
+        return TextUtils.equals("0", mCommentMap.get(sid).getPid()) ? CMT_SIMPLE : CMT_COMPLEX;
     }
 
     @Override
@@ -76,15 +78,15 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case LABEL_HOT:
             case LABEL_ALL:
                 view = inflater.inflate(R.layout.tv_label_primary, parent, false);
-                viewHolder = new LabelViewHolder(view);
+                viewHolder = new LabelHolder(view);
                 break;
-            case COMMENT_SIMPLE:
+            case CMT_SIMPLE:
                 view = inflater.inflate(R.layout.item_comment_simple, parent, false);
-                viewHolder = new SimpleViewHolder(view);
+                viewHolder = new ViewHolder(view, true, new CommentViewGroup(), null);
                 break;
-            case COMMENT_COMPLEX:
+            case CMT_COMPLEX:
                 view = inflater.inflate(R.layout.item_comment_complex, parent, false);
-                viewHolder = new ComplexViewHolder(view);
+                viewHolder = new ViewHolder(view, false, new CommentViewGroup(), new CommentViewGroup());
                 break;
             default:
                 Log.d(TAG, "onCreateViewHolder:  viewHolder == null");
@@ -98,19 +100,19 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         CommentItem item = mCommentMap.get(mTids.get(position));
         switch (holder.getItemViewType()) {
             case LABEL_HOT:
-                ((LabelViewHolder) holder).tvLabel.setText(mPosLabelAll == 1
+                ((LabelHolder) holder).tvLabel.setText(mPosLabelAll == 1
                         ? R.string.label_popular_comments_no : R.string.label_popular_comments);
                 break;
             case LABEL_ALL:
-                ((LabelViewHolder) holder).tvLabel.setText(mTids.size() == 2
+                ((LabelHolder) holder).tvLabel.setText(mTids.size() == 2
                         ? R.string.label_all_comments_no : R.string.label_all_comments);
                 break;
-            case COMMENT_SIMPLE:
-                SimpleViewHolder svh = (SimpleViewHolder) holder;
+            case CMT_SIMPLE:
+                ViewHolder svh = (ViewHolder) holder;
                 svh.origin.setComment(item, svh.itemView.getContext());
                 break;
-            case COMMENT_COMPLEX:
-                ComplexViewHolder cvh = (ComplexViewHolder) holder;
+            case CMT_COMPLEX:
+                ViewHolder cvh = (ViewHolder) holder;
                 cvh.origin.setComment(item, cvh.itemView.getContext());
                 cvh.reference.setComment(mCommentMap.get(item.getPid()), cvh.itemView.getContext());
                 break;
@@ -140,7 +142,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    private static void showPopupMenu(final CommentItem item, final View view) {
+    private void showPopupMenu(final CommentItem item, final View view) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_popup_comment, popup.getMenu());
@@ -149,7 +151,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
-                        Navigator.toPublishComment(false, item.getContent(), item.getSid(), item.getTid(), view.getContext());
+                        mActivity.showPublishCmtDialog(false, item.getContent(), item.getSid(), item.getTid());
                         return true;
                     case R.id.action_comment_report:
                         mView.toJudgeComment(Action.REPORT.toString(), item.getTid());
@@ -161,48 +163,37 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         popup.show();
     }
 
-    private static class SimpleViewHolder extends RecyclerView.ViewHolder {
+    private static class ViewHolder extends RecyclerView.ViewHolder {
         View itemView;
         ImageView ivHead;
-        CommentViewGroup origin = new CommentViewGroup();
-        CommentViewGroup reference = new CommentViewGroup();
+        CommentViewGroup origin;
+        CommentViewGroup reference;
 
-        public SimpleViewHolder(View itemView) {
+        public ViewHolder(View itemView, boolean isSimple, CommentViewGroup origin, CommentViewGroup reference) {
             super(itemView);
             this.itemView = itemView;
+            this.origin = origin;
+            this.reference = reference;
             ivHead = (ImageView) itemView.findViewById(R.id.iv_comment_photo);
-            initView(itemView);
-        }
-
-        void initView(View parent) {
-            origin.findViews(parent, true);
-        }
-
-    }
-
-    private static class ComplexViewHolder extends SimpleViewHolder {
-
-        public ComplexViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        void initView(View parent) {
-            origin.findViews(parent, false);
-            reference.findViews(parent.findViewById(R.id.inc_comment_ref), true);
+            if (isSimple) {
+                origin.findViews(itemView, true);
+            } else {
+                origin.findViews(itemView, false);
+                reference.findViews(itemView.findViewById(R.id.inc_comment_ref), true);
+            }
         }
     }
 
-    private static class LabelViewHolder extends RecyclerView.ViewHolder {
+    private static class LabelHolder extends RecyclerView.ViewHolder {
         TextView tvLabel;
 
-        public LabelViewHolder(View itemView) {
+        public LabelHolder(View itemView) {
             super(itemView);
             tvLabel = (TextView) itemView.findViewById(R.id.tv_label_primary);
         }
     }
 
-    private static class CommentViewGroup {
+    private class CommentViewGroup {
         private TextView tvUser;
         private TextView tvDate;
         private TextView tvContent;

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
-import cn.j1angvei.cnbetareader.activity.PublishCommentActivity;
 import cn.j1angvei.cnbetareader.activity.SettingsActivity;
 import cn.j1angvei.cnbetareader.bean.Content;
 
@@ -50,17 +49,6 @@ public final class Navigator {
             String url = mobileFirst ? mobile.replace("SID", sid) : pc.replace("SID", sid);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
-            context.startActivity(intent);
-        }
-    }
-
-    public static void toPublishComment(boolean isAdd, String quote, String sid, String pid, Context context) {
-        if (context != null) {
-            Intent intent = new Intent(context, PublishCommentActivity.class);
-            intent.putExtra(PublishCommentActivity.IS_ADD, isAdd);
-            intent.putExtra(PublishCommentActivity.QUOTE, quote);
-            intent.putExtra(PublishCommentActivity.SID, sid);
-            intent.putExtra(PublishCommentActivity.PID, pid);
             context.startActivity(intent);
         }
     }

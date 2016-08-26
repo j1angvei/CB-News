@@ -1,6 +1,5 @@
 package cn.j1angvei.cnbetareader.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -129,6 +128,7 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
 
     @Override
     public void renderComments(Comments comments) {
+        mAdapter.clear();
         mAdapter.add(comments);
     }
 
@@ -139,13 +139,12 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
 
     @Override
     public void onJudgeSuccess() {
-        MessageUtil.snack(mCoordinatorLayout, "judge success");
+        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_success);
     }
 
     @Override
     public void onJudgeFail() {
-        MessageUtil.snack(mCoordinatorLayout, "judge fail");
-
+        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_fail);
     }
 
     @Override
@@ -156,11 +155,5 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
     @Override
     public void hideLoading() {
         mSwipeRefreshLayout.setRefreshing(false);
-
-    }
-
-    @Override
-    public Context getViewContext() {
-        return getActivity();
     }
 }

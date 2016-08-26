@@ -1,6 +1,5 @@
 package cn.j1angvei.cnbetareader.fragment;
 
-import android.content.Context;
 import android.view.View;
 
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;

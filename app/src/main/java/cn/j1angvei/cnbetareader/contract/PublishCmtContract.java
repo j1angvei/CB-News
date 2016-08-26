@@ -9,12 +9,11 @@ public interface PublishCmtContract {
     interface View extends BaseView {
         void showCaptcha(Bitmap bitmap);
 
-        void onShowCaptchaFail();
+        void onShowFail();
 
-        void showInfo(String message);
+        void onSendSuccess(String message);
 
         void onSendFail();
-
     }
 
     interface Presenter extends BasePresenter<View> {

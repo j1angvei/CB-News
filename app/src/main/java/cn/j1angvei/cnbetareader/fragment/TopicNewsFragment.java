@@ -94,11 +94,6 @@ public class TopicNewsFragment extends BaseFragment implements TopicNewsContract
     }
 
     @Override
-    public Context getViewContext() {
-        return getActivity();
-    }
-
-    @Override
     public void renderArticle(Article item) {
         mAdapter.add(item);
     }
