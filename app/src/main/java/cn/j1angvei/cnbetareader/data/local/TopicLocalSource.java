@@ -20,12 +20,12 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/24.
  */
 @Singleton
-public class ExploreLocalSource implements LocalSource<Topic> {
+public class TopicLocalSource implements LocalSource<Topic> {
     private final TopicDbHelper mHelper;
     public static final String ALL_TOPICS = "all_topics";
 
     @Inject
-    public ExploreLocalSource(TopicDbHelper helper) {
+    public TopicLocalSource(TopicDbHelper helper) {
         mHelper = helper;
     }
 

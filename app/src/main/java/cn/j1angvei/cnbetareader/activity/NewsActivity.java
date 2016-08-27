@@ -29,7 +29,7 @@ import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.BookmarkFragment;
-import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
+import cn.j1angvei.cnbetareader.fragment.TopicFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
@@ -149,7 +149,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_my_topics:
                 source = MY_TOPICS;
                 break;
-            case R.id.nav_explore:
+            case R.id.nav_all_topic:
                 source = EXPLORE;
                 break;
             case R.id.nav_bookmarks:
@@ -183,7 +183,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                     fragment = HeadlineFragment.newInstance(sourceType);
                     break;
                 case EXPLORE:
-                    fragment = ExploreFragment.newInstance(1);
+                    fragment = TopicFragment.newInstance(1);
                     break;
                 case MY_TOPICS:
                     fragment = MyTopicsFragment.newInstance(sourceType);

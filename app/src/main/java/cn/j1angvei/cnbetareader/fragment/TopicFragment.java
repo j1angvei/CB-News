@@ -33,14 +33,14 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.ExplorePresenter;
+import cn.j1angvei.cnbetareader.presenter.TopicPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/13.
  */
-public class ExploreFragment extends BaseFragment implements ExploreContract.View, SwipeRefreshLayout.OnRefreshListener {
-    private static final String PAGE = "ExploreFragment.page";
+public class TopicFragment extends BaseFragment implements ExploreContract.View, SwipeRefreshLayout.OnRefreshListener {
+    private static final String PAGE = "TopicFragment.page";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.grid_view)
@@ -48,15 +48,15 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Inject
     ExploreAdapter mAdapter;
     @Inject
-    ExplorePresenter mPresenter;
+    TopicPresenter mPresenter;
     CoordinatorLayout mCoordinatorLayout;
     private Spinner mSpinner;
     private FloatingActionButton mFab;
     private int mPage;
 
 
-    public static ExploreFragment newInstance(int page) {
-        ExploreFragment fragment = new ExploreFragment();
+    public static TopicFragment newInstance(int page) {
+        TopicFragment fragment = new TopicFragment();
         Bundle args = new Bundle();
         args.putInt(PAGE, page);
         fragment.setArguments(args);

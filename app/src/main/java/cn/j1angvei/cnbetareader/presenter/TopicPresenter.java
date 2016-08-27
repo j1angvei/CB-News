@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.ExploreContract;
-import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
+import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
@@ -22,14 +22,14 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/15.
  */
 @PerFragment
-public class ExplorePresenter implements ExploreContract.Presenter {
-    private static final String TAG = "ExplorePresenter";
-    private final ExploreRepository mRepository;
+public class TopicPresenter implements ExploreContract.Presenter {
+    private static final String TAG = "TopicPresenter";
+    private final TopicRepository mRepository;
     private final PrefsUtil mPrefsUtil;
     private ExploreContract.View mView;
 
     @Inject
-    public ExplorePresenter(ExploreRepository repository, PrefsUtil prefsUtil) {
+    public TopicPresenter(TopicRepository repository, PrefsUtil prefsUtil) {
         mRepository = repository;
         mPrefsUtil = prefsUtil;
     }
