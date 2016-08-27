@@ -8,7 +8,7 @@
     <string name="nav_latest_news">Latest news</string>
     <string name="nav_top_comments">Top comments</string>
     <string name="nav_past_headlines">Past headlines</string>
-    <string name="nav_my_topics">My topics</string>
+    <string name="nav_my_topics">My myTopics</string>
     <string name="nav_bookmarks">Bookmarks</string>
     <string name="nav_explore">Explore more</string>
     <string name="nav_quick_entry">Quick entry</string>
@@ -49,6 +49,7 @@
     <string name="info_retry">Retry</string>
     <string name="info_cmt_success">Judge comment success!</string>
     <string name="info_cmt_fail">Judge comment fail!</string>
+    <string name="info_my_topics_empty">No myTopics added!</string>
     <!--add comment-->
     <string name="title_publish_cmt_add">Publish comment</string>
     <string name="title_publish_cmt_reply">Reply comment</string>
@@ -60,7 +61,7 @@
     <string name="publish_comment_captcha">Captcha</string>
     <string name="publish_cmt_reference_comment">Reference comment</string>
     <string name="publish_cmt_your_comment">Your comment</string>
-    <!--my topics-->
+    <!--my myTopics-->
     <string name="hint_add_my_topic">You haven\'t add any topic\nGo to \"Explore more\" to add</string>
     <!--error-->
     <string name="error_generic">Error happened!</string>

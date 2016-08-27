@@ -11,7 +11,6 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.ExploreContract;
 import cn.j1angvei.cnbetareader.data.repository.ExploreRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Observable;
@@ -70,6 +69,7 @@ public class ExplorePresenter implements ExploreContract.Presenter {
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
+                        mPrefsUtil.writeStringSet(PrefsUtil.KEY_MY_TOPICS, ids);
                         mView.onAddSuccess();
                     }
 
@@ -84,8 +84,6 @@ public class ExplorePresenter implements ExploreContract.Presenter {
                         ids.add(s);
                     }
                 });
-        Log.d(TAG, "saveMyTopicIds: " + originIds);
-        mPrefsUtil.writeStringSet(PrefsUtil.KEY_MY_TOPICS, ids);
     }
 
     @Override

@@ -24,6 +24,10 @@ public interface DbHelper<T> extends BaseColumns {
     String OR = "OR";
     String AND = "AND";
     String QUOTE = "'";
+    String ORDER_BY = "ORDER BY";
+    String ASCEND = "ASC";
+    String DESCEND = "DESC";
+    String AUTO_INCREMENT = "AUTOINCREMENT";
     //column type
     String TYPE_TEXT = "TEXT";
     String TYPE_INTEGER = "INTEGER";
@@ -59,6 +63,8 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_COMMENT_MAP = "comment_map";
     //use to judge the sourceType
     String COL_SOURCE_TYPE = "source_type";
+    //use to reorder row
+    String COL_ADD_ORDER = "add_order";
 
 
     void create(T item);

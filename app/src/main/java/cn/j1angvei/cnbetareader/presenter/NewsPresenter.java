@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.presenter;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Map;
@@ -29,7 +30,11 @@ public class NewsPresenter<N extends News> implements NewsContract.Presenter<N> 
     @Override
     public void retrieveNews(String type, int page) {
         mView.showLoading();
-        Map<String, String> param = mApiUtil.getNewsParam(type, page);
+        //check if incoming request is from topic news
+        boolean isTopicNews = TextUtils.isDigitsOnly(type);
+        Map<String, String> param = isTopicNews ?
+                mApiUtil.getTopicsNewsParam(type, page) :
+                mApiUtil.getNewsParam(type, page);
         mRepository.getData(type, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import rx.Observable;
 
@@ -83,9 +84,10 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
     @Override
     public Observable<Content> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Content> contents = new ArrayList<>();
+        List<Content> contents = null;
         try {
             if (cursor.moveToFirst()) {
+                contents = new ArrayList<>();
                 do {
                     Content content = new Content();
                     content.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
@@ -107,7 +109,11 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return Observable.from(contents);
+        if (contents == null || contents.isEmpty()) {
+            return Observable.error(new NoLocalItemException());
+        } else {
+            return Observable.from(contents);
+        }
     }
 
     @Override

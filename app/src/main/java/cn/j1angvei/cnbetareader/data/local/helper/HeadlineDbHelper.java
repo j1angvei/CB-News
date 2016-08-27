@@ -23,11 +23,12 @@ import rx.Observable;
 @Singleton
 public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
     private static final String DB_NAME = "headline.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_NAME = "headline";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +
@@ -62,7 +63,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(_ID, item.getSid());
+            values.put(COL_SID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_SUMMARY, item.getSummary());
             values.put(COL_THUMB, item.getThumb());
@@ -83,7 +84,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             if (cursor.moveToFirst()) {
                 do {
                     Headline headline = new Headline();
-                    headline.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
+                    headline.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     headline.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     headline.setSummary(cursor.getString(cursor.getColumnIndex(COL_SUMMARY)));
                     headline.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));

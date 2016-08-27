@@ -8,9 +8,11 @@ import javax.inject.Singleton;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.data.local.ExploreLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.ExploreRemoteSource;
+import cn.j1angvei.cnbetareader.exception.NoNetworkException;
 import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by Wayne on 2016/7/24.
@@ -28,16 +30,30 @@ public class ExploreRepository extends Repository<Topic> {
         mRemoteSource = remoteSource;
     }
 
+    /**
+     * @param letter index of the topic
+     * @param param  should be null
+     * @return Topics started with "letter"
+     */
     @Override
     public Observable<Topic> getData(final String letter, final Map<String, String> param) {
         return mLocalSource.read(letter)
-                .switchIfEmpty(mRemoteSource.getData(letter, param)
-                        .doOnNext(new Action1<Topic>() {
-                            @Override
-                            public void call(Topic topic) {
-                                toDisk(topic);
-                            }
-                        }));
+                .onErrorResumeNext(new Func1<Throwable, Observable<Topic>>() {
+                    @Override
+                    public Observable<Topic> call(Throwable throwable) {
+                        if (isConnected()) {
+                            return mRemoteSource.getData(letter, param)
+                                    .doOnNext(new Action1<Topic>() {
+                                        @Override
+                                        public void call(Topic topic) {
+                                            toDisk(topic);
+                                        }
+                                    });
+                        } else {
+                            return Observable.error(new NoNetworkException());
+                        }
+                    }
+                });
     }
 
     @Override

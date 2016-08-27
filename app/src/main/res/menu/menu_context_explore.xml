@@ -9,6 +9,6 @@
     <item
         android:id="@+id/menu_context_explore_add"
         android:icon="@drawable/ic_grade_white"
-        android:title="Add to my topics"
+        android:title="Add to my myTopics"
         app:showAsAction="always"/>
 </menu>

@@ -5,52 +5,37 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.data.local.MyTopicsLocalSource;
-import cn.j1angvei.cnbetareader.data.remote.MyTopicsRemoteSource;
 import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * Created by Wayne on 2016/7/23.
+ * retrieve my topics
  */
 @Singleton
-public class MyTopicsRepository extends Repository<Article> {
+public class MyTopicsRepository extends Repository<MyTopic> {
     private final MyTopicsLocalSource mLocalSource;
-    private final MyTopicsRemoteSource mRemoteSource;
 
     @Inject
-    public MyTopicsRepository(MyTopicsLocalSource localSource, MyTopicsRemoteSource remoteSource, NetworkUtil util) {
+    public MyTopicsRepository(MyTopicsLocalSource localSource, NetworkUtil util) {
         super(util);
         mLocalSource = localSource;
-        mRemoteSource = remoteSource;
     }
 
     @Override
-    public Observable<Article> getData(String extra, Map<String, String> param) {
-        return mRemoteSource.getData(extra, param)
-                .doOnNext(new Action1<Article>() {
-                    @Override
-                    public void call(Article article) {
-                        //save to cache or disk
-                        toDisk(article);
-                    }
-                });
+    public Observable<MyTopic> getData(String isAscend, Map<String, String> param) {
+        return mLocalSource.read(isAscend);
     }
 
     @Override
-    public void toDisk(Article item) {
+    void toDisk(MyTopic item) {
 
     }
 
     @Override
-    public void toRAM(Article item) {
+    void toRAM(MyTopic item) {
 
-    }
-
-    public Observable<Topic> getMyTopic() {
-        return mLocalSource.readMyTopics();
     }
 }

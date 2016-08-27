@@ -46,9 +46,8 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     @Override
     public void retrieveComments(String sid, String sn) {
         mView.showLoading();
-        String referer = HeaderUtil.assembleRefererValue(sid);
         Map<String, String> param = mApiUtil.getCommentsParam(sid, sn);
-        mRepository.getData(referer, param)
+        mRepository.getData(sid, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Comments>() {

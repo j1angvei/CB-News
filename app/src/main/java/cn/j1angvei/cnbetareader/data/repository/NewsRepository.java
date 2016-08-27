@@ -26,17 +26,15 @@ public class NewsRepository<T extends News> extends Repository<T> {
 
     @Override
     public Observable<T> getData(String sourceType, Map<String, String> param) {
-        if (isConnected()) {
-            return mRemoteSource.getData(sourceType, param)
-                    .doOnNext(new Action1<T>() {
-                        @Override
-                        public void call(T t) {
-                            toDisk(t);
-                        }
-                    });
-        } else {
-            return mLocalSource.read(sourceType);
-        }
+        return isConnected() ?
+                mRemoteSource.getData(sourceType, param)
+                        .doOnNext(new Action1<T>() {
+                            @Override
+                            public void call(T t) {
+                                toDisk(t);
+                            }
+                        }) :
+                mLocalSource.read(sourceType);
     }
 
     @Override

@@ -7,26 +7,37 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.data.local.helper.CommentsDbHelper;
 import rx.Observable;
 
+import static android.provider.BaseColumns._ID;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.QUOTE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
+
 /**
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
 public class CommentsLocalSource implements LocalSource<Comments> {
-    private final CommentsDbHelper mHelper;
+    private final CommentsDbHelper mDbHelper;
 
     @Inject
-    public CommentsLocalSource(CommentsDbHelper helper) {
-        mHelper = helper;
+    public CommentsLocalSource(CommentsDbHelper dbHelper) {
+        mDbHelper = dbHelper;
     }
 
     @Override
     public void create(Comments item) {
-        mHelper.create(item);
+        mDbHelper.create(item);
     }
 
     @Override
     public Observable<Comments> read(String... args) {
-        return null;
+        String sid = args[0];
+        String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
+                WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
+                QUOTE + sid + QUOTE;
+        return mDbHelper.read(query);
     }
 
     @Override

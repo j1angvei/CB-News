@@ -1,8 +1,8 @@
 package cn.j1angvei.cnbetareader.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -20,12 +20,12 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.MyTopicsPagerAdapter;
-import cn.j1angvei.cnbetareader.bean.Source;
-import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/6.
@@ -41,6 +41,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     TabLayout mTabLayout;
     MyTopicsPagerAdapter mAdapter;
     FloatingActionButton mFab;
+    CoordinatorLayout mCoordinatorLayout;
 
     public static MyTopicsFragment newInstance(String later) {
         MyTopicsFragment fragment = new MyTopicsFragment();
@@ -66,10 +67,11 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prepareAddTopics();
+                showAllTopics();
             }
         });
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
@@ -93,45 +95,37 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void showLoading() {
-
+        mHint.setVisibility(View.VISIBLE);
+        mHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAllTopics();
+            }
+        });
     }
 
     @Override
     public void hideLoading() {
-
+        mHint.setVisibility(View.GONE);
+        mHint.setOnClickListener(null);
     }
 
     @Override
-    public void prepareAddTopics() {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.fl_container, ExploreFragment.newInstance(1), Source.EXPLORE.toString())
-                .addToBackStack(null)
-                .commit();
+    public void showAllTopics() {
+        MessageUtil.snack(mCoordinatorLayout, "all topics");
     }
 
     @Override
-    public void renderMyTopics(List<Topic> topics) {
-        if (topics.isEmpty()) {
-            mHint.setVisibility(View.VISIBLE);
-            mHint.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    prepareAddTopics();
-                }
-            });
-        } else {
-            mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
-            mViewPager.setAdapter(mAdapter);
-            mTabLayout.setupWithViewPager(mViewPager);
-            mTabLayout.setVisibility(View.VISIBLE);
-            mHint.setVisibility(View.GONE);
-        }
+    public void renderMyTopics(List<MyTopic> topics) {
+        hideLoading();
+        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onMyTopicsEmpty() {
-
+        showLoading();
     }
 }

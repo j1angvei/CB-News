@@ -25,11 +25,12 @@ import rx.Observable;
 @Singleton
 public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String TABLE_NAME = "bookmark";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TIME + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
@@ -59,7 +60,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(_ID, item.getSid());
+            values.put(COL_SID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_SOURCE_TYPE, item.getSourceType());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
@@ -78,7 +79,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             if (cursor.moveToFirst()) {
                 do {
                     Bookmark bookmark = new Bookmark();
-                    bookmark.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
+                    bookmark.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     bookmark.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     bookmark.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     try {

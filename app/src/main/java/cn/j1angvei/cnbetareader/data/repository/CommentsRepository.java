@@ -28,15 +28,16 @@ public class CommentsRepository extends Repository<Comments> {
     }
 
     @Override
-    public Observable<Comments> getData(String referer, Map<String, String> param) {
-        return mRemoteSource.getData(referer, param)
-                .doOnNext(new Action1<Comments>() {
-                    @Override
-                    public void call(Comments comments) {
-                        toDisk(comments);
-                        //toDisk to toRAM or store to local disk
-                    }
-                });
+    public Observable<Comments> getData(String sid, Map<String, String> param) {
+        return isConnected() ?
+                mRemoteSource.getData(sid, param)
+                        .doOnNext(new Action1<Comments>() {
+                            @Override
+                            public void call(Comments comments) {
+                                toDisk(comments);
+                            }
+                        }) :
+                mLocalSource.read(sid);
     }
 
     @Override

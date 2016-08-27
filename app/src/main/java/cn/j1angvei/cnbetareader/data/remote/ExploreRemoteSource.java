@@ -29,6 +29,7 @@ public class ExploreRemoteSource extends RemoteSource<Topic> {
 
     @Override
     public Observable<Topic> getData(final String letter, Map<String, String> param) {
+        //param not used, should pass null to param
         return mCnbetaApi.getTopics(letter)
                 .flatMap(new Func1<ResponseBody, Observable<Topic>>() {
                     @Override

@@ -70,10 +70,14 @@ public class HeaderUtil {
      * Dynamic Headers
      */
     //need specific string to form the header
-    private static final String PH_SID = "sid";
-    private static final String VALUE_REFERER_CONTENT = "http://www.cnbeta.com/articles/" + PH_SID + ".htm";
+    private static final String VALUE_REFERER_HEAD = "http://www.cnbeta.com/articles/";
+    private static final String VALUE_REFERER_TAIL = ".htm";
 
     public static String assembleRefererValue(String sid) {
-        return VALUE_REFERER_CONTENT.replace(PH_SID, sid);
+        return VALUE_REFERER_HEAD + sid + VALUE_REFERER_TAIL;
+    }
+
+    public static String parseSidFromRefererValue(String referer) {
+        return referer.replace(VALUE_REFERER_HEAD, "").replace(VALUE_REFERER_TAIL, "");
     }
 }

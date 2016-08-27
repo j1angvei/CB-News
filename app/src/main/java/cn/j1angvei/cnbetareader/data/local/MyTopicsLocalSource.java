@@ -1,75 +1,53 @@
 package cn.j1angvei.cnbetareader.data.local;
 
-import java.util.Set;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cnbetareader.bean.Article;
-import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.data.local.helper.TopicDbHelper;
-import cn.j1angvei.cnbetareader.exception.MyTopicEmptyException;
-import cn.j1angvei.cnbetareader.util.PrefsUtil;
+import cn.j1angvei.cnbetareader.bean.MyTopic;
+import cn.j1angvei.cnbetareader.data.local.helper.MyTopicsDbHelper;
 import rx.Observable;
 
-import static android.provider.BaseColumns._ID;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ASCEND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.OR;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.QUOTE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_ADD_ORDER;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.DESCEND;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ORDER_BY;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
 
 /**
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class MyTopicsLocalSource implements LocalSource<Article> {
+public class MyTopicsLocalSource implements LocalSource<MyTopic> {
     private static final String TAG = "MyTopicsLocalSource";
-    private final TopicDbHelper mHelper;
-    private final PrefsUtil mPrefsUtil;
+    private final MyTopicsDbHelper mDbHelper;
 
     @Inject
-    public MyTopicsLocalSource(TopicDbHelper helper, PrefsUtil prefsUtil) {
-        mHelper = helper;
-        mPrefsUtil = prefsUtil;
+    public MyTopicsLocalSource(MyTopicsDbHelper dbHelper) {
+        mDbHelper = dbHelper;
     }
 
     @Override
-    public void create(Article item) {
+    public void create(MyTopic item) {
+        mDbHelper.create(item);
     }
 
     @Override
-    public Observable<Article> read(String... args) {
-        return null;
+    public Observable<MyTopic> read(String... args) {
+        boolean isAscend = Boolean.parseBoolean(args[0]);
+        String query = SELECT_FROM + BLANK +
+                mDbHelper.getTableName() +
+                BLANK + ORDER_BY + BLANK + COL_ADD_ORDER + BLANK + (isAscend ? ASCEND : DESCEND);
+        return mDbHelper.read(query);
     }
 
     @Override
-    public void update(Article item) {
-
+    public void update(MyTopic item) {
+        mDbHelper.update(item);
     }
 
     @Override
-    public void delete(Article item) {
+    public void delete(MyTopic item) {
 
-    }
-
-    public Observable<Topic> readMyTopics() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(SELECT_FROM + BLANK).append(mHelper.getTableName()).append(BLANK + WHERE + BLANK);
-        Set<String> topicIds = mPrefsUtil.readStringSet(PrefsUtil.KEY_MY_TOPICS);
-        if (topicIds.isEmpty()) {
-            return Observable.error(new MyTopicEmptyException());
-        }
-        for (String id : topicIds) {
-            builder.append(_ID + BLANK + LIKE + BLANK + QUOTE)
-                    .append(id)
-                    .append(QUOTE)
-                    .append(BLANK)
-                    .append(OR)
-                    .append(BLANK);
-        }
-        String query = builder.toString();
-        return mHelper.read(query.substring(0, query.length() - 4));
     }
 }

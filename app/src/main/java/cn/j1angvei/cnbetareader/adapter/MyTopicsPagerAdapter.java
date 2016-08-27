@@ -6,32 +6,32 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.fragment.TopicNewsFragment;
+import cn.j1angvei.cnbetareader.bean.MyTopic;
+import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 
 /**
  * Created by Wayne on 2016/7/6.
  */
 public class MyTopicsPagerAdapter extends FragmentPagerAdapter {
-    private final List<Topic> mTopics;
+    private final List<MyTopic> mMyTopics;
 
-    public MyTopicsPagerAdapter(FragmentManager fm, List<Topic> topics) {
+    public MyTopicsPagerAdapter(FragmentManager fm, List<MyTopic> myTopics) {
         super(fm);
-        mTopics = topics;
+        mMyTopics = myTopics;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return TopicNewsFragment.newInstance(mTopics.get(position).getId());
+        return ArticlesFragment.newInstance(mMyTopics.get(position).getId());
     }
 
     @Override
     public int getCount() {
-        return mTopics.size();
+        return mMyTopics.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTopics.get(position).getTitle();
+        return mMyTopics.get(position).getTitle();
     }
 }

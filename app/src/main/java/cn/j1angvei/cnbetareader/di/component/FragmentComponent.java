@@ -7,7 +7,6 @@ import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 import cn.j1angvei.cnbetareader.fragment.ExploreFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ShowCmtFragment;
-import cn.j1angvei.cnbetareader.fragment.TopicNewsFragment;
 import dagger.Subcomponent;
 
 /**
@@ -17,8 +16,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = FragmentModule.class)
 public interface FragmentComponent {
     void inject(ExploreFragment fragment);
-
-    void inject(TopicNewsFragment fragment);
 
     void inject(ContentFragment fragment);
 

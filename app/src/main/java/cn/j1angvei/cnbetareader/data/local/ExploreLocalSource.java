@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.text.TextUtils;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -20,6 +22,7 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
 @Singleton
 public class ExploreLocalSource implements LocalSource<Topic> {
     private final TopicDbHelper mHelper;
+    public static final String ALL_TOPICS = "all_topics";
 
     @Inject
     public ExploreLocalSource(TopicDbHelper helper) {
@@ -34,8 +37,15 @@ public class ExploreLocalSource implements LocalSource<Topic> {
     @Override
     public Observable<Topic> read(String... args) {
         String letter = args[0];
-        String query = SELECT_FROM + BLANK + mHelper.getTableName() + BLANK + WHERE + BLANK + COL_LETTER + BLANK + LIKE + BLANK + QUOTE + letter + QUOTE;
-        return mHelper.read(query);
+        StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK)
+                .append(mHelper.getTableName());
+        if (!TextUtils.equals(ALL_TOPICS, letter)) {
+            builder.append(
+                    BLANK + WHERE + BLANK + COL_LETTER + BLANK + LIKE + BLANK + QUOTE)
+                    .append(letter)
+                    .append(QUOTE);
+        }
+        return mHelper.read(builder.toString());
     }
 
     @Override

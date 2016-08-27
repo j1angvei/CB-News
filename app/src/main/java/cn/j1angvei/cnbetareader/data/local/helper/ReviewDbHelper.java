@@ -22,11 +22,12 @@ import rx.Observable;
 @Singleton
 public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review> {
     private static final String DB_NAME = "review.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String TABLE_NAME = "review";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TID + BLANK + TYPE_TEXT + COMMA +
             COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
@@ -59,7 +60,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(_ID, item.getSid());
+            values.put(COL_SID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_TID, item.getTid());
             values.put(COL_COMMENT, item.getComment());
@@ -80,7 +81,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             if (cursor.moveToFirst()) {
                 do {
                     Review review = new Review();
-                    review.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
+                    review.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     review.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     review.setTid(cursor.getString(cursor.getColumnIndex(COL_TID)));
                     review.setComment(cursor.getString(cursor.getColumnIndex(COL_COMMENT)));

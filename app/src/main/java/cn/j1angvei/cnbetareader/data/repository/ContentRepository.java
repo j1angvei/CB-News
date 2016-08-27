@@ -29,14 +29,15 @@ public class ContentRepository extends Repository<Content> {
 
     @Override
     public Observable<Content> getData(String sid, Map<String, String> param) {
-        return mRemoteSource.getData(sid, param)
-                .doOnNext(new Action1<Content>() {
-                    @Override
-                    public void call(Content content) {
-                        //to toRAM or toDisk to local disk
-                        toDisk(content);
-                    }
-                });
+        return isConnected() ?
+                mRemoteSource.getData(sid, param)
+                        .doOnNext(new Action1<Content>() {
+                            @Override
+                            public void call(Content content) {
+                                toDisk(content);
+                            }
+                        }) :
+                mLocalSource.read(sid);
     }
 
     @Override

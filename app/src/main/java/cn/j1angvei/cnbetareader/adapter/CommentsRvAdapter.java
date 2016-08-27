@@ -33,7 +33,6 @@ import cn.j1angvei.cnbetareader.util.DateUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
- * O means original comment, R means referenced comment.
  */
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseAdapter<Comments> {

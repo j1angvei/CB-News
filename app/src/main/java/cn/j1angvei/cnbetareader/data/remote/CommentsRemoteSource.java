@@ -10,6 +10,7 @@ import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.converter.CommentsConverter;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.exception.ResponseParseException;
+import cn.j1angvei.cnbetareader.util.HeaderUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -25,7 +26,8 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
     }
 
     @Override
-    public Observable<Comments> getData(String referer, Map<String, String> param) {
+    public Observable<Comments> getData(String sid, Map<String, String> param) {
+        String referer = HeaderUtil.assembleRefererValue(sid);
         return mCnbetaApi.getArticleComment(referer, param)
                 .flatMap(new Func1<ResponseBody, Observable<Comments>>() {
                     @Override

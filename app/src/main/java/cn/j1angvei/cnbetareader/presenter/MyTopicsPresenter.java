@@ -4,10 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -18,11 +19,13 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class MyTopicsPresenter implements MyTopicsContract.Presenter {
     private final MyTopicsRepository mRepository;
+    private final PrefsUtil mPrefsUtil;
     private MyTopicsContract.View mView;
 
     @Inject
-    public MyTopicsPresenter(MyTopicsRepository repository) {
+    public MyTopicsPresenter(MyTopicsRepository repository, PrefsUtil prefsUtil) {
         mRepository = repository;
+        mPrefsUtil = prefsUtil;
     }
 
     @Override
@@ -32,11 +35,12 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
 
     @Override
     public void retrieveMyTopics() {
-        mRepository.getMyTopic()
+        boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.KEY_MY_TOPICS_ORDER);
+        mRepository.getData(String.valueOf(isAscend), null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()
-                .subscribe(new Subscriber<List<Topic>>() {
+                .subscribe(new Subscriber<List<MyTopic>>() {
                     @Override
                     public void onCompleted() {
 
@@ -44,14 +48,14 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mView.onMyTopicsEmpty();
                     }
 
                     @Override
-                    public void onNext(List<Topic> topics) {
+                    public void onNext(List<MyTopic> topics) {
                         mView.renderMyTopics(topics);
                     }
-                })
-        ;
+                });
     }
+
 }

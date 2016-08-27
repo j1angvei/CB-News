@@ -26,11 +26,12 @@ import rx.Observable;
 @Singleton
 public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
     private static final String DB_NAME = "article.db";
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 6;
     private static final String TABLE_NAME = "article";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TOPIC + BLANK + TYPE_TEXT + COMMA +
             COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
@@ -67,7 +68,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(_ID, item.getSid());
+            values.put(COL_SID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_TOPIC, item.getTopic());
             values.put(COL_SUMMARY, item.getSummary());
@@ -92,7 +93,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             if (cursor.moveToFirst()) {
                 do {
                     Article article = new Article();
-                    article.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
+                    article.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     article.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     article.setTopic(cursor.getString(cursor.getColumnIndex(COL_TOPIC)));
                     article.setSummary(cursor.getString(cursor.getColumnIndex(COL_SUMMARY)));
