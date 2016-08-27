@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.data.local.helper;
 import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 

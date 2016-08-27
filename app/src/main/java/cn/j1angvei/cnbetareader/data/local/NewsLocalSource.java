@@ -1,10 +1,13 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
 import rx.Observable;
+import rx.functions.Action1;
 
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.AND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SID;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SOURCE_TYPE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_TOPIC;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
@@ -16,7 +19,7 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/23.
  * store Article
  */
-public class NewsLocalSource<T> implements LocalSource<T> {
+public class NewsLocalSource<T extends News> implements LocalSource<T> {
     private final DbHelper<T> mDbHelper;
 
     public NewsLocalSource(DbHelper<T> dbHelper) {
@@ -24,8 +27,18 @@ public class NewsLocalSource<T> implements LocalSource<T> {
     }
 
     @Override
-    public void create(T item) {
-        mDbHelper.create(item);
+    public void create(final T item) {
+        String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
+                WHERE + BLANK + COL_SID + BLANK + LIKE + BLANK + QUOTE + item.getSid() + QUOTE + BLANK +
+                AND + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + item.getSourceType() + QUOTE;
+        mDbHelper.read(query)
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mDbHelper.create(item);
+                    }
+                })
+                .subscribe();
     }
 
     @Override

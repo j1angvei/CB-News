@@ -23,12 +23,11 @@ import rx.Observable;
 @Singleton
 public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
     private static final String DB_NAME = "headline.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 6;
     private static final String TABLE_NAME = "headline";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT + COMMA +

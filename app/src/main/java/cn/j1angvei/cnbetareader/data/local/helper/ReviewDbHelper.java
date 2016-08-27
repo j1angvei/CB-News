@@ -22,12 +22,11 @@ import rx.Observable;
 @Singleton
 public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review> {
     private static final String DB_NAME = "review.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_NAME = "review";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
-            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
+            COL_SID + BLANK + TYPE_TEXT + BLANK + BLANK + PRIMARY_KEY + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_TID + BLANK + TYPE_TEXT + COMMA +
             COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
