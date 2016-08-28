@@ -16,10 +16,13 @@ public interface AddTopicContract {
 
         void renderTopics(int groupPosition, List<Topic> topics);
 
+        void onAddMyTopicsSuccess();
     }
 
     interface Presenter extends BasePresenter<View> {
         void retrieveTopics(int groupPosition);
+
+        void addToMyTopics(List<Topic> topics);
 
     }
 }

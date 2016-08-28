@@ -60,33 +60,6 @@ public class TopicPresenter implements TopicContract.Presenter {
     }
 
     @Override
-    public void saveMyTopicIds(final Set<String> ids) {
-        //As when save prefs set, can not just put new item into retrieved set
-        //because it is still the same object, no change will apply to the prefs
-        final Set<String> originIds = mPrefsUtil.readStringSet(PrefsUtil.KEY_MY_TOPICS);
-        Observable.from(originIds)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        mPrefsUtil.writeStringSet(PrefsUtil.KEY_MY_TOPICS, ids);
-                        mView.onAddSuccess();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.onAddFail();
-                        Log.e(TAG, "onError: ", e);
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        ids.add(s);
-                    }
-                });
-    }
-
-    @Override
     public void setView(TopicContract.View view) {
         mView = view;
     }

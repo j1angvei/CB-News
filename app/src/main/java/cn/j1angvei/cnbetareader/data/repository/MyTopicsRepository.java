@@ -30,8 +30,8 @@ public class MyTopicsRepository extends Repository<MyTopic> {
     }
 
     @Override
-    void toDisk(MyTopic item) {
-
+    public void toDisk(MyTopic item) {
+        mLocalSource.create(item);
     }
 
     @Override

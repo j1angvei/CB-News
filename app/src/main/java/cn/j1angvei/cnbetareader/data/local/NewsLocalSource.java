@@ -10,8 +10,11 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.AND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SID;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SOURCE_TYPE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_TIME;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_TOPIC;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.DESCEND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ORDER_BY;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.QUOTE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
@@ -60,6 +63,7 @@ public class NewsLocalSource<T extends News> implements LocalSource<T> {
                     .append(topicId)
                     .append(QUOTE);
         }
+        builder.append(BLANK + ORDER_BY + BLANK + COL_TIME + BLANK + DESCEND);
         return mDbHelper.read(builder.toString());
     }
 

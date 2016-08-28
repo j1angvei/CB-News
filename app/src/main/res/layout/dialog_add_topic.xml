@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dialog_add_topic"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dialog_margin_horz">
+
+    <include layout="@layout/include_progress_bar_horz"/>
 
     <ExpandableListView
         android:id="@+id/list_view_expand"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:scrollbars="none"/>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

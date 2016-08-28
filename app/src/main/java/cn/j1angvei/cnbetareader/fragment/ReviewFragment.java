@@ -1,8 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
 
-import android.view.View;
-
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -22,10 +20,5 @@ public class ReviewFragment extends NewsFragment<Review, ReviewRvAdapter.ViewHol
     @Override
     protected void inject(ActivityComponent component) {
         component.reviewComponent(new ReviewModule()).inject(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 }

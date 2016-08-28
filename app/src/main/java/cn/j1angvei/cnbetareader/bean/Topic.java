@@ -41,4 +41,13 @@ public class Topic {
         this.letter = letter;
     }
 
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", thumb='" + thumb + '\'' +
+                ", letter='" + letter + '\'' +
+                '}';
+    }
 }

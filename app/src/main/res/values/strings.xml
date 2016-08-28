@@ -50,12 +50,8 @@
     <string name="info_cmt_success">Judge comment success!</string>
     <string name="info_cmt_fail">Judge comment fail!</string>
     <string name="info_my_topics_empty">No myTopics added!</string>
+    <string name="info_add_my_topic_success">Add topics success!</string>
     <!--add comment-->
-    <string name="title_publish_cmt_add">Publish comment</string>
-    <string name="title_publish_cmt_reply">Reply comment</string>
-    <string name="action_publish_cmt_save">Save</string>
-    <string name="action_publish_cmt_send">Send</string>
-    <string name="action_publish_cmt_cancel">Cancel</string>
     <string name="header_publish_cmt_news_title">News title</string>
     <string name="header_publish_cmt_origin_cmt">Original comment</string>
     <string name="publish_comment_captcha">Captcha</string>
@@ -79,5 +75,16 @@
     <string name="label_all_comments_no">All comments: empty</string>
     <string name="label_popular_comments">Popular comments</string>
     <string name="label_popular_comments_no">Popular comments: empty</string>
-
+    <!--toolbar title-->
+    <string name="title_publish_cmt">Publish comment</string>
+    <string name="title_reply_cmt">Reply comment</string>
+    <string name="title_add_my_topic">Add topic</string>
+    <string name="title_select_topic">Select topics</string>
+    <!--action-->
+    <string name="action_add">Add</string>
+    <string name="action_save">Save</string>
+    <string name="action_send">Send</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_drop">Drop</string>
+    <string name="action_reset">Reset</string>
 </resources>

@@ -3,8 +3,8 @@
     <string name="app_name">cnBeta新闻</string>
     <string name="action_comment_reply">回复</string>
     <string name="action_comment_report">举报</string>
-    <string name="action_publish_cmt_cancel">取消</string>
-    <string name="action_publish_cmt_save">保存</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_save">保存</string>
     <string name="cmt_action_down_vote">反对 (%1$s)</string>
     <string name="cmt_action_up_vote">支持 (%1$s)</string>
     <string name="cmt_time">评论于 %1$s</string>
@@ -18,7 +18,7 @@
     <string name="info_retry">重试</string>
     <string name="menu_add_comment">添加评论</string>
     <string name="menu_all_comments">所有评论</string>
-    <string name="menu_bookmark_this_article">收藏</string>
+    <string name="menu_bookmark_this_article">添加到我的收藏</string>
     <string name="menu_comment_ordered_by_time">按时间排序</string>
     <string name="menu_comment_switch">热门评论</string>
     <string name="menu_mini_card">迷你卡片</string>
@@ -43,10 +43,10 @@
     <string name="publish_comment_captcha">验证码</string>
     <string name="title_activity_comments">评论</string>
     <string name="title_activity_content">新闻内容</string>
-    <string name="title_publish_cmt_add">发表评论</string>
-    <string name="title_publish_cmt_reply">回复评论</string>
+    <string name="title_publish_cmt">发表评论</string>
+    <string name="title_reply_cmt">回复评论</string>
     <string name="cmt_header">%1$s 来自 %2$s</string>
-    <string name="action_publish_cmt_send">发送</string>
+    <string name="action_send">发送</string>
     <string name="hint_add_my_topic">你尚未添加任何主题\n点击此处添加</string>
     <string name="label_all_comments">所有评论</string>
     <string name="label_popular_comments">热门评论</string>
@@ -60,4 +60,11 @@
     <string name="error_response_parse_fail">返回内容格式错误</string>
     <string name="error_wrong_captcha">输入验证码不正确</string>
     <string name="error_generic">出现错误</string>
+    <string name="action_add">添加</string>
+    <string name="info_my_topics_empty">尚未添加主题</string>
+    <string name="title_add_my_topic">添加主题</string>
+    <string name="title_select_topic">选择主题</string>
+    <string name="action_drop">放弃</string>
+    <string name="action_reset">重置</string>
+    <string name="info_add_my_topic_success">添加成功！</string>
 </resources>

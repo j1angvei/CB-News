@@ -6,13 +6,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.AddTopicContract;
+import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -22,10 +26,12 @@ import rx.schedulers.Schedulers;
 public class AddTopicPresenter implements AddTopicContract.Presenter {
     private static final String TAG = "AddTopicPresenter";
     private AddTopicContract.View mView;
-    private final TopicRepository mRepository;
+    private final TopicRepository mTopicRepository;
+    private final MyTopicsRepository mRepository;
 
     @Inject
-    public AddTopicPresenter(TopicRepository repository) {
+    public AddTopicPresenter(TopicRepository topicRepository, MyTopicsRepository repository) {
+        mTopicRepository = topicRepository;
         mRepository = repository;
     }
 
@@ -33,7 +39,7 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
     public void retrieveTopics(final int groupPosition) {
         mView.showLoading();
         String letter = ApiUtil.pageToLetter(groupPosition + 1);
-        mRepository.getData(letter, null)
+        mTopicRepository.getData(letter, null)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,6 +59,39 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
                         mView.renderTopics(groupPosition, topics);
                     }
                 });
+    }
+
+    @Override
+    public void addToMyTopics(List<Topic> topics) {
+        Observable.from(topics)
+                .map(new Func1<Topic, MyTopic>() {
+                    @Override
+                    public MyTopic call(Topic topic) {
+                        MyTopic myTopic = new MyTopic();
+                        myTopic.setLetter(topic.getLetter());
+                        myTopic.setId(topic.getId());
+                        myTopic.setThumb(topic.getThumb());
+                        myTopic.setTitle(topic.getTitle());
+                        return myTopic;
+                    }
+                })
+                .subscribe(new Subscriber<MyTopic>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.onAddMyTopicsSuccess();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: ", e);
+                    }
+
+                    @Override
+                    public void onNext(MyTopic myTopic) {
+                        mRepository.toDisk(myTopic);
+                    }
+                });
+
     }
 
     @Override

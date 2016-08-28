@@ -2,7 +2,6 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +24,7 @@ import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
  * Created by Wayne on 2016/7/9.
  * abstract class display news like Article Headline Review
  */
-public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "NewsFragment";
     private static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
@@ -38,7 +37,6 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     NewsAdapter<T, VH> mAdapter;
     @Inject
     NewsPresenter<T> mPresenter;
-    FloatingActionButton mFab;
     private String mType;
     private int mPage = 1;
 
@@ -60,7 +58,6 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
-        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -71,7 +68,6 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFab.setOnClickListener(this);
         mPresenter.setView(this);
         onRefresh();
     }

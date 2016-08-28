@@ -17,7 +17,7 @@ public abstract class Repository<T> {
 
     abstract Observable<T> getData(String extra, Map<String, String> param);
 
-    abstract void toDisk(T item);
+    public abstract void toDisk(T item);
 
     abstract void toRAM(T item);
 

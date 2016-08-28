@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.contract;
 
-import java.util.Set;
-
 import cn.j1angvei.cnbetareader.bean.Topic;
 
 /**
@@ -12,16 +10,11 @@ public interface TopicContract {
         void renderTopic(Topic topic);
 
         void clearTopics();
-
-        void onAddSuccess();
-
-        void onAddFail();
     }
 
     interface Presenter extends BasePresenter<TopicContract.View> {
         void retrieveTopics(int page);
 
-        void saveMyTopicIds(Set<String> ids);
     }
 
 }

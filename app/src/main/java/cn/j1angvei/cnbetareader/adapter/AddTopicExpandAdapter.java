@@ -1,6 +1,7 @@
 package cn.j1angvei.cnbetareader.adapter;
 
 import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -111,6 +112,16 @@ public class AddTopicExpandAdapter extends BaseExpandableListAdapter implements 
     public void addItem(int groupPosition, List<Topic> items) {
         mTopicArray.setValueAt(groupPosition, items);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public List<Topic> getSelectedItems() {
+        return null;
+    }
+
+    @Override
+    public List<Topic> clearSelectedItems() {
+        return null;
     }
 
 }

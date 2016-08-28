@@ -94,10 +94,10 @@ public class PublishCmtDialog extends DialogFragment implements BaseDialog, Publ
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_publish_cmt, null);
         initView(view);
         final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setTitle(mIsAdd ? R.string.title_publish_cmt_add : R.string.title_publish_cmt_reply)
+                .setTitle(mIsAdd ? R.string.title_publish_cmt : R.string.title_reply_cmt)
                 .setView(view)
-                .setPositiveButton(R.string.action_publish_cmt_send, null)
-                .setNegativeButton(R.string.action_publish_cmt_cancel, null)
+                .setPositiveButton(R.string.action_send, null)
+                .setNegativeButton(R.string.action_cancel, null)
                 .create();
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override

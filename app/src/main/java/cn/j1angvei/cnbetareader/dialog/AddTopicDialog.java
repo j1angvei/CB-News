@@ -1,16 +1,21 @@
 package cn.j1angvei.cnbetareader.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.DialogFragment;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,19 +29,21 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.AddTopicContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.listener.DefaultMultiChoiceModeListener;
 import cn.j1angvei.cnbetareader.presenter.AddTopicPresenter;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/8/28.
  */
 
-public class AddTopicDialog extends BottomSheetDialogFragment implements BaseDialog, AddTopicContract.View {
+public class AddTopicDialog extends DialogFragment implements BaseDialog, AddTopicContract.View {
     private static final String TAG = "AddTopicDialog";
     public static final String ADD_TOPIC = "add_topic";
-    private BottomSheetBehavior mBehavior;
     @BindView(R.id.list_view_expand)
     ExpandableListView mListView;
-
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
     AddTopicExpandAdapter mAdapter;
     @Inject
     AddTopicPresenter mPresenter;
@@ -63,8 +70,39 @@ public class AddTopicDialog extends BottomSheetDialogFragment implements BaseDia
                 }
             }
         });
-        mBehavior = BottomSheetBehavior.from((View) view.getParent());
-        mBehavior.setHideable(false);
+        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                if (mListView.getChoiceMode() == ExpandableListView.CHOICE_MODE_MULTIPLE_MODAL) {
+                    int index = mListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                    mListView.setItemChecked(index, true);
+                }
+                return true;
+            }
+        });
+        mListView.setChoiceMode(ExpandableListView.CHOICE_MODE_MULTIPLE_MODAL);
+        mListView.setMultiChoiceModeListener(new DefaultMultiChoiceModeListener());
+    }
+
+    private List<Topic> getSelectedItems() {
+        List<Topic> topics = new ArrayList<>();
+        SparseBooleanArray array = mListView.getCheckedItemPositions();
+        for (int i = 0; i < mListView.getCount(); i++) {
+            if (array.get(i)) {
+                Topic topic = (Topic) mListView.getItemAtPosition(i);
+                topics.add(topic);
+            }
+        }
+        return topics;
+    }
+
+    private void clearSelectedItems() {
+        SparseBooleanArray array = mListView.getCheckedItemPositions();
+        for (int i = 0; i < mListView.getCount(); i++) {
+            if (array.get(i)) {
+                mListView.setItemChecked(i, false);
+            }
+        }
     }
 
     @Override
@@ -79,15 +117,38 @@ public class AddTopicDialog extends BottomSheetDialogFragment implements BaseDia
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
-        View view = View.inflate(getActivity(), R.layout.dialog_add_topic, null);
-        dialog.setContentView(view);
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_topic, null);
         initView(view);
-        return dialog;
+        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.title_add_my_topic)
+                .setView(view)
+                .setPositiveButton(R.string.action_add, null)
+                .setNeutralButton(R.string.action_reset, null)
+                .setNegativeButton(R.string.action_drop, null)
+                .create();
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button save = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.addToMyTopics(getSelectedItems());
+                    }
+                });
+                Button reset = alertDialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+                reset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clearSelectedItems();
+                    }
+                });
+            }
+        });
+        return alertDialog;
     }
 
     @Override
@@ -101,12 +162,18 @@ public class AddTopicDialog extends BottomSheetDialogFragment implements BaseDia
     }
 
     @Override
-    public void showLoading() {
+    public void onAddMyTopicsSuccess() {
+        dismiss();
+        MessageUtil.toast(R.string.info_add_my_topic_success, mContext);
+    }
 
+    @Override
+    public void showLoading() {
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mProgressBar.setVisibility(View.GONE);
     }
 }

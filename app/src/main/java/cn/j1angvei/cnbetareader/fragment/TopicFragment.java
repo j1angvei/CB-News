@@ -2,12 +2,8 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,16 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.ExploreAdapter;
+import cn.j1angvei.cnbetareader.adapter.TopicAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.TopicContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -46,14 +39,11 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
     @BindView(R.id.grid_view)
     GridView mGridView;
     @Inject
-    ExploreAdapter mAdapter;
+    TopicAdapter mAdapter;
     @Inject
     TopicPresenter mPresenter;
-    CoordinatorLayout mCoordinatorLayout;
     private Spinner mSpinner;
-    private FloatingActionButton mFab;
     private int mPage;
-
 
     public static TopicFragment newInstance(int page) {
         TopicFragment fragment = new TopicFragment();
@@ -103,16 +93,10 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
                 MessageUtil.toast("test " + i, getContext());
             }
         });
-        //set context action mode
-        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-        mGridView.setMultiChoiceModeListener(new TopicCABListener());
         //make gridView response to coordinatorLayout scroll behavior
         ViewCompat.setNestedScrollingEnabled(mGridView, true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //fab
-        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        //coordinatorLayout
-        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
@@ -120,7 +104,6 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-//        onRefresh();
     }
 
     @Override
@@ -154,16 +137,6 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
     }
 
     @Override
-    public void onAddSuccess() {
-        MessageUtil.snack(mCoordinatorLayout, "Add success!");
-    }
-
-    @Override
-    public void onAddFail() {
-        MessageUtil.snack(mCoordinatorLayout, "Added already!");
-    }
-
-    @Override
     public void onRefresh() {
         clearTopics();
         mPresenter.retrieveTopics(mPage);
@@ -192,68 +165,4 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
         });
     }
 
-    private class TopicCABListener implements GridView.MultiChoiceModeListener {
-        @Override
-        public void onItemCheckedStateChanged(ActionMode mode, int position,
-                                              long id, boolean checked) {
-            // Here you can do something when items are selected/de-selected,
-            // such as update the title in the CAB
-            int count = mGridView.getCheckedItemCount();
-            if (count == 1) {
-                mode.setTitle(count + " topic selected");
-            } else if (count > 1) {
-                mode.setTitle(count + " topics selected");
-            }
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            // Respond to clicks on the actions in the CAB
-            switch (item.getItemId()) {
-                case R.id.menu_context_explore_select_all:
-                    for (int i = 0; i < mGridView.getCount(); i++) {
-                        mGridView.setItemChecked(i, true);
-                    }
-                    return true;
-                case R.id.menu_context_explore_add:
-                    Set<String> ids = new HashSet<>();
-                    SparseBooleanArray checked = mGridView.getCheckedItemPositions();
-                    for (int i = 0; i < mGridView.getCount(); i++) {
-                        if (checked.get(i)) {
-                            Topic topic = mAdapter.getItem(i);
-                            if (topic != null) {
-                                ids.add(topic.getId());
-                            }
-                        }
-                    }
-                    mPresenter.saveMyTopicIds(ids);
-                    mode.finish();
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate the menu for the CAB
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.menu_context_explore, menu);
-            mode.setTitle("Select topics");
-            return true;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            // Here you can make any necessary updates to the activity when
-            // the CAB is removed. By default, selected items are deselected/unchecked.
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            // Here you can perform updates to the CAB due to
-            // an invalidate() request
-            return true;
-        }
-    }
 }

@@ -23,8 +23,4 @@ public class BookmarkFragment extends NewsFragment<Bookmark, BookmarkRvAdapter.V
         component.bookmarkComponent(new BookmarkModule()).inject(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        MessageUtil.toast("bookmark", getActivity());
-    }
 }

@@ -24,7 +24,7 @@ import rx.Observable;
 @Singleton
 public class MyTopicsDbHelper extends SQLiteOpenHelper implements DbHelper<MyTopic> {
     private static final String DB_NAME = "my_topics.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_NAME = "my_topics";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
@@ -74,9 +74,7 @@ public class MyTopicsDbHelper extends SQLiteOpenHelper implements DbHelper<MyTop
 
     private long getRowCount() {
         SQLiteDatabase db = getReadableDatabase();
-        long num = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
-        db.close();
-        return num;
+        return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
 
     @Override

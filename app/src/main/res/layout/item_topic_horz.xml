@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="?attr/selectableItemBackground"
+              android:background="@drawable/bg_item_topic"
               android:orientation="horizontal"
               android:paddingBottom="4dp"
               android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-              android:paddingRight="?android:attr/expandableListPreferredChildIndicatorRight"
+              android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
               android:paddingTop="4dp">
 
     <ImageView
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:ellipsize="marquee"
         android:paddingLeft="10dp"
         android:text="Google 谷歌"/>

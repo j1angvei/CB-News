@@ -6,7 +6,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,6 +30,7 @@ import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.dialog.AddTopicDialog;
 import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 import static cn.j1angvei.cnbetareader.dialog.AddTopicDialog.ADD_TOPIC;
 
@@ -33,6 +38,7 @@ import static cn.j1angvei.cnbetareader.dialog.AddTopicDialog.ADD_TOPIC;
  * Created by Wayne on 2016/7/6.
  */
 public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
+    private static final String TAG = "MyTopicsFragment";
     private static final String LATER_USE = "MyTopicsFragment.later_use";
 
     @BindView(R.id.viewpager)
@@ -70,12 +76,31 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onClick: fab clicked");
                 showAllTopics();
             }
         });
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
         mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_my_topics, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_topic:
+                MessageUtil.toast("load dialog", getActivity());
+                showAllTopics();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -99,18 +124,11 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     @Override
     public void showLoading() {
         mHint.setVisibility(View.VISIBLE);
-        mHint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAllTopics();
-            }
-        });
     }
 
     @Override
     public void hideLoading() {
         mHint.setVisibility(View.GONE);
-        mHint.setOnClickListener(null);
     }
 
     @Override

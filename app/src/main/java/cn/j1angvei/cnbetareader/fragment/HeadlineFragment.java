@@ -23,8 +23,4 @@ public class HeadlineFragment extends NewsFragment<Headline, HeadlineRvAdapter.V
         component.headlineComponent(new HeadlineModule()).inject(this);
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 }

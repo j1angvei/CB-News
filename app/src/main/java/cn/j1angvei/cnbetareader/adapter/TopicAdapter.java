@@ -21,11 +21,11 @@ import cn.j1angvei.cnbetareader.di.scope.PerFragment;
  * Created by Wayne on 2016/8/16.
  */
 @PerFragment
-public class ExploreAdapter extends ArrayAdapter<Topic> {
+public class TopicAdapter extends ArrayAdapter<Topic> {
     private final Activity mActivity;
 
     @Inject
-    public ExploreAdapter(Activity activity) {
+    public TopicAdapter(Activity activity) {
         super(activity, 0);
         mActivity = activity;
     }
