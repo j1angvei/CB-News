@@ -2,11 +2,12 @@ package cn.j1angvei.cnbetareader.di.component;
 
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
+import cn.j1angvei.cnbetareader.dialog.AddTopicDialog;
 import cn.j1angvei.cnbetareader.dialog.PublishCmtDialog;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
-import cn.j1angvei.cnbetareader.fragment.TopicFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ShowCmtFragment;
+import cn.j1angvei.cnbetareader.fragment.TopicFragment;
 import dagger.Subcomponent;
 
 /**
@@ -24,4 +25,6 @@ public interface FragmentComponent {
     void inject(MyTopicsFragment fragment);
 
     void inject(PublishCmtDialog dialog);
+
+    void inject(AddTopicDialog dialog);
 }

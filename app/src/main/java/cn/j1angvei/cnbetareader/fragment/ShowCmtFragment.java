@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -119,6 +120,11 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
         mRecyclerView.setLayoutManager(null);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getContext();
     }
 
     @Override

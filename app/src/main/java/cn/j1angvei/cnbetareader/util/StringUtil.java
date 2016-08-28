@@ -12,5 +12,9 @@ public final class StringUtil {
         return input.replaceAll("\\s+$", "");
     }
 
+    public static String indexToUpperLetter(int index) {
+        return "" + (char) ('A' + index);
+    }
+
 }
 

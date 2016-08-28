@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.ExploreContract;
+import cn.j1angvei.cnbetareader.contract.TopicContract;
 import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -22,11 +22,11 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/15.
  */
 @PerFragment
-public class TopicPresenter implements ExploreContract.Presenter {
+public class TopicPresenter implements TopicContract.Presenter {
     private static final String TAG = "TopicPresenter";
     private final TopicRepository mRepository;
     private final PrefsUtil mPrefsUtil;
-    private ExploreContract.View mView;
+    private TopicContract.View mView;
 
     @Inject
     public TopicPresenter(TopicRepository repository, PrefsUtil prefsUtil) {
@@ -87,7 +87,7 @@ public class TopicPresenter implements ExploreContract.Presenter {
     }
 
     @Override
-    public void setView(ExploreContract.View view) {
+    public void setView(TopicContract.View view) {
         mView = view;
     }
 }

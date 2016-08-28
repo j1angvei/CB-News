@@ -12,6 +12,7 @@ import rx.Observable;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_LETTER;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
+import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ORDER_BY;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.QUOTE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
@@ -45,6 +46,7 @@ public class TopicLocalSource implements LocalSource<Topic> {
                     .append(letter)
                     .append(QUOTE);
         }
+        builder.append(BLANK + ORDER_BY + BLANK + COL_LETTER);
         return mHelper.read(builder.toString());
     }
 

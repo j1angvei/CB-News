@@ -30,7 +30,7 @@ import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.ExploreAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.ExploreContract;
+import cn.j1angvei.cnbetareader.contract.TopicContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.TopicPresenter;
@@ -39,7 +39,7 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 /**
  * Created by Wayne on 2016/7/13.
  */
-public class TopicFragment extends BaseFragment implements ExploreContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class TopicFragment extends BaseFragment implements TopicContract.View, SwipeRefreshLayout.OnRefreshListener {
     private static final String PAGE = "TopicFragment.page";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;

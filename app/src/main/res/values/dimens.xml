@@ -17,4 +17,7 @@
     <dimen name="dialog_margin_up">20dp</dimen>
     <dimen name="dialog_margin_horz">24dp</dimen>
     <dimen name="dialog_margin_bottom">8dp</dimen>
+    <!--bottom sheet-->
+    <dimen name="bottom_sheet_margin_horz">16dp</dimen>
+    <dimen name="bottom_sheet_margin_vert">8dp</dimen>
 </resources>

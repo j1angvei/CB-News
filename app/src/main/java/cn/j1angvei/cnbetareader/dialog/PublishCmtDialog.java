@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,7 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  * Created by Wayne on 2016/8/26.
  */
 
-public class PublishCmtDialog extends BaseDialog implements PublishCmtContract.View {
+public class PublishCmtDialog extends DialogFragment implements BaseDialog, PublishCmtContract.View {
     private static final String TAG = "PublishCmtDialog";
     private static final String IS_ADD = "PublishCmtDialog.is_add";
     private static final String QUOTE = "PublishCmtDialog.quote";
@@ -122,7 +123,7 @@ public class PublishCmtDialog extends BaseDialog implements PublishCmtContract.V
     }
 
     @Override
-    void initView(View view) {
+    public void initView(View view) {
         ButterKnife.bind(this, view);
         mPresenter.setView(this);
         mPresenter.getCaptchaImage(mSid);
@@ -178,7 +179,7 @@ public class PublishCmtDialog extends BaseDialog implements PublishCmtContract.V
     }
 
     @Override
-    protected void inject(ActivityComponent component) {
+    public void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule()).inject(this);
     }
 

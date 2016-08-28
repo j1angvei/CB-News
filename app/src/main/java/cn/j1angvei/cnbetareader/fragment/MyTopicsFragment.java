@@ -24,14 +24,17 @@ import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
+import cn.j1angvei.cnbetareader.dialog.AddTopicDialog;
 import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
-import cn.j1angvei.cnbetareader.util.MessageUtil;
+
+import static cn.j1angvei.cnbetareader.dialog.AddTopicDialog.ADD_TOPIC;
 
 /**
  * Created by Wayne on 2016/7/6.
  */
 public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
     private static final String LATER_USE = "MyTopicsFragment.later_use";
+
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
     @BindView(R.id.tv_my_topic_hint)
@@ -112,7 +115,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void showAllTopics() {
-        MessageUtil.snack(mCoordinatorLayout, "all topics");
+        new AddTopicDialog().show(getChildFragmentManager(), ADD_TOPIC);
     }
 
     @Override

@@ -3,7 +3,6 @@ package cn.j1angvei.cnbetareader.data.local.helper;
 import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -79,7 +78,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_SOURCE, item.getSource());
             values.put(COL_SOURCE_TYPE, item.getSourceType());
             values.put(COL_THUMB, item.getThumb());
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -89,9 +88,10 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
     @Override
     public Observable<Article> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Article> articles = new ArrayList<>();
+        List<Article> articles = null;
         try {
             if (cursor.moveToFirst()) {
+                articles = new ArrayList<>();
                 do {
                     Article article = new Article();
                     article.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
@@ -115,7 +115,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (articles.isEmpty())
+        if (articles == null || articles.isEmpty())
             return Observable.error(new NoLocalItemException());
         else
             return Observable.from(articles);

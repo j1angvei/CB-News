@@ -7,7 +7,7 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 /**
  * Created by Wayne on 2016/8/9.
  */
-public interface ExploreContract {
+public interface TopicContract {
     interface View extends BaseView {
         void renderTopic(Topic topic);
 
@@ -18,7 +18,7 @@ public interface ExploreContract {
         void onAddFail();
     }
 
-    interface Presenter extends BasePresenter<ExploreContract.View> {
+    interface Presenter extends BasePresenter<TopicContract.View> {
         void retrieveTopics(int page);
 
         void saveMyTopicIds(Set<String> ids);
