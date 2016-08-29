@@ -17,6 +17,7 @@ public interface AddMyTopicContract {
         void renderTopics(int groupPosition, List<Topic> topics);
 
         void onAddMyTopicsSuccess();
+
     }
 
     interface Presenter extends BasePresenter<View> {

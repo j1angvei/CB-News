@@ -13,5 +13,5 @@ public interface BaseExpandAdapter<T> {
 
     List<T> getSelectedItems();
 
-    List<T> clearSelectedItems();
+    void clearSelectedItems();
 }

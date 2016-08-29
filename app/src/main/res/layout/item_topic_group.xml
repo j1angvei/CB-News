@@ -7,7 +7,7 @@
               android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft">
 
     <TextView
-        android:id="@+id/tv_add_topic_group_letter"
+        android:id="@+id/tv_add_topic_letter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

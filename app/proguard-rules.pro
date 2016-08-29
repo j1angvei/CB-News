@@ -86,9 +86,14 @@ private <fields>;
 }
 ##---------------End: proguard configuration for rxJava  ----------
 
-##---------------Begin: proguard configuration for Rxjava-promises---------
+##---------------Begin: proguard configuration for jsoup  ---------
 -keeppackagenames org.jsoup.nodes
 #-keep public class org.jsoup.** {
 #public *;
 #}
-##---------------Begin: proguard configuration for Rxjava-promises----------
+##---------------Begin: proguard configuration for jsoup ----------
+
+##---------------Begin: proguard configuration for picasso ---------
+-dontwarn com.squareup.okhttp.**
+##---------------Begin: proguard configuration for picasso ----------
+

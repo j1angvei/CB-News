@@ -26,4 +26,10 @@
         android:paddingLeft="10dp"
         android:text="Google 谷歌"/>
 
+    <CheckBox
+        android:id="@+id/cb_add_topic_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
 </LinearLayout>

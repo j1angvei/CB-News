@@ -1,16 +1,21 @@
 package cn.j1angvei.cnbetareader.adapter;
 
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -22,12 +27,15 @@ import cn.j1angvei.cnbetareader.util.StringUtil;
 
 /**
  * Created by Wayne on 2016/8/28.
+ * adapter to get All Topic for user to select
  */
 @PerFragment
 public class AddMyTopicAdapter extends BaseExpandableListAdapter implements BaseExpandAdapter<Topic> {
+    private static final String TAG = "AddMyTopicAdapter";
     private static final int GROUP_SIZE = 26;
     private final SparseArray<List<Topic>> mTopicArray;
     private final AddMyTopicContract.View mView;
+    private final Set<Topic> mSelected;
 
     @Inject
     public AddMyTopicAdapter(AddMyTopicContract.View view) {
@@ -36,6 +44,7 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
         for (int i = 0; i < GROUP_SIZE; i++) {
             mTopicArray.put(i, new ArrayList<Topic>());
         }
+        mSelected = new HashSet<>();
     }
 
     @Override
@@ -75,24 +84,44 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        GroupHolder holder;
         if (convertView == null) {
             convertView = View.inflate(mView.getViewContext(), R.layout.item_topic_group, null);
+            holder = new GroupHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (GroupHolder) convertView.getTag();
         }
-        TextView tvHeader = (TextView) convertView.findViewById(R.id.tv_add_topic_group_letter);
-        tvHeader.setText(StringUtil.indexToUpperLetter(groupPosition));
+        holder.tvLetter.setText(StringUtil.indexToUpperLetter(groupPosition));
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Topic topic = (Topic) getChild(groupPosition, childPosition);
+        final ChildHolder holder;
         if (convertView == null) {
             convertView = View.inflate(mView.getViewContext(), R.layout.item_topic_horz, null);
+            holder = new ChildHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ChildHolder) convertView.getTag();
         }
-        ImageView ivThumb = (ImageView) convertView.findViewById(R.id.iv_add_topic_item_thumb);
-        Picasso.with(mView.getViewContext()).load(topic.getThumb()).into(ivThumb);
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tv_add_topic_item_title);
-        tvTitle.setText(topic.getTitle());
+        final Topic topic = (Topic) getChild(groupPosition, childPosition);
+        holder.cbSelected.setChecked(mSelected.contains(topic));
+        holder.tvTitle.setText(topic.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSelected.contains(topic)) {
+                    holder.cbSelected.setChecked(false);
+                    mSelected.remove(topic);
+                } else {
+                    holder.cbSelected.setChecked(true);
+                    mSelected.add(topic);
+                }
+            }
+        });
+        Glide.with(convertView.getContext()).load(topic.getThumb()).into(holder.ivThumb);
         return convertView;
     }
 
@@ -115,12 +144,37 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
 
     @Override
     public List<Topic> getSelectedItems() {
-        return null;
+        return new ArrayList<>(mSelected);
     }
 
     @Override
-    public List<Topic> clearSelectedItems() {
-        return null;
+    public void clearSelectedItems() {
+        mSelected.clear();
     }
 
+    private static class GroupHolder {
+        TextView tvLetter;
+        ProgressBar pb;
+        View itemView;
+
+        GroupHolder(View view) {
+            itemView = view;
+            tvLetter = (TextView) view.findViewById(R.id.tv_add_topic_letter);
+            pb = (ProgressBar) view.findViewById(R.id.progress_bar);
+        }
+    }
+
+    private static class ChildHolder {
+        TextView tvTitle;
+        ImageView ivThumb;
+        CheckBox cbSelected;
+        View itemView;
+
+        ChildHolder(View view) {
+            itemView = view;
+            tvTitle = (TextView) view.findViewById(R.id.tv_add_topic_item_title);
+            ivThumb = (ImageView) view.findViewById(R.id.iv_add_topic_item_thumb);
+            cbSelected = (CheckBox) view.findViewById(R.id.cb_add_topic_selected);
+        }
+    }
 }

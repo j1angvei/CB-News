@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.SparseBooleanArray;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,14 +24,15 @@ import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.AddMyTopicAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.AddMyTopicContract;
+import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.listener.DefaultMultiChoiceModeListener;
 import cn.j1angvei.cnbetareader.presenter.AddTopicPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/8/28.
+ * open a dialog to add Topic
  */
 
 public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddMyTopicContract.View {
@@ -41,8 +40,6 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
     public static final String ADD_TOPIC = "add_topic";
     @BindView(R.id.list_view_expand)
     ExpandableListView mListView;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
     AddMyTopicAdapter mAdapter;
     @Inject
     AddTopicPresenter mPresenter;
@@ -69,39 +66,6 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
                 }
             }
         });
-        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                if (mListView.getChoiceMode() == ExpandableListView.CHOICE_MODE_MULTIPLE_MODAL) {
-                    int index = mListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
-                    mListView.setItemChecked(index, true);
-                }
-                return true;
-            }
-        });
-        mListView.setChoiceMode(ExpandableListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mListView.setMultiChoiceModeListener(new DefaultMultiChoiceModeListener());
-    }
-
-    private List<Topic> getSelectedItems() {
-        List<Topic> topics = new ArrayList<>();
-        SparseBooleanArray array = mListView.getCheckedItemPositions();
-        for (int i = 0; i < mListView.getCount(); i++) {
-            if (array.get(i)) {
-                Topic topic = (Topic) mListView.getItemAtPosition(i);
-                topics.add(topic);
-            }
-        }
-        return topics;
-    }
-
-    private void clearSelectedItems() {
-        SparseBooleanArray array = mListView.getCheckedItemPositions();
-        for (int i = 0; i < mListView.getCount(); i++) {
-            if (array.get(i)) {
-                mListView.setItemChecked(i, false);
-            }
-        }
     }
 
     @Override
@@ -125,8 +89,7 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
                 .setTitle(R.string.title_add_my_topic)
                 .setView(view)
                 .setPositiveButton(R.string.action_add, null)
-                .setNeutralButton(R.string.action_reset, null)
-                .setNegativeButton(R.string.action_drop, null)
+                .setNegativeButton(R.string.action_cancel, null)
                 .create();
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -135,14 +98,17 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.addToMyTopics(getSelectedItems());
+                        List<Topic> topics = mAdapter.getSelectedItems();
+                        Log.d(TAG, "onClick: " + topics);
+                        mPresenter.addToMyTopics(topics);
                     }
                 });
-                Button reset = alertDialog.getButton(DialogInterface.BUTTON_NEUTRAL);
-                reset.setOnClickListener(new View.OnClickListener() {
+                Button cancel = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        clearSelectedItems();
+                        mAdapter.clearSelectedItems();
+                        dismiss();
                     }
                 });
             }
@@ -164,15 +130,14 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
     public void onAddMyTopicsSuccess() {
         dismiss();
         MessageUtil.toast(R.string.info_add_my_topic_success, mContext);
+        ((MyTopicsContract.View) getTargetFragment()).refreshMyTopics();
     }
 
     @Override
     public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
     }
 }

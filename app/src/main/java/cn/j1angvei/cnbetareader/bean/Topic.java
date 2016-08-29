@@ -48,6 +48,28 @@ public class Topic {
                 ", title='" + title + '\'' +
                 ", thumb='" + thumb + '\'' +
                 ", letter='" + letter + '\'' +
-                '}';
+                '}' + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Topic topic = (Topic) o;
+
+        if (!id.equals(topic.id)) return false;
+        if (!title.equals(topic.title)) return false;
+        if (!thumb.equals(topic.thumb)) return false;
+        return letter.equals(topic.letter);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + thumb.hashCode();
+        result = 31 * result + letter.hashCode();
+        return result;
     }
 }

@@ -93,7 +93,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        mPresenter.retrieveMyTopics();
+        refreshMyTopics();
     }
 
     @Override
@@ -119,7 +119,9 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void showAllTopics() {
-        new AddMyTopicDialog().show(getChildFragmentManager(), ADD_TOPIC);
+        AddMyTopicDialog dialog = new AddMyTopicDialog();
+        dialog.setTargetFragment(this, 0);
+        dialog.show(getChildFragmentManager(), ADD_TOPIC);
     }
 
     @Override
@@ -134,5 +136,10 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     @Override
     public void onMyTopicsEmpty() {
         showLoading();
+    }
+
+    @Override
+    public void refreshMyTopics() {
+        mPresenter.retrieveMyTopics();
     }
 }

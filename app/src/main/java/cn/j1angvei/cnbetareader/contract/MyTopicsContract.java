@@ -16,6 +16,8 @@ public interface MyTopicsContract {
         void renderMyTopics(List<MyTopic> topics);
 
         void onMyTopicsEmpty();
+
+        void refreshMyTopics();
     }
 
     interface Presenter extends BasePresenter<View> {
