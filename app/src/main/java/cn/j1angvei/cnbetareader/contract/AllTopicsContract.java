@@ -10,6 +10,8 @@ public interface AllTopicsContract {
         void renderTopic(Topic topic);
 
         void clearTopics();
+
+        void onLetterChosen(int page);
     }
 
     interface Presenter extends BasePresenter<AllTopicsContract.View> {

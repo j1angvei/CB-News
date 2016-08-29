@@ -37,7 +37,6 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddMyTopicContract.View {
     private static final String TAG = "AddMyTopicDialog";
-    public static final String ADD_TOPIC = "add_topic";
     @BindView(R.id.list_view_expand)
     ExpandableListView mListView;
     AddMyTopicAdapter mAdapter;

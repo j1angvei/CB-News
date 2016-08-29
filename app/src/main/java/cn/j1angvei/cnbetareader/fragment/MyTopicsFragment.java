@@ -29,14 +29,13 @@ import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.dialog.AddMyTopicDialog;
 import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
 
-import static cn.j1angvei.cnbetareader.dialog.AddMyTopicDialog.ADD_TOPIC;
-
 /**
  * Created by Wayne on 2016/7/6.
  */
 public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
     private static final String TAG = "MyTopicsFragment";
     private static final String LATER_USE = "MyTopicsFragment.later_use";
+    private static final String DIALOG_ADD_TOPIC = "add_topic";
 
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
@@ -121,7 +120,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void showAllTopics() {
         AddMyTopicDialog dialog = new AddMyTopicDialog();
         dialog.setTargetFragment(this, 0);
-        dialog.show(getChildFragmentManager(), ADD_TOPIC);
+        dialog.show(getChildFragmentManager(), DIALOG_ADD_TOPIC);
     }
 
     @Override

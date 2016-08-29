@@ -43,8 +43,8 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View articleView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
-        return new ViewHolder(articleView);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override

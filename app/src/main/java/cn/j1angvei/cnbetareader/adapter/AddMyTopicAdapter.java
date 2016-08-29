@@ -1,6 +1,5 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,7 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
         } else {
             holder = (GroupHolder) convertView.getTag();
         }
-        holder.tvLetter.setText(StringUtil.indexToUpperLetter(groupPosition));
+        holder.tvLetter.setText(StringUtil.intToAlphabetLetter(groupPosition));
         return convertView;
     }
 

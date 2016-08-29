@@ -79,7 +79,7 @@
     </style>
 
     <style name="CBTheme.TextView.Summary.Review">
-        <item name="android:background">@drawable/bg_review_comment</item>
+        <item name="android:background">@drawable/bg_review_cmt</item>
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>

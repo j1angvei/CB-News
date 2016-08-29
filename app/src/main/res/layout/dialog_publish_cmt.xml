@@ -16,7 +16,7 @@
             android:id="@+id/tv_publish_cmt_quote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_publish_comment_content"
+            android:background="@drawable/bg_publish_cmt_content"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="none"/>

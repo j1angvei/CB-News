@@ -4,7 +4,7 @@
     android:id="@+id/grid_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnWidth="90dp"
+    android:columnWidth="50dp"
     android:drawSelectorOnTop="true"
     android:gravity="center"
     android:horizontalSpacing="@dimen/card_margin"

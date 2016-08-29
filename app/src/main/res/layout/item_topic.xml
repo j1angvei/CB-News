@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_topic_thumb"
             android:gravity="center"
-            android:lines="1"
             android:text="Google 谷歌"/>
 
     </RelativeLayout>
