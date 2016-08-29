@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -34,7 +32,7 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
     private static final int GROUP_SIZE = 26;
     private final SparseArray<List<Topic>> mTopicArray;
     private final AddMyTopicContract.View mView;
-    private final Set<Topic> mSelected;
+    private final List<Topic> mSelected;
 
     @Inject
     public AddMyTopicAdapter(AddMyTopicContract.View view) {
@@ -43,7 +41,7 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
         for (int i = 0; i < GROUP_SIZE; i++) {
             mTopicArray.put(i, new ArrayList<Topic>());
         }
-        mSelected = new HashSet<>();
+        mSelected = new ArrayList<>();
     }
 
     @Override
@@ -106,8 +104,8 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
             holder = (ChildHolder) convertView.getTag();
         }
         final Topic topic = (Topic) getChild(groupPosition, childPosition);
-        holder.cbSelected.setChecked(mSelected.contains(topic));
         holder.tvTitle.setText(topic.getTitle());
+        holder.cbSelected.setChecked(mSelected.contains(topic));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,12 +128,6 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
     }
 
     @Override
-    public void clearItems(int groupPosition) {
-        mTopicArray.get(groupPosition).clear();
-        notifyDataSetChanged();
-    }
-
-    @Override
     public void addItem(int groupPosition, List<Topic> items) {
         mTopicArray.setValueAt(groupPosition, items);
         notifyDataSetChanged();
@@ -143,7 +135,7 @@ public class AddMyTopicAdapter extends BaseExpandableListAdapter implements Base
 
     @Override
     public List<Topic> getSelectedItems() {
-        return new ArrayList<>(mSelected);
+        return mSelected;
     }
 
     @Override

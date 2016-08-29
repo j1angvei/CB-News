@@ -8,6 +8,7 @@ public class Topic {
     private String title;
     private String thumb;
     private String letter;
+    private boolean isAdded;
 
     public String getId() {
         return id;
@@ -38,7 +39,16 @@ public class Topic {
     }
 
     public void setLetter(String letter) {
+
         this.letter = letter;
+    }
+
+    public boolean isAdded() {
+        return isAdded;
+    }
+
+    public void setAdded(boolean added) {
+        isAdded = added;
     }
 
     @Override
@@ -48,7 +58,8 @@ public class Topic {
                 ", title='" + title + '\'' +
                 ", thumb='" + thumb + '\'' +
                 ", letter='" + letter + '\'' +
-                '}' + "\n";
+                ", isAdded=" + isAdded +
+                '}';
     }
 
     @Override
@@ -58,18 +69,21 @@ public class Topic {
 
         Topic topic = (Topic) o;
 
-        if (!id.equals(topic.id)) return false;
-        if (!title.equals(topic.title)) return false;
-        if (!thumb.equals(topic.thumb)) return false;
-        return letter.equals(topic.letter);
+        if (isAdded != topic.isAdded) return false;
+        if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
+        if (title != null ? !title.equals(topic.title) : topic.title != null) return false;
+        if (thumb != null ? !thumb.equals(topic.thumb) : topic.thumb != null) return false;
+        return letter != null ? letter.equals(topic.letter) : topic.letter == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + thumb.hashCode();
-        result = 31 * result + letter.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (thumb != null ? thumb.hashCode() : 0);
+        result = 31 * result + (letter != null ? letter.hashCode() : 0);
+        result = 31 * result + (isAdded ? 1 : 0);
         return result;
     }
 }

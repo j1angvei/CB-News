@@ -92,7 +92,7 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
                 .create();
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
+            public void onShow(final DialogInterface dialog) {
                 Button save = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -106,8 +106,8 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mAdapter.clearSelectedItems();
                         dismiss();
+                        mAdapter.clearSelectedItems();
                     }
                 });
             }
