@@ -24,7 +24,7 @@ import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
  * Created by Wayne on 2016/7/9.
  * abstract class display news like Article Headline Review
  */
-public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T> {
     private static final String TAG = "NewsFragment";
     private static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
@@ -50,6 +50,7 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
         mType = getArguments().getString(NEWS_TYPE);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
@@ -61,7 +62,13 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                clearNewses();
+                mPresenter.retrieveNews(mType, mPage++);
+            }
+        });
         return view;
     }
 
@@ -69,7 +76,7 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        onRefresh();
+        mPresenter.retrieveNews(mType, mPage++);
     }
 
     @Override
@@ -100,13 +107,4 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         mAdapter.clear();
     }
 
-    @Override
-    public void onRefresh() {
-        clearNewses();
-        retrieveItem();
-    }
-
-    protected void retrieveItem() {
-        mPresenter.retrieveNews(mType, mPage++);
-    }
 }

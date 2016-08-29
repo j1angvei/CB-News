@@ -19,11 +19,11 @@ import rx.functions.Func1;
  * get topics by letter from web
  */
 @Singleton
-public class TopicRemoteSource extends RemoteSource<Topic> {
-    private static final String TAG = "TopicRemoteSource";
+public class AllTopicsRemoteSource extends RemoteSource<Topic> {
+    private static final String TAG = "AllTopicsRemoteSource";
 
     @Inject
-    public TopicRemoteSource(CnbetaApi api, TopicConverter converter) {
+    public AllTopicsRemoteSource(CnbetaApi api, TopicConverter converter) {
         super(api, converter);
     }
 

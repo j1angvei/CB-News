@@ -10,9 +10,9 @@ import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
-import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
@@ -50,7 +50,7 @@ public interface ApplicationComponent {
 
     MyTopicsRepository myTopicsRepository();
 
-    TopicRepository exploreRepository();
+    AllTopicsRepository exploreRepository();
 
     ContentRepository contentRepository();
 

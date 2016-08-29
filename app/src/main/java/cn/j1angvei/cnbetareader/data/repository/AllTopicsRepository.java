@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.data.local.TopicLocalSource;
-import cn.j1angvei.cnbetareader.data.remote.TopicRemoteSource;
+import cn.j1angvei.cnbetareader.data.local.AllTopicsLocalSource;
+import cn.j1angvei.cnbetareader.data.remote.AllTopicsRemoteSource;
 import cn.j1angvei.cnbetareader.exception.NoNetworkException;
 import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
@@ -18,13 +18,13 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/24.
  */
 @Singleton
-public class TopicRepository extends Repository<Topic> {
-    private static final String TAG = "TopicRepository";
-    private final TopicLocalSource mLocalSource;
-    private final TopicRemoteSource mRemoteSource;
+public class AllTopicsRepository extends Repository<Topic> {
+    private static final String TAG = "AllTopicsRepository";
+    private final AllTopicsLocalSource mLocalSource;
+    private final AllTopicsRemoteSource mRemoteSource;
 
     @Inject
-    public TopicRepository(TopicLocalSource localSource, TopicRemoteSource remoteSource, NetworkUtil networkUtil) {
+    public AllTopicsRepository(AllTopicsLocalSource localSource, AllTopicsRemoteSource remoteSource, NetworkUtil networkUtil) {
         super(networkUtil);
         mLocalSource = localSource;
         mRemoteSource = remoteSource;

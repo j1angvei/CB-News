@@ -47,7 +47,9 @@ public class ArticleConverter extends NewsConverter<Article> {
                     @Override
                     public void call(Article article) {
                         String source = article.getSource();
-                        if (source.contains("@")) {
+                        if (source == null) {
+                            article.setSource("null");
+                        } else if (source.contains("@")) {
                             source = source.substring(0, source.indexOf('@') - 1);
                             article.setSource(source);
                         }

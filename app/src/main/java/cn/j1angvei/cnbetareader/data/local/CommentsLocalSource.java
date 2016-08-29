@@ -32,8 +32,7 @@ public class CommentsLocalSource implements LocalSource<Comments> {
     }
 
     @Override
-    public Observable<Comments> read(String... args) {
-        String sid = args[0];
+    public Observable<Comments> read(String sid) {
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + sid + QUOTE;

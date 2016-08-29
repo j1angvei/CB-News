@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -23,7 +25,8 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
 
     @Override
     public Observable<T> getData(final String sourceType, Map<String, String> param) {
-        return mCnbetaApi.getNews(param)
+        boolean isTopicMews = TextUtils.isDigitsOnly(sourceType);
+        return (isTopicMews ? mCnbetaApi.getTopicNews(param) : mCnbetaApi.getNews(param))
                 .flatMap(new Func1<ResponseBody, Observable<T>>() {
                     @Override
                     public Observable<T> call(ResponseBody responseBody) {

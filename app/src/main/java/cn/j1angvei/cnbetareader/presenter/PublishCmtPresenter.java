@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.contract.PublishCmtContract;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
-import cn.j1angvei.cnbetareader.data.remote.response.PublishCommentResponse;
+import cn.j1angvei.cnbetareader.data.remote.response.PublishCmtResponse;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.HeaderUtil;
@@ -92,7 +92,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
         mApi.publishComment(refer, param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PublishCommentResponse>() {
+                .subscribe(new Subscriber<PublishCmtResponse>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -103,7 +103,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(PublishCommentResponse response) {
+                    public void onNext(PublishCmtResponse response) {
                         mView.onSendSuccess(response.getInfo());
                     }
                 });

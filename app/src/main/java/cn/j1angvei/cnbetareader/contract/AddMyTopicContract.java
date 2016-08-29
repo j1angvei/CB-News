@@ -10,7 +10,7 @@ import cn.j1angvei.cnbetareader.bean.Topic;
  * Created by Wayne on 2016/8/28.
  */
 
-public interface AddTopicContract {
+public interface AddMyTopicContract {
     interface View extends BaseView {
         Context getViewContext();
 

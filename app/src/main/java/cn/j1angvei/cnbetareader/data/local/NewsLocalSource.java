@@ -10,8 +10,6 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.AND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.BLANK;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SID;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_SOURCE_TYPE;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_TIME;
-import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.COL_TOPIC;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.DESCEND;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.LIKE;
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ORDER_BY;
@@ -49,22 +47,11 @@ public class NewsLocalSource<T extends News> implements LocalSource<T> {
     }
 
     @Override
-    public Observable<T> read(String... args) {
-        String sourceType = args[0];
-        StringBuilder builder = new StringBuilder();
-        builder.append(SELECT_FROM + BLANK)
-                .append(mDbHelper.getTableName())
-                .append(BLANK + WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE)
-                .append(sourceType)
-                .append(QUOTE);
-        if (args.length == 2) {
-            String topicId = args[1];
-            builder.append(BLANK + AND + BLANK + COL_TOPIC + BLANK + LIKE + BLANK + QUOTE)
-                    .append(topicId)
-                    .append(QUOTE);
-        }
-        builder.append(BLANK + ORDER_BY + BLANK + COL_TIME + BLANK + DESCEND);
-        return mDbHelper.read(builder.toString());
+    public Observable<T> read(String sourceType) {
+        String builder = (SELECT_FROM + BLANK) + mDbHelper.getTableName() + BLANK +
+                WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + sourceType + QUOTE + BLANK +
+                ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;
+        return mDbHelper.read(builder);
     }
 
     @Override

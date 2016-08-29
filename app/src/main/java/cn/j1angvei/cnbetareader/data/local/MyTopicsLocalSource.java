@@ -33,8 +33,8 @@ public class MyTopicsLocalSource implements LocalSource<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> read(String... args) {
-        boolean isAscend = Boolean.parseBoolean(args[0]);
+    public Observable<MyTopic> read(String isAscendString) {
+        boolean isAscend = Boolean.parseBoolean(isAscendString);
         String query = SELECT_FROM + BLANK +
                 mDbHelper.getTableName() +
                 BLANK + ORDER_BY + BLANK + COL_ADD_ORDER + BLANK + (isAscend ? ASCEND : DESCEND);

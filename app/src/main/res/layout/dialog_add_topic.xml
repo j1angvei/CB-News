@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="@dimen/dialog_margin_horz">
 
-    <include layout="@layout/include_progress_bar_horz"/>
+    <include layout="@layout/include_progress_bar_small"/>
 
     <ExpandableListView
         android:id="@+id/list_view_expand"

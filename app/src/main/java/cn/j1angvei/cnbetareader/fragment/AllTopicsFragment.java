@@ -21,32 +21,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.TopicAdapter;
+import cn.j1angvei.cnbetareader.adapter.AllTopicsRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.TopicContract;
+import cn.j1angvei.cnbetareader.contract.AllTopicsContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
-import cn.j1angvei.cnbetareader.presenter.TopicPresenter;
+import cn.j1angvei.cnbetareader.presenter.AllTopicsPresenter;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/13.
  */
-public class TopicFragment extends BaseFragment implements TopicContract.View, SwipeRefreshLayout.OnRefreshListener {
-    private static final String PAGE = "TopicFragment.page";
+public class AllTopicsFragment extends BaseFragment implements AllTopicsContract.View, SwipeRefreshLayout.OnRefreshListener {
+    private static final String PAGE = "AllTopicsFragment.page";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.grid_view)
     GridView mGridView;
     @Inject
-    TopicAdapter mAdapter;
+    AllTopicsRvAdapter mAdapter;
     @Inject
-    TopicPresenter mPresenter;
+    AllTopicsPresenter mPresenter;
     private Spinner mSpinner;
     private int mPage;
 
-    public static TopicFragment newInstance(int page) {
-        TopicFragment fragment = new TopicFragment();
+    public static AllTopicsFragment newInstance(int page) {
+        AllTopicsFragment fragment = new AllTopicsFragment();
         Bundle args = new Bundle();
         args.putInt(PAGE, page);
         fragment.setArguments(args);
@@ -56,6 +56,7 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         mPage = getArguments().getInt(PAGE);
         inject(((BaseActivity) getActivity()).getActivityComponent());
@@ -63,7 +64,7 @@ public class TopicFragment extends BaseFragment implements TopicContract.View, S
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_fragment_explore, menu);
+        inflater.inflate(R.menu.menu_fragment_all_topics, menu);
         MenuItem item = menu.findItem(R.id.menu_spinner);
         mSpinner = (Spinner) item.getActionView();
         setupViewInMenu();

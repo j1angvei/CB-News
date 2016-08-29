@@ -1,7 +1,6 @@
 package cn.j1angvei.cnbetareader.adapter;
 
 import android.util.SparseArray;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -17,7 +16,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.AddTopicContract;
+import cn.j1angvei.cnbetareader.contract.AddMyTopicContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.StringUtil;
 
@@ -25,13 +24,13 @@ import cn.j1angvei.cnbetareader.util.StringUtil;
  * Created by Wayne on 2016/8/28.
  */
 @PerFragment
-public class AddTopicExpandAdapter extends BaseExpandableListAdapter implements BaseExpandAdapter<Topic> {
+public class AddMyTopicAdapter extends BaseExpandableListAdapter implements BaseExpandAdapter<Topic> {
     private static final int GROUP_SIZE = 26;
     private final SparseArray<List<Topic>> mTopicArray;
-    private final AddTopicContract.View mView;
+    private final AddMyTopicContract.View mView;
 
     @Inject
-    public AddTopicExpandAdapter(AddTopicContract.View view) {
+    public AddMyTopicAdapter(AddMyTopicContract.View view) {
         mView = view;
         mTopicArray = new SparseArray<>();
         for (int i = 0; i < GROUP_SIZE; i++) {

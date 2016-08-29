@@ -8,9 +8,9 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.AddTopicContract;
+import cn.j1angvei.cnbetareader.contract.AddMyTopicContract;
+import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
-import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Observable;
@@ -23,15 +23,15 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/8/28.
  */
 @PerFragment
-public class AddTopicPresenter implements AddTopicContract.Presenter {
+public class AddTopicPresenter implements AddMyTopicContract.Presenter {
     private static final String TAG = "AddTopicPresenter";
-    private AddTopicContract.View mView;
-    private final TopicRepository mTopicRepository;
+    private AddMyTopicContract.View mView;
+    private final AllTopicsRepository mAllTopicsRepository;
     private final MyTopicsRepository mRepository;
 
     @Inject
-    public AddTopicPresenter(TopicRepository topicRepository, MyTopicsRepository repository) {
-        mTopicRepository = topicRepository;
+    public AddTopicPresenter(AllTopicsRepository allTopicsRepository, MyTopicsRepository repository) {
+        mAllTopicsRepository = allTopicsRepository;
         mRepository = repository;
     }
 
@@ -39,7 +39,7 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
     public void retrieveTopics(final int groupPosition) {
         mView.showLoading();
         String letter = ApiUtil.pageToLetter(groupPosition + 1);
-        mTopicRepository.getData(letter, null)
+        mAllTopicsRepository.getData(letter, null)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,7 +95,7 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
     }
 
     @Override
-    public void setView(AddTopicContract.View view) {
+    public void setView(AddMyTopicContract.View view) {
         mView = view;
     }
 }

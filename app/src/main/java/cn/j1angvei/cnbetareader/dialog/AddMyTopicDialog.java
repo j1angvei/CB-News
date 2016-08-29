@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.adapter.AddTopicExpandAdapter;
+import cn.j1angvei.cnbetareader.adapter.AddMyTopicAdapter;
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.AddTopicContract;
+import cn.j1angvei.cnbetareader.contract.AddMyTopicContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.listener.DefaultMultiChoiceModeListener;
@@ -37,14 +36,14 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  * Created by Wayne on 2016/8/28.
  */
 
-public class AddTopicDialog extends DialogFragment implements BaseDialog, AddTopicContract.View {
-    private static final String TAG = "AddTopicDialog";
+public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddMyTopicContract.View {
+    private static final String TAG = "AddMyTopicDialog";
     public static final String ADD_TOPIC = "add_topic";
     @BindView(R.id.list_view_expand)
     ExpandableListView mListView;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-    AddTopicExpandAdapter mAdapter;
+    AddMyTopicAdapter mAdapter;
     @Inject
     AddTopicPresenter mPresenter;
     private Context mContext;
@@ -59,7 +58,7 @@ public class AddTopicDialog extends DialogFragment implements BaseDialog, AddTop
         ButterKnife.bind(this, view);
         mPresenter.setView(this);
         //expandableListView
-        mAdapter = new AddTopicExpandAdapter(this);
+        mAdapter = new AddMyTopicAdapter(this);
         mListView.setAdapter(mAdapter);
         mListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override

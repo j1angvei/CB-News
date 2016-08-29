@@ -15,7 +15,7 @@ public enum Source {
     //Review
     JHCOMMENT,
     //Topic
-    EXPLORE;
+    ALL_TOPICS;
 
     @Override
     public String toString() {

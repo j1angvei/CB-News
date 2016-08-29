@@ -21,12 +21,12 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/24.
  */
 @Singleton
-public class TopicLocalSource implements LocalSource<Topic> {
+public class AllTopicsLocalSource implements LocalSource<Topic> {
     private final TopicDbHelper mHelper;
     public static final String ALL_TOPICS = "all_topics";
 
     @Inject
-    public TopicLocalSource(TopicDbHelper helper) {
+    public AllTopicsLocalSource(TopicDbHelper helper) {
         mHelper = helper;
     }
 
@@ -36,8 +36,7 @@ public class TopicLocalSource implements LocalSource<Topic> {
     }
 
     @Override
-    public Observable<Topic> read(String... args) {
-        String letter = args[0];
+    public Observable<Topic> read(String letter) {
         StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK)
                 .append(mHelper.getTableName());
         if (!TextUtils.equals(ALL_TOPICS, letter)) {

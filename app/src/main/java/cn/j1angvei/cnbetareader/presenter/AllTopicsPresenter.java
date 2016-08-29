@@ -3,17 +3,14 @@ package cn.j1angvei.cnbetareader.presenter;
 
 import android.util.Log;
 
-import java.util.Set;
-
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Topic;
-import cn.j1angvei.cnbetareader.contract.TopicContract;
-import cn.j1angvei.cnbetareader.data.repository.TopicRepository;
+import cn.j1angvei.cnbetareader.contract.AllTopicsContract;
+import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -22,14 +19,14 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/15.
  */
 @PerFragment
-public class TopicPresenter implements TopicContract.Presenter {
-    private static final String TAG = "TopicPresenter";
-    private final TopicRepository mRepository;
+public class AllTopicsPresenter implements AllTopicsContract.Presenter {
+    private static final String TAG = "AllTopicsPresenter";
+    private final AllTopicsRepository mRepository;
     private final PrefsUtil mPrefsUtil;
-    private TopicContract.View mView;
+    private AllTopicsContract.View mView;
 
     @Inject
-    public TopicPresenter(TopicRepository repository, PrefsUtil prefsUtil) {
+    public AllTopicsPresenter(AllTopicsRepository repository, PrefsUtil prefsUtil) {
         mRepository = repository;
         mPrefsUtil = prefsUtil;
     }
@@ -60,7 +57,7 @@ public class TopicPresenter implements TopicContract.Presenter {
     }
 
     @Override
-    public void setView(TopicContract.View view) {
+    public void setView(AllTopicsContract.View view) {
         mView = view;
     }
 }

@@ -27,12 +27,12 @@ import cn.j1angvei.cnbetareader.contract.BaseView;
 import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
+import cn.j1angvei.cnbetareader.fragment.AllTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 import cn.j1angvei.cnbetareader.fragment.BookmarkFragment;
 import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
-import cn.j1angvei.cnbetareader.fragment.TopicFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
@@ -44,7 +44,7 @@ import rx.schedulers.Schedulers;
 import static cn.j1angvei.cnbetareader.bean.Source.ALL;
 import static cn.j1angvei.cnbetareader.bean.Source.BOOKMARK;
 import static cn.j1angvei.cnbetareader.bean.Source.EDITORCOMMEND;
-import static cn.j1angvei.cnbetareader.bean.Source.EXPLORE;
+import static cn.j1angvei.cnbetareader.bean.Source.ALL_TOPICS;
 import static cn.j1angvei.cnbetareader.bean.Source.JHCOMMENT;
 import static cn.j1angvei.cnbetareader.bean.Source.MY_TOPICS;
 
@@ -111,8 +111,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_search:
-                break;
             case R.id.menu_mini_card:
                 break;
             default:
@@ -150,7 +148,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 source = MY_TOPICS;
                 break;
             case R.id.nav_all_topic:
-                source = EXPLORE;
+                source = ALL_TOPICS;
                 break;
             case R.id.nav_bookmarks:
                 source = BOOKMARK;
@@ -182,8 +180,8 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 case EDITORCOMMEND:
                     fragment = HeadlineFragment.newInstance(sourceType);
                     break;
-                case EXPLORE:
-                    fragment = TopicFragment.newInstance(1);
+                case ALL_TOPICS:
+                    fragment = AllTopicsFragment.newInstance(1);
                     break;
                 case MY_TOPICS:
                     fragment = MyTopicsFragment.newInstance(sourceType);

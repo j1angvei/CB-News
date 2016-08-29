@@ -32,8 +32,7 @@ public class ContentLocalSource implements LocalSource<Content> {
     }
 
     @Override
-    public Observable<Content> read(String... args) {
-        String sid = args[0];
+    public Observable<Content> read(String sid) {
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + sid + QUOTE;

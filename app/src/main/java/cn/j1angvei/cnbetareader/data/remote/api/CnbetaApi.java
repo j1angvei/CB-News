@@ -3,7 +3,7 @@ package cn.j1angvei.cnbetareader.data.remote.api;
 import java.util.Map;
 
 import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
-import cn.j1angvei.cnbetareader.data.remote.response.PublishCommentResponse;
+import cn.j1angvei.cnbetareader.data.remote.response.PublishCmtResponse;
 import okhttp3.ResponseBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -61,7 +61,7 @@ public interface CnbetaApi {
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @FormUrlEncoded
     @POST("/comment")
-    Observable<PublishCommentResponse> publishComment(@Header(KEY_REFERER) String refer, @FieldMap Map<String, String> publishCommentParam);
+    Observable<PublishCmtResponse> publishComment(@Header(KEY_REFERER) String refer, @FieldMap Map<String, String> publishCommentParam);
 
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @GET("/captcha.htm")
