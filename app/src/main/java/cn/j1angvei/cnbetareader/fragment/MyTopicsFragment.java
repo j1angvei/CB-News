@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     TabLayout mTabLayout;
     MyTopicsPagerAdapter mAdapter;
     CoordinatorLayout mCoordinatorLayout;
+    FloatingActionButton mFab;
 
     public static MyTopicsFragment newInstance(String later) {
         //later is the value of Source.My_TOPICS
@@ -70,6 +72,15 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
         ButterKnife.bind(this, view);
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
         mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        mFab.setImageResource(R.drawable.ic_add_white);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAllTopics();
+            }
+        });
+        mFab.show();
         return view;
     }
 
@@ -99,6 +110,8 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void onDestroyView() {
         mTabLayout.setVisibility(View.GONE);
         super.onDestroyView();
+        mFab.hide();
+        mFab.setOnClickListener(null);
     }
 
     @Override

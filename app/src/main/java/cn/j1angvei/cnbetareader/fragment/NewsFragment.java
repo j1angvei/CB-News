@@ -2,9 +2,12 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import cn.j1angvei.cnbetareader.activity.BaseActivity;
 import cn.j1angvei.cnbetareader.adapter.NewsAdapter;
 import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.contract.NewsContract;
+import cn.j1angvei.cnbetareader.listener.EndlessRecyclerViewScrollListener;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 
 /**
@@ -37,8 +41,10 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     NewsAdapter<T, VH> mAdapter;
     @Inject
     NewsPresenter<T> mPresenter;
+    private FloatingActionButton mFab;
     private String mType;
     private int mPage = 1;
+    private boolean isTopicNews;
 
     void setBundle(String type) {
         Bundle args = new Bundle();
@@ -52,16 +58,24 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mType = getArguments().getString(NEWS_TYPE);
+        isTopicNews = TextUtils.isDigitsOnly(mType);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
         ButterKnife.bind(this, view);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                mPresenter.retrieveNews(mType, mPage++);
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -69,6 +83,17 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
                 mPresenter.retrieveNews(mType, mPage++);
             }
         });
+        if (!isTopicNews) {
+            mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+            mFab.setImageResource(R.drawable.ic_scroll_to_top);
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.scrollToPosition(0);
+                }
+            });
+            mFab.show();
+        }
         return view;
     }
 
@@ -84,6 +109,11 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
         mRecyclerView.setLayoutManager(null);
+        if (!isTopicNews) {
+            mFab.hide();
+            mFab.setOnClickListener(null);
+        }
+
     }
 
     @Override

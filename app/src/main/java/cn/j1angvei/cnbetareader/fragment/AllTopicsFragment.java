@@ -2,6 +2,7 @@ package cn.j1angvei.cnbetareader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,7 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
     @Inject
     AllTopicsPresenter mPresenter;
     private int mPage;
+    FloatingActionButton mFab;
 
     public static AllTopicsFragment newInstance(int page) {
         AllTopicsFragment fragment = new AllTopicsFragment();
@@ -99,6 +101,15 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
                 mPresenter.retrieveTopics(mPage);
             }
         });
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        mFab.setImageResource(R.drawable.ic_choose_letter_white);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLetterPickDialog();
+            }
+        });
+        mFab.show();
         return view;
     }
 
@@ -114,6 +125,8 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
         mRecyclerView.setLayoutManager(null);
+        mFab.hide();
+        mFab.setOnClickListener(null);
     }
 
     @Override
