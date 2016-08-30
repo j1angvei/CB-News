@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 /**
  * Created by Wayne on 2016/6/13.
  */
-public final class Article extends News {
+public final class Article extends News implements Parcelable {
     private String topic;
     @SerializedName("hometext")
     private String summary;
@@ -75,6 +77,7 @@ public final class Article extends News {
     public void setSource(String source) {
         this.source = source;
     }
-}
 
+
+}
 

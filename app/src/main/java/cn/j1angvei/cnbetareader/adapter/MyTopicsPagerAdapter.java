@@ -11,6 +11,7 @@ import cn.j1angvei.cnbetareader.fragment.ArticlesFragment;
 
 /**
  * Created by Wayne on 2016/7/6.
+ * load fragment to show my topic news
  */
 public class MyTopicsPagerAdapter extends FragmentPagerAdapter {
     private final List<MyTopic> mMyTopics;

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +24,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
  * Adapter displaying user bookmarked news
  */
 public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.ViewHolder> {
-    private final List<Bookmark> mBookmarks;
+    private final ArrayList<Bookmark> mBookmarks;
     private NewsContract.View mView;
 
     public BookmarkRvAdapter(Fragment fragment) {
@@ -59,7 +58,7 @@ public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.V
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
+                Navigator.toContent(holder.getAdapterPosition(), mBookmarks, mView.getViewContext());
             }
         });
     }

@@ -1,6 +1,8 @@
 package cn.j1angvei.cnbetareader.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -11,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +39,7 @@ import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -54,6 +58,7 @@ import static cn.j1angvei.cnbetareader.bean.Source.MY_TOPICS;
  * control child fragment to display different {@link Source} news
  */
 public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, BaseView {
+    public static final String EXIT = "NewsActivity.exit";
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
     @BindView(R.id.nav_view)
@@ -71,6 +76,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Inject
     PrefsUtil mPrefsUtil;
     boolean mIsTokenValid;
+    private boolean mIsExit;
 
     @Override
     protected void parseIntent() {
@@ -121,15 +127,39 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            mFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            super.onBackPressed();
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra(EXIT, false);
+            if (isExit) {
+                this.finish();
+            }
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            if (mIsExit) {
+                this.finish();
+            } else {
+                MessageUtil.toast(R.string.info_press_to_exit, this);
+                mIsExit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -159,6 +189,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_settings:
                 return true;
             case R.id.nav_exit:
+                Navigator.toExit(true, this);
                 return true;
             default:
                 return true;

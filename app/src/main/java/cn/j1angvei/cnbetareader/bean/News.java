@@ -1,9 +1,13 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Wayne on 2016/7/26.
+ * super class of article headline review bookmark
  */
-public class News {
+public class News implements Parcelable {
     private String sid;
     private String title;
     private String sourceType;
@@ -29,6 +33,7 @@ public class News {
     }
 
     public void setSourceType(String sourceType) {
+
         this.sourceType = sourceType;
     }
 
@@ -38,4 +43,38 @@ public class News {
         public static final String REVIEW = "review";
         public static final String BOOKMARK = "bookmark";
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sid);
+        dest.writeString(this.title);
+        dest.writeString(this.sourceType);
+    }
+
+    public News() {
+    }
+
+    protected News(Parcel in) {
+        this.sid = in.readString();
+        this.title = in.readString();
+        this.sourceType = in.readString();
+    }
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel source) {
+            return new News(source);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }

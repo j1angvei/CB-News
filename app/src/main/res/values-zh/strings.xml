@@ -59,7 +59,7 @@
     <string name="error_no_network">没有网络连接</string>
     <string name="error_response_parse_fail">返回内容格式错误</string>
     <string name="error_wrong_captcha">输入验证码不正确</string>
-    <string name="error_generic">出现错误</string>
+    <string name="error_generic">出现未知错误！</string>
     <string name="action_add">添加</string>
     <string name="info_my_topics_empty">尚未添加主题</string>
     <string name="title_add_my_topic">添加主题</string>
@@ -68,4 +68,7 @@
     <string name="action_reset">重置</string>
     <string name="info_add_my_topic_success">添加主题成功！</string>
     <string name="info_add_my_topic_fail">添加主题失败！</string>
+    <string name="info_press_to_exit">再按一次退出</string>
+    <string name="info_comment_closed">评论功能已关闭</string>
+    <string name="info_news_content_retrieving">新闻内容获取中！</string>
 </resources>

@@ -1,9 +1,8 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,7 +22,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.bean.Action;
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
@@ -33,21 +31,20 @@ import cn.j1angvei.cnbetareader.util.DateUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
+ * render comment items from repository
  */
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseAdapter<Comments> {
     private static final String TAG = "CommentsRvAdapter";
-    private static ShowCmtContract.View mView;
+    private ShowCmtContract.View mView;
     private List<String> mTids;
     private int mPosLabelAll = 1, mPosLabelHot = 0;
     private Map<String, CommentItem> mCommentMap;
     private static final int CMT_SIMPLE = 0, CMT_COMPLEX = 1, LABEL_ALL = 2, LABEL_HOT = 3;
-    private CommentsActivity mActivity;
 
     @Inject
-    public CommentsRvAdapter(FragmentManager fm, Activity activity) {
-        mActivity = (CommentsActivity) activity;
-        mView = (ShowCmtContract.View) fm.findFragmentByTag(CommentsActivity.SHOW_CMT);
+    CommentsRvAdapter(Fragment fragment) {
+        mView = (ShowCmtContract.View) fragment;
         mTids = new ArrayList<>();
     }
 
@@ -65,7 +62,12 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private int getCommentViewType(String sid) {
-        return TextUtils.equals("0", mCommentMap.get(sid).getPid()) ? CMT_SIMPLE : CMT_COMPLEX;
+        String pid = mCommentMap.get(sid).getPid();
+        if (TextUtils.equals("0", pid) || mCommentMap.get(pid) == null) {
+            return CMT_SIMPLE;
+        } else {
+            return CMT_COMPLEX;
+        }
     }
 
     @Override
@@ -150,7 +152,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_comment_reply:
-                        mActivity.showPublishCmtDialog(false, item.getContent(), item.getSid(), item.getTid());
+                        mView.replyCmt(item);
                         return true;
                     case R.id.action_comment_report:
                         mView.toJudgeComment(Action.REPORT.toString(), item.getTid());
@@ -186,7 +188,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static class LabelHolder extends RecyclerView.ViewHolder {
         TextView tvLabel;
 
-        public LabelHolder(View itemView) {
+        LabelHolder(View itemView) {
             super(itemView);
             tvLabel = (TextView) itemView.findViewById(R.id.tv_label_primary);
         }

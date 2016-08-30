@@ -52,6 +52,9 @@
     <string name="info_my_topics_empty">No myTopics added!</string>
     <string name="info_add_my_topic_success">Add to my topics success!</string>
     <string name="info_add_my_topic_fail">Add to my topics fail!</string>
+    <string name="info_press_to_exit">Press again to exit</string>
+    <string name="info_comment_closed">Comment function closed!</string>
+    <string name="info_news_content_retrieving">News content retrieving</string>
     <!--add comment-->
     <string name="header_publish_cmt_news_title">News title</string>
     <string name="header_publish_cmt_origin_cmt">Original comment</string>
@@ -61,7 +64,7 @@
     <!--my myTopics-->
     <string name="hint_add_my_topic">You haven\'t add any topic\nClick here to add</string>
     <!--error-->
-    <string name="error_generic">Error happened!</string>
+    <string name="error_generic">Unknown error happened!</string>
     <string name="error_no_network">No network connection!</string>
     <string name="error_no_local_item">No local item found!</string>
     <string name="error_response_parse_fail">Response body parse string error!</string>

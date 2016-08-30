@@ -13,6 +13,7 @@
         android:theme="@style/CBTheme">
         <activity
             android:name=".activity.NewsActivity"
+            android:launchMode="singleTask"
             android:theme="@style/CBTheme.TransparentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -30,7 +30,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
  */
 public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.ViewHolder> {
     private static final String TAG = "HeadlineRvAdapter";
-    private List<Headline> mHeadlines;
+    private ArrayList<Headline> mHeadlines;
     private NewsContract.View mView;
 
     public HeadlineRvAdapter(Fragment fragment) {
@@ -53,15 +53,11 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
         holder.tvDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
+                Navigator.toContent(holder.getAdapterPosition(), mHeadlines, mView.getViewContext());
             }
         });
         //relate items
-        List<News> newsList = headline.getRelatedNews();
-        final ArrayList<String> relatedSids = new ArrayList<>();
-        for (News item : newsList) {
-            relatedSids.add(item.getSid());
-        }
+        final ArrayList<News> newsList = (ArrayList<News>) headline.getRelatedNews();
         if (newsList.size() <= 0) {
             holder.llRelateContainer.setVisibility(View.GONE);
         } else {
@@ -76,7 +72,7 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
                 tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Navigator.toContent(finalI, relatedSids, mView.getViewContext());
+                        Navigator.toContent(finalI, newsList, mView.getViewContext());
                     }
                 });
             }

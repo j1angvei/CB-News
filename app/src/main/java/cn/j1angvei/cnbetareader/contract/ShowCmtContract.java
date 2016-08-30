@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.contract;
 
+import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 
 /**
@@ -16,10 +17,13 @@ public interface ShowCmtContract {
         void onJudgeSuccess();
 
         void onJudgeFail();
+
+        void replyCmt(CommentItem item);
+
     }
 
-    interface Presenter extends BasePresenter<ShowCmtContract.View> {
-        void retrieveComments(String sid, String sn);
+    interface Presenter extends BasePresenter<View> {
+        void retrieveComments(String sid);
 
         void judgeComment(String action, String sid, String tid);
     }

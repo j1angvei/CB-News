@@ -20,9 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
+import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.adapter.CommentsRvAdapter;
+import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
-import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
@@ -31,9 +32,10 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
+ * show news comments
  */
 public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.View {
-    private static final String NEWS_CONTENT = "ShowCmtFragment.news_content";
+    private static final String NEWS_ID = "ShowCmtFragment.news_id";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -45,12 +47,12 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
     ShowCmtPresenter mPresenter;
     @Inject
     CommentsRvAdapter mAdapter;
-    private Content mContent;
+    private String mSid;
 
-    public static ShowCmtFragment newInstance(Content content) {
+    public static ShowCmtFragment newInstance(String sid) {
         ShowCmtFragment fragment = new ShowCmtFragment();
         Bundle args = new Bundle();
-        args.putParcelable(NEWS_CONTENT, content);
+        args.putString(NEWS_ID, sid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +67,7 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        mContent = getArguments().getParcelable(NEWS_CONTENT);
+        mSid = getArguments().getString(NEWS_ID);
         inject(((BaseActivity) getActivity()).getActivityComponent());
     }
 
@@ -129,18 +131,23 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
 
     @Override
     public void refreshComments() {
-        mPresenter.retrieveComments(mContent.getSid(), mContent.getSn());
+        mPresenter.retrieveComments(mSid);
     }
 
     @Override
     public void renderComments(Comments comments) {
-        mAdapter.clear();
-        mAdapter.add(comments);
+        if (comments.isOpen()) {
+            mAdapter.clear();
+            mAdapter.add(comments);
+        } else {
+            MessageUtil.toast(R.string.info_comment_closed, getActivity());
+            getActivity().finish();
+        }
     }
 
     @Override
     public void toJudgeComment(String action, String tid) {
-        mPresenter.judgeComment(action, mContent.getSid(), tid);
+        mPresenter.judgeComment(action, mSid, tid);
     }
 
     @Override
@@ -151,6 +158,11 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
     @Override
     public void onJudgeFail() {
         MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_fail);
+    }
+
+    @Override
+    public void replyCmt(CommentItem item) {
+        ((CommentsActivity) getActivity()).showPublishCmtDialog(false, item.getContent(), item.getSid(), item.getTid());
     }
 
     @Override

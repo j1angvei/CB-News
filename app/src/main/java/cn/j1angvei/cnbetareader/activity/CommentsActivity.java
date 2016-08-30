@@ -11,7 +11,6 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
-import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.dialog.PublishCmtDialog;
@@ -21,23 +20,24 @@ import cn.j1angvei.cnbetareader.fragment.ShowCmtFragment;
  * Created by Wayne on 2016/7/28.
  * activity to handle comments relevant stuff
  */
-public class CommentsActivity extends BaseActivity
-//        implements ShowCmtContract.View
-{
-    public static final String NEWS = "CommentsActivity.news";
-    public static final String SHOW_CMT = "CommentsActivity_show";
-    public static final String PUBLISH_CMT = "CommentsActivity_publish";
+public class CommentsActivity extends BaseActivity {
+    public static final String NEWS_ID = "CommentsActivity.news_id";
+    public static final String NEWS_TITLE = "CommentsActivity.news_title";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
-    private Content mContent;
+    //    private Content mContent;
+    private String mSid;
+    private String mTitle;
 
     @Override
     protected void parseIntent() {
-        mContent = getIntent().getParcelableExtra(NEWS);
+//        mContent = getIntent().getParcelableExtra(NEWS);
+        mSid = getIntent().getStringExtra(NEWS_ID);
+        mTitle = getIntent().getStringExtra(NEWS_TITLE);
     }
 
     @Override
@@ -66,11 +66,11 @@ public class CommentsActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 //add comment, set pid "0"
-                showPublishCmtDialog(true, mContent.getTitle(), mContent.getSid(), "0");
+                showPublishCmtDialog(true, mTitle, mSid, "0");
             }
         });
         //load show comments fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, ShowCmtFragment.newInstance(mContent), SHOW_CMT).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, ShowCmtFragment.newInstance(mSid), "show cmt").commit();
     }
 
     @Override
@@ -86,6 +86,6 @@ public class CommentsActivity extends BaseActivity
 
     public void showPublishCmtDialog(boolean isAdd, String quote, String sid, String pid) {
         DialogFragment dialog = PublishCmtDialog.newInstance(isAdd, quote, sid, pid);
-        dialog.show(getSupportFragmentManager(), PUBLISH_CMT);
+        dialog.show(getSupportFragmentManager(), "publish cmt");
     }
 }

@@ -10,7 +10,7 @@ import cn.j1angvei.cnbetareader.exception.ResponseParseException;
  */
 
 public class ErrorUtil {
-    public static int getErrorRes(Throwable e) {
+    public static int getErrorInfo(Throwable e) {
         if (e instanceof NoLocalItemException) {
             return R.string.error_no_local_item;
         } else if (e instanceof NoNetworkException) {

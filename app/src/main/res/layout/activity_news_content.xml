@@ -18,10 +18,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/include_progress_bar_large"/>
+    <include layout="@layout/include_view_pager"/>
 
     <include layout="@layout/include_fab"/>
-
-    <include layout="@layout/include_view_pager"/>
 
 </android.support.design.widget.CoordinatorLayout>

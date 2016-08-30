@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,7 +33,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
 @PerFragment
 public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> {
 
-    private List<Article> mArticles;
+    private ArrayList<Article> mArticles;
     private NewsContract.View mView;
 
     @Inject
@@ -63,7 +62,7 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
+                Navigator.toContent(holder.getAdapterPosition(), mArticles, mView.getViewContext());
             }
         });
     }

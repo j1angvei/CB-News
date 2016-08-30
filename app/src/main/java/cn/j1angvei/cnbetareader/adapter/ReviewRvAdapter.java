@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +22,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
  * load hot comment(aka review) from repository
  */
 public class ReviewRvAdapter extends NewsAdapter<Review, ReviewRvAdapter.ViewHolder> {
-    private List<Review> mReviews;
+    private ArrayList<Review> mReviews;
     private NewsContract.View mView;
 
     public ReviewRvAdapter(Fragment fragment) {
@@ -48,7 +47,7 @@ public class ReviewRvAdapter extends NewsAdapter<Review, ReviewRvAdapter.ViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
+                Navigator.toContent(holder.getAdapterPosition(), mReviews, mView.getViewContext());
             }
         });
     }

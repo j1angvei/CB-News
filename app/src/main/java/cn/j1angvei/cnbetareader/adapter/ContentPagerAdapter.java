@@ -1,43 +1,35 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import cn.j1angvei.cnbetareader.activity.ContentActivity;
-import cn.j1angvei.cnbetareader.di.scope.PerActivity;
+import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.fragment.ContentFragment;
 
 /**
  * Created by Wayne on 2016/7/25.
+ * load fragment to render news content
  */
-@PerActivity
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
-    private ContentActivity mActivity;
     private List<String> allSid;
+    private List<News> mNewses;
 
-    @Inject
-    public ContentPagerAdapter(FragmentManager fm, Activity activity) {
+    public ContentPagerAdapter(FragmentManager fm, List<News> newses) {
         super(fm);
-        mActivity = (ContentActivity) activity;
-        allSid = mActivity.getSids();
+        mNewses = newses;
     }
 
     @Override
     public Fragment getItem(int position) {
-        String sid = allSid.get(position);
-        ContentFragment fragment = ContentFragment.newInstance(sid);
-        mActivity.getContent(fragment, sid);
-        return fragment;
+        String sid = mNewses.get(position).getSid();
+        return ContentFragment.newInstance(sid);
     }
 
     @Override
     public int getCount() {
-        return allSid.size();
+        return mNewses.size();
     }
 }
