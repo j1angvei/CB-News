@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -42,9 +43,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static cn.j1angvei.cnbetareader.bean.Source.ALL;
+import static cn.j1angvei.cnbetareader.bean.Source.ALL_TOPICS;
 import static cn.j1angvei.cnbetareader.bean.Source.BOOKMARK;
 import static cn.j1angvei.cnbetareader.bean.Source.EDITORCOMMEND;
-import static cn.j1angvei.cnbetareader.bean.Source.ALL_TOPICS;
 import static cn.j1angvei.cnbetareader.bean.Source.JHCOMMENT;
 import static cn.j1angvei.cnbetareader.bean.Source.MY_TOPICS;
 
@@ -229,6 +230,11 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         mProgressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    public Context getViewContext() {
+        return this;
+    }
+
     private class CsrfTokenSubscriber extends Subscriber<ResponseBody> {
         private final Source source;
         private final CharSequence title;
@@ -261,7 +267,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         public void onNext(ResponseBody body) {
             try {
                 String token = ApiUtil.parseToken(body.string());
-                MessageUtil.snack(mCoordinatorLayout, token);
                 mPrefsUtil.writeString(PrefsUtil.CSRF_TOKEN, token);
             } catch (IOException e) {
                 //something wrong with response

@@ -1,6 +1,6 @@
 package cn.j1angvei.cnbetareader.di.module.sub;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Named;
 
@@ -23,8 +23,8 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.BOOKMARK;
 public class BookmarkModule {
     @Provides
     @PerFragment
-    NewsAdapter<Bookmark, BookmarkRvAdapter.ViewHolder> provideBookmarkRvAdapter(Activity activity) {
-        return new BookmarkRvAdapter(activity);
+    NewsAdapter<Bookmark, BookmarkRvAdapter.ViewHolder> provideBookmarkRvAdapter(Fragment fragment) {
+        return new BookmarkRvAdapter(fragment);
     }
 
     @Provides

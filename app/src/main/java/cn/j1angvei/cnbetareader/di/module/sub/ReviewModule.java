@@ -1,6 +1,6 @@
 package cn.j1angvei.cnbetareader.di.module.sub;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Named;
 
@@ -24,8 +24,8 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 public class ReviewModule {
     @Provides
     @PerFragment
-    NewsAdapter<Review, ReviewRvAdapter.ViewHolder> provideReviewRvAdapter(Activity activity) {
-        return new ReviewRvAdapter(activity);
+    NewsAdapter<Review, ReviewRvAdapter.ViewHolder> provideReviewRvAdapter(Fragment fragment) {
+        return new ReviewRvAdapter(fragment);
     }
 
     @Provides

@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -32,6 +33,7 @@ import cn.j1angvei.cnbetareader.presenter.MyTopicsPresenter;
 
 /**
  * Created by Wayne on 2016/7/6.
+ * show user selected topic news
  */
 public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
     private static final String TAG = "MyTopicsFragment";
@@ -130,6 +132,11 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     }
 
     @Override
+    public Context getViewContext() {
+        return getContext();
+    }
+
+    @Override
     public void showAllTopics() {
         AddMyTopicDialog dialog = new AddMyTopicDialog();
         dialog.setTargetFragment(this, 0);
@@ -154,4 +161,6 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void refreshMyTopics() {
         mPresenter.retrieveMyTopics();
     }
+
+
 }

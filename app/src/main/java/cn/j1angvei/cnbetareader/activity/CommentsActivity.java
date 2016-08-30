@@ -88,22 +88,4 @@ public class CommentsActivity extends BaseActivity
         DialogFragment dialog = PublishCmtDialog.newInstance(isAdd, quote, sid, pid);
         dialog.show(getSupportFragmentManager(), PUBLISH_CMT);
     }
-
-//
-//    @Override
-//    public void onJudgeSuccess(String action, String tid) {
-//        CommentItem item = mComments.getCommentMap().get(tid);
-//        if (TextUtils.equals(action, Action.SUPPORT.toString())) {
-//            int num = 1 + Integer.parseInt(item.getSupport());
-//            item.setSupport(String.valueOf(num));
-//        } else if (TextUtils.equals(action, Action.AGAINST.toString())) {
-//            int num = 1 + Integer.parseInt(item.getAgainst());
-//            item.setAgainst(String.valueOf(num));
-//        }
-//        ShowCmtFragment fragment = (ShowCmtFragment) mFragmentManager.findFragmentByTag(TAG_ALL_COMMENTS);
-//        fragment.notifyDataSetChanged();
-//        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_judge_success);
-//    }
-//
-
 }

@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +15,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Review;
+import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/5.
+ * load hot comment(aka review) from repository
  */
 public class ReviewRvAdapter extends NewsAdapter<Review, ReviewRvAdapter.ViewHolder> {
     private List<Review> mReviews;
-    private Activity mActivity;
+    private NewsContract.View mView;
 
-    public ReviewRvAdapter(Activity activity) {
-        mActivity = activity;
+    public ReviewRvAdapter(Fragment fragment) {
+        mView = (NewsContract.View) fragment;
         mReviews = new ArrayList<>();
     }
 
@@ -46,7 +48,7 @@ public class ReviewRvAdapter extends NewsAdapter<Review, ReviewRvAdapter.ViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
             }
         });
     }

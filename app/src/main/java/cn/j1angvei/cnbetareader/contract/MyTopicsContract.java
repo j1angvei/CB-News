@@ -18,6 +18,7 @@ public interface MyTopicsContract {
         void onMyTopicsEmpty();
 
         void refreshMyTopics();
+
     }
 
     interface Presenter extends BasePresenter<View> {

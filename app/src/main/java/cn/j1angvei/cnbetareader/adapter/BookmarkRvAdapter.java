@@ -1,8 +1,8 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
+import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
 
@@ -25,10 +26,10 @@ import cn.j1angvei.cnbetareader.util.Navigator;
  */
 public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.ViewHolder> {
     private final List<Bookmark> mBookmarks;
-    private final Activity mActivity;
+    private NewsContract.View mView;
 
-    public BookmarkRvAdapter(Activity activity) {
-        mActivity = activity;
+    public BookmarkRvAdapter(Fragment fragment) {
+        mView = (NewsContract.View) fragment;
         mBookmarks = new ArrayList<>();
     }
 
@@ -58,7 +59,7 @@ public class BookmarkRvAdapter extends NewsAdapter<Bookmark, BookmarkRvAdapter.V
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
             }
         });
     }

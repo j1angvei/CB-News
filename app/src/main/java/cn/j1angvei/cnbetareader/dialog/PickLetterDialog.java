@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +24,6 @@ import cn.j1angvei.cnbetareader.util.StringUtil;
  */
 
 public class PickLetterDialog extends BottomSheetDialogFragment {
-    private static final String TAG = "PickLetterDialog";
     private static final String CUR_PAGE = "PickLetterDialog.cur_page";
     private BottomSheetBehavior mBehavior;
     private int mCurPos;
@@ -62,7 +60,6 @@ public class PickLetterDialog extends BottomSheetDialogFragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: " + position);
                 ((AllTopicsContract.View) getTargetFragment()).onLetterChosen(position + 1);
                 dismiss();
             }

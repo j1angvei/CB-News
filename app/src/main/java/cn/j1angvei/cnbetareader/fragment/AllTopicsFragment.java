@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -123,10 +124,10 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mRecyclerView.setAdapter(null);
-        mRecyclerView.setLayoutManager(null);
         mFab.hide();
         mFab.setOnClickListener(null);
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setLayoutManager(null);
     }
 
     @Override
@@ -142,6 +143,11 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
     @Override
     public void hideLoading() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getContext();
     }
 
     @Override

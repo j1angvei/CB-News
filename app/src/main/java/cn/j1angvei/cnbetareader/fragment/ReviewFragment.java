@@ -9,6 +9,7 @@ import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 
 /**
  * Created by Wayne on 2016/7/5.
+ * display hot comment(aka review)
  */
 public class ReviewFragment extends NewsFragment<Review, ReviewRvAdapter.ViewHolder> {
 
@@ -20,6 +21,6 @@ public class ReviewFragment extends NewsFragment<Review, ReviewRvAdapter.ViewHol
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.reviewComponent(new ReviewModule(),new FragmentModule(this)).inject(this);
+        component.reviewComponent(new ReviewModule(), new FragmentModule(this)).inject(this);
     }
 }

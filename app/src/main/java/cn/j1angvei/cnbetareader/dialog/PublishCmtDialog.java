@@ -179,6 +179,11 @@ public class PublishCmtDialog extends DialogFragment implements BaseDialog, Publ
     }
 
     @Override
+    public Context getViewContext() {
+        return mContext;
+    }
+
+    @Override
     public void inject(ActivityComponent component) {
         component.fragmentComponent(new FragmentModule(this)).inject(this);
     }

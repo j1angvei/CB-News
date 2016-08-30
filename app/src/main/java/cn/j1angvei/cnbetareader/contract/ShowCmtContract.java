@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.contract;
 
-import android.content.Context;
-
 import cn.j1angvei.cnbetareader.bean.Comments;
 
 /**
@@ -9,8 +7,6 @@ import cn.j1angvei.cnbetareader.bean.Comments;
  */
 public interface ShowCmtContract {
     interface View extends BaseView {
-        Context getViewContext();
-
         void refreshComments();
 
         void renderComments(Comments comments);

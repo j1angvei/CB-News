@@ -7,6 +7,7 @@ import cn.j1angvei.cnbetareader.R;
 
 /**
  * Created by Wayne on 2016/6/28.
+ * show all setting preferences
  */
 public class SettingsFragment extends PreferenceFragment {
     @Override

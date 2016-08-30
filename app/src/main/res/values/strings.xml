@@ -50,7 +50,8 @@
     <string name="info_cmt_success">Judge comment success!</string>
     <string name="info_cmt_fail">Judge comment fail!</string>
     <string name="info_my_topics_empty">No myTopics added!</string>
-    <string name="info_add_my_topic_success">Add topics success!</string>
+    <string name="info_add_my_topic_success">Add to my topics success!</string>
+    <string name="info_add_my_topic_fail">Add to my topics fail!</string>
     <!--add comment-->
     <string name="header_publish_cmt_news_title">News title</string>
     <string name="header_publish_cmt_origin_cmt">Original comment</string>

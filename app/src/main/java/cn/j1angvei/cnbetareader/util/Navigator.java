@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.SettingsActivity;
+import cn.j1angvei.cnbetareader.activity.TopicNewsActivity;
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.bean.Topic;
 
 /**
  * Created by Wayne on 2016/6/13.
@@ -40,6 +42,14 @@ public final class Navigator {
             context.startActivity(intent);
         }
 
+    }
+
+    public static void toTopicNews(Topic topic, Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, TopicNewsActivity.class);
+            intent.putExtra(TopicNewsActivity.TOPIC, topic);
+            context.startActivity(intent);
+        }
     }
 
     public static void toBrowser(String sid, boolean mobileFirst, Context context) {

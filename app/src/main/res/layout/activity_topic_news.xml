@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.ContentActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        style="@style/CBTheme.AppBarOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/backdrop_height"
+        android:fitsSystemWindows="true">
+
+        <include layout="@layout/include_backdrop_toolbar"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/include_fab_anchor"/>
+
+    <include layout="@layout/include_container"/>
+</android.support.design.widget.CoordinatorLayout>

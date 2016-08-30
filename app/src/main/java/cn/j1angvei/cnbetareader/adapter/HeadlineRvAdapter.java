@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +21,20 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.News;
+import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/5.
+ * get headline news from repository
  */
 public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.ViewHolder> {
     private static final String TAG = "HeadlineRvAdapter";
     private List<Headline> mHeadlines;
-    private Activity mActivity;
+    private NewsContract.View mView;
 
-    public HeadlineRvAdapter(Activity activity) {
-        mActivity = activity;
+    public HeadlineRvAdapter(Fragment fragment) {
+        mView = (NewsContract.View) fragment;
         mHeadlines = new ArrayList<>();
     }
 
@@ -51,7 +53,7 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
         holder.tvDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
             }
         });
         //relate items
@@ -74,7 +76,7 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
                 tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Navigator.toContent(finalI, relatedSids, mActivity);
+                        Navigator.toContent(finalI, relatedSids, mView.getViewContext());
                     }
                 });
             }

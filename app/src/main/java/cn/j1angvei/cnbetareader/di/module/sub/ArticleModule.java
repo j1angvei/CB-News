@@ -1,6 +1,6 @@
 package cn.j1angvei.cnbetareader.di.module.sub;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Named;
 
@@ -25,8 +25,8 @@ public class ArticleModule {
 
     @Provides
     @PerFragment
-    NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> provideArticlesRvAdapter(Activity activity) {
-        return new ArticlesRvAdapter(activity);
+    NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> provideArticlesRvAdapter(Fragment fragment) {
+        return new ArticlesRvAdapter(fragment);
     }
 
     @Provides

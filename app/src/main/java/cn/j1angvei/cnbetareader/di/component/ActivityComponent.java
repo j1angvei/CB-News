@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.di.component;
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.NewsActivity;
+import cn.j1angvei.cnbetareader.activity.TopicNewsActivity;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
@@ -25,6 +26,8 @@ public interface ActivityComponent {
     void inject(ContentActivity activity);
 
     void inject(CommentsActivity activity);
+
+    void inject(TopicNewsActivity activity);
 
     //expose variable to sub component
     FragmentComponent fragmentComponent(FragmentModule module);

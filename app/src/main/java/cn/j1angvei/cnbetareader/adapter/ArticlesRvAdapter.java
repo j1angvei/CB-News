@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Article;
+import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
@@ -34,11 +35,11 @@ import cn.j1angvei.cnbetareader.util.Navigator;
 public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> {
 
     private List<Article> mArticles;
-    private Activity mActivity;
+    private NewsContract.View mView;
 
     @Inject
-    public ArticlesRvAdapter(Activity activity) {
-        mActivity = activity;
+    public ArticlesRvAdapter(Fragment fragment) {
+        mView = (NewsContract.View) fragment;
         mArticles = new ArrayList<>();
     }
 
@@ -62,7 +63,7 @@ public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigator.toContent(holder.getAdapterPosition(), getSids(), mActivity);
+                Navigator.toContent(holder.getAdapterPosition(), getSids(), mView.getViewContext());
             }
         });
     }

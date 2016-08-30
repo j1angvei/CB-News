@@ -39,5 +39,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.TopicNewsActivity"
+            android:theme="@style/CBTheme.TransparentStatusBar"/>
     </application>
 </manifest>

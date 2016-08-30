@@ -1,7 +1,7 @@
 package cn.j1angvei.cnbetareader.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.contract.AllTopicsContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/8/16.
@@ -29,18 +30,19 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
  */
 @PerFragment
 public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.ViewHolder> implements BaseAdapter<Topic> {
-    private final Activity mActivity;
     private final List<Topic> mTopics;
+    private AllTopicsContract.View mView;
 
     @Inject
-    public AllTopicsRvAdapter(Activity activity) {
-        mActivity = activity;
+    public AllTopicsRvAdapter(Fragment fragment) {
+        mView = (AllTopicsContract.View) fragment;
         mTopics = new ArrayList<>();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_topic, parent, false);
+        final View view = LayoutInflater.from(mView.getViewContext()).
+                inflate(R.layout.item_topic, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +55,7 @@ public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageUtil.toast(topic.getId(), context);
+                Navigator.toTopicNews(topic, mView.getViewContext());
             }
         });
     }
@@ -75,6 +77,7 @@ public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.
         mTopics.add(item);
         notifyItemInserted(mTopics.size() - 1);
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_topic_thumb)

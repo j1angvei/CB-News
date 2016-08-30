@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.NewsActivity">
 
-    <include layout="@layout/include_appbar"/>
+    <include layout="@layout/include_news_list_content"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

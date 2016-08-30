@@ -1,9 +1,13 @@
 package cn.j1angvei.cnbetareader.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Wayne on 2016/7/11.
+ * bean represent a Topic in CB
  */
-public class Topic {
+public class Topic implements Parcelable {
     private String id;
     private String title;
     private String thumb;
@@ -62,6 +66,7 @@ public class Topic {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +91,41 @@ public class Topic {
         result = 31 * result + (isAdded ? 1 : 0);
         return result;
     }
+
+    public Topic() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.thumb);
+        dest.writeString(this.letter);
+        dest.writeByte(this.isAdded ? (byte) 1 : (byte) 0);
+    }
+
+    protected Topic(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.thumb = in.readString();
+        this.letter = in.readString();
+        this.isAdded = in.readByte() != 0;
+    }
+
+    public static final Creator<Topic> CREATOR = new Creator<Topic>() {
+        @Override
+        public Topic createFromParcel(Parcel source) {
+            return new Topic(source);
+        }
+
+        @Override
+        public Topic[] newArray(int size) {
+            return new Topic[size];
+        }
+    };
 }
