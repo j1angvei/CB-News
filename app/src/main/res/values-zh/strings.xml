@@ -48,8 +48,8 @@
     <string name="cmt_header">%1$s 来自 %2$s</string>
     <string name="action_send">发送</string>
     <string name="hint_add_my_topic">你尚未添加任何主题\n点击此处添加</string>
-    <string name="label_all_comments">所有评论</string>
-    <string name="label_popular_comments">热门评论</string>
+    <string name="label_all_comments">所有评论： %1$s条</string>
+    <string name="label_popular_comments">热门评论： %1$s条</string>
     <string name="label_all_comments_no">所有评论：无</string>
     <string name="label_popular_comments_no">热门评论： 无</string>
     <string name="info_get_captcha_fail">获取验证码失败！</string>
@@ -71,4 +71,5 @@
     <string name="info_press_to_exit">再按一次退出</string>
     <string name="info_comment_closed">评论功能已关闭</string>
     <string name="info_news_content_retrieving">新闻内容获取中！</string>
+    <string name="title_choose_letter">选择索引字母</string>
 </resources>

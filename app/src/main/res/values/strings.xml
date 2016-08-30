@@ -75,10 +75,11 @@
     <string name="hint_input_comment">Input comment</string>
     <string name="hint_input_captcha">Input captcha</string>
     <!--label-->
-    <string name="label_all_comments">All comments</string>
+    <string name="label_all_comments">All comments: %1$s </string>
     <string name="label_all_comments_no">All comments: empty</string>
-    <string name="label_popular_comments">Popular comments</string>
+    <string name="label_popular_comments">Popular comments: %1$s</string>
     <string name="label_popular_comments_no">Popular comments: empty</string>
+    <!--place holder-->
     <!--toolbar title-->
     <string name="title_publish_cmt">Publish comment</string>
     <string name="title_reply_cmt">Reply comment</string>

@@ -39,6 +39,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private ShowCmtContract.View mView;
     private List<String> mTids;
     private int mPosLabelAll = 1, mPosLabelHot = 0;
+    private Comments mComments;
     private Map<String, CommentItem> mCommentMap;
     private static final int CMT_SIMPLE = 0, CMT_COMPLEX = 1, LABEL_ALL = 2, LABEL_HOT = 3;
 
@@ -101,12 +102,20 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         CommentItem item = mCommentMap.get(mTids.get(position));
         switch (holder.getItemViewType()) {
             case LABEL_HOT:
-                ((LabelHolder) holder).tvLabel.setText(mPosLabelAll == 1
-                        ? R.string.label_popular_comments_no : R.string.label_popular_comments);
+                String labelHot = holder.itemView.getResources().getString(R.string.label_popular_comments);
+                if (mPosLabelAll == 1) {
+                    ((LabelHolder) holder).tvLabel.setText(R.string.label_popular_comments_no);
+                } else {
+                    ((LabelHolder) holder).tvLabel.setText(String.format(labelHot, mComments.getHotIds().size()));
+                }
                 break;
             case LABEL_ALL:
-                ((LabelHolder) holder).tvLabel.setText(mTids.size() == 2
-                        ? R.string.label_all_comments_no : R.string.label_all_comments);
+                String labelAll = holder.itemView.getResources().getString(R.string.label_all_comments);
+                if (mTids.size() == 2) {
+                    ((LabelHolder) holder).tvLabel.setText(R.string.label_all_comments_no);
+                } else {
+                    ((LabelHolder) holder).tvLabel.setText(String.format(labelAll, mComments.getAllIds().size()));
+                }
                 break;
             case CMT_SIMPLE:
                 ViewHolder svh = (ViewHolder) holder;
@@ -133,6 +142,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void add(Comments item) {
+        mComments = item;
         mPosLabelHot = 0;
         mTids.add(mPosLabelHot + "");
         mTids.addAll(item.getHotIds());
