@@ -4,6 +4,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ReviewModule;
 
 /**
@@ -19,6 +20,6 @@ public class ReviewFragment extends NewsFragment<Review, ReviewRvAdapter.ViewHol
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.reviewComponent(new ReviewModule()).inject(this);
+        component.reviewComponent(new ReviewModule(),new FragmentModule(this)).inject(this);
     }
 }

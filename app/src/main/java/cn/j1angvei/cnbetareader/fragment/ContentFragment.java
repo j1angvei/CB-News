@@ -138,7 +138,7 @@ public class ContentFragment extends BaseFragment {
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.fragmentComponent(new FragmentModule()).inject(this);
+        component.fragmentComponent(new FragmentModule(this)).inject(this);
     }
 
 }

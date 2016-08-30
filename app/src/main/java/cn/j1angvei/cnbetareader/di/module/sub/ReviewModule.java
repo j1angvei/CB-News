@@ -8,7 +8,6 @@ import cn.j1angvei.cnbetareader.adapter.NewsAdapter;
 import cn.j1angvei.cnbetareader.adapter.ReviewRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
-import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -21,9 +20,8 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 /**
  * Created by Wayne on 2016/7/22.
  */
-@Module(includes = FragmentModule.class)
+@Module
 public class ReviewModule {
-
     @Provides
     @PerFragment
     NewsAdapter<Review, ReviewRvAdapter.ViewHolder> provideReviewRvAdapter(Activity activity) {

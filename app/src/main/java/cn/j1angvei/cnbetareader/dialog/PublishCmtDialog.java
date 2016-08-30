@@ -180,7 +180,7 @@ public class PublishCmtDialog extends DialogFragment implements BaseDialog, Publ
 
     @Override
     public void inject(ActivityComponent component) {
-        component.fragmentComponent(new FragmentModule()).inject(this);
+        component.fragmentComponent(new FragmentModule(this)).inject(this);
     }
 
 }

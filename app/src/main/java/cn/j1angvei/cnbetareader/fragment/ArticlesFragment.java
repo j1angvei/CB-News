@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.ArticleModule;
 
 /**
@@ -18,6 +19,6 @@ public class ArticlesFragment extends NewsFragment<Article, ArticlesRvAdapter.Vi
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.articleComponent(new ArticleModule()).inject(this);
+        component.articleComponent(new ArticleModule(),new FragmentModule(this)).inject(this);
     }
 }

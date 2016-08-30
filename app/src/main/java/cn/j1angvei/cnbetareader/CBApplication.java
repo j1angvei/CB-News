@@ -2,6 +2,8 @@ package cn.j1angvei.cnbetareader;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import cn.j1angvei.cnbetareader.di.component.ApplicationComponent;
 import cn.j1angvei.cnbetareader.di.component.DaggerApplicationComponent;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
@@ -15,6 +17,7 @@ public class CBApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();

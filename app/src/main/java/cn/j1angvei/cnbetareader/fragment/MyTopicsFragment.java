@@ -116,7 +116,7 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.fragmentComponent(new FragmentModule()).inject(this);
+        component.fragmentComponent(new FragmentModule(this)).inject(this);
     }
 
     @Override

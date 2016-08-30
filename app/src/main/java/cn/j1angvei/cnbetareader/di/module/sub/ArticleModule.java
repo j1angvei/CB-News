@@ -8,7 +8,6 @@ import cn.j1angvei.cnbetareader.adapter.ArticlesRvAdapter;
 import cn.j1angvei.cnbetareader.adapter.NewsAdapter;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
-import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -19,8 +18,9 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.ARTICLE;
 
 /**
  * Created by Wayne on 2016/7/22.
+ * article specific for {@link cn.j1angvei.cnbetareader.fragment.ArticlesFragment}
  */
-@Module(includes = FragmentModule.class)
+@Module
 public class ArticleModule {
 
     @Provides

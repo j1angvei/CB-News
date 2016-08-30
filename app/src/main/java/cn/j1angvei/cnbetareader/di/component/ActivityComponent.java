@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.di.component;
 
-import android.app.Activity;
-
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.activity.NewsActivity;
@@ -16,6 +14,7 @@ import dagger.Component;
 
 /**
  * Created by Wayne on 2016/6/15.
+ * component for all {@link android.support.v7.app.AppCompatActivity}
  */
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
@@ -27,17 +26,15 @@ public interface ActivityComponent {
 
     void inject(CommentsActivity activity);
 
-    //expose variable to sub-graph
-    Activity activity();
-
+    //expose variable to sub component
     FragmentComponent fragmentComponent(FragmentModule module);
 
-    ArticleComponent articleComponent(ArticleModule module);
+    ArticleComponent articleComponent(ArticleModule module, FragmentModule fragmentModule);
 
-    HeadlineComponent headlineComponent(HeadlineModule module);
+    HeadlineComponent headlineComponent(HeadlineModule module, FragmentModule fragmentModule);
 
-    ReviewComponent reviewComponent(ReviewModule module);
+    ReviewComponent reviewComponent(ReviewModule module, FragmentModule fragmentModule);
 
-    BookmarkComponent bookmarkComponent(BookmarkModule module);
+    BookmarkComponent bookmarkComponent(BookmarkModule module, FragmentModule fragmentModule);
 
 }

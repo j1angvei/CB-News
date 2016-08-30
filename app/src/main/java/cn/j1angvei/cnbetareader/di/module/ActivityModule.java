@@ -10,6 +10,7 @@ import dagger.Provides;
 
 /**
  * Created by Wayne on 2016/6/15.
+ * module for all {@link android.support.v7.app.AppCompatActivity}
  */
 @Module
 public class ActivityModule {

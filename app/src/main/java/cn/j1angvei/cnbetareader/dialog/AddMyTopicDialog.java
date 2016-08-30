@@ -46,7 +46,7 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
 
     @Override
     public void inject(ActivityComponent component) {
-        component.fragmentComponent(new FragmentModule()).inject(this);
+        component.fragmentComponent(new FragmentModule(this)).inject(this);
     }
 
     @Override

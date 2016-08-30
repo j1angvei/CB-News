@@ -5,6 +5,7 @@ import android.view.View;
 import cn.j1angvei.cnbetareader.adapter.HeadlineRvAdapter;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
+import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.di.module.sub.HeadlineModule;
 
 /**
@@ -20,7 +21,7 @@ public class HeadlineFragment extends NewsFragment<Headline, HeadlineRvAdapter.V
 
     @Override
     protected void inject(ActivityComponent component) {
-        component.headlineComponent(new HeadlineModule()).inject(this);
+        component.headlineComponent(new HeadlineModule(),new FragmentModule(this)).inject(this);
     }
 
 }

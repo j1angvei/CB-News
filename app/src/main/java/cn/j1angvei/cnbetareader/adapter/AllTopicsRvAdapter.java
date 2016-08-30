@@ -25,6 +25,7 @@ import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/8/16.
+ * adapter display all Topics
  */
 @PerFragment
 public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.ViewHolder> implements BaseAdapter<Topic> {
@@ -36,25 +37,6 @@ public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.
         mActivity = activity;
         mTopics = new ArrayList<>();
     }
-
-//    @NonNull
-//    @Override
-//    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-//        ViewHolder viewHolder;
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_topic, parent, false);
-//            viewHolder = new ViewHolder(convertView);
-//            convertView.setTag(viewHolder);
-//        } else {
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-//        Topic topic = getItem(position);
-//        if (topic != null) {
-//            Glide.with(mActivity).load(topic.getThumb()).into(viewHolder.ivThumb);
-//            viewHolder.tvName.setText(topic.getTitle());
-//        }
-//        return convertView;
-//    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

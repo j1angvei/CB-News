@@ -10,6 +10,7 @@ import cn.j1angvei.cnbetareader.di.component.ApplicationComponent;
 
 /**
  * Created by Wayne on 2016/6/27.
+ * baseActivity with abstract class
  */
 public abstract class BaseActivity extends AppCompatActivity {
     protected ActivityComponent mActivityComponent;

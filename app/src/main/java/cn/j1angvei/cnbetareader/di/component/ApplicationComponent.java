@@ -29,6 +29,7 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 
 /**
  * Created by Wayne on 2016/6/15.
+ * component specific for {@link cn.j1angvei.cnbetareader.CBApplication}
  */
 @Singleton
 @Component(modules = {ApplicationModule.class, RepositoryModule.class, DataSourceModule.class})

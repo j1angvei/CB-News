@@ -28,6 +28,7 @@ import cn.j1angvei.cnbetareader.util.Navigator;
 
 /**
  * Created by Wayne on 2016/7/4.
+ * adapter display Article
  */
 @PerFragment
 public class ArticlesRvAdapter extends NewsAdapter<Article, ArticlesRvAdapter.ViewHolder> {
