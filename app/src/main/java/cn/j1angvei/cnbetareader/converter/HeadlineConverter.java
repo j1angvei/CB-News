@@ -49,7 +49,11 @@ public class HeadlineConverter extends NewsConverter<Headline> {
 
     @Override
     public Observable<Headline> toObservable(String json) {
-        return Observable.from(toList(json));
+        List<Headline> headlines = toList(json);
+        if (headlines == null) {
+            return Observable.empty();
+        }
+        return Observable.from(headlines);
     }
 
     private Headline convert(RawHeadline raw) {

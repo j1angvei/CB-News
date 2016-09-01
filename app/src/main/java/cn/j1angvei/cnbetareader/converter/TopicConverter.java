@@ -16,6 +16,7 @@ import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/23.
+ * convert response to Topic
  */
 @Singleton
 public class TopicConverter implements Converter<String, Topic> {
@@ -51,6 +52,10 @@ public class TopicConverter implements Converter<String, Topic> {
 
     @Override
     public Observable<Topic> toObservable(String json) {
-        return Observable.from(toList(json));
+        List<Topic> topics = toList(json);
+        if (topics == null) {
+            return Observable.empty();
+        }
+        return Observable.from(topics);
     }
 }

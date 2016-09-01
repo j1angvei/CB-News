@@ -72,4 +72,5 @@
     <string name="info_comment_closed">评论功能已关闭</string>
     <string name="info_news_content_retrieving">新闻内容获取中！</string>
     <string name="title_choose_letter">选择索引字母</string>
+    <string name="error_json_parse_fail">Json返回值解析错误！</string>
 </resources>

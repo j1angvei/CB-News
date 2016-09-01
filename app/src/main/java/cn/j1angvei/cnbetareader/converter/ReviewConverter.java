@@ -45,7 +45,11 @@ public class ReviewConverter extends NewsConverter<Review> {
 
     @Override
     public Observable<Review> toObservable(String json) {
-        return Observable.from(toList(json));
+        List<Review> reviews = toList(json);
+        if (reviews == null) {
+            return Observable.empty();
+        }
+        return Observable.from(reviews);
     }
 
     private Review convert(RawReview raw) {

@@ -21,7 +21,7 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
     private NewsConverter<T> mConverter;
 
     public NewsRemoteSource(CBApiWrapper wrapper, NewsConverter<T> converter) {
-       super(wrapper);
+        super(wrapper);
         mConverter = converter;
     }
 
@@ -45,6 +45,7 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
                     public void call(T t) {
                         t.setSourceType(sourceType);
                     }
-                });
+                })
+                .retry(1);
     }
 }

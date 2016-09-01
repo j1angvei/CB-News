@@ -67,6 +67,7 @@
     <string name="error_generic">Unknown error happened!</string>
     <string name="error_no_network">No network connection!</string>
     <string name="error_no_local_item">No local item found!</string>
+    <string name="error_json_parse_fail">Json response parse error!</string>
     <string name="error_response_parse_fail">Response body parse string error!</string>
     <string name="error_no_comment">No comment input!</string>
     <string name="error_no_captcha">No captcha input!</string>

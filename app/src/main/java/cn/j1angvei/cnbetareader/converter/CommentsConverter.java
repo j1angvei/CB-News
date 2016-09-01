@@ -1,5 +1,8 @@
 package cn.j1angvei.cnbetareader.converter;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -16,7 +19,6 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
-import cn.j1angvei.cnbetareader.exception.JsonParseException;
 import rx.Observable;
 
 /**
@@ -25,6 +27,7 @@ import rx.Observable;
  */
 @Singleton
 public class CommentsConverter implements Converter<String, Comments> {
+    private static final String TAG = "CommentsConverter";
     final private Gson mGson;
 
     @Inject
@@ -33,32 +36,48 @@ public class CommentsConverter implements Converter<String, Comments> {
     }
 
     @Override
-    public Comments to(String json) throws JSONException {
-        Comments comments = new Comments();
-        JSONObject result = new JSONObject(json).getJSONObject("result");
-        comments.setCommentNum(result.getString("comment_num"));
-        comments.setJoinNum(result.getString("join_num"));
-        comments.setOpen(result.getString("open").equals("1"));
-        comments.setToken(result.getString("token"));
-        comments.setPage(result.getString("page"));
-        comments.setSid(result.getString("sid"));
-        //hot comments tid list
-        JSONArray hotArray = result.getJSONArray("hotlist");
-        comments.setHotIds(getCommentIds(hotArray));
+    public Comments to(String json) {
+        Comments comments;
+        JSONObject result;
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String state = jsonObject.getString("state");
+            if (!TextUtils.equals(state, "success")) {
+                return null;
+            }
+            comments = new Comments();
+            result = jsonObject.getJSONObject("result");
 
-        //all comments tid list
-        JSONArray allArray = result.getJSONArray("cmntlist");
-        List<String> allIds = getCommentIds(allArray);
-        comments.setAllIds(getCommentIds(allArray));
+            comments.setCommentNum(result.getString("comment_num"));
+            comments.setJoinNum(result.getString("join_num"));
+            comments.setOpen(result.getString("open").equals("1"));
+            comments.setToken(result.getString("token"));
+            comments.setPage(result.getString("page"));
+            comments.setSid(result.getString("sid"));
+            //hot comments tid list
+            JSONArray hotArray = result.getJSONArray("hotlist");
+            comments.setHotIds(getCommentIds(hotArray));
 
-        //comments map
-        JSONObject store = result.getJSONObject("cmntstore");
-        Map<String, CommentItem> map = new HashMap<>();
-        for (String tid : allIds) {
-            CommentItem item = mGson.fromJson(store.getJSONObject(tid).toString(), CommentItem.class);
-            map.put(tid, item);
+            //all comments tid list
+            JSONArray allArray = result.getJSONArray("cmntlist");
+            List<String> allIds = getCommentIds(allArray);
+            comments.setAllIds(getCommentIds(allArray));
+
+            //comments map
+            if (comments.isOpen() && comments.getAllIds().size() > 0) {
+                JSONObject store = result.getJSONObject("cmntstore");
+                Map<String, CommentItem> map = new HashMap<>();
+                for (String tid : allIds) {
+                    CommentItem item = mGson.fromJson(store.getJSONObject(tid).toString(), CommentItem.class);
+                    map.put(tid, item);
+                }
+                comments.setCommentMap(map);
+            }
+        } catch (JSONException e) {
+            Log.d(TAG, "to: " + json);
+            e.printStackTrace();
+            return null;
         }
-        comments.setCommentMap(map);
         return comments;
     }
 
@@ -69,11 +88,11 @@ public class CommentsConverter implements Converter<String, Comments> {
 
     @Override
     public Observable<Comments> toObservable(String json) {
-        try {
-            return Observable.just(to(json));
-        } catch (JSONException e) {
-            return Observable.error(new JsonParseException());
+        Comments comments = to(json);
+        if (comments == null) {
+            return Observable.empty();
         }
+        return Observable.just(comments);
     }
 
     private List<String> getCommentIds(JSONArray array) throws JSONException {

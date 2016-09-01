@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.MyTopic;
-import cn.j1angvei.cnbetareader.data.local.MyTopicsLocalSource;
+import cn.j1angvei.cnbetareader.data.local.TopicNewsLocalSource;
 import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import rx.Observable;
 
@@ -14,10 +14,10 @@ import rx.Observable;
  */
 @Singleton
 public class MyTopicsRepository extends Repository<MyTopic> {
-    private final MyTopicsLocalSource mLocalSource;
+    private final TopicNewsLocalSource mLocalSource;
 
     @Inject
-    public MyTopicsRepository(MyTopicsLocalSource localSource, NetworkUtil util) {
+    public MyTopicsRepository(TopicNewsLocalSource localSource, NetworkUtil util) {
         super(util);
         mLocalSource = localSource;
     }

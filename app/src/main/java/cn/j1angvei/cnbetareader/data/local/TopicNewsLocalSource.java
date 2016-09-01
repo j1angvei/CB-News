@@ -19,13 +19,13 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class MyTopicsLocalSource implements LocalSource<MyTopic> {
-    private static final String TAG = "MyTopicsLocalSource";
+public class TopicNewsLocalSource implements LocalSource<MyTopic> {
+    private static final String TAG = "TopicNewsLocalSource";
     private final MyTopicsDbHelper mDbHelper;
     private final PrefsUtil mPrefsUtil;
 
     @Inject
-    public MyTopicsLocalSource(MyTopicsDbHelper dbHelper, PrefsUtil prefsUtil) {
+    public TopicNewsLocalSource(MyTopicsDbHelper dbHelper, PrefsUtil prefsUtil) {
         mDbHelper = dbHelper;
         mPrefsUtil = prefsUtil;
     }

@@ -17,12 +17,12 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class MyTopicsRemoteSource extends RemoteSource<Article> {
+public class TopicNewsRemoteSource extends RemoteSource<Article> {
     private ArticleConverter mConverter;
 
     @Inject
-    public MyTopicsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter) {
-       super(wrapper);
+    public TopicNewsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter) {
+        super(wrapper);
         mConverter = converter;
     }
 
@@ -39,6 +39,7 @@ public class MyTopicsRemoteSource extends RemoteSource<Article> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                });
+                })
+                .retry(1);
     }
 }

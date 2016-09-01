@@ -19,6 +19,7 @@ import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
 import cn.j1angvei.cnbetareader.di.module.DataSourceModule;
 import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
 
@@ -62,4 +63,6 @@ public interface ApplicationComponent {
     CBApiWrapper apiHelper();
 
     MyTopicsConverter myTopicsConverter();
+
+    NetworkUtil networkUtil();
 }

@@ -22,7 +22,7 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
 
     @Inject
     public CommentsRemoteSource(CBApiWrapper wrapper, CommentsConverter converter) {
-       super(wrapper);
+        super(wrapper);
         mConverter = converter;
     }
 
@@ -39,6 +39,7 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                });
+                })
+                .retry(1);
     }
 }

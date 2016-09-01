@@ -39,6 +39,10 @@ public class BookmarkConverter extends NewsConverter<Bookmark> {
 
     @Override
     public Observable<Bookmark> toObservable(String json) {
-        return Observable.just(to(json));
+        Bookmark bookmark = to(json);
+        if (bookmark == null) {
+            return Observable.empty();
+        }
+        return Observable.just(bookmark);
     }
 }

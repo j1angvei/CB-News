@@ -2,9 +2,12 @@ package cn.j1angvei.cnbetareader.service;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,9 +25,13 @@ import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.component.DaggerServiceComponent;
 import cn.j1angvei.cnbetareader.di.module.ServiceModule;
+import cn.j1angvei.cnbetareader.util.ErrorUtil;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -50,6 +57,13 @@ public class OfflineDownloadService extends BaseService {
     CommentsRepository mCommentsRepository;
     @Inject
     PrefsUtil mPrefsUtil;
+    @Inject
+    NetworkUtil mNetworkUtil;
+
+    private static NotificationManager MANAGER;
+    private static NotificationCompat.Builder BUILDER;
+    private static int MAX_PROCESS = 360;
+    private static int CUR_PROCESS = 0;
 
     public OfflineDownloadService() {
         super(TAG);
@@ -66,84 +80,97 @@ public class OfflineDownloadService extends BaseService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        int pages = mPrefsUtil.readIntDefault1(PrefsUtil.DOWNLOAD_PAGES);
-        if (pages == 1) {
-            pages = 2;
+        if (!mNetworkUtil.isNetworkOn()) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    MessageUtil.toast(R.string.error_no_network, getApplicationContext());
+                }
+            });
+            return;
         }
-        final int[] id = {1};
-        final int maxProgress = 180 * pages;
-        final NotificationManager manager = getNotificationMgr();
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setContentTitle("download title")
-                .setContentText("download in progress")
-                .setSmallIcon(R.drawable.ic_file_download_black_24dp);
+        int pages = mPrefsUtil.readIntDefault1(PrefsUtil.DOWNLOAD_PAGES);
 
-//        mArticleRepository.getData(null, Source.ALL.toString(), pages);
+        MAX_PROCESS = 180 * pages;
+        MANAGER = getNotificationMgr();
+        BUILDER = new NotificationCompat.Builder(this)
+                .setContentTitle("Caching news.")
+                .setContentText("download in progress")
+                .setSmallIcon(R.drawable.ic_stat_logo);
         Observable.range(1, pages)
-                .flatMap(new Func1<Integer, Observable<? extends News>>() {
+                .concatMap(new Func1<Integer, Observable<? extends News>>() {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
-                        return Observable.merge(
+                        return Observable.concat(
+                                mArticleRepository.getData(integer, null, Source.ALL.toString()),
                                 mHeadlineRepository.getData(integer, null, Source.EDITORCOMMEND.toString()),
-                                mReviewRepository.getData(integer, null, Source.JHCOMMENT.toString()),
-                                mArticleRepository.getData(integer, null, Source.ALL.toString()));
+                                mReviewRepository.getData(integer, null, Source.JHCOMMENT.toString())
+                        );
                     }
                 })
-                .doOnNext(new Action1<News>() {
-                    @Override
-                    public void call(News news) {
-                        builder.setContentTitle("download news");
-                        builder.setProgress(maxProgress, id[0]++, false);
-                        manager.notify(2, builder.build());
-                    }
-                })
-                .flatMap(new Func1<News, Observable<Content>>() {
+                .doOnNext(new UpdateAction<News>())
+                .delay(1000, TimeUnit.MICROSECONDS)
+                .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
                         return mContentRepository.getData(0, news.getSid(), null);
                     }
                 })
-                .doOnNext(new Action1<Content>() {
-                    @Override
-                    public void call(Content content) {
-                        builder.setContentTitle("download content");
-                        builder.setProgress(maxProgress, id[0]++, false);
-                        manager.notify(2, builder.build());
-                    }
-                })
-                .flatMap(new Func1<Content, Observable<Comments>>() {
+                .doOnNext(new UpdateAction<Content>())
+                .delay(100, TimeUnit.MICROSECONDS)
+                .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
                         return mCommentsRepository.getData(0, content.getSid(), content.getSn());
                     }
                 })
-                .doOnNext(new Action1<Comments>() {
-                    @Override
-                    public void call(Comments comments) {
-                        builder.setContentTitle("download comments");
-                        builder.setProgress(maxProgress, id[0]++, false);
-                        manager.notify(2, builder.build());
-                    }
-                })
-                .toList()
-                .subscribe(new Subscriber<List<Comments>>() {
+                .doOnNext(new UpdateAction<Comments>())
+                .delay(1000, TimeUnit.MICROSECONDS)
+                .count()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {
-                        manager.cancel(2);
+                        MessageUtil.toast("Download complete", getApplicationContext());
+                        BUILDER.setProgress(0, 0, false)
+                                .setContentTitle("Cache complete")
+                                .setContentText("");
+                        MANAGER.notify(2, BUILDER.build());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "onError: ", e);
+                        e.printStackTrace();
+                        BUILDER.setContentTitle("Download failure");
+                        MANAGER.notify(2, BUILDER.build());
+                        MessageUtil.toast(ErrorUtil.getErrorInfo(e), getApplicationContext());
                     }
 
                     @Override
-                    public void onNext(List<Comments> vc) {
-                        builder.setProgress(0, 0, false);
-                        manager.notify(2, builder.build());
+                    public void onNext(Integer integer) {
+                        BUILDER.setProgress(integer, integer, false);
+                        MANAGER.notify(2, BUILDER.build());
                     }
                 });
+    }
 
+    private class UpdateAction<T> implements Action1<T> {
+
+        @Override
+        public void call(Object o) {
+            String text = "Downloading in progress... ";
+            if (o instanceof Article) {
+                text += "Latest news";
+            } else if (o instanceof Headline) {
+                text += "Past headlines";
+            } else if (o instanceof Review) {
+                text += "Popular comments";
+            }
+            BUILDER.setContentText(text);
+            BUILDER.setProgress(MAX_PROCESS, ++CUR_PROCESS, false);
+            MANAGER.notify(2, BUILDER.build());
+        }
     }
 
 }

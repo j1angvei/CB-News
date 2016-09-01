@@ -23,7 +23,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
 
     @Inject
     public ContentRemoteSource(CBApiWrapper wrapper, ContentConverter converter) {
-       super(wrapper);
+        super(wrapper);
         mConverter = converter;
     }
 
@@ -41,6 +41,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                });
+                })
+                .retry(1);
     }
 }

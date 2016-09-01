@@ -42,7 +42,11 @@ public class ArticleConverter extends NewsConverter<Article> {
 
     @Override
     public Observable<Article> toObservable(String json) {
-        return Observable.from(toList(json))
+        List<Article> articles = toList(json);
+        if (articles == null) {
+            return Observable.empty();
+        }
+        return Observable.from(articles)
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {

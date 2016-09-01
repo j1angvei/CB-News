@@ -23,7 +23,7 @@ public class AllTopicsRemoteSource extends RemoteSource<Topic> {
 
     @Inject
     public AllTopicsRemoteSource(CBApiWrapper wrapper, TopicConverter converter) {
-       super(wrapper);
+        super(wrapper);
         mConverter = converter;
     }
 
@@ -44,6 +44,7 @@ public class AllTopicsRemoteSource extends RemoteSource<Topic> {
                     public void call(Topic topic) {
                         topic.setPage(page);
                     }
-                });
+                })
+                .retry(1);
     }
 }

@@ -35,6 +35,10 @@ public class MyTopicsConverter implements Converter<Topic, MyTopic> {
 
     @Override
     public Observable<MyTopic> toObservable(Topic from) {
-        return Observable.just(to(from));
+        MyTopic myTopic = to(from);
+        if (myTopic == null) {
+            return Observable.empty();
+        }
+        return Observable.just(myTopic);
     }
 }
