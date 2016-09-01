@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.support.annotation.NonNull;
+
 import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.data.local.helper.DbHelper;
 import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
@@ -47,7 +49,7 @@ public class NewsLocalSource<T extends News> implements LocalSource<T> {
     }
 
     @Override
-    public Observable<T> read(String id, String sourceType, int page) {
+    public Observable<T> read(int page, String id, @NonNull String sourceType) {
         String builder = (SELECT_FROM + BLANK) + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + sourceType + QUOTE + BLANK +
                 ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;

@@ -22,17 +22,18 @@ public class NewsRepository<T extends News> extends Repository<T> {
         mRemoteSource = remoteSource;
     }
 
+
     @Override
-    public Observable<T> getData(String id, String param, int page) {//param should be sourceType here
+    public Observable<T> getData(int page, String id, String typeOrSN) {
         return isConnected() ?
-                mRemoteSource.loadData(page, param)
+                mRemoteSource.loadData(page, typeOrSN)
                         .doOnNext(new Action1<T>() {
                             @Override
                             public void call(T t) {
-
+                                storeToDisk(t);
                             }
                         }) :
-                mLocalSource.read(param, id, page);
+                mLocalSource.read(page, id, typeOrSN);
     }
 
     @Override

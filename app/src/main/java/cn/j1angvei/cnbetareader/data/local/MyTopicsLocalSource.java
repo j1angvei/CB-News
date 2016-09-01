@@ -36,7 +36,7 @@ public class MyTopicsLocalSource implements LocalSource<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> read(String id, String sourceType, int page) {
+    public Observable<MyTopic> read(int page, String id, String sourceType) {
         boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.MY_TOPICS_IS_ASCEND);
         String query = SELECT_FROM + BLANK +
                 mDbHelper.getTableName() +

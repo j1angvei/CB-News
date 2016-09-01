@@ -14,7 +14,7 @@ public abstract class Repository<T> {
         mNetworkUtil = networkUtil;
     }
 
-    public abstract Observable<T> getData(String id, String param, int page);
+    public abstract Observable<T> getData(int page, String id, String typeOrSN);
 
     public abstract void storeToDisk(T item);
 

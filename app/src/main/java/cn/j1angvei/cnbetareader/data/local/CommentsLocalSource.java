@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -32,7 +34,7 @@ public class CommentsLocalSource implements LocalSource<Comments> {
     }
 
     @Override
-    public Observable<Comments> read(String id, String sourceType, int page) {//sourceType should be null
+    public Observable<Comments> read(int page, @NonNull String id, String sourceType) {
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + id + QUOTE;

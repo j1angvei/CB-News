@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
+import cn.j1angvei.cnbetareader.exception.JsonParseException;
 import rx.Observable;
 
 /**
@@ -32,38 +33,32 @@ public class CommentsConverter implements Converter<String, Comments> {
     }
 
     @Override
-    public Comments to(String json) {
+    public Comments to(String json) throws JSONException {
         Comments comments = new Comments();
-        try {
-            JSONObject result = new JSONObject(json).getJSONObject("result");
-            comments.setCommentNum(result.getString("comment_num"));
-            comments.setJoinNum(result.getString("join_num"));
-            comments.setOpen(result.getString("open").equals("1"));
-            comments.setToken(result.getString("token"));
-            comments.setPage(result.getString("page"));
-            comments.setSid(result.getString("sid"));
+        JSONObject result = new JSONObject(json).getJSONObject("result");
+        comments.setCommentNum(result.getString("comment_num"));
+        comments.setJoinNum(result.getString("join_num"));
+        comments.setOpen(result.getString("open").equals("1"));
+        comments.setToken(result.getString("token"));
+        comments.setPage(result.getString("page"));
+        comments.setSid(result.getString("sid"));
+        //hot comments tid list
+        JSONArray hotArray = result.getJSONArray("hotlist");
+        comments.setHotIds(getCommentIds(hotArray));
 
-            //hot comments tid list
-            JSONArray hotArray = result.getJSONArray("hotlist");
-            comments.setHotIds(getCommentIds(hotArray));
+        //all comments tid list
+        JSONArray allArray = result.getJSONArray("cmntlist");
+        List<String> allIds = getCommentIds(allArray);
+        comments.setAllIds(getCommentIds(allArray));
 
-            //all comments tid list
-            JSONArray allArray = result.getJSONArray("cmntlist");
-            List<String> allIds = getCommentIds(allArray);
-            comments.setAllIds(getCommentIds(allArray));
-
-            //comments map
-            JSONObject store = result.getJSONObject("cmntstore");
-            Map<String, CommentItem> map = new HashMap<>();
-            for (String tid : allIds) {
-                CommentItem item = mGson.fromJson(store.getJSONObject(tid).toString(), CommentItem.class);
-                map.put(tid, item);
-            }
-            comments.setCommentMap(map);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        //comments map
+        JSONObject store = result.getJSONObject("cmntstore");
+        Map<String, CommentItem> map = new HashMap<>();
+        for (String tid : allIds) {
+            CommentItem item = mGson.fromJson(store.getJSONObject(tid).toString(), CommentItem.class);
+            map.put(tid, item);
         }
+        comments.setCommentMap(map);
         return comments;
     }
 
@@ -74,7 +69,11 @@ public class CommentsConverter implements Converter<String, Comments> {
 
     @Override
     public Observable<Comments> toObservable(String json) {
-        return Observable.just(to(json));
+        try {
+            return Observable.just(to(json));
+        } catch (JSONException e) {
+            return Observable.error(new JsonParseException());
+        }
     }
 
     private List<String> getCommentIds(JSONArray array) throws JSONException {

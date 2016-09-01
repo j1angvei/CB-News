@@ -37,7 +37,7 @@ public class AllTopicsLocalSource implements LocalSource<Topic> {
     }
 
     @Override
-    public Observable<Topic> read(String id, String sourceType, int page) {
+    public Observable<Topic> read(int page, String id, String sourceType) {//id and sourceType is null
         String letter = ApiUtil.pageToLetter(page);
         StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK)
                 .append(mHelper.getTableName());

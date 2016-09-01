@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.converter;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 import rx.Observable;
@@ -10,9 +12,9 @@ import rx.Observable;
  */
 public interface Converter<F, T> {
 
-    T to(F from);
+    T to(F from) throws JSONException;
 
-    List<T> toList(F from);
+    List<T> toList(F from) throws JSONException;
 
     Observable<T> toObservable(F from);
 

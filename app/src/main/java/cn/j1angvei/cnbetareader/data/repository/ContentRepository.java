@@ -26,7 +26,7 @@ public class ContentRepository extends Repository<Content> {
     }
 
     @Override
-    public Observable<Content> getData(String id, String param, int page) {// only need id here
+    public Observable<Content> getData(int page, String id, String typeOrSN) {
         return isConnected() ?
                 mRemoteSource.loadData(0, id)
                         .doOnNext(new Action1<Content>() {
@@ -35,7 +35,7 @@ public class ContentRepository extends Repository<Content> {
                                 storeToDisk(content);
                             }
                         }) :
-                mLocalSource.read(id, null, 0);
+                mLocalSource.read(0, id, null);
     }
 
     @Override

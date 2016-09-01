@@ -8,6 +8,8 @@ public interface NewsContract {
         void renderNews(T news);
 
         void clearNewses();
+
+        void onGetNewsFail(int message);
     }
 
     interface Presenter<T> extends BasePresenter<NewsContract.View<T>> {

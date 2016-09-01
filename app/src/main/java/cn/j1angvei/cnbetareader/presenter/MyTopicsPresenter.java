@@ -32,7 +32,7 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
 
     @Override
     public void retrieveMyTopics() {
-        mRepository.getData(null, null, 0)
+        mRepository.getData(0, null, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()

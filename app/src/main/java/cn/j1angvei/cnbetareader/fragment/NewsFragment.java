@@ -3,6 +3,7 @@ package cn.j1angvei.cnbetareader.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +24,14 @@ import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.contract.NewsContract;
 import cn.j1angvei.cnbetareader.listener.EndlessRecyclerViewScrollListener;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
+import cn.j1angvei.cnbetareader.util.MessageUtil;
 
 /**
  * Created by Wayne on 2016/7/9.
  * abstract class display news like Article Headline Review
  */
 public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewHolder> extends BaseFragment implements NewsContract.View<T> {
+    private static final String TAG = "NewsFragment";
     private static final String NEWS_TYPE = "NewsFragment.news_type";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -40,6 +43,7 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     NewsAdapter<T, VH> mAdapter;
     @Inject
     NewsPresenter<T> mPresenter;
+    CoordinatorLayout mCoordinatorLayout;
     private FloatingActionButton mFab;
     private String mType;
     private int mPage = 1;
@@ -92,6 +96,7 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
             });
             mFab.show();
         }
+        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
@@ -138,5 +143,10 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     @Override
     public Context getViewContext() {
         return getContext();
+    }
+
+    @Override
+    public void onGetNewsFail(int message) {
+        MessageUtil.snack(mCoordinatorLayout, message);
     }
 }

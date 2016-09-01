@@ -29,8 +29,8 @@ public class AllTopicsRepository extends Repository<Topic> {
     }
 
     @Override
-  public Observable<Topic> getData(final String id, String param, final int page) {
-        return mLocalSource.read(id, param, page)
+    public Observable<Topic> getData(final int page, String id, String typeOrSN) {
+        return mLocalSource.read(page, id, typeOrSN)
                 .onErrorResumeNext(new Func1<Throwable, Observable<Topic>>() {
                     @Override
                     public Observable<Topic> call(Throwable throwable) {

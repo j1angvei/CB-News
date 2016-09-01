@@ -23,8 +23,8 @@ public class MyTopicsRepository extends Repository<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> getData(String id, String param, int page) {// no param is needed
-        return mLocalSource.read(null, null, 0);
+    public Observable<MyTopic> getData(int page, String id, String typeOrSN) {
+        return mLocalSource.read(0, null, null);
     }
 
     @Override

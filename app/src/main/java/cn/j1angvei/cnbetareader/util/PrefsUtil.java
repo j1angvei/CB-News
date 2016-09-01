@@ -14,12 +14,17 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class PrefsUtil {
-    //cookie keywords
+
     public static final String CSRF_TOKEN = "csrf_token";
+    //cookie keywords
     public static final String COOKIE_TOKEN = "cookie_token";
     public static final String COOKIE_SESSION = "cookie_session";
     //my_topics
     public static final String MY_TOPICS_IS_ASCEND = "my_topics_is_ascend";
+    //download
+    public static final String DOWNLOAD_PAGES = "download_pages";
+
+
     private final SharedPreferences prefs;
 
     @Inject
@@ -49,5 +54,18 @@ public class PrefsUtil {
 
     public void writeBoolean(String key, boolean value) {
         prefs.edit().putBoolean(key, value).apply();
+    }
+
+    public int readIntDefault0(String key) {
+        return prefs.getInt(key, 0);
+    }
+
+    public int readIntDefault1(String key) {
+        return prefs.getInt(key, 1);
+    }
+
+    public void writeInt(String key, int value) {
+        prefs.edit().putInt(key, value).apply();
+
     }
 }

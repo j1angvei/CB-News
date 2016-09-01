@@ -26,16 +26,16 @@ public class CommentsRepository extends Repository<Comments> {
     }
 
     @Override
-    public Observable<Comments> getData(String id, String param, int page) {//param is "SN" here
+    public Observable<Comments> getData(int page, String id, String typeOrSN) {//page is no need here
         return isConnected() ?
-                mRemoteSource.loadData(page, id, param)
+                mRemoteSource.loadData(0, id, typeOrSN)
                         .doOnNext(new Action1<Comments>() {
                             @Override
                             public void call(Comments comments) {
                                 storeToDisk(comments);
                             }
                         }) :
-                mLocalSource.read(id, null, page);
+                mLocalSource.read(0, id, null);
     }
 
     @Override

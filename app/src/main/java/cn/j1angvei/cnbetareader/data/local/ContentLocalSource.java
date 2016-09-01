@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.data.local;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -32,7 +34,7 @@ public class ContentLocalSource implements LocalSource<Content> {
     }
 
     @Override
-    public Observable<Content> read(String id, String sourceType, int page) {
+    public Observable<Content> read(int page, @NonNull String id, String sourceType) {
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + id + QUOTE;
