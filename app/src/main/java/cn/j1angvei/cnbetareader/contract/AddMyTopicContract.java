@@ -17,7 +17,7 @@ public interface AddMyTopicContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void retrieveTopics(int groupPosition);
+        void retrieveTopics(int page);
 
         void addToMyTopics(List<Topic> topics);
 

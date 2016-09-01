@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.TopicNewsContract;
+import cn.j1angvei.cnbetareader.converter.MyTopicsConverter;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerActivity;
 import rx.Observable;
@@ -18,24 +19,21 @@ import rx.functions.Func1;
 public class TopicNewsPresenter implements TopicNewsContract.Presenter {
     private TopicNewsContract.View mView;
     private final MyTopicsRepository mRepository;
+    private final MyTopicsConverter mConverter;
 
     @Inject
-    public TopicNewsPresenter(MyTopicsRepository repository) {
+    public TopicNewsPresenter(MyTopicsRepository repository, MyTopicsConverter converter) {
         mRepository = repository;
+        mConverter = converter;
     }
 
     @Override
     public void addToMyTopics(Topic topic) {
         Observable.just(topic)
-                .map(new Func1<Topic, MyTopic>() {
+                .flatMap(new Func1<Topic, Observable<MyTopic>>() {
                     @Override
-                    public MyTopic call(Topic topic) {
-                        MyTopic myTopic = new MyTopic();
-                        myTopic.setLetter(topic.getLetter());
-                        myTopic.setId(topic.getId());
-                        myTopic.setThumb(topic.getThumb());
-                        myTopic.setTitle(topic.getTitle());
-                        return myTopic;
+                    public Observable<MyTopic> call(Topic topic) {
+                        return mConverter.toObservable(topic);
                     }
                 })
                 .subscribe(new Observer<MyTopic>() {
@@ -51,7 +49,7 @@ public class TopicNewsPresenter implements TopicNewsContract.Presenter {
 
                     @Override
                     public void onNext(MyTopic myTopic) {
-                        mRepository.toDisk(myTopic);
+                        mRepository.storeToDisk(myTopic);
                     }
                 });
     }

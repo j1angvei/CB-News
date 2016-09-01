@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
-import java.util.Map;
-
 import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.data.local.NewsLocalSource;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
@@ -25,24 +23,24 @@ public class NewsRepository<T extends News> extends Repository<T> {
     }
 
     @Override
-    public Observable<T> getData(String sourceType, Map<String, String> param) {
+    public Observable<T> getData(String id, String param, int page) {//param should be sourceType here
         return isConnected() ?
-                mRemoteSource.getData(sourceType, param)
+                mRemoteSource.loadData(page, param)
                         .doOnNext(new Action1<T>() {
                             @Override
                             public void call(T t) {
-                                toDisk(t);
+
                             }
                         }) :
-                mLocalSource.read(sourceType);
+                mLocalSource.read(param, id, page);
     }
 
     @Override
-    public void toDisk(T item) {
+    public void storeToDisk(T item) {
         mLocalSource.create(item);
     }
 
     @Override
-    public void toRAM(T item) {
+    public void storeToMemory(T item) {
     }
 }

@@ -10,7 +10,6 @@ import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
@@ -30,7 +29,7 @@ public class HeadlineModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Headline> headlinesPresenter(@Named(HEADLINE) NewsRepository<Headline> repository, ApiUtil apiUtil) {
-        return new NewsPresenter<>(repository, apiUtil);
+    NewsPresenter<Headline> headlinesPresenter(@Named(HEADLINE) NewsRepository<Headline> repository) {
+        return new NewsPresenter<>(repository);
     }
 }

@@ -3,20 +3,16 @@ package cn.j1angvei.cnbetareader.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.data.remote.response.BaseResponse;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
-import cn.j1angvei.cnbetareader.util.HeaderUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,16 +28,14 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     private static final String TAG = "ShowCmtPresenter";
     private final CommentsRepository mRepository;
     private final ContentRepository mContentRepository;
-    private final ApiUtil mApiUtil;
-    private final CnbetaApi mApi;
     private ShowCmtContract.View mView;
+    private CBApiWrapper mApiWrapper;
 
     @Inject
-    public ShowCmtPresenter(CommentsRepository repository, ContentRepository contentRepository, ApiUtil apiUtil, CnbetaApi api) {
+    public ShowCmtPresenter(CommentsRepository repository, ContentRepository contentRepository, CBApiWrapper wrapper) {
         mRepository = repository;
         mContentRepository = contentRepository;
-        mApiUtil = apiUtil;
-        mApi = api;
+        mApiWrapper = wrapper;
     }
 
     @Override
@@ -52,17 +46,17 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getData(sid, null)
-                .map(new Func1<Content, Map<String, String>>() {
+        mContentRepository.getData(sid, null, 0)
+                .map(new Func1<Content, String>() {
                     @Override
-                    public Map<String, String> call(Content content) {
-                        return mApiUtil.getCommentsParam(sid, content.getSn());
+                    public String call(Content content) {
+                        return content.getSn();
                     }
                 })
-                .flatMap(new Func1<Map<String, String>, Observable<Comments>>() {
+                .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
-                    public Observable<Comments> call(Map<String, String> param) {
-                        return mRepository.getData(sid, param);
+                    public Observable<Comments> call(String s) {
+                        return mRepository.getData(sid, s, 0);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -87,9 +81,7 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
 
     @Override
     public void judgeComment(final String action, String sid, final String tid) {
-        String referer = HeaderUtil.assembleRefererValue(sid);
-        Map<String, String> param = mApiUtil.getJudgeCommentParam(action, sid, tid);
-        mApi.judgeComment(referer, param)
+        mApiWrapper.judgeComment(action, sid, tid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse>() {
@@ -108,7 +100,6 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
                     public void onNext(BaseResponse baseResponse) {
                         Log.d(TAG, "onNext: " + baseResponse);
                         if (TextUtils.equals(baseResponse.getState(), "success")) {
-//                            mView.onJudgeSuccess(action, tid);
                             mView.onJudgeSuccess();
                         } else {
                             mView.onJudgeFail();

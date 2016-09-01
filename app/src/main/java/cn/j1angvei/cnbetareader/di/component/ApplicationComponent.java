@@ -9,7 +9,8 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
 import cn.j1angvei.cnbetareader.bean.Review;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.converter.MyTopicsConverter;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.CommentsRepository;
 import cn.j1angvei.cnbetareader.data.repository.ContentRepository;
@@ -18,7 +19,6 @@ import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
 import cn.j1angvei.cnbetareader.di.module.DataSourceModule;
 import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
 
@@ -57,10 +57,9 @@ public interface ApplicationComponent {
 
     CommentsRepository commentsRepository();
 
-    CnbetaApi cnbetaApi();
-
     PrefsUtil prefUtil();
 
-    ApiUtil apiUtil();
+    CBApiWrapper apiHelper();
 
+    MyTopicsConverter myTopicsConverter();
 }

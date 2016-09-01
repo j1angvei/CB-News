@@ -23,7 +23,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class CommentsConverter implements Converter<Comments> {
+public class CommentsConverter implements Converter<String, Comments> {
     final private Gson mGson;
 
     @Inject

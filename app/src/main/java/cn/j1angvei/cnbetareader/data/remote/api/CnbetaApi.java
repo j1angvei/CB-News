@@ -16,9 +16,6 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
-import static cn.j1angvei.cnbetareader.util.ApiUtil.KEY_LETTER;
-import static cn.j1angvei.cnbetareader.util.ApiUtil.KEY_SID;
-import static cn.j1angvei.cnbetareader.util.ApiUtil.KEY_V;
 import static cn.j1angvei.cnbetareader.util.HeaderUtil.HEADER_ACCEPT_IMG;
 import static cn.j1angvei.cnbetareader.util.HeaderUtil.HEADER_ACCEPT_JSON;
 import static cn.j1angvei.cnbetareader.util.HeaderUtil.HEADER_AJAX;
@@ -42,11 +39,11 @@ public interface CnbetaApi {
 
     @Headers(HEADER_CACHE_MAX)
     @GET("/topics.htm")
-    Observable<ResponseBody> getTopics(@Query(KEY_LETTER) String letter);
+    Observable<ResponseBody> getTopics(@Query("letter") String letter);
 
     @Headers({HEADER_CACHE_NO, HEADER_PRAGMA})
     @GET("/articles/{sid}.htm")
-    Observable<ResponseBody> getArticleContent(@Path(KEY_SID) String sid);
+    Observable<ResponseBody> getArticleContent(@Path("sid") String sid);
 
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @FormUrlEncoded
@@ -65,11 +62,11 @@ public interface CnbetaApi {
 
     @Headers({HEADER_ACCEPT_JSON, HEADER_AJAX})
     @GET("/captcha.htm")
-    Observable<ResponseBody> getCaptchaUrl(@Header(KEY_REFERER) String refer, @QueryMap Map<String, String> captchaUrlParam);
+    Observable<ResponseBody> getCaptchaVerify(@Header(KEY_REFERER) String refer, @QueryMap Map<String, String> captchaUrlParam);
 
     @Headers(HEADER_ACCEPT_IMG)
     @GET("/captcha.htm")
-    Observable<ResponseBody> getCaptchaImage(@Header(KEY_REFERER) String refer, @Query(KEY_V) String v);
+    Observable<ResponseBody> getCaptchaImage(@Header(KEY_REFERER) String refer, @Query("v") String verify);
 
     @GET("/deliver")
     Observable<ResponseBody> getCsrfToken();

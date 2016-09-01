@@ -34,7 +34,7 @@ public class ContentPresenter implements ContentContract.Presenter {
     @Override
     public void retrieveContent(String sid) {
         mView.showLoading();
-        mRepository.getData(sid, null)
+        mRepository.getData(sid, null, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Content>() {

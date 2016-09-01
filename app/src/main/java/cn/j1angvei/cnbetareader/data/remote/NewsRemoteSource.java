@@ -3,11 +3,10 @@ package cn.j1angvei.cnbetareader.data.remote;
 import android.text.TextUtils;
 
 import java.io.IOException;
-import java.util.Map;
 
 import cn.j1angvei.cnbetareader.bean.News;
-import cn.j1angvei.cnbetareader.converter.Converter;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.converter.NewsConverter;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -16,17 +15,21 @@ import rx.functions.Func1;
 
 /**
  * Created by Wayne on 2016/7/23.
+ * get all type news from web
  */
 public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
+    private NewsConverter<T> mConverter;
 
-    public NewsRemoteSource(CnbetaApi api, Converter<T> converter) {
-        super(api, converter);
+    public NewsRemoteSource(CBApiWrapper wrapper, NewsConverter<T> converter) {
+       super(wrapper);
+        mConverter = converter;
     }
 
     @Override
-    public Observable<T> getData(final String sourceType, Map<String, String> param) {
+    public Observable<T> loadData(int page, String... args) {
+        final String sourceType = args[0];
         boolean isTopicMews = TextUtils.isDigitsOnly(sourceType);
-        return (isTopicMews ? mCnbetaApi.getTopicNews(param) : mCnbetaApi.getNews(param))
+        return (isTopicMews ? mApiWrapper.getTopicNews(sourceType, page) : mApiWrapper.getNews(sourceType, page))
                 .flatMap(new Func1<ResponseBody, Observable<T>>() {
                     @Override
                     public Observable<T> call(ResponseBody responseBody) {
@@ -44,5 +47,4 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
                     }
                 });
     }
-
 }

@@ -19,8 +19,7 @@ public class PrefsUtil {
     public static final String COOKIE_TOKEN = "cookie_token";
     public static final String COOKIE_SESSION = "cookie_session";
     //my_topics
-    public static final String KEY_MY_TOPICS = "my_topics";
-    public static final String KEY_MY_TOPICS_ORDER = "my_topics_order";
+    public static final String MY_TOPICS_IS_ASCEND = "my_topics_is_ascend";
     private final SharedPreferences prefs;
 
     @Inject
@@ -45,7 +44,7 @@ public class PrefsUtil {
     }
 
     public boolean readBoolean(String key) {
-        return prefs.getBoolean(KEY_MY_TOPICS_ORDER, true);
+        return prefs.getBoolean(key, true);
     }
 
     public void writeBoolean(String key, boolean value) {

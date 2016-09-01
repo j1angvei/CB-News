@@ -1,14 +1,13 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.converter.ContentConverter;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -20,14 +19,18 @@ import rx.functions.Func1;
  */
 @Singleton
 public class ContentRemoteSource extends RemoteSource<Content> {
+    private ContentConverter mConverter;
+
     @Inject
-    public ContentRemoteSource(CnbetaApi api, ContentConverter converter) {
-        super(api, converter);
+    public ContentRemoteSource(CBApiWrapper wrapper, ContentConverter converter) {
+       super(wrapper);
+        mConverter = converter;
     }
 
     @Override
-    public Observable<Content> getData(String sid, Map<String, String> param) {
-        return mCnbetaApi.getArticleContent(sid)
+    public Observable<Content> loadData(int page, String... args) {
+        String sid = args[0];
+        return mApiWrapper.getContent(sid)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(ResponseBody responseBody) {
@@ -40,5 +43,4 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                     }
                 });
     }
-
 }

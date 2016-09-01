@@ -10,7 +10,6 @@ import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,7 +30,7 @@ public class ArticleModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Article> articlesPresenter(@Named(ARTICLE) NewsRepository<Article> repository, ApiUtil apiUtil) {
-        return new NewsPresenter<>(repository, apiUtil);
+    NewsPresenter<Article> articlesPresenter(@Named(ARTICLE) NewsRepository<Article> repository) {
+        return new NewsPresenter<>(repository);
     }
 }

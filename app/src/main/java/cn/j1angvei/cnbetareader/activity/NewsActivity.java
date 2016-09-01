@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.bean.Source;
 import cn.j1angvei.cnbetareader.contract.BaseView;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.fragment.AllTopicsFragment;
@@ -72,7 +72,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Inject
     FragmentManager mFragmentManager;
     @Inject
-    CnbetaApi mCnbetaApi;
+    CBApiWrapper mApiWrapper;
     @Inject
     PrefsUtil mPrefsUtil;
     boolean mIsTokenValid;
@@ -185,6 +185,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 source = BOOKMARK;
                 break;
             case R.id.nav_download:
+                Navigator.toOfflineDownload(this);
                 return true;
             case R.id.nav_settings:
                 return true;
@@ -245,7 +246,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         }
         //token not set, retrieve it now
         showLoading();
-        mCnbetaApi.getCsrfToken()
+        mApiWrapper.getCsrfToken()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CsrfTokenSubscriber(source, title));

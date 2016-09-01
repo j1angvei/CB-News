@@ -13,6 +13,7 @@ import cn.j1angvei.cnbetareader.activity.SettingsActivity;
 import cn.j1angvei.cnbetareader.activity.TopicNewsActivity;
 import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.bean.Topic;
+import cn.j1angvei.cnbetareader.service.OfflineDownloadService;
 
 /**
  * Created by Wayne on 2016/6/13.
@@ -70,5 +71,13 @@ public final class Navigator {
             intent.putExtra(NewsActivity.EXIT, isExit);
             context.startActivity(intent);
         }
+    }
+
+    public static void toOfflineDownload(Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, OfflineDownloadService.class);
+            context.startService(intent);
+        }
+
     }
 }

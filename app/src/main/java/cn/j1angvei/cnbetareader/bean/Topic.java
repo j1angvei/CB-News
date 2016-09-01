@@ -11,8 +11,8 @@ public class Topic implements Parcelable {
     private String id;
     private String title;
     private String thumb;
-    private String letter;
     private boolean isAdded;
+    private int page;
 
     public String getId() {
         return id;
@@ -38,13 +38,12 @@ public class Topic implements Parcelable {
         this.thumb = thumb;
     }
 
-    public String getLetter() {
-        return letter;
+    public int getPage() {
+        return page;
     }
 
-    public void setLetter(String letter) {
-
-        this.letter = letter;
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public boolean isAdded() {
@@ -53,46 +52,6 @@ public class Topic implements Parcelable {
 
     public void setAdded(boolean added) {
         isAdded = added;
-    }
-
-    @Override
-    public String toString() {
-        return "Topic{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", thumb='" + thumb + '\'' +
-                ", letter='" + letter + '\'' +
-                ", isAdded=" + isAdded +
-                '}';
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Topic topic = (Topic) o;
-
-        if (isAdded != topic.isAdded) return false;
-        if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
-        if (title != null ? !title.equals(topic.title) : topic.title != null) return false;
-        if (thumb != null ? !thumb.equals(topic.thumb) : topic.thumb != null) return false;
-        return letter != null ? letter.equals(topic.letter) : topic.letter == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (thumb != null ? thumb.hashCode() : 0);
-        result = 31 * result + (letter != null ? letter.hashCode() : 0);
-        result = 31 * result + (isAdded ? 1 : 0);
-        return result;
-    }
-
-    public Topic() {
     }
 
     @Override
@@ -105,16 +64,19 @@ public class Topic implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.title);
         dest.writeString(this.thumb);
-        dest.writeString(this.letter);
         dest.writeByte(this.isAdded ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.page);
+    }
+
+    public Topic() {
     }
 
     protected Topic(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
         this.thumb = in.readString();
-        this.letter = in.readString();
         this.isAdded = in.readByte() != 0;
+        this.page = in.readInt();
     }
 
     public static final Creator<Topic> CREATOR = new Creator<Topic>() {
@@ -128,4 +90,29 @@ public class Topic implements Parcelable {
             return new Topic[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Topic topic = (Topic) o;
+
+        if (isAdded != topic.isAdded) return false;
+        if (page != topic.page) return false;
+        if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
+        if (title != null ? !title.equals(topic.title) : topic.title != null) return false;
+        return thumb != null ? thumb.equals(topic.thumb) : topic.thumb == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (thumb != null ? thumb.hashCode() : 0);
+        result = 31 * result + (isAdded ? 1 : 0);
+        result = 31 * result + page;
+        return result;
+    }
 }

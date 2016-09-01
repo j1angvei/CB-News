@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -25,17 +23,17 @@ public class MyTopicsRepository extends Repository<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> getData(String isAscend, Map<String, String> param) {
-        return mLocalSource.read(isAscend);
+    public Observable<MyTopic> getData(String id, String param, int page) {// no param is needed
+        return mLocalSource.read(null, null, 0);
     }
 
     @Override
-    public void toDisk(MyTopic item) {
+    public void storeToDisk(MyTopic item) {
         mLocalSource.create(item);
     }
 
     @Override
-    void toRAM(MyTopic item) {
+    void storeToMemory(MyTopic item) {
 
     }
 }

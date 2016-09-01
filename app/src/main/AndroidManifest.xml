@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CBTheme">
+        <!--activities-->
         <activity
             android:name=".activity.NewsActivity"
             android:launchMode="singleTask"
@@ -44,5 +45,9 @@
         <activity
             android:name=".activity.TopicNewsActivity"
             android:theme="@style/CBTheme.TransparentStatusBar"/>
+        <!--services-->
+        <service
+            android:name=".service.OfflineDownloadService"
+            android:exported="false"/>
     </application>
 </manifest>

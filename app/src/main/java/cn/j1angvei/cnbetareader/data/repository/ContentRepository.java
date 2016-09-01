@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -28,25 +26,25 @@ public class ContentRepository extends Repository<Content> {
     }
 
     @Override
-    public Observable<Content> getData(String sid, Map<String, String> param) {
+    public Observable<Content> getData(String id, String param, int page) {// only need id here
         return isConnected() ?
-                mRemoteSource.getData(sid, param)
+                mRemoteSource.loadData(0, id)
                         .doOnNext(new Action1<Content>() {
                             @Override
                             public void call(Content content) {
-                                toDisk(content);
+                                storeToDisk(content);
                             }
                         }) :
-                mLocalSource.read(sid);
+                mLocalSource.read(id, null, 0);
     }
 
     @Override
-    public void toDisk(Content item) {
+    public void storeToDisk(Content item) {
         mLocalSource.create(item);
     }
 
     @Override
-    public void toRAM(Content item) {
+    public void storeToMemory(Content item) {
 
     }
 }

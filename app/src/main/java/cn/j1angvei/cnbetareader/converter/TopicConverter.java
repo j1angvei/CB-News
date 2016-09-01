@@ -18,7 +18,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class TopicConverter implements Converter<Topic> {
+public class TopicConverter implements Converter<String, Topic> {
     @Inject
     public TopicConverter() {
     }

@@ -10,7 +10,6 @@ import cn.j1angvei.cnbetareader.bean.Review;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
@@ -30,8 +29,8 @@ public class ReviewModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Review> reviewsPresenter(@Named(REVIEW) NewsRepository<Review> repository, ApiUtil apiUtil) {
-        return new NewsPresenter<>(repository, apiUtil);
+    NewsPresenter<Review> reviewsPresenter(@Named(REVIEW) NewsRepository<Review> repository) {
+        return new NewsPresenter<>(repository);
     }
 
 }

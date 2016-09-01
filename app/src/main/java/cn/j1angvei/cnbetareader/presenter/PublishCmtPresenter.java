@@ -4,12 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import cn.j1angvei.cnbetareader.contract.PublishCmtContract;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cnbetareader.data.remote.response.PublishCmtResponse;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
@@ -26,14 +25,12 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class PublishCmtPresenter implements PublishCmtContract.Presenter {
-    private final CnbetaApi mApi;
-    private final ApiUtil mApiUtil;
+    private final CBApiWrapper mApiWrapper;
     private PublishCmtContract.View mView;
 
     @Inject
-    public PublishCmtPresenter(CnbetaApi api, ApiUtil apiUtil) {
-        mApi = api;
-        mApiUtil = apiUtil;
+    public PublishCmtPresenter(CBApiWrapper wrapper) {
+        mApiWrapper = wrapper;
     }
 
     @Override
@@ -42,17 +39,15 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
     }
 
     @Override
-    public void getCaptchaImage(String sid) {
+    public void getCaptchaImage(final String sid) {
         mView.showLoading();
-        final String referer = HeaderUtil.assembleRefererValue(sid);
-        Map<String, String> param = mApiUtil.getCaptchaUrlParam();
-        mApi.getCaptchaUrl(referer, param)
+        mApiWrapper.getCaptchaVerify(sid)
                 .flatMap(new Func1<ResponseBody, Observable<ResponseBody>>() {
                     @Override
                     public Observable<ResponseBody> call(ResponseBody body) {
                         try {
-                            String url = ApiUtil.parseCaptchaParamV(body.string());
-                            return mApi.getCaptchaImage(referer, url);
+                            String verify = ApiUtil.parseCaptchaVerify(body.string());
+                            return mApiWrapper.getCaptchaImage(sid, verify);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -88,8 +83,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
     @Override
     public void sendComment(String content, String captcha, String sid, final String pid) {
         String refer = HeaderUtil.assembleRefererValue(sid);
-        Map<String, String> param = mApiUtil.getPublishCommentParam(content, captcha, sid, pid);
-        mApi.publishComment(refer, param)
+        mApiWrapper.publishComment(refer, captcha, sid, pid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PublishCmtResponse>() {

@@ -8,7 +8,6 @@ import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.contract.MyTopicsContract;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -19,13 +18,11 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class MyTopicsPresenter implements MyTopicsContract.Presenter {
     private final MyTopicsRepository mRepository;
-    private final PrefsUtil mPrefsUtil;
     private MyTopicsContract.View mView;
 
     @Inject
-    public MyTopicsPresenter(MyTopicsRepository repository, PrefsUtil prefsUtil) {
+    public MyTopicsPresenter(MyTopicsRepository repository) {
         mRepository = repository;
-        mPrefsUtil = prefsUtil;
     }
 
     @Override
@@ -35,8 +32,7 @@ public class MyTopicsPresenter implements MyTopicsContract.Presenter {
 
     @Override
     public void retrieveMyTopics() {
-        boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.KEY_MY_TOPICS_ORDER);
-        mRepository.getData(String.valueOf(isAscend), null)
+        mRepository.getData(null, null, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()

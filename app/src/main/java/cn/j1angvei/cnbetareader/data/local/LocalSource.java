@@ -9,7 +9,7 @@ public interface LocalSource<T> {
 
     void create(T item);
 
-    Observable<T> read(String queryParam);
+    Observable<T> read(String id, String sourceType, int page);
 
     void update(T item);
 

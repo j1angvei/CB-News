@@ -1,22 +1,17 @@
 package cn.j1angvei.cnbetareader.data.remote;
 
-import java.util.Map;
-
-import cn.j1angvei.cnbetareader.converter.Converter;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import rx.Observable;
 
 /**
  * Created by Wayne on 2016/7/23.
  */
 public abstract class RemoteSource<T> {
-    final CnbetaApi mCnbetaApi;
-    final Converter<T> mConverter;
+    final CBApiWrapper mApiWrapper;
 
-    public RemoteSource(CnbetaApi api, Converter<T> converter) {
-        mCnbetaApi = api;
-        mConverter = converter;
+    public RemoteSource(CBApiWrapper wrapper) {
+        mApiWrapper = wrapper;
     }
 
-    public abstract Observable<T> getData(String extra, Map<String, String> param);
+    public abstract Observable<T> loadData(int page, String... args);
 }

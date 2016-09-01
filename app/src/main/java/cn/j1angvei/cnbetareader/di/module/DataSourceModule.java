@@ -17,7 +17,7 @@ import cn.j1angvei.cnbetareader.data.local.helper.BookmarkDbHelper;
 import cn.j1angvei.cnbetareader.data.local.helper.HeadlineDbHelper;
 import cn.j1angvei.cnbetareader.data.local.helper.ReviewDbHelper;
 import cn.j1angvei.cnbetareader.data.remote.NewsRemoteSource;
-import cn.j1angvei.cnbetareader.data.remote.api.CnbetaApi;
+import cn.j1angvei.cnbetareader.data.remote.api.CBApiWrapper;
 import dagger.Module;
 import dagger.Provides;
 
@@ -62,28 +62,28 @@ public class DataSourceModule {
     @Provides
     @Singleton
     @Named(ARTICLE)
-    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CnbetaApi api, ArticleConverter converter) {
-        return new NewsRemoteSource<>(api, converter);
+    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter) {
+        return new NewsRemoteSource<>(wrapper, converter);
     }
 
     @Provides
     @Singleton
     @Named(REVIEW)
-    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CnbetaApi api, ReviewConverter converter) {
-        return new NewsRemoteSource<>(api, converter);
+    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CBApiWrapper wrapper, ReviewConverter converter) {
+        return new NewsRemoteSource<>(wrapper, converter);
     }
 
     @Provides
     @Singleton
     @Named(HEADLINE)
-    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CnbetaApi api, HeadlineConverter converter) {
-        return new NewsRemoteSource<>(api, converter);
+    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CBApiWrapper wrapper, HeadlineConverter converter) {
+        return new NewsRemoteSource<>(wrapper, converter);
     }
 
     @Provides
     @Singleton
     @Named(BOOKMARK)
-    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CnbetaApi api, BookmarkConverter converter) {
-        return new NewsRemoteSource<>(api, converter);
+    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CBApiWrapper wrapper, BookmarkConverter converter) {
+        return new NewsRemoteSource<>(wrapper, converter);
     }
 }

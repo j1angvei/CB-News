@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -30,23 +28,18 @@ public class AllTopicsRepository extends Repository<Topic> {
         mRemoteSource = remoteSource;
     }
 
-    /**
-     * @param letter index of the topic
-     * @param param  should be null
-     * @return Topics started with "letter"
-     */
     @Override
-    public Observable<Topic> getData(final String letter, final Map<String, String> param) {
-        return mLocalSource.read(letter)
+  public Observable<Topic> getData(final String id, String param, final int page) {
+        return mLocalSource.read(id, param, page)
                 .onErrorResumeNext(new Func1<Throwable, Observable<Topic>>() {
                     @Override
                     public Observable<Topic> call(Throwable throwable) {
                         if (isConnected()) {
-                            return mRemoteSource.getData(letter, param)
+                            return mRemoteSource.loadData(page)
                                     .doOnNext(new Action1<Topic>() {
                                         @Override
                                         public void call(Topic topic) {
-                                            toDisk(topic);
+                                            storeToDisk(topic);
                                         }
                                     });
                         } else {
@@ -57,11 +50,11 @@ public class AllTopicsRepository extends Repository<Topic> {
     }
 
     @Override
-    public void toDisk(Topic item) {
+    public void storeToDisk(Topic item) {
         mLocalSource.create(item);
     }
 
     @Override
-    public void toRAM(Topic item) {
+    public void storeToMemory(Topic item) {
     }
 }

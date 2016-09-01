@@ -15,20 +15,20 @@ import cn.j1angvei.cnbetareader.di.component.ApplicationComponent;
 public abstract class BaseActivity extends AppCompatActivity {
     protected ActivityComponent mActivityComponent;
 
-    protected ApplicationComponent getApplicationComponent() {
-        return ((CBApplication) getApplication()).getApplicationComponent();
-    }
-
-    public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseIntent();
         doInjection();
         initView();
+    }
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((CBApplication) getApplication()).getApplicationComponent();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return mActivityComponent;
     }
 
     protected abstract void parseIntent();

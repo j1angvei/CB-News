@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.AddMyTopicContract;
+import cn.j1angvei.cnbetareader.converter.MyTopicsConverter;
 import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.data.repository.MyTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,18 +28,19 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
     private AddMyTopicContract.View mView;
     private final AllTopicsRepository mAllTopicsRepository;
     private final MyTopicsRepository mRepository;
+    private final MyTopicsConverter mConverter;
 
     @Inject
-    public AddTopicPresenter(AllTopicsRepository allTopicsRepository, MyTopicsRepository repository) {
+    public AddTopicPresenter(AllTopicsRepository allTopicsRepository, MyTopicsRepository repository, MyTopicsConverter converter) {
         mAllTopicsRepository = allTopicsRepository;
         mRepository = repository;
+        mConverter = converter;
     }
 
     @Override
-    public void retrieveTopics(final int groupPosition) {
+    public void retrieveTopics(final int page) {
         mView.showLoading();
-        String letter = ApiUtil.pageToLetter(groupPosition + 1);
-        mAllTopicsRepository.getData(letter, null)
+        mAllTopicsRepository.getData(null, null, page)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,7 +57,7 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
 
                     @Override
                     public void onNext(List<Topic> topics) {
-                        mView.renderTopics(groupPosition, topics);
+                        mView.renderTopics(page, topics);
                     }
                 });
     }
@@ -64,15 +65,10 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
     @Override
     public void addToMyTopics(List<Topic> topics) {
         Observable.from(topics)
-                .map(new Func1<Topic, MyTopic>() {
+                .flatMap(new Func1<Topic, Observable<MyTopic>>() {
                     @Override
-                    public MyTopic call(Topic topic) {
-                        MyTopic myTopic = new MyTopic();
-                        myTopic.setLetter(topic.getLetter());
-                        myTopic.setId(topic.getId());
-                        myTopic.setThumb(topic.getThumb());
-                        myTopic.setTitle(topic.getTitle());
-                        return myTopic;
+                    public Observable<MyTopic> call(Topic topic) {
+                        return mConverter.toObservable(topic);
                     }
                 })
                 .subscribe(new Subscriber<MyTopic>() {
@@ -88,7 +84,7 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
 
                     @Override
                     public void onNext(MyTopic myTopic) {
-                        mRepository.toDisk(myTopic);
+                        mRepository.storeToDisk(myTopic);
                     }
                 });
 

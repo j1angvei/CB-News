@@ -61,7 +61,7 @@ public class ContentActivity extends BaseActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle(R.string.title_activity_content);
+//        actionBar.setTitle(R.string.title_activity_content);
         //fab
         mFab.setImageResource(R.drawable.ic_group_comments_white);
         //viewpager
@@ -71,6 +71,7 @@ public class ContentActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 final News news = mNewses.get(position);
+                setTitle(news.getTitle());
                 mFab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

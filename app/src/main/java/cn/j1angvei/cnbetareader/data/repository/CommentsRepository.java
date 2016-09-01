@@ -1,7 +1,5 @@
 package cn.j1angvei.cnbetareader.data.repository;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -28,25 +26,25 @@ public class CommentsRepository extends Repository<Comments> {
     }
 
     @Override
-    public Observable<Comments> getData(String sid, Map<String, String> param) {
+    public Observable<Comments> getData(String id, String param, int page) {//param is "SN" here
         return isConnected() ?
-                mRemoteSource.getData(sid, param)
+                mRemoteSource.loadData(page, id, param)
                         .doOnNext(new Action1<Comments>() {
                             @Override
                             public void call(Comments comments) {
-                                toDisk(comments);
+                                storeToDisk(comments);
                             }
                         }) :
-                mLocalSource.read(sid);
+                mLocalSource.read(id, null, page);
     }
 
     @Override
-    public void toDisk(Comments item) {
+    public void storeToDisk(Comments item) {
         mLocalSource.create(item);
     }
 
     @Override
-    public void toRAM(Comments item) {
+    public void storeToMemory(Comments item) {
     }
 
 }

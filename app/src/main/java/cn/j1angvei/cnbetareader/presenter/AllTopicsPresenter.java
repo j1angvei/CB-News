@@ -9,8 +9,6 @@ import cn.j1angvei.cnbetareader.bean.Topic;
 import cn.j1angvei.cnbetareader.contract.AllTopicsContract;
 import cn.j1angvei.cnbetareader.data.repository.AllTopicsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
-import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -22,20 +20,17 @@ import rx.schedulers.Schedulers;
 public class AllTopicsPresenter implements AllTopicsContract.Presenter {
     private static final String TAG = "AllTopicsPresenter";
     private final AllTopicsRepository mRepository;
-    private final PrefsUtil mPrefsUtil;
     private AllTopicsContract.View mView;
 
     @Inject
-    public AllTopicsPresenter(AllTopicsRepository repository, PrefsUtil prefsUtil) {
+    public AllTopicsPresenter(AllTopicsRepository repository) {
         mRepository = repository;
-        mPrefsUtil = prefsUtil;
     }
 
     @Override
     public void retrieveTopics(int page) {
         mView.showLoading();
-        String letter = ApiUtil.pageToLetter(page);
-        mRepository.getData(letter, null)
+        mRepository.getData(null, null, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Topic>() {
@@ -47,6 +42,7 @@ public class AllTopicsPresenter implements AllTopicsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: ", e);
+                        e.printStackTrace();
                     }
 
                     @Override

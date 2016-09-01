@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.MyTopic;
 import cn.j1angvei.cnbetareader.data.local.helper.MyTopicsDbHelper;
+import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import rx.Observable;
 
 import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.ASCEND;
@@ -21,10 +22,12 @@ import static cn.j1angvei.cnbetareader.data.local.helper.DbHelper.SELECT_FROM;
 public class MyTopicsLocalSource implements LocalSource<MyTopic> {
     private static final String TAG = "MyTopicsLocalSource";
     private final MyTopicsDbHelper mDbHelper;
+    private final PrefsUtil mPrefsUtil;
 
     @Inject
-    public MyTopicsLocalSource(MyTopicsDbHelper dbHelper) {
+    public MyTopicsLocalSource(MyTopicsDbHelper dbHelper, PrefsUtil prefsUtil) {
         mDbHelper = dbHelper;
+        mPrefsUtil = prefsUtil;
     }
 
     @Override
@@ -33,8 +36,8 @@ public class MyTopicsLocalSource implements LocalSource<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> read(String isAscendString) {
-        boolean isAscend = Boolean.parseBoolean(isAscendString);
+    public Observable<MyTopic> read(String id, String sourceType, int page) {
+        boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.MY_TOPICS_IS_ASCEND);
         String query = SELECT_FROM + BLANK +
                 mDbHelper.getTableName() +
                 BLANK + ORDER_BY + BLANK + COL_ADD_ORDER + BLANK + (isAscend ? ASCEND : DESCEND);

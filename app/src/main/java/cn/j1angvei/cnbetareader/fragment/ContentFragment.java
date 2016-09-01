@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -100,7 +101,12 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         //need to implement WebViewClient later to deal with link in WebView
-        wvDetail.setWebViewClient(new WebViewClient());
+        wvDetail.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return true;
+            }
+        });
         wvDetail.setWebChromeClient(new WebChromeClient());
         WebSettings settings = wvDetail.getSettings();
         settings.setJavaScriptEnabled(true);

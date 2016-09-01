@@ -10,7 +10,6 @@ import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
 import cn.j1angvei.cnbetareader.presenter.NewsPresenter;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,7 +28,7 @@ public class BookmarkModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Bookmark> bookmarkPresenter(@Named(BOOKMARK) NewsRepository<Bookmark> repository, ApiUtil apiUtil) {
-        return new NewsPresenter<>(repository, apiUtil);
+    NewsPresenter<Bookmark> bookmarkPresenter(@Named(BOOKMARK) NewsRepository<Bookmark> repository) {
+        return new NewsPresenter<>(repository);
     }
 }
