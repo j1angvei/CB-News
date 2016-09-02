@@ -29,7 +29,7 @@ public class NetworkUtil {
         return isNetworkOn() && mConnMgr.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
     }
 
-    public boolean isDataOn() {
+    public boolean isCellularOn() {
         NetworkInfo activeNetworkInfo = mConnMgr.getActiveNetworkInfo();
         return isNetworkOn() && mConnMgr.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE;
 

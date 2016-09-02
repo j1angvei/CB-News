@@ -2,8 +2,6 @@ package cn.j1angvei.cnbetareader.converter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Tag;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
-import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.StringUtil;
 import rx.Observable;
@@ -32,10 +29,10 @@ public class ContentConverter implements Converter<String, Content> {
 
     @Override
     public Content to(String html) {
-        Content content = null;
+        Content content;
         try {
             content = new Content();
-            Document doc = Jsoup.parse(html, ApiUtil.BASE_URL);
+            Document doc = Jsoup.parse(html);
             //parse title
             String title = doc.getElementById("news_title").text();
             content.setTitle(StringUtil.removeBlanks(title));
@@ -54,25 +51,8 @@ public class ContentConverter implements Converter<String, Content> {
             String introduction = doc.select(".introduction > p").text();
             content.setSummary(StringUtil.removeBlanks(introduction));
             //parse detail
-            Element elementContent = doc.getElementsByClass("content").first();
-            //convert relative url to absolute url
-            for (Element e : elementContent.select("a[href]")) {
-                e.attr("href", e.absUrl("href"));
-            }
-            //modify width to fit device width
-            elementContent.select("[width]").attr("width", "100%");
-            //remove height
-            elementContent.select("[height]").removeAttr("height");
-            //make image to fit device width
-            elementContent.select("img").attr("width", "100%");
-            //generate new element to wrap content
-            Element container = new Element(Tag.valueOf("html"), "");
-            //viewport makes content adjusts to content width,justify style makes content justify
-            container.html("<head><meta name=\"viewport\" content=\"width=device-width,user-scalable=no\"></head><body style=\"text-align:justify\"></body>");
-            //modify width in javascript to 100%
-            String detail = elementContent.html().replaceAll("\"width\":\"\\d+\"", "\"width\":\"100%\"");
-            container.getElementsByTag("body").first().html(detail);
-            content.setDetail(StringUtil.removeTailingBlanks(container.outerHtml()));
+            String detail = doc.getElementsByClass("content").first().outerHtml();
+            content.setDetail(StringUtil.removeTailingBlanks(detail));
             //parse sid, sn and token
             Pattern pattern;
             Matcher matcher;

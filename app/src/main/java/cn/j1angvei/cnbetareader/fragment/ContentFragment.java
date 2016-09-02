@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -29,14 +28,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
+import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.contract.ContentContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.FragmentModule;
 import cn.j1angvei.cnbetareader.presenter.ContentPresenter;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.DateUtil;
+import cn.j1angvei.cnbetareader.util.HtmlUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
+import cn.j1angvei.cnbetareader.web.JsInterface;
 
 /**
  * Created by Wayne on 2016/7/21.
@@ -59,6 +63,8 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     ProgressBar mProgressBar;
     @Inject
     ContentPresenter mPresenter;
+    @Inject
+    NetworkUtil mNetworkUtil;
     CoordinatorLayout mCoordinatorLayout;
     private Content mContent;
     private String mSid;
@@ -98,24 +104,32 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     private void setupWebView() {
-        //need to implement WebViewClient later to deal with link in WebView
-        wvDetail.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return true;
-            }
-        });
-        wvDetail.setWebChromeClient(new WebChromeClient());
-        WebSettings settings = wvDetail.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setLoadsImagesAutomatically(true);
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
+        WebSettings webSettings = wvDetail.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
         if (Build.VERSION.SDK_INT >= 19) {
-            settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         }
+        //new added
+        webSettings.setDefaultTextEncodingName("utf-8");
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
+        webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
+        webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
+        webSettings.setAppCachePath(getActivity().getCacheDir().getAbsolutePath());
+        if (mNetworkUtil.isNetworkOn()) {
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        } else {
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+        wvDetail.setWebViewClient(new WebViewClient());
+        wvDetail.setWebChromeClient(new WebChromeClient());
+        wvDetail.addJavascriptInterface(new JsInterface(getActivity()), "Android");
+
     }
 
     @Override
@@ -166,6 +180,7 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     @Override
     public void renderContent(Content content) {
         mContent = content;
+        String html = HtmlUtil.wrapContent(((ContentActivity) getActivity()).isNightMode(), content.getDetail());
         tvTitle.setText(content.getTitle());
         String header = String.format(getActivity().getResources().getString(R.string.ph_news_content_header),
                 DateUtil.toLongDatePlusTime(content.getTime(), getActivity()), content.getSource());
@@ -174,7 +189,7 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         //thumb
         Glide.with(getActivity()).load(content.getThumb()).into(ivThumb);
         //detail
-        wvDetail.loadData(content.getDetail(), "text/html;charset=utf-8", "utf-8");
+        wvDetail.loadDataWithBaseURL(ApiUtil.BASE_URL, html, "text/html", "utf-8", null);
     }
 
     @Override

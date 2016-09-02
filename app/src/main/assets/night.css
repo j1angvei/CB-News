@@ -1,0 +1,26 @@
+* {
+	margin: 0; padding: 0;
+	border: none;
+	outline: none;
+}
+body {
+	width:100%;
+	height: auto;
+	background-color: #313131;
+	color: #4B4B4B;
+	text-align:justify;
+}
+h1,h2,h3,h4,h5,h6 {
+	margin: 10px auto;
+	color: #565656;
+}
+#content {
+	font-size: 19px;
+	line-height: 1.5; height: auto; width: auto;
+	overflow: hidden;
+	padding: 5px 10px;
+}
+#content img {
+	max-width: 100%; width: auto; height: auto;
+	margin: 10px auto;
+}

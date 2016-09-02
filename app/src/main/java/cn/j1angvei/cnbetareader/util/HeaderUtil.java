@@ -25,11 +25,6 @@ public class HeaderUtil {
             "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30O) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
 
     /**
-     * Cookie will automatically handled by {@link cn.j1angvei.cnbetareader.data.remote.api.CnBetaCookieJar}
-     */
-    public static final String KEY_COOKIE = "Cookie";
-
-    /**
      * If no header in request, this will add to the request in {@link AddHeaderInterceptor}
      */
     public static final String KEY_REFERER = "Referer";
@@ -60,11 +55,6 @@ public class HeaderUtil {
     private static final String KEY_PRAGMA = "Pragma";
     private static final String VALUE_PRAGMA = "no-cache";
     public static final String HEADER_PRAGMA = KEY_PRAGMA + ":" + VALUE_PRAGMA;
-    /**
-     * Headers handled by okhttp
-     */
-    private static final String KEY_ENCODING = "Accept-Encoding";
-    private static final String VALUE_ENCODING = "gzip, deflate";
 
     /**
      * Dynamic Headers
@@ -75,9 +65,5 @@ public class HeaderUtil {
 
     public static String assembleRefererValue(String sid) {
         return VALUE_REFERER_HEAD + sid + VALUE_REFERER_TAIL;
-    }
-
-    public static String parseSidFromRefererValue(String referer) {
-        return referer.replace(VALUE_REFERER_HEAD, "").replace(VALUE_REFERER_TAIL, "");
     }
 }

@@ -1,5 +1,6 @@
 package cn.j1angvei.cnbetareader.activity;
 
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -9,6 +10,8 @@ import android.view.View;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
@@ -17,6 +20,7 @@ import cn.j1angvei.cnbetareader.bean.News;
 import cn.j1angvei.cnbetareader.di.component.DaggerActivityComponent;
 import cn.j1angvei.cnbetareader.di.module.ActivityModule;
 import cn.j1angvei.cnbetareader.util.Navigator;
+import cn.j1angvei.cnbetareader.util.NetworkUtil;
 
 /**
  * Created by Wayne on 2016/7/5.
@@ -35,6 +39,8 @@ public class ContentActivity extends BaseActivity {
     ContentPagerAdapter mAdapter;
     private List<News> mNewses;
     private int mInitPos;
+    @Inject
+    NetworkUtil mNetworkUtil;
 
     @Override
     protected void parseIntent() {
@@ -92,5 +98,15 @@ public class ContentActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public boolean isNightMode() {
+        int mode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        return mode == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    public boolean isAutoLoadImage() {
+        return mNetworkUtil.isWifiOn();
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import cn.j1angvei.cnbetareader.activity.CommentsActivity;
 import cn.j1angvei.cnbetareader.activity.ContentActivity;
+import cn.j1angvei.cnbetareader.activity.ContentImageActivity;
 import cn.j1angvei.cnbetareader.activity.NewsActivity;
 import cn.j1angvei.cnbetareader.activity.SettingsActivity;
 import cn.j1angvei.cnbetareader.activity.TopicNewsActivity;
@@ -69,6 +70,15 @@ public final class Navigator {
         if (context != null) {
             Intent intent = new Intent(context, NewsActivity.class);
             intent.putExtra(NewsActivity.EXIT, isExit);
+            context.startActivity(intent);
+        }
+    }
+
+    public static void toContentImage(int pos, String[] urls, Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, ContentImageActivity.class);
+            intent.putExtra(ContentImageActivity.CUR_POS, pos);
+            intent.putExtra(ContentImageActivity.IMG_URLS, urls);
             context.startActivity(intent);
         }
     }

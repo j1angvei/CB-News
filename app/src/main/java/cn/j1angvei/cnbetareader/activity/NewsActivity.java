@@ -188,6 +188,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 Navigator.toOfflineDownload(this);
                 return true;
             case R.id.nav_settings:
+                Navigator.toSettings(this);
                 return true;
             case R.id.nav_exit:
                 Navigator.toExit(true, this);
