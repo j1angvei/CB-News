@@ -1,14 +1,13 @@
-<svg height="400" width="580" xmlns="http://www.w3.org/2000/svg">
-    <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-    <g>
-        <title>background</title>
-        <rect fill="#fff" height="402" id="canvas_background" width="582" x="-1" y="-1"/>
-        <g display="none" height="100%" id="canvasGrid" overflow="visible" width="100%" x="0" y="0">
-            <rect fill="url(#gridpattern)" height="100%" stroke-width="0" width="100%" x="0" y="0"/>
-        </g>
-    </g>
-    <g>
-        <title>Layer 1</title>
-        <text style="cursor: move;" fill="#000000" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_1" stroke="#000" stroke-width="0" text-anchor="start" x="184.5" y="208" xml:space="preserve">Fail to load image</text>
-    </g>
+<svg width="700" height="220" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="#E0E0E0" id="canvas_background" height="222.168771" width="702.536998" y="-1" x="-1"/>
+ </g>
+
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" fill="none" d="m0,0l24,0l0,24l-24,0l0,-24zm0,24l24,0l0,24l-24,0l0,-24zm21,19c0,1.1 -0.9,2 -2,2l-14,0c-1.1,0 -2,-0.9 -2,-2l0,-38c0,-1.1 0.9,-2 2,-2l14,0c1.1,0 2,0.9 2,2"/>
+  <path id="svg_2" fill="none" d="m0,0l24,0l0,24l-24,0l0,-24z"/>
+  <path stroke="null" id="svg_3" d="m412.999994,63.722223l0,43.567221l-20.999998,-19.899444l-27.999997,26.510555l-27.999997,-26.444444l-27.999997,26.444444l-20.999998,-19.899444l0,-30.278888c0,-7.272222 6.299999,-13.222222 13.999999,-13.222222l97.999991,0c7.699999,0 13.999999,5.95 13.999999,13.222222zm-20.999998,42.443332l20.999998,19.899444l0,30.212777c0,7.272222 -6.299999,13.222222 -13.999999,13.222222l-97.999991,0c-7.699999,0 -13.999999,-5.95 -13.999999,-13.222222l0,-43.50111l20.999998,19.767222l27.999997,-26.444444l27.999997,26.444444l27.999997,-26.378333z" fill="#C7C7C7"/>
+ </g>
 </svg>

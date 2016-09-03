@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorPrimaryLight">#C5CAE9</color>
-    <color name="colorAccent">#FF5252</color>
-
-    <color name="textPrimary">#DE000000</color>
-    <color name="textSecondary">#8A000000</color>
-    <color name="textHint">#61000000</color>
-    <color name="dividers">#1F000000</color>
-
-    <!--color in comment-->
-    <color name="bgCommentRef">#FFFFEE</color>
-    <color name="bgCommentRefBorder">#999999</color>
-    <color name="numberComment">#CC0000</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimaryLight">#B2DFDB</color>
+    <color name="colorAccent">#9C27B0</color>
+    <color name="colorAccentDark">#7B1FA2</color>
+    <color name="colorAccentLight">#BA68C8</color>
 </resources>

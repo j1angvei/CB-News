@@ -28,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.activity.BaseActivity;
-import cn.j1angvei.cnbetareader.activity.ContentActivity;
 import cn.j1angvei.cnbetareader.bean.Content;
 import cn.j1angvei.cnbetareader.contract.ContentContract;
 import cn.j1angvei.cnbetareader.di.component.ActivityComponent;
@@ -117,9 +116,9 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         //new added
         webSettings.setDefaultTextEncodingName("utf-8");
         webSettings.setAllowFileAccess(true);
-        webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
-        webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
-        webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setAppCacheEnabled(true);
         webSettings.setAppCachePath(getActivity().getCacheDir().getAbsolutePath());
         if (mNetworkUtil.isNetworkOn()) {
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -178,9 +177,9 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     }
 
     @Override
-    public void renderContent(Content content) {
+    public void renderContent(final Content content) {
         mContent = content;
-        String html = HtmlUtil.wrapContent(((ContentActivity) getActivity()).isNightMode(), content.getDetail());
+        String html = HtmlUtil.wrapContent(content.getDetail());
         tvTitle.setText(content.getTitle());
         String header = String.format(getActivity().getResources().getString(R.string.ph_news_content_header),
                 DateUtil.toLongDatePlusTime(content.getTime(), getActivity()), content.getSource());
@@ -188,6 +187,11 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         tvSummary.setText(content.getSummary());
         //thumb
         Glide.with(getActivity()).load(content.getThumb()).into(ivThumb);
+        ivThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         //detail
         wvDetail.loadDataWithBaseURL(ApiUtil.BASE_URL, html, "text/html", "utf-8", null);
     }

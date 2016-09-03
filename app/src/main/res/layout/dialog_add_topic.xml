@@ -4,7 +4,6 @@
     android:id="@+id/dialog_add_topic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dialog_margin_horz"
     android:paddingRight="@dimen/dialog_margin_horz"

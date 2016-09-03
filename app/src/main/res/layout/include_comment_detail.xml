@@ -7,12 +7,7 @@
 
     <TextView
         android:id="@+id/tv_comment_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Comment summary"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/text_size_small">
-
+        style="@style/CBTheme.Text.Title.Small">
     </TextView>
 
     <LinearLayout
@@ -24,44 +19,18 @@
 
         <TextView
             android:id="@+id/tv_comment_support"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:text="Support"
-            android:textAllCaps="true"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/text_size_extra_small"/>
+            style="@style/CBTheme.Text.Button.Comment"/>
 
         <TextView
             android:id="@+id/tv_comment_against"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:text="Against"
-            android:textAllCaps="true"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/text_size_extra_small"/>
+            style="@style/CBTheme.Text.Button.Comment"/>
 
         <TextView
             android:id="@+id/tv_comment_popup"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/CBTheme.Text.Button.Comment"
             android:layout_gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
             android:drawableLeft="@drawable/ic_comment_more_action"
             android:drawableStart="@drawable/ic_comment_more_action"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:text=""/>
     </LinearLayout>
 </LinearLayout>

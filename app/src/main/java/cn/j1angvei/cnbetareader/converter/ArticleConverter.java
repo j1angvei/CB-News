@@ -21,7 +21,6 @@ import rx.functions.Action1;
  */
 @Singleton
 public class ArticleConverter extends NewsConverter<Article> {
-
     @Inject
     public ArticleConverter(Gson gson) {
         super(gson);
@@ -50,13 +49,7 @@ public class ArticleConverter extends NewsConverter<Article> {
                 .doOnNext(new Action1<Article>() {
                     @Override
                     public void call(Article article) {
-                        String source = article.getSource();
-                        if (source == null) {
-                            article.setSource("null");
-                        } else if (source.contains("@")) {
-                            source = source.substring(0, source.indexOf('@') - 1);
-                            article.setSource(source);
-                        }
+                        article.setSource(ApiUtil.removeAtChar(article.getSource()));
                         String summary = Html.fromHtml(article.getSummary()).toString();
                         article.setSummary(summary);
                     }

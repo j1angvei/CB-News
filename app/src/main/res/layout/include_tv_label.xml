@@ -2,15 +2,11 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tv_label_primary"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/CBTheme.Text.Caption"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="8dp"
-    android:clickable="false"
     android:paddingLeft="4dp"
     android:paddingRight="4dp"
-    android:text="@string/publish_cmt_your_comment"
-    android:textColor="@color/colorPrimary"
-    android:textSize="@dimen/text_size_small">
+    android:textColor="@color/colorAccent">
 
 </TextView>

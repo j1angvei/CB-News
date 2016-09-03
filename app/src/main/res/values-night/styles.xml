@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CBTheme.PopupOverlay">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+    </style>
+
+    <style name="CBTheme.Image">
+        <item name="android:alpha">0.4</item>
+    </style>
+
+    <style name="CBTheme.Text.Hint.Headline">
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">?android:attr/textColorHint</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:drawableLeft">@drawable/ic_headline_relate</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="CBTheme.Backdrop" parent="CBTheme.AppBarOverlay">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/backdrop_height</item>
+        <item name="android:alpha">0.4</item>
+    </style>
+</resources>

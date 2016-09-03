@@ -38,7 +38,7 @@ public class FragmentModule {
     @Provides
     @PerFragment
     GridLayoutManager provideGridLayoutManager(Fragment fragment) {
-        return new GridLayoutManager(fragment.getContext(), 3);
+        return new GridLayoutManager(fragment.getContext(), 4);
     }
 
     @Provides

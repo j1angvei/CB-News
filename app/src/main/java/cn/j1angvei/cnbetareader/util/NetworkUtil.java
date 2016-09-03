@@ -32,6 +32,5 @@ public class NetworkUtil {
     public boolean isCellularOn() {
         NetworkInfo activeNetworkInfo = mConnMgr.getActiveNetworkInfo();
         return isNetworkOn() && mConnMgr.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE;
-
     }
 }

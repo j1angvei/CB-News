@@ -100,13 +100,13 @@ public class ContentActivity extends BaseActivity {
         }
     }
 
-    public boolean isNightMode() {
+    public boolean isNightModeOn() {
         int mode = getResources().getConfiguration().uiMode
                 & Configuration.UI_MODE_NIGHT_MASK;
         return mode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     public boolean isAutoLoadImage() {
-        return mNetworkUtil.isWifiOn();
+        return !mNetworkUtil.isCellularOn();
     }
 }

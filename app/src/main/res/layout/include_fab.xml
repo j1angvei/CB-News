@@ -9,7 +9,6 @@
     android:layout_margin="@dimen/fab_margin"
     android:clickable="true"
     android:src="@drawable/ic_scroll_to_top"
-    android:tint="@android:color/white"
     app:fabSize="normal"
     app:layout_behavior="@string/behavior_fab">
 

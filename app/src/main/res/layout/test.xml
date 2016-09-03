@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:id="@+id/button2"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textColor="?android:attr/textColorHint"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.Design.Hint"
+        android:id="@+id/button3"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.Design.Error"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.Design.Counter"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a text 中国必胜"
+        android:textAppearance="@style/TextAppearance.Design.Snackbar.Message"/>
+
+</LinearLayout>

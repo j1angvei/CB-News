@@ -61,9 +61,15 @@ function showImage(img) {
 }
 
 function start() {
-console.log("start");
+    //get all img tags
     handleImgTags();
-    console.log("night "+ isNightMode());
+    //modify background to fit app theme
+    if(isNightMode()){
+    console.log("it is night mode");
+    var body=document.getElementById("main");
+    body.style.backgroundColor="#313131";
+    body.style.color="#c7c7c7";
+    }
 }
 
 function openImage(obj) {

@@ -91,9 +91,20 @@ private <fields>;
 #-keep public class org.jsoup.** {
 #public *;
 #}
-##---------------Begin: proguard configuration for jsoup ----------
+##---------------End: proguard configuration for jsoup ----------
 
 ##---------------Begin: proguard configuration for picasso ---------
 -dontwarn com.squareup.okhttp.**
-##---------------Begin: proguard configuration for picasso ----------
+##---------------End: proguard configuration for picasso ----------
 
+##---------------End: proguard configuration for Leakcanary ----------
+-dontwarn com.squareup.haha.guava.**
+-dontwarn com.squareup.haha.perflib.**
+-dontwarn com.squareup.haha.trove.**
+-dontwarn com.squareup.leakcanary.**
+-keep class com.squareup.haha.** { *; }
+-keep class com.squareup.leakcanary.** { *; }
+
+# Marshmallow removed Notification.setLatestEventInfo()
+-dontwarn android.app.Notification
+##---------------End: proguard configuration for Leakcanary ----------

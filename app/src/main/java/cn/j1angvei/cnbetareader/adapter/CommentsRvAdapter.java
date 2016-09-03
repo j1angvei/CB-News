@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import cn.j1angvei.cnbetareader.bean.CommentItem;
 import cn.j1angvei.cnbetareader.bean.Comments;
 import cn.j1angvei.cnbetareader.contract.ShowCmtContract;
 import cn.j1angvei.cnbetareader.di.scope.PerFragment;
-import cn.j1angvei.cnbetareader.util.DateUtil;
 
 /**
  * Created by Wayne on 2016/7/28.
@@ -79,7 +77,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case LABEL_HOT:
             case LABEL_ALL:
-                view = inflater.inflate(R.layout.tv_label_primary, parent, false);
+                view = inflater.inflate(R.layout.include_tv_label, parent, false);
                 viewHolder = new LabelHolder(view);
                 break;
             case CMT_SIMPLE:
@@ -176,7 +174,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
         View itemView;
-        ImageView ivHead;
         CommentViewGroup origin;
         CommentViewGroup reference;
 
@@ -185,7 +182,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             this.itemView = itemView;
             this.origin = origin;
             this.reference = reference;
-            ivHead = (ImageView) itemView.findViewById(R.id.iv_comment_photo);
             if (isSimple) {
                 origin.findViews(itemView, true);
             } else {
@@ -206,7 +202,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private class CommentViewGroup {
         private TextView tvUser;
-        private TextView tvDate;
         private TextView tvContent;
         private TextView tvSupport;
         private TextView tvAgainst;
@@ -217,7 +212,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             //passed view should be direct parent view
             if (isTogether) {
                 tvUser = (TextView) view.findViewById(R.id.tv_comment_user);
-                tvDate = (TextView) view.findViewById(R.id.tv_comment_date);
                 tvContent = (TextView) view.findViewById(R.id.tv_comment_content);
                 tvSupport = (TextView) view.findViewById(R.id.tv_comment_support);
                 tvAgainst = (TextView) view.findViewById(R.id.tv_comment_against);
@@ -225,7 +219,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {// origin viewGroup in complex viewHolder
                 View header = view.findViewById(R.id.inc_comment_header);
                 tvUser = (TextView) header.findViewById(R.id.tv_comment_user);
-                tvDate = (TextView) header.findViewById(R.id.tv_comment_date);
                 View detail = view.findViewById(R.id.inc_comment_detail);
                 tvContent = (TextView) detail.findViewById(R.id.tv_comment_content);
                 tvSupport = (TextView) detail.findViewById(R.id.tv_comment_support);
@@ -238,8 +231,6 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Resources resources = context.getResources();
             String user = String.format(resources.getString(R.string.cmt_header), item.getUsername(), item.getLocation());
             tvUser.setText(user);
-            String date = String.format(resources.getString(R.string.cmt_time), DateUtil.toTime(item.getDate(), context));
-            tvDate.setText(date);
             tvContent.setText(item.getContent());
             String support = String.format(resources.getString(R.string.cmt_action_up_vote), item.getSupport());
             tvSupport.setText(support);

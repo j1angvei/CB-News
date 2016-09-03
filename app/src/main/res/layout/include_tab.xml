@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:visibility="gone"
     app:tabGravity="fill"
-    app:tabIndicatorColor="@android:color/white"
     app:tabMode="scrollable">
     <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
 </android.support.design.widget.TabLayout>

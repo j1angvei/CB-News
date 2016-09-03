@@ -3,17 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <include layout="@layout/include_view_pager"/>
 
     <TextView
         android:id="@+id/tv_my_topic_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.2"
-        android:text="@string/hint_add_my_topic"
-        android:textColor="@color/textHint"
-        android:textSize="@dimen/text_size_large"/>
+        style="@style/CBTheme.Text.Error.MyTopics"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 </FrameLayout>

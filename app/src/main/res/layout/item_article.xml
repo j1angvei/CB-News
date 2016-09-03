@@ -12,35 +12,37 @@
 
         <TextView
             android:id="@+id/tv_article_title"
-            style="@style/CBTheme.TextView.Title.Articles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"/>
+            style="@style/CBTheme.Text.Title.Medium"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
 
         <LinearLayout
             android:id="@+id/ll_article_summary_thumb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_article_title"
-            android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginTop="@dimen/card_margin"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp">
 
             <TextView
                 android:id="@+id/tv_article_summary"
-                style="@style/CBTheme.TextView.Summary.Articles"
+                style="@style/CBTheme.Text.Body"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:text="Summary\nSummary\nSummary\nSummary"/>
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="3"/>
 
             <ImageView
                 android:id="@+id/iv_article_thumb"
+                style="@style/CBTheme.Image.Thumb"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/fake_article_thumb"/>
+                android:cropToPadding="true"
+                android:padding="4dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -51,31 +53,24 @@
 
             <TextView
                 android:id="@+id/tv_article_time"
-                style="@style/CBTheme.TextView.Hint.Articles"
+                style="@style/CBTheme.Text.Counter.Article"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_news_time"
-                android:drawableStart="@drawable/ic_news_time"
-                android:text="2016-02-15"/>
-
-            <TextView
-                android:id="@+id/tv_article_comment"
-                style="@style/CBTheme.TextView.Hint.Articles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_news_comments"
-                android:drawableStart="@drawable/ic_news_comments"
-                android:text="20"/>
+                android:drawableLeft="@drawable/ic_news_time"/>
 
             <TextView
                 android:id="@+id/tv_article_count"
-                style="@style/CBTheme.TextView.Hint.Articles"
+                style="@style/CBTheme.Text.Counter.Article"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_news_viewer"
-                android:drawableStart="@drawable/ic_news_viewer"
-                android:text="300"/>
+                android:drawableLeft="@drawable/ic_news_viewer"/>
 
+            <TextView
+                android:id="@+id/tv_article_comment"
+                style="@style/CBTheme.Text.Counter.Article"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_local_post_office_black_24dp"/>
         </LinearLayout>
     </RelativeLayout>
 

@@ -4,5 +4,5 @@
     <item android:drawable="@drawable/ic_accent_border" android:state_checked="true"/>
     <item android:drawable="@drawable/ic_accent_border" android:state_selected="true"/>
     <item android:drawable="@drawable/ic_accent_border" android:state_pressed="true"/>
-    <item android:drawable="@android:color/white"/>
+    <item android:drawable="@android:color/transparent"/>
 </selector>

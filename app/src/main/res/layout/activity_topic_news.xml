@@ -10,9 +10,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
-        style="@style/CBTheme.AppBarOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/backdrop_height"
+        style="@style/CBTheme.Backdrop"
         android:fitsSystemWindows="true">
 
         <include layout="@layout/include_backdrop_toolbar"/>

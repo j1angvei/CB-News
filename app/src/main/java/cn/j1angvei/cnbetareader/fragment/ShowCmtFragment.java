@@ -122,6 +122,7 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
         super.onDestroyView();
         mRecyclerView.setAdapter(null);
         mRecyclerView.setLayoutManager(null);
+        mCoordinatorLayout = null;
     }
 
     @Override

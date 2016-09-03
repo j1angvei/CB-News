@@ -22,7 +22,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public boolean isNightMode() {
-        return ((ContentActivity) mContext).isNightMode();
+        return ((ContentActivity) mContext).isNightModeOn();
     }
 
     @JavascriptInterface

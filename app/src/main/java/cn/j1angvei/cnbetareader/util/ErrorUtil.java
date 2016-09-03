@@ -1,5 +1,7 @@
 package cn.j1angvei.cnbetareader.util;
 
+import android.util.Log;
+
 import cn.j1angvei.cnbetareader.R;
 import cn.j1angvei.cnbetareader.exception.JsonParseException;
 import cn.j1angvei.cnbetareader.exception.NoLocalItemException;
@@ -8,10 +10,14 @@ import cn.j1angvei.cnbetareader.exception.ResponseParseException;
 
 /**
  * Created by Wayne on 2016/8/24.
+ * handle exception and return information
  */
 
 public class ErrorUtil {
+    private static final String TAG = "ErrorUtil";
+
     public static int getErrorInfo(Throwable e) {
+        Log.e(TAG, "getErrorInfo: ", e);
         if (e instanceof NoLocalItemException) {
             return R.string.error_no_local_item;
         } else if (e instanceof NoNetworkException) {

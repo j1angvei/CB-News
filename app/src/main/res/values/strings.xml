@@ -101,10 +101,12 @@
         <item>Popular comments</item>
         <item>My topics</item>
     </string-array>
-    <string-array name="pref_value_offline_dl">
+    <string-array  name="pref_value_offline_dl">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
+    <!--Debug use-->
+    <string name="line_3" translatable="false">This is line 1\n This is line 2\n This is line 3</string>
 </resources>

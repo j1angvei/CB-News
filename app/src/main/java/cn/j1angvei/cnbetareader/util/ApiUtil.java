@@ -43,4 +43,17 @@ public final class ApiUtil {
         String randomString = jqueryVersion + Math.random();
         return String.format("%s%s_%s", jQuery, randomString.replaceAll("\\D", ""), System.currentTimeMillis());
     }
+
+    public static String removeAtChar(String source) {
+        if (source == null) {
+            return "null";
+        } else if (!source.contains("@")) {
+            return source;
+        } else if (source.startsWith("@")) {
+            return source.substring(1);
+        } else {
+            return source.substring(0, source.lastIndexOf("@"));
+        }
+
+    }
 }

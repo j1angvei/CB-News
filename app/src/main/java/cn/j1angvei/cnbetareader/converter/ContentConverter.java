@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cnbetareader.bean.Content;
+import cn.j1angvei.cnbetareader.util.ApiUtil;
 import cn.j1angvei.cnbetareader.util.DateUtil;
 import cn.j1angvei.cnbetareader.util.StringUtil;
 import rx.Observable;
@@ -46,7 +47,7 @@ public class ContentConverter implements Converter<String, Content> {
             }
             //parse source
             String where = doc.getElementsByClass("where").first().text().replace("稿源：", "");
-            content.setSource(where);
+            content.setSource(ApiUtil.removeAtChar(where));
             //parse introduction
             String introduction = doc.select(".introduction > p").text();
             content.setSummary(StringUtil.removeBlanks(introduction));

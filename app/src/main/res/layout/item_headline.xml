@@ -12,18 +12,14 @@
 
         <TextView
             android:id="@+id/tv_headline_title"
-            style="@style/CBTheme.TextView.Title.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"/>
+            style="@style/CBTheme.Text.Title"/>
 
         <TextView
             android:id="@+id/tv_headline_description"
-            style="@style/CBTheme.TextView.Summary.Headline"
+            style="@style/CBTheme.Text.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_headline_title"
-            android:text="Content\nContent\nContent"/>
+            android:layout_below="@id/tv_headline_title"/>
 
         <LinearLayout
             android:id="@+id/ll_headline_relate_container"
@@ -35,9 +31,9 @@
 
             <ImageView
                 android:id="@+id/iv_headline_thumb"
+                style="@style/CBTheme.Image.Headline"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/fake_headline_thumb"/>
+                android:layout_height="match_parent"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -47,24 +43,15 @@
 
                 <TextView
                     android:id="@+id/tv_headline_relate_1"
-                    style="@style/CBTheme.TextView.Link.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Relate 1"/>
+                    style="@style/CBTheme.Text.Hint.Headline"/>
 
                 <TextView
                     android:id="@+id/tv_headline_relate_2"
-                    style="@style/CBTheme.TextView.Link.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Relate 2"/>
+                    style="@style/CBTheme.Text.Hint.Headline"/>
 
                 <TextView
                     android:id="@+id/tv_headline_relate_3"
-                    style="@style/CBTheme.TextView.Link.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Relate 3"/>
+                    style="@style/CBTheme.Text.Hint.Headline"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

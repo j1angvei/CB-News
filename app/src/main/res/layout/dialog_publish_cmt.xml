@@ -12,11 +12,10 @@
         android:hint="@string/header_publish_cmt_news_title">
 
         <android.support.design.widget.TextInputEditText
-
             android:id="@+id/tv_publish_cmt_quote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_publish_cmt_content"
+            android:background="@android:color/transparent"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="none"/>

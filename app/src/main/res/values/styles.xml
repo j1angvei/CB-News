@@ -1,17 +1,11 @@
 <resources>
-
-    <!-- Base application theme. -->
+    <!--Base theme-->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--context action mode-->
-        <!--<item name="windowActionModeOverlay">true</item>-->
-        <!--<item name="actionModeBackground">@color/colorPrimary</item>-->
-        <!--<item name="android:activatedBackgroundIndicator">@drawable/bg_item_topic</item>-->
     </style>
-
+    <!--My theme-->
     <style name="CBTheme" parent="AppTheme"/>
 
     <style name="CBTheme.Dialog" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
@@ -21,130 +15,149 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <!--Less use widget style-->
+    <!-- Toolbar style-->
     <style name="CBTheme.AppBarOverlay">
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
-
+    <!--Popup menu-->
     <style name="CBTheme.PopupOverlay">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <style name="CBTheme.TransparentStatusBar"/>
-    <!--TextView style-->
-    <style name="CBTheme.TextView"/>
-
-    <style name="CBTheme.TextView.Title"/>
-
-    <style name="CBTheme.TextView.Title.Articles">
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
+    <!--Text style-->
+    <style name="CBTheme.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:text">Text</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="CBTheme.TextView.Title.Review">
-        <item name="android:layout_marginLeft">@dimen/card_margin</item>
-        <item name="android:layout_marginRight">@dimen/card_margin</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+    <style name="CBTheme.Text.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:text">Title set from Style</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
-    <style name="CBTheme.TextView.Title.Headline">
-        <item name="android:padding">4dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
+    <style name="CBTheme.Text.Title.Medium">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
-    <style name="CBTheme.TextView.Title.Content">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    <style name="CBTheme.Text.Title.Small">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
     </style>
 
-    <style name="CBTheme.TextView.Summary"/>
-
-    <style name="CBTheme.TextView.Summary.Articles">
-        <item name="android:ellipsize">end</item>
+    <style name="CBTheme.Text.Body">
         <item name="android:lineSpacingMultiplier">1.2</item>
-        <item name="android:maxLines">3</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:text">@string/line_3</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
     </style>
 
-    <style name="CBTheme.TextView.Summary.Headline">
-        <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:padding">4dp</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+    <style name="CBTheme.Text.Body.Bold">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
     </style>
 
-    <style name="CBTheme.TextView.Summary.Review">
-        <item name="android:background">@drawable/bg_review_cmt</item>
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+    <style name="CBTheme.Text.Caption">
+        <item name="android:textColor">?android:attr/textColorHint</item>
+        <item name="android:text">Caption set from Style</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
     </style>
 
-    <style name="CBTheme.TextView.Hint"/>
-
-    <style name="CBTheme.TextView.Hint.Articles">
-        <item name="android:layout_marginRight">8dp</item>
-        <item name="android:drawablePadding">4dp</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">@dimen/text_size_extra_small</item>
-    </style>
-
-    <style name="CBTheme.TextView.Hint.Review">
-        <item name="android:layout_marginLeft">@dimen/card_margin</item>
-        <item name="android:layout_marginRight">@dimen/card_margin</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="CBTheme.TextView.Hint.Content">
+    <style name="CBTheme.Text.Counter">
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_size_extra_small</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:textColor">@color/textSecondary</item>
-
+        <item name="android:textColor">?android:attr/textColorHint</item>
+        <item name="android:text">12345</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.Design.Counter</item>
     </style>
 
-    <style name="CBTheme.TextView.Link"/>
+    <style name="CBTheme.Text.Counter.Article">
+        <item name="android:drawablePadding">1dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Design.Counter</item>
+        <item name="android:paddingRight">@dimen/counter_padding</item>
+    </style>
 
-    <style name="CBTheme.TextView.Link.Headline">
+    <style name="CBTheme.Text.Snack">
+        <item name="android:textColor">?android:attr/textColorHint</item>
+        <item name="android:text">Snack set from Style</item>
+        <item name="android:textAppearance">@style/TextAppearance.Design.Snackbar.Message</item>
+    </style>
+
+    <style name="CBTheme.Text.Hint">
+        <item name="android:text">hint</item>
+        <item name="android:textAppearance">@style/TextAppearance.Design.Hint</item>
+    </style>
+
+    <style name="CBTheme.Text.Hint.Headline">
         <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
         <item name="android:drawablePadding">2dp</item>
         <item name="android:drawableLeft">@drawable/ic_headline_relate</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
+
+    <style name="CBTheme.Text.Error">
+        <item name="android:text">Error</item>
+        <item name="android:textAppearance">@style/TextAppearance.Design.Error</item>
+    </style>
+
+    <style name="CBTheme.Text.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="CBTheme.Text.Button.Comment">
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="CBTheme.Text.Error.MyTopics">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:text">@string/hint_add_my_topic</item>
+    </style>
+    <!--Image style-->
+    <style name="CBTheme.Image">
+        <item name="android:contentDescription">This is a ImageView</item>
+    </style>
+
+    <style name="CBTheme.Image.Thumb">
+        <item name="android:src">@drawable/fake_article_thumb</item>
+    </style>
+
+    <style name="CBTheme.Image.Headline">
+        <item name="android:src">@drawable/fake_headline_thumb</item>
+    </style>
+
+    <style name="CBTheme.Image.Content">
+        <item name="android:src">@drawable/fake_topic_album</item>
+    </style>
+
     <!--CardView style-->
     <style name="CBTheme.CardView">
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
-
     <!--FloatActionButton style-->
     <style name="CBTheme.Fab">
         <item name="fabSize">normal</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
-    <style name="CBTheme.Fab.Content"/>
-
-    <style name="CBTheme.Fab.Content.Small">
-        <item name="fabSize">mini</item>
+    <!--AppbarLayout-->
+    <style name="CBTheme.Backdrop" parent="CBTheme.AppBarOverlay">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/backdrop_height</item>
     </style>
-
-    <style name="CBTheme.FabMenu"/>
-    <!--ImageView style-->
-    <style name="CBTheme.ImageView"/>
-    <!--ProgressBar style-->
-    <style name="CBTheme.ProgressBar"/>
-    <!--Button style-->
-    <style name="CBTheme.Button">
-        <item name="android:textAllCaps">false</item>
-    </style>
-
 </resources>
