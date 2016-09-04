@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -59,11 +56,12 @@ public class OfflineDownloadService extends BaseService {
     PrefsUtil mPrefsUtil;
     @Inject
     NetworkUtil mNetworkUtil;
+    private boolean isCanceled;
 
-    private static NotificationManager MANAGER;
-    private static NotificationCompat.Builder BUILDER;
-    private static int MAX_PROCESS = 360;
-    private static int CUR_PROCESS = 0;
+    private NotificationManager MANAGER;
+    private NotificationCompat.Builder BUILDER;
+    private int MAX_PROCESS = 360;
+    private int CUR_PROCESS = 0;
 
     public OfflineDownloadService() {
         super(TAG);
@@ -80,11 +78,11 @@ public class OfflineDownloadService extends BaseService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (!mNetworkUtil.isNetworkOn()) {
+        if (!mNetworkUtil.isWifiOn()) {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    MessageUtil.toast(R.string.error_no_network, getApplicationContext());
+                    MessageUtil.toast(R.string.info_need_wifi_env, getApplicationContext());
                 }
             });
             return;
@@ -94,10 +92,10 @@ public class OfflineDownloadService extends BaseService {
         MAX_PROCESS = 180 * pages;
         MANAGER = getNotificationMgr();
         BUILDER = new NotificationCompat.Builder(this)
-                .setContentTitle("Caching news.")
-                .setContentText("download in progress")
+                .setContentTitle(getString(R.string.title_cache_news))
+                .setContentText(getString(R.string.ph_download_progress))
                 .setSmallIcon(R.drawable.ic_stat_logo);
-        Observable.range(1, pages)
+        Observable<Integer> download = Observable.range(1, pages)
                 .concatMap(new Func1<Integer, Observable<? extends News>>() {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
@@ -109,7 +107,6 @@ public class OfflineDownloadService extends BaseService {
                     }
                 })
                 .doOnNext(new UpdateAction<News>())
-                .delay(1000, TimeUnit.MICROSECONDS)
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
@@ -117,7 +114,6 @@ public class OfflineDownloadService extends BaseService {
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
-                .delay(100, TimeUnit.MICROSECONDS)
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
@@ -125,48 +121,39 @@ public class OfflineDownloadService extends BaseService {
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())
-                .delay(1000, TimeUnit.MICROSECONDS)
                 .count()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Integer>() {
-                    @Override
-                    public void onCompleted() {
-                        MessageUtil.toast("Download complete", getApplicationContext());
-                        BUILDER.setProgress(0, 0, false)
-                                .setContentTitle("Cache complete")
-                                .setContentText("");
-                        MANAGER.notify(2, BUILDER.build());
-                    }
+                .observeOn(AndroidSchedulers.mainThread());
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: ", e);
-                        e.printStackTrace();
-                        BUILDER.setContentTitle("Download failure");
-                        MANAGER.notify(2, BUILDER.build());
-                        MessageUtil.toast(ErrorUtil.getErrorInfo(e), getApplicationContext());
-                    }
+        download.subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                MessageUtil.toast(getString(R.string.info_download_complete), getApplicationContext());
+                BUILDER.setProgress(0, 0, false)
+                        .setContentTitle(getString(R.string.title_cache_complete))
+                        .setContentText(getString(R.string.info_all_data_cached));
+                MANAGER.notify(2, BUILDER.build());
+            }
 
-                    @Override
-                    public void onNext(Integer integer) {
-                        BUILDER.setProgress(integer, integer, false);
-                        MANAGER.notify(2, BUILDER.build());
-                    }
-                });
+            @Override
+            public void onError(Throwable e) {
+                BUILDER.setContentTitle(getString(R.string.error_cache_fail));
+                MANAGER.notify(2, BUILDER.build());
+                MessageUtil.toast(ErrorUtil.getErrorInfo(e), getApplicationContext());
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                BUILDER.setProgress(integer, integer, false);
+                MANAGER.notify(2, BUILDER.build());
+            }
+        });
     }
 
     private class UpdateAction<T> implements Action1<T> {
 
         @Override
         public void call(Object o) {
-            String text = "Downloading in progress... ";
-            if (o instanceof Article) {
-                text += "Latest news";
-            } else if (o instanceof Headline) {
-                text += "Past headlines";
-            } else if (o instanceof Review) {
-                text += "Popular comments";
-            }
+            String text = String.format(getResources().getString(R.string.ph_download_progress), "" + CUR_PROCESS, "" + MAX_PROCESS);
             BUILDER.setContentText(text);
             BUILDER.setProgress(MAX_PROCESS, ++CUR_PROCESS, false);
             MANAGER.notify(2, BUILDER.build());

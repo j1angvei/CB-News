@@ -14,7 +14,7 @@
     <string name="nav_quick_entry">Quick entry</string>
     <string name="nav_download">Download</string>
     <string name="nav_settings">Settings</string>
-    <string name="nav_exit">Exit</string>
+    <string name="nav_exit">Switch theme</string>
     <!--scroll behavior-->
     <string name="behavior_fab" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABBehavior</string>
     <string name="behavior_fab_up_down" translatable="false">cn.j1angvei.cnbetareader.animation.ScrollAwareFABUpDownBehavior</string>
@@ -47,6 +47,7 @@
     <string name="info_get_captcha_fail">Fail to load captcha</string>
     <string name="info_connection_error">Connection error!</string>
     <string name="info_retry">Retry</string>
+    <string name="info_need_wifi_env">Wifi connection needed!</string>
     <string name="info_cmt_success">Judge comment success!</string>
     <string name="info_cmt_fail">Judge comment fail!</string>
     <string name="info_my_topics_empty">No myTopics added!</string>
@@ -107,6 +108,37 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="set_basic_settings">Basic settings</string>
+    <string name="set_load_img_always">Load image always</string>
+    <string name="set_load_img_wifi">Load image only in WiFi</string>
+    <string name="set_save_data_mode">Save data mode</string>
+    <string name="set_night_mode">Night mode</string>
+    <string name="set_auto_switch_theme">Auto switch theme</string>
+    <string name="set_enable_auto_switch">Enable auto switch</string>
+    <string name="set_enable_cmt_tail">Enable comment tail</string>
+    <string name="set_default_tail">"Send from cnBeta News "</string>
+    <string name="set_custom_cmt_tail">Customize comment tail</string>
+    <string name="set_cmt_tail">Comment tail</string>
+    <string name="set_load_news_manually">Load latest news manually</string>
+    <string name="set_load_news_start">Load latest news on start</string>
+    <string name="set_auto_load">Auto load</string>
+    <string name="set_storage_settings">Storage settings</string>
+    <string name="set_choose_download_source">Choose news types to download</string>
+    <string name="set_clear_caches">Clear caches</string>
+    <string name="set_version_about">Version and About</string>
+    <string name="set_current_version">Current version</string>
+    <string name="set_about_author">About author</string>
+    <string name="set_author_name">j1angvei</string>
+    <string name="set_disclaimer">Disclaimer</string>
+    <string name="set_offline_download">Offline download</string>
+    <string name="set_cache_size">Cache size</string>
+    <string name="set_disclaimer_info">All data are retrieved from www.cnbeta.com, and its copyright belongs to the author</string>
     <!--Debug use-->
     <string name="line_3" translatable="false">This is line 1\n This is line 2\n This is line 3</string>
+    <string name="title_cache_news">Caching news.</string>
+    <string name="ph_download_progress">Download in progress, %1$s %2$s…</string>
+    <string name="info_download_complete">Download complete!</string>
+    <string name="title_cache_complete">Cache complete</string>
+    <string name="info_all_data_cached">all data are cached locally</string>
+    <string name="error_cache_fail">Download failure!</string>
 </resources>

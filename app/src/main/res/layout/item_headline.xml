@@ -43,15 +43,15 @@
 
                 <TextView
                     android:id="@+id/tv_headline_relate_1"
-                    style="@style/CBTheme.Text.Hint.Headline"/>
+                    style="@style/CBTheme.Text.Snack"/>
 
                 <TextView
                     android:id="@+id/tv_headline_relate_2"
-                    style="@style/CBTheme.Text.Hint.Headline"/>
+                    style="@style/CBTheme.Text.Snack"/>
 
                 <TextView
                     android:id="@+id/tv_headline_relate_3"
-                    style="@style/CBTheme.Text.Hint.Headline"/>
+                    style="@style/CBTheme.Text.Snack"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

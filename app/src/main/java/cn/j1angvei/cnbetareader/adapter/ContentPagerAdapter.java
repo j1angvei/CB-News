@@ -14,7 +14,6 @@ import cn.j1angvei.cnbetareader.fragment.ContentFragment;
  * load fragment to render news content
  */
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
-    private List<String> allSid;
     private List<News> mNewses;
 
     public ContentPagerAdapter(FragmentManager fm, List<News> newses) {

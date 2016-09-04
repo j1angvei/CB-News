@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,9 +37,9 @@ import cn.j1angvei.cnbetareader.fragment.HeadlineFragment;
 import cn.j1angvei.cnbetareader.fragment.MyTopicsFragment;
 import cn.j1angvei.cnbetareader.fragment.ReviewFragment;
 import cn.j1angvei.cnbetareader.util.ApiUtil;
+import cn.j1angvei.cnbetareader.util.AppUtil;
 import cn.j1angvei.cnbetareader.util.MessageUtil;
 import cn.j1angvei.cnbetareader.util.Navigator;
-import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -58,6 +57,7 @@ import static cn.j1angvei.cnbetareader.bean.Source.MY_TOPICS;
  * control child fragment to display different {@link Source} news
  */
 public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, BaseView {
+    private static final String TAG = "NewsActivity";
     public static final String EXIT = "NewsActivity.exit";
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -74,7 +74,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Inject
     CBApiWrapper mApiWrapper;
     @Inject
-    PrefsUtil mPrefsUtil;
+    AppUtil mAppUtil;
     boolean mIsTokenValid;
     private boolean mIsExit;
 
@@ -89,22 +89,18 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 .activityModule(new ActivityModule(this))
                 .build();
         mActivityComponent.inject(this);
-        mIsTokenValid = !TextUtils.isEmpty(mPrefsUtil.readString(PrefsUtil.CSRF_TOKEN));
+        mIsTokenValid = mAppUtil.isCsrfTokenValid();
     }
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_news_list);
         ButterKnife.bind(this);
-        //toolbar
         setSupportActionBar(mToolbar);
-        //drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        //navigation view
         mNavigationView.setNavigationItemSelectedListener(this);
-        //load init fragment aka latest news
         String title = getResources().getString(R.string.nav_latest_news);
         checkToken(ALL, title);
     }
@@ -190,8 +186,9 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_settings:
                 Navigator.toSettings(this);
                 return true;
-            case R.id.nav_exit:
-                Navigator.toExit(true, this);
+            case R.id.nav_switch_theme:
+                mAppUtil.switchTheme();
+                recreate();
                 return true;
             default:
                 return true;
@@ -300,7 +297,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         public void onNext(ResponseBody body) {
             try {
                 String token = ApiUtil.parseToken(body.string());
-                mPrefsUtil.writeString(PrefsUtil.CSRF_TOKEN, token);
+                mAppUtil.initCsrfToken(token);
             } catch (IOException e) {
                 //something wrong with response
             }

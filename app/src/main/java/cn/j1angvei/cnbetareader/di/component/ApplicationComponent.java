@@ -5,6 +5,7 @@ import android.app.Application;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import cn.j1angvei.cnbetareader.CBApplication;
 import cn.j1angvei.cnbetareader.bean.Article;
 import cn.j1angvei.cnbetareader.bean.Bookmark;
 import cn.j1angvei.cnbetareader.bean.Headline;
@@ -19,6 +20,7 @@ import cn.j1angvei.cnbetareader.data.repository.NewsRepository;
 import cn.j1angvei.cnbetareader.di.module.ApplicationModule;
 import cn.j1angvei.cnbetareader.di.module.DataSourceModule;
 import cn.j1angvei.cnbetareader.di.module.RepositoryModule;
+import cn.j1angvei.cnbetareader.util.AppUtil;
 import cn.j1angvei.cnbetareader.util.NetworkUtil;
 import cn.j1angvei.cnbetareader.util.PrefsUtil;
 import dagger.Component;
@@ -35,6 +37,9 @@ import static cn.j1angvei.cnbetareader.bean.News.Type.REVIEW;
 @Singleton
 @Component(modules = {ApplicationModule.class, RepositoryModule.class, DataSourceModule.class})
 public interface ApplicationComponent {
+
+    void inject(CBApplication application);
+
     //expose to sub activity graph
     Application application();
 
@@ -65,4 +70,6 @@ public interface ApplicationComponent {
     MyTopicsConverter myTopicsConverter();
 
     NetworkUtil networkUtil();
+
+    AppUtil appUtil();
 }

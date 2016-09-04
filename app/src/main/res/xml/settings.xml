@@ -2,64 +2,53 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:key="pref_category_basic"
-        android:title="Basic settings">
+        android:title="@string/set_basic_settings">
         <SwitchPreference
             android:defaultValue="false"
+            android:key="pref_night_mode"
+            android:title="@string/set_night_mode"/>
+        <SwitchPreference
+            android:defaultValue="true"
             android:key="pref_basic_save_data_mode"
-            android:summaryOff="Load image always"
-            android:summaryOn="Load image only in WiFi"
-            android:title="Save data mode"/>
+            android:summaryOff="@string/set_load_img_always"
+            android:summaryOn="@string/set_load_img_wifi"
+            android:title="@string/set_save_data_mode"/>
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="pref_basic_night_mode"
-            android:title="Night mode"/>
-        <PreferenceScreen
-            android:key="pref_screen_auto_switch_theme"
-            android:title="Auto switch theme">
-            <SwitchPreference
-                android:key="pref_basic_auto_switch"
-                android:title="Enable auto switch"/>
-        </PreferenceScreen>
-        <SwitchPreference
-            android:key="pref_basic_enable_comment_title"
-            android:title="Enable comment title"/>
+            android:defaultValue="true"
+            android:summaryOff="@string/set_load_news_manually"
+            android:summaryOn="@string/set_load_news_start"
+            android:title="@string/set_auto_load"/>
         <EditTextPreference
-            android:defaultValue="Send from CB news"
-            android:dependency="pref_basic_enable_comment_title"
-            android:summary="Customize comment tail "
-            android:title="Comment tail"/>
-
-        <SwitchPreference
-            android:summaryOff="Load latest news manually"
-            android:summaryOn="Load latest news on start"
-            android:title="Auto refresh"/>
-
+            android:defaultValue="@string/set_default_tail"
+            android:summary="@string/set_default_tail"
+            android:title="@string/set_custom_cmt_tail"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Storage">
+        android:title="@string/set_storage_settings">
         <MultiSelectListPreference
             android:entries="@array/pref_title_offline_dl_list"
             android:entryValues="@array/pref_value_offline_dl"
             android:key="pref_offline_download"
-            android:summary="Choose news types to download"
-            android:title="Offline download"/>
-        <Preference
-            android:summary="Cache size: 5M"
-            android:title="Clear cache"/>
+            android:summary="@string/set_choose_download_source"
+            android:title="@string/set_offline_download"/>
+        <EditTextPreference
+            android:summary="default: 2"
+            android:title="Download pages"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_category_about"
-        android:title="Help and About">
+        android:title="@string/set_version_about">
         android:title="Open source"/>
         <Preference
-            android:summary="0.7-alpha"
-            android:title="Version"/>
+            android:summary="v0.8-alpha"
+            android:title="@string/set_current_version"/>
         <PreferenceScreen
             android:key="pref_about_author"
-            android:summary="j1angvei"
-            android:title="About author">
+            android:summary="@string/set_author_name"
+            android:title="@string/set_about_author">
         </PreferenceScreen>
         <Preference
-            android:title="Disclaimer"/>
+            android:summary="@string/set_disclaimer_info"
+            android:title="@string/set_disclaimer"/>
     </PreferenceCategory>
 </PreferenceScreen>
