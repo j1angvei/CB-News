@@ -21,14 +21,14 @@ android {
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
-        versionName "0.7-alpha"
+        versionName "0.8-alpha"
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            versionNameSuffix '-20160829'
+            versionNameSuffix '-20160904'
         }
     }
     dexOptions {

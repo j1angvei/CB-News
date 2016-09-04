@@ -29,6 +29,13 @@ public final class Navigator {
         }
     }
 
+    public static void toNewsList(Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, NewsActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
     public static void toContent(int position, ArrayList<? extends News> newses, Context context) {
         if (context != null) {
             Intent intent = new Intent(context, ContentActivity.class);

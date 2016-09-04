@@ -13,13 +13,18 @@
         android:theme="@style/CBTheme">
         <!--activities-->
         <activity
-            android:name=".activity.NewsActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/CBTheme.TransparentStatusBar">
+            android:name=".activity.SplashActivity"
+            android:theme="@style/CBTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.NewsActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/CBTheme.TransparentStatusBar">
+
         </activity>
         <activity android:name=".activity.ContentActivity">
             <intent-filter>

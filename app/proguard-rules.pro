@@ -12,11 +12,11 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-#test wayne
-#-dontobfuscate
+-keepattributes JavascriptInterface
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+##make gson deserilize work on beans
 -keepclassmembers class cn.j1angvei.cnbetareader.bean.*{
 private <fields>;
 }
@@ -94,7 +94,7 @@ private <fields>;
 ##---------------End: proguard configuration for jsoup ----------
 
 ##---------------Begin: proguard configuration for picasso ---------
--dontwarn com.squareup.okhttp.**
+#-dontwarn com.squareup.okhttp.**
 ##---------------End: proguard configuration for picasso ----------
 
 ##---------------End: proguard configuration for Leakcanary ----------

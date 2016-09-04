@@ -25,6 +25,8 @@
     </style>
 
     <style name="CBTheme.TransparentStatusBar"/>
+
+    <style name="CBTheme.Splash" parent="CBTheme.TransparentStatusBar"/>
     <!--Text style-->
     <style name="CBTheme.Text">
         <item name="android:layout_width">match_parent</item>
@@ -129,6 +131,10 @@
     <!--Image style-->
     <style name="CBTheme.Image">
         <item name="android:contentDescription">This is a ImageView</item>
+    </style>
+
+    <style name="CBTheme.Image.Detail">
+        <item name="android:alpha">1</item>
     </style>
 
     <style name="CBTheme.Image.Thumb">
