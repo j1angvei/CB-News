@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cn.j1angvei.cnbetareader">
+          package="cn.j1angvei.cbnews">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".CBApplication"
+        android:name="cn.j1angvei.cbnews.CBApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:theme="@style/CBTheme">
         <!--activities-->
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="cn.j1angvei.cbnews.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.Splash">
             <intent-filter>
@@ -22,14 +22,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NewsActivity"
+            android:name="cn.j1angvei.cbnews.activity.NewsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar">
 
         </activity>
         <activity
-            android:name=".activity.ContentActivity"
+            android:name="cn.j1angvei.cbnews.activity.ContentActivity"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -46,10 +46,10 @@
         </activity>
 
         <activity
-            android:name=".activity.CommentsActivity"
+            android:name="cn.j1angvei.cbnews.activity.CommentsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name="cn.j1angvei.cbnews.activity.SettingsActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
@@ -58,16 +58,16 @@
         </activity>
 
         <activity
-            android:name=".activity.TopicNewsActivity"
+            android:name="cn.j1angvei.cbnews.activity.TopicNewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar"/>
-        <activity android:name=".activity.ContentImageActivity"/>
+        <activity android:name="cn.j1angvei.cbnews.activity.ContentImageActivity"/>
         <!--services-->
         <service
-            android:name=".service.OfflineDownloadService"
+            android:name="cn.j1angvei.cbnews.service.OfflineDownloadService"
             android:exported="false"/>
         <service
-            android:name=".service.MyTopicService"
+            android:name="cn.j1angvei.cbnews.service.MyTopicService"
             android:exported="false"/>
     </application>
 </manifest>

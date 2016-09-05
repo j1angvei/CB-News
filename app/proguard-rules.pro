@@ -17,10 +17,10 @@
     @android.webkit.JavascriptInterface <methods>;
 }
 ##make gson deserilize work on beans
--keepclassmembers class cn.j1angvei.cnbetareader.bean.*{
+-keepclassmembers class cn.j1angvei.cbnews.bean.*{
 private <fields>;
 }
--keepclassmembers class cn.j1angvei.cnbetareader.data.remote.response.*{
+-keepclassmembers class cn.j1angvei.cbnews.data.remote.response.*{
 private <fields>;
 }
 ##---------------Begin: proguard configuration for Gson  ----------

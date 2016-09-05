@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">cnBeta新闻</string>
+    <string name="app_name">西贝新闻</string>
     <string name="action_comment_reply">回复</string>
     <string name="action_comment_report">举报</string>
     <string name="action_cancel">取消</string>

@@ -17,18 +17,18 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
-        applicationId "cn.j1angvei.cnbetareader"
+        applicationId "cn.j1angvei.cbnews"
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
-        versionName "0.8-alpha"
+        versionName "0.8.20160905"
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            versionNameSuffix '-20160904'
+            versionNameSuffix '-alpha'
         }
     }
     dexOptions {
