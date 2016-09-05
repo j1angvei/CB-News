@@ -121,8 +121,8 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
     }
 
     @Override
-    public void renderTopics(int groupPosition, List<Topic> topics) {
-        mAdapter.addItem(groupPosition, topics);
+    public void renderTopics(int page, List<Topic> topics) {
+        mAdapter.addItem(page - 1, topics);
     }
 
     @Override

@@ -12,7 +12,7 @@ CB News Supported features are as follows:
 7. Support search article, post articles(In future).  
 
 ## Gallery
-<p align="center"><img src="./raw/splash.png" width="360" /></p>  
+<img src="./raw/splash.png" width="720" />
 <img src="./raw/nav.png" width="360" />
 <img src="./raw/latest_news.png" width="360" />
 <img src="./raw/headline.png" width="360" />

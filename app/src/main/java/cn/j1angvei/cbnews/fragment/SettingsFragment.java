@@ -62,10 +62,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
-                Navigator.toNewsList(getActivity());
+//                getActivity().recreate();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Navigator.toNewsList(getActivity());
     }
 }

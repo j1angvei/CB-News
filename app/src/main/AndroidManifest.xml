@@ -14,7 +14,6 @@
         <!--activities-->
         <activity
             android:name="cn.j1angvei.cbnews.activity.SplashActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/CBTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.Locale;
 
@@ -65,7 +64,7 @@ public class AppUtil {
         System.exit(0);
     }
 
-    public int getDefaultNightMode() {
+    private int getDefaultNightMode() {
         return AppCompatDelegate.getDefaultNightMode();
     }
 
@@ -76,4 +75,5 @@ public class AppUtil {
     public boolean isAutoLoadImage() {
         return !mNetworkUtil.isCellularOn();
     }
+
 }
