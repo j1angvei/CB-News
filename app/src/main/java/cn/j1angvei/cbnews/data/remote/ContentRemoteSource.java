@@ -1,5 +1,7 @@
 package cn.j1angvei.cbnews.data.remote;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.converter.ContentConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -22,13 +25,13 @@ public class ContentRemoteSource extends RemoteSource<Content> {
     private ContentConverter mConverter;
 
     @Inject
-    public ContentRemoteSource(CBApiWrapper wrapper, ContentConverter converter) {
-        super(wrapper);
+    public ContentRemoteSource(CBApiWrapper wrapper, ContentConverter converter, NetworkUtil networkUtil) {
+        super(wrapper, networkUtil);
         mConverter = converter;
     }
 
     @Override
-    public Observable<Content> loadData(int page, String... args) {
+    public Observable<Content> fetchData(Integer page, @NonNull String... args) {
         String sid = args[0];
         return mApiWrapper.getContent(sid)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {

@@ -100,9 +100,9 @@ public class OfflineDownloadService extends BaseService {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
                         return Observable.concat(
-                                mArticleRepository.getData(integer, null, Source.ALL.toString()),
-                                mHeadlineRepository.getData(integer, null, Source.EDITORCOMMEND.toString()),
-                                mReviewRepository.getData(integer, null, Source.JHCOMMENT.toString())
+                                mArticleRepository.getDataFromDB(integer, null, Source.ALL.toString()),
+                                mHeadlineRepository.getDataFromDB(integer, null, Source.EDITORCOMMEND.toString()),
+                                mReviewRepository.getDataFromDB(integer, null, Source.JHCOMMENT.toString())
                         );
                     }
                 })
@@ -110,14 +110,14 @@ public class OfflineDownloadService extends BaseService {
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
-                        return mContentRepository.getData(0, news.getSid(), null);
+                        return mContentRepository.getDataFromDB(0, news.getSid(), null);
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCommentsRepository.getData(0, content.getSid(), content.getSn());
+                        return mCommentsRepository.getDataFromDB(0, content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())

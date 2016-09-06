@@ -1,5 +1,6 @@
 package cn.j1angvei.cbnews.data.local;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class AllTopicsLocalSource implements LocalSource<Topic> {
     }
 
     @Override
-    public Observable<Topic> read(int page, String id, String sourceType) {//id and sourceType is null
+    public Observable<Topic> read(@NonNull Integer page, String id, String sourceType) {//id and sourceType is null
         String letter = ApiUtil.pageToLetter(page);
         StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK)
                 .append(mHelper.getTableName());

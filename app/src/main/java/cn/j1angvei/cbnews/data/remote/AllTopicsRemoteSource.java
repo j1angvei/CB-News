@@ -1,5 +1,7 @@
 package cn.j1angvei.cbnews.data.remote;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -7,6 +9,7 @@ import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.converter.TopicConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Action1;
@@ -22,13 +25,13 @@ public class AllTopicsRemoteSource extends RemoteSource<Topic> {
     private TopicConverter mConverter;
 
     @Inject
-    public AllTopicsRemoteSource(CBApiWrapper wrapper, TopicConverter converter) {
-        super(wrapper);
+    public AllTopicsRemoteSource(CBApiWrapper wrapper, TopicConverter converter, NetworkUtil networkUtil) {
+        super(wrapper, networkUtil);
         mConverter = converter;
     }
 
     @Override
-    public Observable<Topic> loadData(final int page, String... args) {
+    public Observable<Topic> fetchData(@NonNull final Integer page, String... args) {
         return mApiWrapper.getTopics(page)
                 .flatMap(new Func1<ResponseBody, Observable<Topic>>() {
                     @Override
@@ -39,7 +42,8 @@ public class AllTopicsRemoteSource extends RemoteSource<Topic> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                }).doOnNext(new Action1<Topic>() {
+                })
+                .doOnNext(new Action1<Topic>() {
                     @Override
                     public void call(Topic topic) {
                         topic.setPage(page);

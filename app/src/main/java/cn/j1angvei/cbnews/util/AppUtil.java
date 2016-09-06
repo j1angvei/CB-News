@@ -37,17 +37,13 @@ public class AppUtil {
         mPrefsUtil.writeString(PrefsUtil.CSRF_TOKEN, token);
     }
 
-    public static int getNightMode() {
-        return AppCompatDelegate.getDefaultNightMode();
-    }
-
     public void initAppTheme() {
-        boolean isNight = mPrefsUtil.readBoolean(SettingsFragment.PREF_NIGHT_MODE);
+        boolean isNight = mPrefsUtil.readBoolean(SettingsFragment.PREF_NIGHT_MODE, false);
         AppCompatDelegate.setDefaultNightMode(isNight ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     public void switchCurrentTheme() {
-        boolean isNight = mPrefsUtil.readBoolean(SettingsFragment.PREF_NIGHT_MODE);
+        boolean isNight = mPrefsUtil.readBoolean(SettingsFragment.PREF_NIGHT_MODE, false);
         AppCompatDelegate.setDefaultNightMode(isNight ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
         mPrefsUtil.writeBoolean(SettingsFragment.PREF_NIGHT_MODE, !isNight);
     }
@@ -73,7 +69,7 @@ public class AppUtil {
     }
 
     public boolean isAutoLoadImage() {
-        return !mNetworkUtil.isCellularOn();
+        return !mNetworkUtil.isNetworkOn() || mNetworkUtil.isWifiOn() || !mPrefsUtil.readBoolean(SettingsFragment.PREF_DATA_SAVE_MODE, true);
     }
 
 }

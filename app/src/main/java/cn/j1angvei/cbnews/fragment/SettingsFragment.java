@@ -3,12 +3,7 @@ package cn.j1angvei.cbnews.fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.support.v7.app.AppCompatDelegate;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.util.Navigator;
@@ -19,20 +14,12 @@ import cn.j1angvei.cbnews.util.Navigator;
  */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREF_NIGHT_MODE = "pref_night_mode";
-    private SwitchPreference spNightMode;
+    public static final String PREF_DATA_SAVE_MODE = "pref_data_save_mode";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        PreferenceManager manager = getPreferenceManager();
-        spNightMode = (SwitchPreference) manager.findPreference(PREF_NIGHT_MODE);
-        return super.onCreateView(inflater, container, savedInstanceState);
-
     }
 
     @Override
@@ -62,7 +49,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
-//                getActivity().recreate();
                 break;
             default:
                 break;

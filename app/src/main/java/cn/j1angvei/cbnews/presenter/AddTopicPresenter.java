@@ -40,7 +40,7 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
     @Override
     public void retrieveTopics(final int page) {
         mView.showLoading();
-        mAllTopicsRepository.getData(page, null, null)
+        mAllTopicsRepository.getDataFromDB(page, null, null)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

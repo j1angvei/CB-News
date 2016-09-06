@@ -46,7 +46,7 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getData(0, sid, null)
+        mContentRepository.getDataFromDB(0, sid, null)
                 .map(new Func1<Content, String>() {
                     @Override
                     public String call(Content content) {
@@ -56,7 +56,7 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
                 .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(String sn) {
-                        return mRepository.getData(0, sid, sn);
+                        return mRepository.getDataFromDB(0, sid, sn);
                     }
                 })
                 .subscribeOn(Schedulers.io())

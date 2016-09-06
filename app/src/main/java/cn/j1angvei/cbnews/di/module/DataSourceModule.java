@@ -18,6 +18,7 @@ import cn.j1angvei.cbnews.data.local.helper.HeadlineDbHelper;
 import cn.j1angvei.cbnews.data.local.helper.ReviewDbHelper;
 import cn.j1angvei.cbnews.data.remote.NewsRemoteSource;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.util.NetworkUtil;
 import dagger.Module;
 import dagger.Provides;
 
@@ -62,28 +63,28 @@ public class DataSourceModule {
     @Provides
     @Singleton
     @Named(ARTICLE)
-    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter) {
-        return new NewsRemoteSource<>(wrapper, converter);
+    NewsRemoteSource<Article> provideArticleNewsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter, NetworkUtil networkUtil) {
+        return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @Named(REVIEW)
-    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CBApiWrapper wrapper, ReviewConverter converter) {
-        return new NewsRemoteSource<>(wrapper, converter);
+    NewsRemoteSource<Review> provideReviewNewsRemoteSource(CBApiWrapper wrapper, ReviewConverter converter, NetworkUtil networkUtil) {
+        return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @Named(HEADLINE)
-    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CBApiWrapper wrapper, HeadlineConverter converter) {
-        return new NewsRemoteSource<>(wrapper, converter);
+    NewsRemoteSource<Headline> provideHeadlineNewsRemoteSource(CBApiWrapper wrapper, HeadlineConverter converter, NetworkUtil networkUtil) {
+        return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @Named(BOOKMARK)
-    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CBApiWrapper wrapper, BookmarkConverter converter) {
-        return new NewsRemoteSource<>(wrapper, converter);
+    NewsRemoteSource<Bookmark> provideBookmarkRemoteSource(CBApiWrapper wrapper, BookmarkConverter converter, NetworkUtil networkUtil) {
+        return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 }

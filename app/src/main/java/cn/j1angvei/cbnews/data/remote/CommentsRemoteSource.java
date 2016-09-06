@@ -1,5 +1,7 @@
 package cn.j1angvei.cbnews.data.remote;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.converter.CommentsConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
@@ -21,13 +24,13 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
     private CommentsConverter mConverter;
 
     @Inject
-    public CommentsRemoteSource(CBApiWrapper wrapper, CommentsConverter converter) {
-        super(wrapper);
+    public CommentsRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
+        super(wrapper, networkUtil);
         mConverter = converter;
     }
 
     @Override
-    public Observable<Comments> loadData(int page, String... args) {
+    public Observable<Comments> fetchData(Integer page, @NonNull String... args) {
         String sid = args[0], sn = args[1];
         return mApiWrapper.getComments(sid, sn)
                 .flatMap(new Func1<ResponseBody, Observable<Comments>>() {

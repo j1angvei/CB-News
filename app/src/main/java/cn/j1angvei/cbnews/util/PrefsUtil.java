@@ -48,8 +48,8 @@ public class PrefsUtil {
         prefs.edit().putStringSet(key, set).apply();
     }
 
-    public boolean readBoolean(String key) {
-        return prefs.getBoolean(key, true);
+    public boolean readBoolean(String key, boolean defaultValue) {
+        return prefs.getBoolean(key, defaultValue);
     }
 
     public void writeBoolean(String key, boolean value) {

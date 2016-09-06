@@ -111,9 +111,8 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
         }
         if (contents == null || contents.isEmpty()) {
             return Observable.error(new NoLocalItemException());
-        } else {
-            return Observable.from(contents);
         }
+        return Observable.from(contents);
     }
 
     @Override

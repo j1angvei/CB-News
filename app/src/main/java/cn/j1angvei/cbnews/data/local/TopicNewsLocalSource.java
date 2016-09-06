@@ -36,8 +36,8 @@ public class TopicNewsLocalSource implements LocalSource<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> read(int page, String id, String sourceType) {
-        boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.MY_TOPICS_IS_ASCEND);
+    public Observable<MyTopic> read(Integer page, String id, String sourceType) {
+        boolean isAscend = mPrefsUtil.readBoolean(PrefsUtil.MY_TOPICS_IS_ASCEND, true);
         String query = SELECT_FROM + BLANK +
                 mDbHelper.getTableName() +
                 BLANK + ORDER_BY + BLANK + COL_ADD_ORDER + BLANK + (isAscend ? ASCEND : DESCEND);

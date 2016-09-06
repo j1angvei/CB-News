@@ -9,7 +9,7 @@
             android:title="@string/set_night_mode"/>
         <SwitchPreference
             android:defaultValue="true"
-            android:key="pref_basic_save_data_mode"
+            android:key="pref_data_save_mode"
             android:summaryOff="@string/set_load_img_always"
             android:summaryOn="@string/set_load_img_wifi"
             android:title="@string/set_save_data_mode"/>

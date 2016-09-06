@@ -49,7 +49,7 @@ public class NewsLocalSource<T extends News> implements LocalSource<T> {
     }
 
     @Override
-    public Observable<T> read(int page, String id, @NonNull String sourceType) {
+    public Observable<T> read(Integer page, String id, @NonNull String sourceType) {
         String builder = (SELECT_FROM + BLANK) + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + sourceType + QUOTE + BLANK +
                 ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;

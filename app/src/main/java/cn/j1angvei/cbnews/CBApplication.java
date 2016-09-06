@@ -27,8 +27,8 @@ public class CBApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         mApplicationComponent.inject(this);
-        mAppUtil.initLocaleAsChina();
         mAppUtil.initAppTheme();
+        mAppUtil.initLocaleAsChina();
     }
 
     public ApplicationComponent getApplicationComponent() {

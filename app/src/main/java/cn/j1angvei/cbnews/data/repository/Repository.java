@@ -1,6 +1,7 @@
 package cn.j1angvei.cbnews.data.repository;
 
-import cn.j1angvei.cbnews.util.NetworkUtil;
+import cn.j1angvei.cbnews.data.local.LocalSource;
+import cn.j1angvei.cbnews.data.remote.RemoteSource;
 import rx.Observable;
 
 /**
@@ -8,19 +9,21 @@ import rx.Observable;
  * implement repository pattern
  */
 public abstract class Repository<T> {
-    private final NetworkUtil mNetworkUtil;
+    LocalSource<T> mLocalSource;
+    RemoteSource<T> mRemoteSource;
 
-    public Repository(NetworkUtil networkUtil) {
-        mNetworkUtil = networkUtil;
+    public Repository(LocalSource<T> localSource, RemoteSource<T> remoteSource) {
+        mLocalSource = localSource;
+        mRemoteSource = remoteSource;
     }
 
-    public abstract Observable<T> getData(int page, String id, String typeOrSN);
+    public abstract Observable<T> getDataFromDB(Integer page, String id, String typeOrSN);
+
+    public abstract Observable<T> offlineDownload(Integer page, String id, String typeOrSN);
+
+    public abstract Observable<T> getDataFromRAM(Integer page, String id, String typeOrSN);
 
     public abstract void storeToDisk(T item);
 
-    abstract void storeToMemory(T item);
-
-    boolean isConnected() {
-        return mNetworkUtil.isNetworkOn();
-    }
+    public abstract void storeToMemory(T item);
 }
