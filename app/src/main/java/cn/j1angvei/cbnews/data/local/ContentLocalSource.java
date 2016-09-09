@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.data.local.helper.ContentDbHelper;
+import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import rx.Observable;
 
 import static android.provider.BaseColumns._ID;
@@ -34,7 +35,10 @@ public class ContentLocalSource implements LocalSource<Content> {
     }
 
     @Override
-    public Observable<Content> read(Integer page, @NonNull String id, String sourceType) {
+    public Observable<Content> read(@NonNull Integer page, @NonNull String id, String sourceType) {
+        if (page > 1) {
+            return Observable.error(new NoMoreItemException());
+        }
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + id + QUOTE;

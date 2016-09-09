@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
 
@@ -109,10 +109,8 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (contents == null || contents.isEmpty()) {
-            return Observable.error(new NoLocalItemException());
-        }
-        return Observable.from(contents);
+        return contents == null || contents.isEmpty() ?
+                Observable.<Content>error(new LocalItemNotFoundException()) : Observable.from(contents);
     }
 
     @Override

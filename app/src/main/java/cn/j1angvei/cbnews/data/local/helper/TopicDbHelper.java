@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Topic;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import rx.Observable;
 
 /**
@@ -71,9 +72,10 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     @Override
     public Observable<Topic> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Topic> topics = new ArrayList<>();
+        List<Topic> topics = null;
         try {
             if (cursor.moveToFirst()) {
+                topics = new ArrayList<>();
                 do {
                     Topic topic = new Topic();
                     topic.setId(cursor.getString(cursor.getColumnIndex(_ID)));
@@ -87,7 +89,8 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return Observable.from(topics);
+        return topics == null || topics.isEmpty() ?
+                Observable.<Topic>error(new LocalItemNotFoundException()) : Observable.from(topics);
     }
 
     @Override

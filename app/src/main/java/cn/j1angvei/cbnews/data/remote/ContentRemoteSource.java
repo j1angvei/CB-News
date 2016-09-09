@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.converter.ContentConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
@@ -33,7 +34,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
     @Override
     public Observable<Content> fetchData(Integer page, @NonNull String... args) {
         String sid = args[0];
-        return mApiWrapper.getContent(sid)
+        return hasConnection() ? mApiWrapper.getContent(sid)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(ResponseBody responseBody) {
@@ -45,6 +46,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                         }
                     }
                 })
-                .retry(1);
+                .retry(1) :
+                Observable.<Content>error(new ServerItemNotFoundException());
     }
 }

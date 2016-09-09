@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.data.local.CommentsLocalSource;
 import cn.j1angvei.cbnews.data.remote.CommentsRemoteSource;
-import cn.j1angvei.cbnews.exception.NoNetworkException;
+import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -35,43 +35,33 @@ public class CommentsRepository extends Repository<Comments> {
 
     @Override
     public Observable<Comments> getDataFromDB(@NonNull Integer page, @NonNull final String id, @NonNull String typeOrSN) {
-        return Observable.just(page == -1)
-                .flatMap(new Func1<Boolean, Observable<Comments>>() {
-                    @Override
-                    public Observable<Comments> call(Boolean refresh) {
-                        Comments comments = mCommentsMap.get(id);
-                        return refresh || comments == null ?
-                                Observable.<Comments>empty() :
-                                Observable.just(comments);
-                    }
-                })
-                .switchIfEmpty(mRemoteSource.fetchData(null, id, typeOrSN)
-                        .doOnNext(new Action1<Comments>() {
-                            @Override
-                            public void call(Comments comments) {
-                                storeToMemory(comments);
-                                storeToDisk(comments);
-                            }
-                        }))
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Comments>>() {
-                    @Override
-                    public Observable<? extends Comments> call(Throwable throwable) {
-                        if (throwable instanceof NoNetworkException) {
-                            return mLocalSource.read(null, id, null);
-                        } else {
-                            return Observable.error(throwable);
+        if (page < 0) {
+            Comments comments = mCommentsMap.get(id);
+            return comments == null ? Observable.<Comments>error(new RAMItemNotFoundException()) : Observable.just(comments);
+        } else
+            return mRemoteSource.fetchData(null, id, typeOrSN)
+                    .doOnNext(new Action1<Comments>() {
+                        @Override
+                        public void call(Comments comments) {
+                            storeToDisk(comments);
                         }
-                    }
-                });
+                    })
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Comments>>() {
+                        @Override
+                        public Observable<? extends Comments> call(Throwable throwable) {
+                            return mLocalSource.read(null, id, null);
+                        }
+                    })
+                    .doOnNext(new Action1<Comments>() {
+                        @Override
+                        public void call(Comments comments) {
+                            storeToMemory(comments);
+                        }
+                    });
     }
 
     @Override
     public Observable<Comments> offlineDownload(Integer page, String id, String typeOrSN) {
-        return null;
-    }
-
-    @Override
-    public Observable<Comments> getDataFromRAM(Integer page, String id, String typeOrSN) {
         return null;
     }
 

@@ -105,5 +105,7 @@
     <string name="title_cache_complete">缓存完成！</string>
     <string name="title_cache_news">离线下载</string>
     <string name="info_need_wifi_env">仅在WiFi环境下能够离线下载！</string>
+    <string name="error_no_more_data">没有更多数据了</string>
+    <string name="error_no_item_in_ram">内存内容为空！</string>
     <!--settings-->
 </resources>

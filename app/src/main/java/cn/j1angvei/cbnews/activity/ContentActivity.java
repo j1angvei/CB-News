@@ -67,7 +67,7 @@ public class ContentActivity extends BaseActivity {
         //viewpager
         mAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mNewses);
         mViewPager.setAdapter(mAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        ViewPager.SimpleOnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 final News news = mNewses.get(position);
@@ -79,8 +79,12 @@ public class ContentActivity extends BaseActivity {
                     }
                 });
             }
-        });
+        };
+        mViewPager.addOnPageChangeListener(listener);
         mViewPager.setCurrentItem(mInitPos);
+        if (mInitPos == 0) {
+            listener.onPageSelected(mInitPos);
+        }
     }
 
     @Override

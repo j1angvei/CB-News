@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.data.local.ContentLocalSource;
 import cn.j1angvei.cbnews.data.remote.ContentRemoteSource;
+import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -32,32 +33,34 @@ public class ContentRepository extends Repository<Content> {
 
     @Override
     public Observable<Content> getDataFromDB(@NonNull Integer page, @NonNull final String id, String typeOrSN) {
-        return Observable.just(page == -1)
-                .flatMap(new Func1<Boolean, Observable<Content>>() {
-                    @Override
-                    public Observable<Content> call(Boolean refresh) {
-                        Content content = mContentMap.get(id);
-                        return refresh || content == null ? Observable.<Content>empty() : Observable.just(content);
-                    }
-                })
-                .switchIfEmpty(mRemoteSource.fetchData(null, id))
-                .switchIfEmpty(mLocalSource.read(null, id, null))
-                .doOnNext(new Action1<Content>() {
-                    @Override
-                    public void call(Content content) {
-                        storeToMemory(content);
-                        storeToDisk(content);
-                    }
-                });
+        if (page < 0) {
+            Content content = mContentMap.get(id);
+            return content == null ?
+                    Observable.<Content>error(new RAMItemNotFoundException()) : Observable.just(content);
+        } else
+            return mRemoteSource.fetchData(null, id)
+                    .doOnNext(new Action1<Content>() {
+                        @Override
+                        public void call(Content content) {
+                            storeToDisk(content);
+                        }
+                    })
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Content>>() {
+                        @Override
+                        public Observable<? extends Content> call(Throwable throwable) {
+                            return mLocalSource.read(null, id, null);
+                        }
+                    })
+                    .doOnNext(new Action1<Content>() {
+                        @Override
+                        public void call(Content content) {
+                            storeToMemory(content);
+                        }
+                    });
     }
 
     @Override
     public Observable<Content> offlineDownload(Integer page, String id, String typeOrSN) {
-        return null;
-    }
-
-    @Override
-    public Observable<Content> getDataFromRAM(Integer page, String id, String typeOrSN) {
         return null;
     }
 

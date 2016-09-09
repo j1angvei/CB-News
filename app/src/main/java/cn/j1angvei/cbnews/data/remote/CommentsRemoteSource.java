@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.converter.CommentsConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
@@ -32,7 +33,7 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
     @Override
     public Observable<Comments> fetchData(Integer page, @NonNull String... args) {
         String sid = args[0], sn = args[1];
-        return mApiWrapper.getComments(sid, sn)
+        return hasConnection() ? mApiWrapper.getComments(sid, sn)
                 .flatMap(new Func1<ResponseBody, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(ResponseBody responseBody) {
@@ -43,6 +44,7 @@ public class CommentsRemoteSource extends RemoteSource<Comments> {
                         }
                     }
                 })
-                .retry(1);
+                .retry(1) :
+                Observable.<Comments>error(new ServerItemNotFoundException());
     }
 }

@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Bookmark;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
 
@@ -73,9 +73,10 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
     @Override
     public Observable<Bookmark> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Bookmark> bookmarks = new ArrayList<>();
+        List<Bookmark> bookmarks = null;
         try {
             if (cursor.moveToFirst()) {
+                bookmarks = new ArrayList<>();
                 do {
                     Bookmark bookmark = new Bookmark();
                     bookmark.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
@@ -93,10 +94,8 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (bookmarks.isEmpty())
-            return Observable.error(new NoLocalItemException());
-        else
-            return Observable.from(bookmarks);
+        return bookmarks == null || bookmarks.isEmpty() ?
+                Observable.<Bookmark>error(new LocalItemNotFoundException()) : Observable.from(bookmarks);
     }
 
     @Override

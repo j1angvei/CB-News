@@ -21,8 +21,6 @@ public abstract class Repository<T> {
 
     public abstract Observable<T> offlineDownload(Integer page, String id, String typeOrSN);
 
-    public abstract Observable<T> getDataFromRAM(Integer page, String id, String typeOrSN);
-
     public abstract void storeToDisk(T item);
 
     public abstract void storeToMemory(T item);

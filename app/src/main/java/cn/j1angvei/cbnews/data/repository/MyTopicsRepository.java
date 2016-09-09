@@ -44,11 +44,6 @@ public class MyTopicsRepository extends Repository<MyTopic> {
     }
 
     @Override
-    public Observable<MyTopic> getDataFromRAM(Integer page, String id, String typeOrSN) {
-        return null;
-    }
-
-    @Override
     public void storeToDisk(MyTopic item) {
         mLocalSource.create(item);
     }

@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.MyTopic;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import rx.Observable;
 
 /**
@@ -98,11 +98,8 @@ public class MyTopicsDbHelper extends SQLiteOpenHelper implements DbHelper<MyTop
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (topics == null || topics.isEmpty()) {
-            return Observable.error(new NoLocalItemException());
-        } else {
-            return Observable.from(topics);
-        }
+        return topics == null || topics.isEmpty()
+                ? Observable.<MyTopic>error(new LocalItemNotFoundException()) : Observable.from(topics);
     }
 
     @Override

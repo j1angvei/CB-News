@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DbUtil;
 import rx.Observable;
 
@@ -106,10 +106,8 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (commentsList == null || commentsList.isEmpty()) {
-            return Observable.error(new NoLocalItemException());
-        }
-        return Observable.from(commentsList);
+        return commentsList == null || commentsList.isEmpty() ?
+                Observable.<Comments>error(new LocalItemNotFoundException()) : Observable.from(commentsList);
     }
 
     @Override

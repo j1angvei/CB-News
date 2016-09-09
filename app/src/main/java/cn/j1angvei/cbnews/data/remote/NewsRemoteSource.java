@@ -8,6 +8,7 @@ import java.io.IOException;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.converter.NewsConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
@@ -31,23 +32,26 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
     public Observable<T> fetchData(@NonNull Integer page, @NonNull String... args) {
         final String sourceType = args[0];
         boolean isTopicMews = TextUtils.isDigitsOnly(sourceType);
-        return (isTopicMews ? mApiWrapper.getTopicNews(sourceType, page) : mApiWrapper.getNews(sourceType, page))
-                .flatMap(new Func1<ResponseBody, Observable<T>>() {
-                    @Override
-                    public Observable<T> call(ResponseBody responseBody) {
-                        try {
-                            return mConverter.toObservable(responseBody.string());
-                        } catch (IOException e) {
-                            return Observable.error(new ResponseParseException());
-                        }
-                    }
-                })
-                .doOnNext(new Action1<T>() {
-                    @Override
-                    public void call(T t) {
-                        t.setSourceType(sourceType);
-                    }
-                })
-                .retry(1);
+        return hasConnection() ?
+                (isTopicMews ? mApiWrapper.getTopicNews(sourceType, page) : mApiWrapper.getNews(sourceType, page))
+                        .flatMap(new Func1<ResponseBody, Observable<T>>() {
+                            @Override
+                            public Observable<T> call(ResponseBody responseBody) {
+                                try {
+                                    return mConverter.toObservable(responseBody.string());
+                                } catch (IOException e) {
+                                    return Observable.error(new ResponseParseException());
+                                }
+                            }
+                        })
+                        .doOnNext(new Action1<T>() {
+                            @Override
+                            public void call(T t) {
+                                t.setSourceType(sourceType);
+                            }
+                        })
+                        .retry(1) :
+                Observable.<T>error(new ServerItemNotFoundException());
+
     }
 }

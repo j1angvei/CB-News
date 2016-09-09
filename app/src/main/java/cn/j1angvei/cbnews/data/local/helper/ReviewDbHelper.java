@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Review;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import rx.Observable;
 
 /**
@@ -75,9 +75,10 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
     @Override
     public Observable<Review> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Review> reviews = new ArrayList<>();
+        List<Review> reviews = null;
         try {
             if (cursor.moveToFirst()) {
+                reviews = new ArrayList<>();
                 do {
                     Review review = new Review();
                     review.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
@@ -93,10 +94,8 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (reviews.isEmpty()) {
-            return Observable.error(new NoLocalItemException());
-        }
-        return Observable.from(reviews);
+        return reviews == null || reviews.isEmpty() ?
+                Observable.<Review>error(new LocalItemNotFoundException()) : Observable.from(reviews);
     }
 
     @Override

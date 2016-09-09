@@ -77,4 +77,23 @@ public class News implements Parcelable {
             return new News[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        News news = (News) o;
+
+        if (!sid.equals(news.sid)) return false;
+        return sourceType != null ? sourceType.equals(news.sourceType) : news.sourceType == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sid.hashCode();
+        result = 31 * result + (sourceType != null ? sourceType.hashCode() : 0);
+        return result;
+    }
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Headline;
-import cn.j1angvei.cbnews.exception.NoLocalItemException;
+import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DbUtil;
 import rx.Observable;
 
@@ -78,9 +78,10 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
     @Override
     public Observable<Headline> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Headline> headlines = new ArrayList<>();
+        List<Headline> headlines = null;
         try {
             if (cursor.moveToFirst()) {
+                headlines = new ArrayList<>();
                 do {
                     Headline headline = new Headline();
                     headline.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
@@ -96,11 +97,8 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        if (headlines.isEmpty()) {
-            return Observable.error(new NoLocalItemException());
-        } else {
-            return Observable.from(headlines);
-        }
+        return headlines == null || headlines.isEmpty() ?
+                Observable.<Headline>error(new LocalItemNotFoundException()) : Observable.from(headlines);
     }
 
     @Override

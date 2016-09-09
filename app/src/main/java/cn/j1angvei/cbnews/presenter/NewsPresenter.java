@@ -35,6 +35,7 @@ public class NewsPresenter<N extends News> implements NewsContract.Presenter<N> 
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetNewsFail(ErrorUtil.getErrorInfo(e));
+                        mView.hideLoading();
                     }
 
                     @Override

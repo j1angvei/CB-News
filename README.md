@@ -1,5 +1,5 @@
 # CB News(西贝新闻)
-A third-party CB News Android Application, MVP pattern, Repository design pattern, Material design, using library Dagger2, RxJava, OkHttp, Retrofit, ButterKnife Glide and Jsoup.  
+A third-party cnBeta News Android Application, MVP pattern, Repository design pattern, Material design, using library Dagger2, RxJava, OkHttp, Retrofit, ButterKnife Glide and Jsoup.  
 Play store link: https://play.google.com/store/apps/details?id=cn.j1angvei.cbnews
 ## Introduction
 Data source are parsed from cnBeta official website www.cnbeta.com.  

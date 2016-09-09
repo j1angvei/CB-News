@@ -9,7 +9,7 @@ import rx.Observable;
  */
 public abstract class RemoteSource<T> {
     final CBApiWrapper mApiWrapper;
-    final NetworkUtil mNetworkUtil;
+    private final NetworkUtil mNetworkUtil;
 
     public RemoteSource(CBApiWrapper wrapper, NetworkUtil networkUtil) {
         mApiWrapper = wrapper;
