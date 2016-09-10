@@ -5,6 +5,9 @@ import android.content.res.Configuration;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -60,16 +63,27 @@ public class AppUtil {
         System.exit(0);
     }
 
-    private int getDefaultNightMode() {
-        return AppCompatDelegate.getDefaultNightMode();
-    }
-
     public boolean isNightModeOn() {
-        return getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
+        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
     }
 
     public boolean isAutoLoadImage() {
         return !mNetworkUtil.isNetworkOn() || mNetworkUtil.isWifiOn() || !mPrefsUtil.readBoolean(SettingsFragment.PREF_DATA_SAVE_MODE, true);
+    }
+
+    public List<String> getMyTopicIds() {
+        String idString = mPrefsUtil.readString(PrefsUtil.MY_TOPIC_IDS);
+        List<String> ids = new ArrayList<>();
+        if (!idString.isEmpty()) {
+            String[] array = idString.split(" ");
+            ids = new ArrayList<>(Arrays.asList(array));
+        }
+        return ids;
+    }
+
+    public void setMyTopics(List<String> ids) {
+        String idString = TextUtils.join(" ", ids);
+        mPrefsUtil.writeString(PrefsUtil.MY_TOPIC_IDS, idString);
     }
 
 }

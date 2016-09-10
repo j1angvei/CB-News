@@ -6,7 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.data.local.helper.CommentsDbHelper;
+import cn.j1angvei.cbnews.data.local.helper.DbHelper;
+import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import rx.Observable;
 
@@ -21,15 +22,12 @@ import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
-public class CommentsLocalSource implements LocalSource<Comments> {
-    private final CommentsDbHelper mDbHelper;
-
+public class CmtLocalSource extends LocalSource<Comments> {
     @Inject
-    public CommentsLocalSource(CommentsDbHelper dbHelper) {
-        mDbHelper = dbHelper;
+    public CmtLocalSource(@QCmt DbHelper<Comments> dbHelper) {
+        super(dbHelper);
     }
 
-    @Override
     public void create(Comments item) {
         mDbHelper.create(item);
     }

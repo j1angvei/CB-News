@@ -19,7 +19,7 @@ import rx.Observable;
  * convert response to Topic
  */
 @Singleton
-public class TopicConverter implements Converter<String, Topic> {
+public class TopicConverter implements Converter<Topic> {
     @Inject
     public TopicConverter() {
     }

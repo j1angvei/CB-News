@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Topic;
+import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import rx.Observable;
 

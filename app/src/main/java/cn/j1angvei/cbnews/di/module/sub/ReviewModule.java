@@ -2,18 +2,15 @@ package cn.j1angvei.cbnews.di.module.sub;
 
 import android.support.v4.app.Fragment;
 
-import javax.inject.Named;
-
 import cn.j1angvei.cbnews.adapter.NewsAdapter;
 import cn.j1angvei.cbnews.adapter.ReviewRvAdapter;
 import cn.j1angvei.cbnews.bean.Review;
-import cn.j1angvei.cbnews.data.repository.NewsRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.di.qualifier.QReview;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.presenter.NewsPresenter;
 import dagger.Module;
 import dagger.Provides;
-
-import static cn.j1angvei.cbnews.bean.News.Type.REVIEW;
 
 
 /**
@@ -29,7 +26,7 @@ public class ReviewModule {
 
     @Provides
     @PerFragment
-    NewsPresenter<Review> reviewsPresenter(@Named(REVIEW) NewsRepository<Review> repository) {
+    NewsPresenter<Review> reviewsPresenter(@QReview Repository<Review> repository) {
         return new NewsPresenter<>(repository);
     }
 

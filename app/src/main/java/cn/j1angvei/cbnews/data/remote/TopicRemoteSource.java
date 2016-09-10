@@ -21,12 +21,12 @@ import rx.functions.Func1;
  * get topics by letter from web
  */
 @Singleton
-public class AllTopicsRemoteSource extends RemoteSource<Topic> {
-    private static final String TAG = "AllTopicsRemoteSource";
+public class TopicRemoteSource extends RemoteSource<Topic> {
+    private static final String TAG = "TopicRemoteSource";
     private TopicConverter mConverter;
 
     @Inject
-    public AllTopicsRemoteSource(CBApiWrapper wrapper, TopicConverter converter, NetworkUtil networkUtil) {
+    public TopicRemoteSource(CBApiWrapper wrapper, TopicConverter converter, NetworkUtil networkUtil) {
         super(wrapper, networkUtil);
         mConverter = converter;
     }

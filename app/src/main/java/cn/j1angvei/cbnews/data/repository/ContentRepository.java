@@ -9,8 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.data.local.ContentLocalSource;
-import cn.j1angvei.cbnews.data.remote.ContentRemoteSource;
+import cn.j1angvei.cbnews.data.local.LocalSource;
+import cn.j1angvei.cbnews.data.remote.RemoteSource;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
 import rx.functions.Action1;
@@ -21,14 +22,11 @@ import rx.functions.Func1;
  */
 @Singleton
 public class ContentRepository extends Repository<Content> {
-    private final Map<String, Content> mContentMap;
+    private final Map<String, Content> mContentMap = new HashMap<>();
 
     @Inject
-    public ContentRepository(ContentLocalSource localSource, ContentRemoteSource remoteSource) {
+    public ContentRepository(@QContent LocalSource<Content> localSource, @QContent RemoteSource<Content> remoteSource) {
         super(localSource, remoteSource);
-        mLocalSource = localSource;
-        mRemoteSource = remoteSource;
-        mContentMap = new HashMap<>();
     }
 
     @Override

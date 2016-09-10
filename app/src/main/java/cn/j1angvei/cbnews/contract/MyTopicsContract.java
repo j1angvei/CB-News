@@ -2,7 +2,7 @@ package cn.j1angvei.cbnews.contract;
 
 import java.util.List;
 
-import cn.j1angvei.cbnews.bean.MyTopic;
+import cn.j1angvei.cbnews.bean.Topic;
 
 /**
  * Created by Wayne on 2016/8/19.
@@ -13,7 +13,7 @@ public interface MyTopicsContract {
 
         void showAllTopics();
 
-        void renderMyTopics(List<MyTopic> topics);
+        void renderMyTopics(List<Topic> topics);
 
         void onMyTopicsEmpty();
 

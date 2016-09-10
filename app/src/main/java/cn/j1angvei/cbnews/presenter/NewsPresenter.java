@@ -2,7 +2,7 @@ package cn.j1angvei.cbnews.presenter;
 
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.contract.NewsContract;
-import cn.j1angvei.cbnews.data.repository.NewsRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.util.ErrorUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -14,9 +14,9 @@ import rx.schedulers.Schedulers;
 public class NewsPresenter<N extends News> implements NewsContract.Presenter<N> {
     public static final String TAG = "NewsPresenter";
     private NewsContract.View<N> mView;
-    private NewsRepository<N> mRepository;
+    private Repository<N> mRepository;
 
-    public NewsPresenter(NewsRepository<N> repository) {
+    public NewsPresenter(Repository<N> repository) {
         mRepository = repository;
     }
 

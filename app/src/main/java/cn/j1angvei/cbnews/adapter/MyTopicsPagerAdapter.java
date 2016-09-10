@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import cn.j1angvei.cbnews.bean.MyTopic;
+import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.fragment.ArticlesFragment;
 
 /**
@@ -14,9 +14,9 @@ import cn.j1angvei.cbnews.fragment.ArticlesFragment;
  * load fragment to show my topic news
  */
 public class MyTopicsPagerAdapter extends FragmentPagerAdapter {
-    private final List<MyTopic> mMyTopics;
+    private final List<Topic> mMyTopics;
 
-    public MyTopicsPagerAdapter(FragmentManager fm, List<MyTopic> myTopics) {
+    public MyTopicsPagerAdapter(FragmentManager fm, List<Topic> myTopics) {
         super(fm);
         mMyTopics = myTopics;
     }

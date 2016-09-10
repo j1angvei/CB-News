@@ -11,8 +11,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.data.local.AllTopicsLocalSource;
-import cn.j1angvei.cbnews.data.remote.AllTopicsRemoteSource;
+import cn.j1angvei.cbnews.data.local.LocalSource;
+import cn.j1angvei.cbnews.data.remote.RemoteSource;
+import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -21,18 +22,15 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/24.
  */
 @Singleton
-public class AllTopicsRepository extends Repository<Topic> {
-    private static final String TAG = "AllTopicsRepository";
-    private final AllTopicsLocalSource mLocalSource;
-    private final AllTopicsRemoteSource mRemoteSource;
-    private final SparseArray<List<Topic>> mTopicArray;
+public class TopicRepository extends Repository<Topic> {
+    private static final String TAG = "TopicRepository";
+    private final SparseArray<List<Topic>> mTopicArray = new SparseArray<>();
 
     @Inject
-    public AllTopicsRepository(AllTopicsLocalSource localSource, AllTopicsRemoteSource remoteSource) {
+    public TopicRepository(@QTopic LocalSource<Topic> localSource, @QTopic RemoteSource<Topic> remoteSource) {
         super(localSource, remoteSource);
         mLocalSource = localSource;
         mRemoteSource = remoteSource;
-        mTopicArray = new SparseArray<>();
     }
 
     @Override

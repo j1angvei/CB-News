@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.j1angvei.cbnews.bean.News;
-import cn.j1angvei.cbnews.data.local.NewsLocalSource;
-import cn.j1angvei.cbnews.data.remote.NewsRemoteSource;
+import cn.j1angvei.cbnews.data.local.LocalSource;
+import cn.j1angvei.cbnews.data.remote.RemoteSource;
 import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
 import rx.functions.Action1;
@@ -22,13 +22,10 @@ import rx.functions.Func1;
  */
 public class NewsRepository<T extends News> extends Repository<T> {
     private static final String TAG = "NewsRepository";
-    private final Map<String, List<T>> mNewsMap;
+    private final Map<String, List<T>> mNewsMap = new HashMap<>();
 
-    public NewsRepository(NewsLocalSource<T> localSource, NewsRemoteSource<T> remoteSource) {
+    public NewsRepository(LocalSource<T> localSource, RemoteSource<T> remoteSource) {
         super(localSource, remoteSource);
-        mLocalSource = localSource;
-        mRemoteSource = remoteSource;
-        mNewsMap = new HashMap<>();
     }
 
 

@@ -37,14 +37,6 @@ public class News implements Parcelable {
         this.sourceType = sourceType;
     }
 
-    public static class Type {
-        public static final String ARTICLE = "article";
-        public static final String HEADLINE = "headline";
-        public static final String REVIEW = "review";
-        public static final String BOOKMARK = "bookmark";
-    }
-
-
     @Override
     public int describeContents() {
         return 0;

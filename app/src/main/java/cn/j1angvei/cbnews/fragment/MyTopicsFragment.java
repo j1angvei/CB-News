@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.activity.BaseActivity;
 import cn.j1angvei.cbnews.adapter.MyTopicsPagerAdapter;
-import cn.j1angvei.cbnews.bean.MyTopic;
+import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.contract.MyTopicsContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
-import cn.j1angvei.cbnews.dialog.AddMyTopicDialog;
+import cn.j1angvei.cbnews.dialog.AddTopicDialog;
 import cn.j1angvei.cbnews.presenter.MyTopicsPresenter;
 
 /**
@@ -138,13 +138,13 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void showAllTopics() {
-        AddMyTopicDialog dialog = new AddMyTopicDialog();
+        AddTopicDialog dialog = new AddTopicDialog();
         dialog.setTargetFragment(this, 0);
         dialog.show(getChildFragmentManager(), DIALOG_ADD_TOPIC);
     }
 
     @Override
-    public void renderMyTopics(List<MyTopic> topics) {
+    public void renderMyTopics(List<Topic> topics) {
         hideLoading();
         mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
         mViewPager.setAdapter(mAdapter);

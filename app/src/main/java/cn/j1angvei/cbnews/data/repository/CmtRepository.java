@@ -9,8 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.data.local.CommentsLocalSource;
-import cn.j1angvei.cbnews.data.remote.CommentsRemoteSource;
+import cn.j1angvei.cbnews.data.local.LocalSource;
+import cn.j1angvei.cbnews.data.remote.RemoteSource;
+import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
 import rx.functions.Action1;
@@ -20,21 +21,17 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
-public class CommentsRepository extends Repository<Comments> {
-    private final CommentsLocalSource mLocalSource;
-    private final CommentsRemoteSource mRemoteSource;
-    private final Map<String, Comments> mCommentsMap;
+@QCmt
+public class CmtRepository extends Repository<Comments> {
+    private final Map<String, Comments> mCommentsMap = new HashMap<>();
 
     @Inject
-    public CommentsRepository(CommentsLocalSource localSource, CommentsRemoteSource remoteSource) {
+    public CmtRepository(@QCmt LocalSource<Comments> localSource, @QCmt RemoteSource<Comments> remoteSource) {
         super(localSource, remoteSource);
-        mLocalSource = localSource;
-        mRemoteSource = remoteSource;
-        mCommentsMap = new HashMap<>();
     }
 
     @Override
-    public Observable<Comments> getDataFromDB(@NonNull Integer page, @NonNull final String id, @NonNull String typeOrSN) {
+    public Observable<Comments> getDataFromDB(@NonNull final Integer page, @NonNull final String id, @NonNull String typeOrSN) {
         if (page < 0) {
             Comments comments = mCommentsMap.get(id);
             return comments == null ? Observable.<Comments>error(new RAMItemNotFoundException()) : Observable.just(comments);
@@ -49,7 +46,7 @@ public class CommentsRepository extends Repository<Comments> {
                     .onErrorResumeNext(new Func1<Throwable, Observable<? extends Comments>>() {
                         @Override
                         public Observable<? extends Comments> call(Throwable throwable) {
-                            return mLocalSource.read(null, id, null);
+                            return mLocalSource.read(page, id, null);
                         }
                     })
                     .doOnNext(new Action1<Comments>() {

@@ -7,7 +7,8 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.contract.AllTopicsContract;
-import cn.j1angvei.cbnews.data.repository.AllTopicsRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,11 +20,11 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class AllTopicsPresenter implements AllTopicsContract.Presenter {
     private static final String TAG = "AllTopicsPresenter";
-    private final AllTopicsRepository mRepository;
+    private final Repository<Topic> mRepository;
     private AllTopicsContract.View mView;
 
     @Inject
-    public AllTopicsPresenter(AllTopicsRepository repository) {
+    public AllTopicsPresenter(@QTopic Repository<Topic> repository) {
         mRepository = repository;
     }
 

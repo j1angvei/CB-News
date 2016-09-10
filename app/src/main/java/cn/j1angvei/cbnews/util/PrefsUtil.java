@@ -20,7 +20,7 @@ public class PrefsUtil {
     public static final String COOKIE_TOKEN = "cookie_token";
     public static final String COOKIE_SESSION = "cookie_session";
     //my_topics
-    public static final String MY_TOPICS_IS_ASCEND = "my_topics_is_ascend";
+    public static final String MY_TOPIC_IDS = "my_topic_ids";
     //download
     public static final String DOWNLOAD_PAGES = "download_pages";
 

@@ -6,7 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.data.local.helper.ContentDbHelper;
+import cn.j1angvei.cbnews.data.local.helper.DbHelper;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import rx.Observable;
 
@@ -21,12 +22,10 @@ import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/25.
  */
 @Singleton
-public class ContentLocalSource implements LocalSource<Content> {
-    private final ContentDbHelper mDbHelper;
-
+public class ContentLocalSource extends LocalSource<Content> {
     @Inject
-    public ContentLocalSource(ContentDbHelper dbHelper) {
-        mDbHelper = dbHelper;
+    public ContentLocalSource(@QContent DbHelper<Content> dbHelper) {
+        super(dbHelper);
     }
 
     @Override

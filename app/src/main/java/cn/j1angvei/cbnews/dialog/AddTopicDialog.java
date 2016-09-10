@@ -1,5 +1,6 @@
 package cn.j1angvei.cbnews.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -21,9 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.activity.BaseActivity;
-import cn.j1angvei.cbnews.adapter.AddMyTopicAdapter;
+import cn.j1angvei.cbnews.adapter.AddTopicAdapter;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AddMyTopicContract;
+import cn.j1angvei.cbnews.contract.AddTopicContract;
 import cn.j1angvei.cbnews.contract.MyTopicsContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
@@ -35,11 +36,11 @@ import cn.j1angvei.cbnews.util.MessageUtil;
  * open a dialog to add Topic
  */
 
-public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddMyTopicContract.View {
-    private static final String TAG = "AddMyTopicDialog";
+public class AddTopicDialog extends DialogFragment implements BaseDialog, AddTopicContract.View {
+    private static final String TAG = "AddTopicDialog";
     @BindView(R.id.list_view_expand)
     ExpandableListView mListView;
-    AddMyTopicAdapter mAdapter;
+    AddTopicAdapter mAdapter;
     @Inject
     AddTopicPresenter mPresenter;
     private Context mContext;
@@ -54,7 +55,7 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
         ButterKnife.bind(this, view);
         mPresenter.setView(this);
         //expandableListView
-        mAdapter = new AddMyTopicAdapter(this);
+        mAdapter = new AddTopicAdapter(this);
         mListView.setAdapter(mAdapter);
         mListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -82,6 +83,7 @@ public class AddMyTopicDialog extends DialogFragment implements BaseDialog, AddM
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        @SuppressLint("InflateParams")
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_topic, null);
         initView(view);
         final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())

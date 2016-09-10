@@ -21,7 +21,7 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
+public class CmtDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
     private static final String DB_NAME = "comments.db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "comments";
@@ -41,7 +41,7 @@ public class CommentsDbHelper extends SQLiteOpenHelper implements DbHelper<Comme
     private final DbUtil mDbUtil;
 
     @Inject
-    public CommentsDbHelper(Application context, DbUtil dbUtil) {
+    public CmtDbHelper(Application context, DbUtil dbUtil) {
         super(context, DB_NAME, null, DB_VERSION);
         mDbUtil = dbUtil;
     }

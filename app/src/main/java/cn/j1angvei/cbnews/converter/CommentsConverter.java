@@ -26,7 +26,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class CommentsConverter implements Converter<String, Comments> {
+public class CommentsConverter implements Converter<Comments> {
     private static final String TAG = "CommentsConverter";
     final private Gson mGson;
 

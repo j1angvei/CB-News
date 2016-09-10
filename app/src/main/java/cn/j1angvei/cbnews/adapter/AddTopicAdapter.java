@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AddMyTopicContract;
+import cn.j1angvei.cbnews.contract.AddTopicContract;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.util.StringUtil;
 
@@ -27,14 +27,14 @@ import cn.j1angvei.cbnews.util.StringUtil;
  * adapter to get All Topic for user to select
  */
 @PerFragment
-public class AddMyTopicAdapter extends BaseExpandableListAdapter implements BaseExpandAdapter<Topic> {
+public class AddTopicAdapter extends BaseExpandableListAdapter implements BaseExpandAdapter<Topic> {
     private static final int GROUP_SIZE = 26;
     private final SparseArray<List<Topic>> mTopicArray;
-    private final AddMyTopicContract.View mView;
+    private final AddTopicContract.View mView;
     private final List<Topic> mSelected;
 
     @Inject
-    public AddMyTopicAdapter(AddMyTopicContract.View view) {
+    public AddTopicAdapter(AddTopicContract.View view) {
         mView = view;
         mTopicArray = new SparseArray<>();
         for (int i = 0; i < GROUP_SIZE; i++) {

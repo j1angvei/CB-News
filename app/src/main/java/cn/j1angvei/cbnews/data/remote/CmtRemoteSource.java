@@ -21,11 +21,11 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class CommentsRemoteSource extends RemoteSource<Comments> {
+public class CmtRemoteSource extends RemoteSource<Comments> {
     private CommentsConverter mConverter;
 
     @Inject
-    public CommentsRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
+    public CmtRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
         super(wrapper, networkUtil);
         mConverter = converter;
     }

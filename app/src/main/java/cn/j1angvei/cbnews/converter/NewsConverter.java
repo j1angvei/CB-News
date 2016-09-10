@@ -7,7 +7,7 @@ import cn.j1angvei.cbnews.bean.News;
 /**
  * Created by Wayne on 2016/7/23.
  */
-public abstract class NewsConverter<T extends News> implements Converter<String, T> {
+public abstract class NewsConverter<T extends News> implements Converter<T> {
     final Gson mGson;
 
     public NewsConverter(Gson gson) {

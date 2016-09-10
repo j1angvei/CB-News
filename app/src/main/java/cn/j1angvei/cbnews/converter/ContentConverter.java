@@ -21,7 +21,7 @@ import rx.Observable;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class ContentConverter implements Converter<String, Content> {
+public class ContentConverter implements Converter<Content> {
     private static final String TAG = "ContentConverter";
 
     @Inject

@@ -8,12 +8,12 @@ import rx.Observable;
  * base converter, from response to bean
  * Created by Wayne on 2016/7/22.
  */
-public interface Converter<F, T> {
+public interface Converter<T> {
 
-    T to(F from);
+    T to(String from);
 
-    List<T> toList(F from);
+    List<T> toList(String from);
 
-    Observable<T> toObservable(F from);
+    Observable<T> toObservable(String from);
 
 }

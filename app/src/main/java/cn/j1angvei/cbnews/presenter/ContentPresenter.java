@@ -5,7 +5,8 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.contract.ContentContract;
-import cn.j1angvei.cbnews.data.repository.ContentRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.util.ErrorUtil;
 import rx.Subscriber;
@@ -18,11 +19,11 @@ import rx.schedulers.Schedulers;
  */
 @PerFragment
 public class ContentPresenter implements ContentContract.Presenter {
-    private final ContentRepository mRepository;
+    private final Repository<Content> mRepository;
     private ContentContract.View mView;
 
     @Inject
-    public ContentPresenter(ContentRepository repository) {
+    public ContentPresenter(@QContent Repository<Content> repository) {
         mRepository = repository;
     }
 

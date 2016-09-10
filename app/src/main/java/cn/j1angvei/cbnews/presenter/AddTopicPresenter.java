@@ -6,41 +6,36 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cbnews.bean.MyTopic;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AddMyTopicContract;
-import cn.j1angvei.cbnews.converter.MyTopicsConverter;
-import cn.j1angvei.cbnews.data.repository.AllTopicsRepository;
-import cn.j1angvei.cbnews.data.repository.MyTopicsRepository;
+import cn.j1angvei.cbnews.contract.AddTopicContract;
+import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by Wayne on 2016/8/28.
  */
 @PerFragment
-public class AddTopicPresenter implements AddMyTopicContract.Presenter {
+public class AddTopicPresenter implements AddTopicContract.Presenter {
     private static final String TAG = "AddTopicPresenter";
-    private AddMyTopicContract.View mView;
-    private final AllTopicsRepository mAllTopicsRepository;
-    private final MyTopicsRepository mRepository;
-    private final MyTopicsConverter mConverter;
+    private AddTopicContract.View mView;
+    private final Repository<Topic> mTopicRepository;
+    //    private final MyTopicsRepository mRepository;
 
     @Inject
-    public AddTopicPresenter(AllTopicsRepository allTopicsRepository, MyTopicsRepository repository, MyTopicsConverter converter) {
-        mAllTopicsRepository = allTopicsRepository;
-        mRepository = repository;
-        mConverter = converter;
+    public AddTopicPresenter(@QTopic Repository<Topic> topicRepository) {
+        mTopicRepository = topicRepository;
+//        mRepository = repository;
     }
 
     @Override
     public void retrieveTopics(final int page) {
         mView.showLoading();
-        mAllTopicsRepository.getDataFromDB(page, null, null)
+        mTopicRepository.getDataFromDB(page, null, null)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,13 +60,7 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
     @Override
     public void addToMyTopics(List<Topic> topics) {
         Observable.from(topics)
-                .flatMap(new Func1<Topic, Observable<MyTopic>>() {
-                    @Override
-                    public Observable<MyTopic> call(Topic topic) {
-                        return mConverter.toObservable(topic);
-                    }
-                })
-                .subscribe(new Subscriber<MyTopic>() {
+                .subscribe(new Subscriber<Topic>() {
                     @Override
                     public void onCompleted() {
                         mView.onAddMyTopicsSuccess();
@@ -83,15 +72,15 @@ public class AddTopicPresenter implements AddMyTopicContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(MyTopic myTopic) {
-                        mRepository.storeToDisk(myTopic);
+                    public void onNext(Topic myTopic) {
+//                        mRepository.storeToDisk(myTopic);
                     }
                 });
 
     }
 
     @Override
-    public void setView(AddMyTopicContract.View view) {
+    public void setView(AddTopicContract.View view) {
         mView = view;
     }
 }

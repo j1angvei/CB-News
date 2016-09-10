@@ -24,12 +24,11 @@ import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/23.
  * store Article
  */
-public class NewsLocalSource<T extends News> implements LocalSource<T> {
+public class NewsLocalSource<T extends News> extends LocalSource<T> {
     private static final String TAG = "NewsLocalSource";
-    private final DbHelper<T> mDbHelper;
 
     public NewsLocalSource(DbHelper<T> dbHelper) {
-        mDbHelper = dbHelper;
+        super(dbHelper);
     }
 
     @Override

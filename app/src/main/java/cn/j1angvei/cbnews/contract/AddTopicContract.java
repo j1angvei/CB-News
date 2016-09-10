@@ -8,7 +8,7 @@ import cn.j1angvei.cbnews.bean.Topic;
  * Created by Wayne on 2016/8/28.
  */
 
-public interface AddMyTopicContract {
+public interface AddTopicContract {
     interface View extends BaseView {
         void renderTopics(int groupPosition, List<Topic> topics);
 

@@ -62,9 +62,6 @@ public interface DbHelper<T> extends BaseColumns {
     String COL_COMMENT_MAP = "comment_map";
     //use to judge the sourceType
     String COL_SOURCE_TYPE = "source_type";
-    //use to reorder row
-    String COL_ADD_ORDER = "add_order";
-
 
     void create(T item);
 

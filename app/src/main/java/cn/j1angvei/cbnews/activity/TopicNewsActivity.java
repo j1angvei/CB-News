@@ -48,8 +48,8 @@ public class TopicNewsActivity extends BaseActivity implements TopicNewsContract
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Inject
-    TopicNewsPresenter mPresenter;
+//    @Inject
+//    TopicNewsPresenter mPresenter;
     Topic mTopic;
 
     @Override
@@ -68,7 +68,7 @@ public class TopicNewsActivity extends BaseActivity implements TopicNewsContract
 
     @Override
     protected void initView() {
-        mPresenter.setView(this);
+//        mPresenter.setView(this);
         setContentView(R.layout.activity_topic_news);
         ButterKnife.bind(this);
         //toolbar
@@ -89,7 +89,7 @@ public class TopicNewsActivity extends BaseActivity implements TopicNewsContract
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.addToMyTopics(mTopic);
+//                mPresenter.addToMyTopics(mTopic);
             }
         });
 

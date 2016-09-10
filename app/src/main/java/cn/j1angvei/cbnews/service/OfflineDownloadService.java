@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.bean.Article;
@@ -17,11 +16,14 @@ import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Source;
-import cn.j1angvei.cbnews.data.repository.CommentsRepository;
-import cn.j1angvei.cbnews.data.repository.ContentRepository;
-import cn.j1angvei.cbnews.data.repository.NewsRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;
+import cn.j1angvei.cbnews.di.qualifier.QArticle;
+import cn.j1angvei.cbnews.di.qualifier.QCmt;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
+import cn.j1angvei.cbnews.di.qualifier.QHeadline;
+import cn.j1angvei.cbnews.di.qualifier.QReview;
 import cn.j1angvei.cbnews.util.ErrorUtil;
 import cn.j1angvei.cbnews.util.MessageUtil;
 import cn.j1angvei.cbnews.util.NetworkUtil;
@@ -40,18 +42,20 @@ import rx.functions.Func1;
 public class OfflineDownloadService extends BaseService {
     static final String TAG = "OfflineDownloadService";
     @Inject
-    @Named(News.Type.ARTICLE)
-    NewsRepository<Article> mArticleRepository;
+    @QArticle
+    Repository<Article> mArticleRepository;
     @Inject
-    @Named(News.Type.HEADLINE)
-    NewsRepository<Headline> mHeadlineRepository;
+    @QHeadline
+    Repository<Headline> mHeadlineRepository;
     @Inject
-    @Named(News.Type.REVIEW)
-    NewsRepository<Review> mReviewRepository;
+    @QReview
+    Repository<Review> mReviewRepository;
     @Inject
-    ContentRepository mContentRepository;
+    @QContent
+    Repository<Content> mContentRepository;
     @Inject
-    CommentsRepository mCommentsRepository;
+    @QCmt
+    Repository<Comments> mCmtRepository;
     @Inject
     PrefsUtil mPrefsUtil;
     @Inject
@@ -117,7 +121,7 @@ public class OfflineDownloadService extends BaseService {
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCommentsRepository.getDataFromDB(0, content.getSid(), content.getSn());
+                        return mCmtRepository.getDataFromDB(0, content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())

@@ -10,8 +10,9 @@ import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.contract.ShowCmtContract;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.data.remote.response.BaseResponse;
-import cn.j1angvei.cbnews.data.repository.CommentsRepository;
-import cn.j1angvei.cbnews.data.repository.ContentRepository;
+import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.di.qualifier.QCmt;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import rx.Observable;
 import rx.Subscriber;
@@ -26,13 +27,13 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     private static final String TAG = "ShowCmtPresenter";
-    private final CommentsRepository mRepository;
-    private final ContentRepository mContentRepository;
+    private final Repository<Comments> mRepository;
+    private final Repository<Content> mContentRepository;
     private ShowCmtContract.View mView;
     private CBApiWrapper mApiWrapper;
 
     @Inject
-    public ShowCmtPresenter(CommentsRepository repository, ContentRepository contentRepository, CBApiWrapper wrapper) {
+    public ShowCmtPresenter(@QCmt Repository<Comments> repository, @QContent Repository<Content> contentRepository, CBApiWrapper wrapper) {
         mRepository = repository;
         mContentRepository = contentRepository;
         mApiWrapper = wrapper;

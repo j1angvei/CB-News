@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Bookmark;
+import cn.j1angvei.cbnews.di.qualifier.QBookmark;
 import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
@@ -23,6 +24,7 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
+@QBookmark
 public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
     private static final int DB_VERSION = 3;
