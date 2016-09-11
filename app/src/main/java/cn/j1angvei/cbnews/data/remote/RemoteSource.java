@@ -1,5 +1,6 @@
 package cn.j1angvei.cbnews.data.remote;
 
+import cn.j1angvei.cbnews.converter.Converter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import rx.Observable;
@@ -9,12 +10,15 @@ import rx.Observable;
  */
 public abstract class RemoteSource<T> {
     final CBApiWrapper mApiWrapper;
+    final Converter<T> mConverter;
     private final NetworkUtil mNetworkUtil;
 
-    public RemoteSource(CBApiWrapper wrapper, NetworkUtil networkUtil) {
+    public RemoteSource(CBApiWrapper wrapper, Converter<T> converter, NetworkUtil networkUtil) {
         mApiWrapper = wrapper;
+        mConverter = converter;
         mNetworkUtil = networkUtil;
     }
+
 
     public abstract Observable<T> fetchData(int page, String id, String extra);
 

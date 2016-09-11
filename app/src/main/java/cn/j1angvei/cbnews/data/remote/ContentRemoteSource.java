@@ -6,8 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.converter.ContentConverter;
+import cn.j1angvei.cbnews.converter.Converter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
@@ -21,12 +22,10 @@ import rx.functions.Func1;
  */
 @Singleton
 public class ContentRemoteSource extends RemoteSource<Content> {
-    private ContentConverter mConverter;
 
     @Inject
-    public ContentRemoteSource(CBApiWrapper wrapper, ContentConverter converter, NetworkUtil networkUtil) {
-        super(wrapper, networkUtil);
-        mConverter = converter;
+    public ContentRemoteSource(CBApiWrapper wrapper, @QContent Converter<Content> converter, NetworkUtil networkUtil) {
+        super(wrapper, converter, networkUtil);
     }
 
     @Override

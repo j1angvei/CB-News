@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.io.IOException;
 
 import cn.j1angvei.cbnews.bean.News;
-import cn.j1angvei.cbnews.converter.NewsConverter;
+import cn.j1angvei.cbnews.converter.Converter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
@@ -20,11 +20,9 @@ import rx.functions.Func1;
  * get all type news from web
  */
 public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
-    private NewsConverter<T> mConverter;
 
-    public NewsRemoteSource(CBApiWrapper wrapper, NewsConverter<T> converter, NetworkUtil networkUtil) {
-        super(wrapper, networkUtil);
-        mConverter = converter;
+    public NewsRemoteSource(CBApiWrapper wrapper, Converter<T> converter, NetworkUtil networkUtil) {
+        super(wrapper, converter, networkUtil);
     }
 
     @Override

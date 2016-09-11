@@ -180,12 +180,6 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
             case R.id.nav_switch_theme:
                 mAppUtil.switchCurrentTheme();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        recreate();
-                    }
-                }, 500);
                 return true;
             default:
                 return true;

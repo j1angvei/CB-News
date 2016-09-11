@@ -6,8 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.converter.CommentsConverter;
+import cn.j1angvei.cbnews.converter.Converter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
+import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
 import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
@@ -20,12 +21,10 @@ import rx.functions.Func1;
  */
 @Singleton
 public class CommentRemoteSource extends RemoteSource<Comments> {
-    private CommentsConverter mConverter;
 
     @Inject
-    public CommentRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
-        super(wrapper, networkUtil);
-        mConverter = converter;
+    public CommentRemoteSource(CBApiWrapper wrapper, @QCmt Converter<Comments> converter, NetworkUtil networkUtil) {
+        super(wrapper, converter, networkUtil);
     }
 
     @Override

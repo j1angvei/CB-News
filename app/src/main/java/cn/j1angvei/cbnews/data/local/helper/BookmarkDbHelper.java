@@ -26,13 +26,14 @@ import rx.Observable;
 @QBookmark
 public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_NAME = "bookmark";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_TIME + BLANK + TYPE_TEXT +
+            COL_TIME + BLANK + TYPE_TEXT + COMMA +
+            COL_SOURCE_TYPE + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
     private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 

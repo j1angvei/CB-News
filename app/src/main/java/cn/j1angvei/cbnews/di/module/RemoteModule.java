@@ -9,10 +9,7 @@ import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.converter.ArticleConverter;
-import cn.j1angvei.cbnews.converter.BookmarkConverter;
-import cn.j1angvei.cbnews.converter.HeadlineConverter;
-import cn.j1angvei.cbnews.converter.ReviewConverter;
+import cn.j1angvei.cbnews.converter.Converter;
 import cn.j1angvei.cbnews.data.remote.CommentRemoteSource;
 import cn.j1angvei.cbnews.data.remote.ContentRemoteSource;
 import cn.j1angvei.cbnews.data.remote.NewsRemoteSource;
@@ -39,9 +36,11 @@ public abstract class RemoteModule {
     @Binds
     @QCmt
     abstract RemoteSource<Comments> bindsMR(CommentRemoteSource source);
+
     @Binds
     @QContent
     abstract RemoteSource<Content> bindsCR(ContentRemoteSource source);
+
     @Binds
     @QTopic
     abstract RemoteSource<Topic> bindsTR(TopicRemoteSource source);
@@ -49,28 +48,28 @@ public abstract class RemoteModule {
     @Provides
     @Singleton
     @QArticle
-    static RemoteSource<Article> provideArticleNewsRemoteSource(CBApiWrapper wrapper, ArticleConverter converter, NetworkUtil networkUtil) {
+    static RemoteSource<Article> provideArticleNewsRemoteSource(CBApiWrapper wrapper, @QArticle Converter<Article> converter, NetworkUtil networkUtil) {
         return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @QReview
-    static RemoteSource<Review> provideReviewNewsRemoteSource(CBApiWrapper wrapper, ReviewConverter converter, NetworkUtil networkUtil) {
+    static RemoteSource<Review> provideReviewNewsRemoteSource(CBApiWrapper wrapper, @QReview Converter<Review> converter, NetworkUtil networkUtil) {
         return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @QHeadline
-    static RemoteSource<Headline> provideHeadlineNewsRemoteSource(CBApiWrapper wrapper, HeadlineConverter converter, NetworkUtil networkUtil) {
+    static RemoteSource<Headline> provideHeadlineNewsRemoteSource(CBApiWrapper wrapper, @QHeadline Converter<Headline> converter, NetworkUtil networkUtil) {
         return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 
     @Provides
     @Singleton
     @QBookmark
-    static RemoteSource<Bookmark> provideBookmarkRemoteSource(CBApiWrapper wrapper, BookmarkConverter converter, NetworkUtil networkUtil) {
+    static RemoteSource<Bookmark> provideBookmarkRemoteSource(CBApiWrapper wrapper, @QBookmark Converter<Bookmark> converter, NetworkUtil networkUtil) {
         return new NewsRemoteSource<>(wrapper, converter, networkUtil);
     }
 }
