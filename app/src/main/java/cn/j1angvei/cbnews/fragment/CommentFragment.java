@@ -20,11 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.activity.BaseActivity;
-import cn.j1angvei.cbnews.activity.CommentsActivity;
+import cn.j1angvei.cbnews.activity.CommentActivity;
 import cn.j1angvei.cbnews.adapter.CommentsRvAdapter;
 import cn.j1angvei.cbnews.bean.CommentItem;
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.contract.ShowCmtContract;
+import cn.j1angvei.cbnews.contract.CommentContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.presenter.ShowCmtPresenter;
@@ -34,8 +34,8 @@ import cn.j1angvei.cbnews.util.MessageUtil;
  * Created by Wayne on 2016/7/28.
  * show news comments
  */
-public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.View {
-    private static final String NEWS_ID = "ShowCmtFragment.news_id";
+public class CommentFragment extends BaseFragment implements CommentContract.View {
+    private static final String NEWS_ID = "CommentFragment.news_id";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -49,8 +49,8 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
     CommentsRvAdapter mAdapter;
     private String mSid;
 
-    public static ShowCmtFragment newInstance(String sid) {
-        ShowCmtFragment fragment = new ShowCmtFragment();
+    public static CommentFragment newInstance(String sid) {
+        CommentFragment fragment = new CommentFragment();
         Bundle args = new Bundle();
         args.putString(NEWS_ID, sid);
         fragment.setArguments(args);
@@ -76,6 +76,7 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_comments, container, false);
         ButterKnife.bind(this, view);
+        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,7 +85,6 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
                 refreshComments();
             }
         });
-        mCoordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         return view;
     }
 
@@ -163,7 +163,7 @@ public class ShowCmtFragment extends BaseFragment implements ShowCmtContract.Vie
 
     @Override
     public void replyCmt(CommentItem item) {
-        ((CommentsActivity) getActivity()).showPublishCmtDialog(false, item.getContent(), item.getSid(), item.getTid());
+        ((CommentActivity) getActivity()).showPublishCmtDialog(false, item.getContent(), item.getSid(), item.getTid());
     }
 
     @Override

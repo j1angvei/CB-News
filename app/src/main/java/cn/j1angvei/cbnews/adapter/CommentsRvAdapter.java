@@ -24,7 +24,7 @@ import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.bean.Action;
 import cn.j1angvei.cbnews.bean.CommentItem;
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.contract.ShowCmtContract;
+import cn.j1angvei.cbnews.contract.CommentContract;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 
 /**
@@ -34,7 +34,7 @@ import cn.j1angvei.cbnews.di.scope.PerFragment;
 @PerFragment
 public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseAdapter<Comments> {
     private static final String TAG = "CommentsRvAdapter";
-    private ShowCmtContract.View mView;
+    private CommentContract.View mView;
     private List<String> mTids;
     private int mPosLabelAll = 1, mPosLabelHot = 0;
     private Comments mComments;
@@ -43,7 +43,7 @@ public class CommentsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     CommentsRvAdapter(Fragment fragment) {
-        mView = (ShowCmtContract.View) fragment;
+        mView = (CommentContract.View) fragment;
         mTids = new ArrayList<>();
     }
 

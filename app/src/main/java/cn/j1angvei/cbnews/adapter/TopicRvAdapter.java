@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AllTopicsContract;
+import cn.j1angvei.cbnews.contract.TopicContract;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.util.Navigator;
 
@@ -29,13 +29,13 @@ import cn.j1angvei.cbnews.util.Navigator;
  * adapter display all Topics
  */
 @PerFragment
-public class AllTopicsRvAdapter extends RecyclerView.Adapter<AllTopicsRvAdapter.ViewHolder> implements BaseAdapter<Topic> {
+public class TopicRvAdapter extends RecyclerView.Adapter<TopicRvAdapter.ViewHolder> implements BaseAdapter<Topic> {
     private final List<Topic> mTopics;
-    private AllTopicsContract.View mView;
+    private TopicContract.View mView;
 
     @Inject
-    public AllTopicsRvAdapter(Fragment fragment) {
-        mView = (AllTopicsContract.View) fragment;
+    public TopicRvAdapter(Fragment fragment) {
+        mView = (TopicContract.View) fragment;
         mTopics = new ArrayList<>();
     }
 

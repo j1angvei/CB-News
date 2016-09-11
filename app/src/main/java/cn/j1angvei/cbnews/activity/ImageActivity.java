@@ -13,9 +13,9 @@ import cn.j1angvei.cbnews.util.MessageUtil;
  * show image in news content
  */
 
-public class ContentImageActivity extends BaseActivity {
-    public static final String CUR_POS = "ContentImageActivity.cur_pos";
-    public static final String IMG_URLS = "ContentImageActivity.img_urls";
+public class ImageActivity extends BaseActivity {
+    public static final String CUR_POS = "ImageActivity.cur_pos";
+    public static final String IMG_URLS = "ImageActivity.img_urls";
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 

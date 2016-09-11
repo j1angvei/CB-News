@@ -1,12 +1,5 @@
 package cn.j1angvei.cbnews.data.repository;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.util.SparseArray;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -14,8 +7,9 @@ import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.data.local.LocalSource;
 import cn.j1angvei.cbnews.data.remote.RemoteSource;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
+import cn.j1angvei.cbnews.exception.NeedRefreshException;
+import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -24,7 +18,6 @@ import rx.functions.Func1;
 @Singleton
 public class TopicRepository extends Repository<Topic> {
     private static final String TAG = "TopicRepository";
-    private final SparseArray<List<Topic>> mTopicArray = new SparseArray<>();
 
     @Inject
     public TopicRepository(@QTopic LocalSource<Topic> localSource, @QTopic RemoteSource<Topic> remoteSource) {
@@ -33,49 +26,29 @@ public class TopicRepository extends Repository<Topic> {
         mRemoteSource = remoteSource;
     }
 
-    @Override
-    public Observable<Topic> getDataFromDB(@NonNull final Integer page, String id, String typeOrSN) {
-        return Observable.from(mTopicArray.get(page, new ArrayList<Topic>()))//from RAM
-                .switchIfEmpty(mLocalSource.read(page, null, null))//from local db
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Topic>>() {
-                    @Override
-                    public Observable<? extends Topic> call(Throwable throwable) {
-                        Log.e(TAG, "call: ", throwable);
-                        return mRemoteSource.fetchData(page)//from server
-                                .doOnNext(new Action1<Topic>() {
-                                    @Override
-                                    public void call(Topic topic) {
-                                        storeToDisk(topic);
-                                    }
-                                });
-                    }
-                })
-                .doOnNext(new Action1<Topic>() {
-                    @Override
-                    public void call(Topic topic) {
-                        storeToMemory(topic);
-                    }
-                });
-    }
+    /**
+     * One of page, id should be null.
+     * If page not null, it is in All Topic module.
+     * If id not null, it is in My Topic module
+     *
+     * @param page  if page not null, retrieve data from SQL or WEB (RAM data may not complete, return error)
+     * @param id    if id not null, try to retrieve it from RAM first
+     * @param extra no extra info needed in Topic
+     * @return topics in RAM
+     */
 
     @Override
-    public Observable<Topic> offlineDownload(Integer page, String id, String typeOrSN) {
-        return null;
+    Observable<Topic> fromRAM(int page, final String id, String extra) {
+        return id == null ?
+                Observable.<Topic>error(new NeedRefreshException()) :
+                Observable.from(mCache)
+                        .filter(new Func1<Topic, Boolean>() {
+                            @Override
+                            public Boolean call(Topic topic) {
+                                return topic.getId().equals(id);
+                            }
+                        })
+                        .switchIfEmpty(Observable.<Topic>error(new RAMItemNotFoundException()));
     }
 
-    @Override
-    public void storeToDisk(Topic item) {
-        mLocalSource.create(item);
-    }
-
-    @Override
-    public void storeToMemory(Topic item) {
-        List<Topic> topics = mTopicArray.get(item.getPage());
-        if (topics == null) {
-            topics = new ArrayList<>();
-            mTopicArray.setValueAt(item.getPage(), topics);
-        } else if (!topics.contains(item)) {
-            topics.add(item);
-        }
-    }
 }

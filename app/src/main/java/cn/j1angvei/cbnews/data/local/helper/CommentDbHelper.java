@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Comments;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DbUtil;
 import rx.Observable;
 
@@ -21,7 +20,7 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class CmtDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
+public class CommentDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
     private static final String DB_NAME = "comments.db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "comments";
@@ -41,7 +40,7 @@ public class CmtDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> 
     private final DbUtil mDbUtil;
 
     @Inject
-    public CmtDbHelper(Application context, DbUtil dbUtil) {
+    public CommentDbHelper(Application context, DbUtil dbUtil) {
         super(context, DB_NAME, null, DB_VERSION);
         mDbUtil = dbUtil;
     }
@@ -84,10 +83,9 @@ public class CmtDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> 
     @Override
     public Observable<Comments> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Comments> commentsList = null;
+        List<Comments> commentsList = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                commentsList = new ArrayList<>();
                 do {
                     Comments comments = new Comments();
                     comments.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
@@ -106,8 +104,7 @@ public class CmtDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> 
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return commentsList == null || commentsList.isEmpty() ?
-                Observable.<Comments>error(new LocalItemNotFoundException()) : Observable.from(commentsList);
+        return Observable.from(commentsList);
     }
 
     @Override

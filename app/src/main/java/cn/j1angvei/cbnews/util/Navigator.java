@@ -3,13 +3,12 @@ package cn.j1angvei.cbnews.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import java.util.ArrayList;
 
-import cn.j1angvei.cbnews.activity.CommentsActivity;
+import cn.j1angvei.cbnews.activity.CommentActivity;
 import cn.j1angvei.cbnews.activity.ContentActivity;
-import cn.j1angvei.cbnews.activity.ContentImageActivity;
+import cn.j1angvei.cbnews.activity.ImageActivity;
 import cn.j1angvei.cbnews.activity.NewsActivity;
 import cn.j1angvei.cbnews.activity.SettingsActivity;
 import cn.j1angvei.cbnews.activity.TopicNewsActivity;
@@ -48,9 +47,9 @@ public final class Navigator {
 
     public static void toComments(String sid, String title, Context context) {
         if (context != null) {
-            Intent intent = new Intent(context, CommentsActivity.class);
-            intent.putExtra(CommentsActivity.NEWS_ID, sid);
-            intent.putExtra(CommentsActivity.NEWS_TITLE, title);
+            Intent intent = new Intent(context, CommentActivity.class);
+            intent.putExtra(CommentActivity.NEWS_ID, sid);
+            intent.putExtra(CommentActivity.NEWS_TITLE, title);
             context.startActivity(intent);
         }
     }
@@ -84,9 +83,9 @@ public final class Navigator {
 
     public static void toContentImage(int pos, String[] urls, Context context) {
         if (context != null) {
-            Intent intent = new Intent(context, ContentImageActivity.class);
-            intent.putExtra(ContentImageActivity.CUR_POS, pos);
-            intent.putExtra(ContentImageActivity.IMG_URLS, urls);
+            Intent intent = new Intent(context, ImageActivity.class);
+            intent.putExtra(ImageActivity.CUR_POS, pos);
+            intent.putExtra(ImageActivity.IMG_URLS, urls);
             context.startActivity(intent);
         }
     }

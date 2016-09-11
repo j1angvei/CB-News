@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.j1angvei.cbnews.R;
-import cn.j1angvei.cbnews.contract.AllTopicsContract;
+import cn.j1angvei.cbnews.contract.TopicContract;
 import cn.j1angvei.cbnews.util.StringUtil;
 
 /**
@@ -60,7 +60,7 @@ public class PickLetterDialog extends BottomSheetDialogFragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((AllTopicsContract.View) getTargetFragment()).onLetterChosen(position + 1);
+                ((TopicContract.View) getTargetFragment()).onLetterChosen(position + 1);
                 dismiss();
             }
         });

@@ -23,7 +23,7 @@ public class NewsPresenter<N extends News> implements NewsContract.Presenter<N> 
     @Override
     public void retrieveNews(String type, int page) {
         mView.showLoading();
-        mRepository.getDataFromDB(page, null, type)
+        mRepository.getData(page, null, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<N>() {

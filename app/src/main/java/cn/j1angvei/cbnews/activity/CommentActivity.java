@@ -14,15 +14,15 @@ import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.di.component.DaggerActivityComponent;
 import cn.j1angvei.cbnews.di.module.ActivityModule;
 import cn.j1angvei.cbnews.dialog.PublishCmtDialog;
-import cn.j1angvei.cbnews.fragment.ShowCmtFragment;
+import cn.j1angvei.cbnews.fragment.CommentFragment;
 
 /**
  * Created by Wayne on 2016/7/28.
  * activity to handle comments relevant stuff
  */
-public class CommentsActivity extends BaseActivity {
-    public static final String NEWS_ID = "CommentsActivity.news_id";
-    public static final String NEWS_TITLE = "CommentsActivity.news_title";
+public class CommentActivity extends BaseActivity {
+    public static final String NEWS_ID = "CommentActivity.news_id";
+    public static final String NEWS_TITLE = "CommentActivity.news_title";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
@@ -70,7 +70,7 @@ public class CommentsActivity extends BaseActivity {
             }
         });
         //load show comments fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, ShowCmtFragment.newInstance(mSid), "show cmt").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, CommentFragment.newInstance(mSid), "show cmt").commit();
     }
 
     @Override

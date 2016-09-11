@@ -9,10 +9,10 @@ import cn.j1angvei.cbnews.di.module.sub.ArticleModule;
 /**
  * Created by Wayne on 2016/7/4.
  */
-public class ArticlesFragment extends NewsFragment<Article, ArticlesRvAdapter.ViewHolder> {
+public class ArticleFragment extends NewsFragment<Article, ArticlesRvAdapter.ViewHolder> {
 
-    public static ArticlesFragment newInstance(String type) {
-        ArticlesFragment fragment = new ArticlesFragment();
+    public static ArticleFragment newInstance(String type) {
+        ArticleFragment fragment = new ArticleFragment();
         fragment.setBundle(type);
         return fragment;
     }

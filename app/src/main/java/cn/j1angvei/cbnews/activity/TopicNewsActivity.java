@@ -18,8 +18,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
@@ -27,8 +25,7 @@ import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.contract.TopicNewsContract;
 import cn.j1angvei.cbnews.di.component.DaggerActivityComponent;
 import cn.j1angvei.cbnews.di.module.ActivityModule;
-import cn.j1angvei.cbnews.fragment.ArticlesFragment;
-import cn.j1angvei.cbnews.presenter.TopicNewsPresenter;
+import cn.j1angvei.cbnews.fragment.ArticleFragment;
 import cn.j1angvei.cbnews.util.MessageUtil;
 
 /**
@@ -93,7 +90,7 @@ public class TopicNewsActivity extends BaseActivity implements TopicNewsContract
             }
         });
 
-        ArticlesFragment fragment = ArticlesFragment.newInstance(mTopic.getId());
+        ArticleFragment fragment = ArticleFragment.newInstance(mTopic.getId());
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container, fragment).commit();
 
     }

@@ -36,7 +36,7 @@ public class TopicNewsPresenter implements TopicNewsContract.Presenter {
 
                     @Override
                     public void onNext(Topic topic) {
-//                        mRepository.storeToDisk(myTopic);
+//                        mRepository.toSQL(myTopic);
                     }
                 });
     }

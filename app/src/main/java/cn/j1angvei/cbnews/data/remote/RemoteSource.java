@@ -16,7 +16,7 @@ public abstract class RemoteSource<T> {
         mNetworkUtil = networkUtil;
     }
 
-    public abstract Observable<T> fetchData(Integer page, String... args);
+    public abstract Observable<T> fetchData(int page, String id, String extra);
 
     boolean hasConnection() {
         return mNetworkUtil.isNetworkOn();

@@ -13,7 +13,7 @@ import cn.j1angvei.cbnews.converter.ArticleConverter;
 import cn.j1angvei.cbnews.converter.BookmarkConverter;
 import cn.j1angvei.cbnews.converter.HeadlineConverter;
 import cn.j1angvei.cbnews.converter.ReviewConverter;
-import cn.j1angvei.cbnews.data.remote.CmtRemoteSource;
+import cn.j1angvei.cbnews.data.remote.CommentRemoteSource;
 import cn.j1angvei.cbnews.data.remote.ContentRemoteSource;
 import cn.j1angvei.cbnews.data.remote.NewsRemoteSource;
 import cn.j1angvei.cbnews.data.remote.RemoteSource;
@@ -38,7 +38,7 @@ import dagger.Provides;
 public abstract class RemoteModule {
     @Binds
     @QCmt
-    abstract RemoteSource<Comments> bindsMR(CmtRemoteSource source);
+    abstract RemoteSource<Comments> bindsMR(CommentRemoteSource source);
     @Binds
     @QContent
     abstract RemoteSource<Content> bindsCR(ContentRemoteSource source);

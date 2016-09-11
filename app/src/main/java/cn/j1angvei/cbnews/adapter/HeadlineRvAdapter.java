@@ -63,7 +63,7 @@ public class HeadlineRvAdapter extends NewsAdapter<Headline, HeadlineRvAdapter.V
         } else {
             holder.llRelateContainer.setVisibility(View.VISIBLE);
             Glide.with(context).load(headline.getThumb()).into(holder.ivThumb);
-            for (int i = 0; i < newsList.size(); i++) {
+            for (int i = 0; i < newsList.size() && i < 3; i++) {
                 TextView tv = holder.tvRelate.get(i);
                 final News item = headline.getRelatedNews().get(i);
                 tv.setVisibility(View.VISIBLE);

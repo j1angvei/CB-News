@@ -98,7 +98,7 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         if (savedInstanceState == null) {
-            mPresenter.retrieveContent(mSid);
+            mPresenter.retrieveContent(1, mSid);
         }
     }
 

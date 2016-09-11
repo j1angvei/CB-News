@@ -1,21 +1,17 @@
 package cn.j1angvei.cbnews.data.local;
 
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.data.local.helper.DbHelper;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
-import cn.j1angvei.cbnews.util.ApiUtil;
 import rx.Observable;
 
+import static android.provider.BaseColumns._ID;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.BLANK;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.COL_PAGE;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.LIKE;
-import static cn.j1angvei.cbnews.data.local.helper.DbHelper.ORDER_BY;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.QUOTE;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.SELECT_FROM;
 import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
@@ -25,7 +21,7 @@ import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
  */
 @Singleton
 public class TopicLocalSource extends LocalSource<Topic> {
-    public static final String ALL_TOPICS = "all_topics";
+    private static final String TAG = "TopicLocalSource";
 
     @Inject
     public TopicLocalSource(@QTopic DbHelper<Topic> dbHelper) {
@@ -33,22 +29,17 @@ public class TopicLocalSource extends LocalSource<Topic> {
     }
 
     @Override
-    public void create(Topic item) {
-        mDbHelper.create(item);
-    }
-
-    @Override
-    public Observable<Topic> read(@NonNull Integer page, String id, String sourceType) {//id and sourceType is null
-        String letter = ApiUtil.pageToLetter(page);
-        StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK)
-                .append(mDbHelper.getTableName());
-        if (!TextUtils.equals(ALL_TOPICS, letter)) {
-            builder.append(
-                    BLANK + WHERE + BLANK + COL_PAGE + BLANK + LIKE + BLANK + QUOTE)
-                    .append(letter)
+    public Observable<Topic> read(int page, String id, String extra) {
+        StringBuilder builder = new StringBuilder(SELECT_FROM + BLANK).append(mDbHelper.getTableName());
+        if (id != null) {
+            builder.append(BLANK + WHERE + BLANK + _ID + BLANK + LIKE + BLANK + QUOTE)
+                    .append(id)
+                    .append(QUOTE);
+        } else {
+            builder.append(BLANK + WHERE + BLANK + COL_PAGE + BLANK + LIKE + BLANK + QUOTE)
+                    .append(page)
                     .append(QUOTE);
         }
-        builder.append(BLANK + ORDER_BY + BLANK + COL_PAGE);
         return mDbHelper.read(builder.toString());
     }
 

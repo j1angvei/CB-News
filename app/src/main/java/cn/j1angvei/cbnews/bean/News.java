@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class News implements Parcelable {
     private String sid;
     private String title;
-    private String sourceType;
+    private String type;
 
     public String getSid() {
         return sid;
@@ -28,13 +28,13 @@ public class News implements Parcelable {
         this.title = title;
     }
 
-    public String getSourceType() {
-        return sourceType;
+    public String getType() {
+        return type;
     }
 
-    public void setSourceType(String sourceType) {
+    public void setType(String type) {
 
-        this.sourceType = sourceType;
+        this.type = type;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class News implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.sid);
         dest.writeString(this.title);
-        dest.writeString(this.sourceType);
+        dest.writeString(this.type);
     }
 
     public News() {
@@ -55,7 +55,7 @@ public class News implements Parcelable {
     protected News(Parcel in) {
         this.sid = in.readString();
         this.title = in.readString();
-        this.sourceType = in.readString();
+        this.type = in.readString();
     }
 
     public static final Creator<News> CREATOR = new Creator<News>() {
@@ -78,14 +78,14 @@ public class News implements Parcelable {
         News news = (News) o;
 
         if (!sid.equals(news.sid)) return false;
-        return sourceType != null ? sourceType.equals(news.sourceType) : news.sourceType == null;
+        return type != null ? type.equals(news.type) : news.type == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = sid.hashCode();
-        result = 31 * result + (sourceType != null ? sourceType.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
 }

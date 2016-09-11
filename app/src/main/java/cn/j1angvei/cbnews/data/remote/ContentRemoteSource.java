@@ -1,7 +1,5 @@
 package cn.j1angvei.cbnews.data.remote;
 
-import android.support.annotation.NonNull;
-
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -10,8 +8,8 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.converter.ContentConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
-import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -32,9 +30,8 @@ public class ContentRemoteSource extends RemoteSource<Content> {
     }
 
     @Override
-    public Observable<Content> fetchData(Integer page, @NonNull String... args) {
-        String sid = args[0];
-        return hasConnection() ? mApiWrapper.getContent(sid)
+    public Observable<Content> fetchData(int page, String id, String extra) {
+        return hasConnection() ? mApiWrapper.getContent(id)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(ResponseBody responseBody) {
@@ -45,8 +42,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                })
-                .retry(1) :
-                Observable.<Content>error(new ServerItemNotFoundException());
+                }) :
+                Observable.<Content>error(new WEBItemNotFoundException());
     }
 }

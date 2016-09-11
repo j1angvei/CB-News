@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name="cn.j1angvei.cbnews.activity.CommentsActivity"
+            android:name="cn.j1angvei.cbnews.activity.CommentActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="cn.j1angvei.cbnews.activity.SettingsActivity"
@@ -60,7 +60,7 @@
             android:name="cn.j1angvei.cbnews.activity.TopicNewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar"/>
-        <activity android:name="cn.j1angvei.cbnews.activity.ContentImageActivity"/>
+        <activity android:name="cn.j1angvei.cbnews.activity.ImageActivity"/>
         <!--services-->
         <service
             android:name="cn.j1angvei.cbnews.service.OfflineDownloadService"

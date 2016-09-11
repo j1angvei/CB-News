@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,21 +24,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.activity.BaseActivity;
-import cn.j1angvei.cbnews.adapter.MyTopicsPagerAdapter;
+import cn.j1angvei.cbnews.adapter.MyTopicAdapter;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.MyTopicsContract;
+import cn.j1angvei.cbnews.contract.MyTopicContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.dialog.AddTopicDialog;
-import cn.j1angvei.cbnews.presenter.MyTopicsPresenter;
+import cn.j1angvei.cbnews.presenter.MyTopicPresenter;
 
 /**
  * Created by Wayne on 2016/7/6.
  * show user selected topic news
  */
-public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.View {
-    private static final String TAG = "MyTopicsFragment";
-    private static final String LATER_USE = "MyTopicsFragment.later_use";
+public class MyTopicFragment extends BaseFragment implements MyTopicContract.View {
+    private static final String TAG = "MyTopicFragment";
+    private static final String LATER_USE = "MyTopicFragment.later_use";
     private static final String DIALOG_ADD_TOPIC = "add_topic";
 
     @BindView(R.id.viewpager)
@@ -45,15 +46,14 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     @BindView(R.id.tv_my_topic_hint)
     TextView mHint;
     @Inject
-    MyTopicsPresenter mPresenter;
+    MyTopicPresenter mPresenter;
     TabLayout mTabLayout;
-    MyTopicsPagerAdapter mAdapter;
+    MyTopicAdapter mAdapter;
     CoordinatorLayout mCoordinatorLayout;
     FloatingActionButton mFab;
 
-    public static MyTopicsFragment newInstance(String later) {
-        //later is the value of Source.My_TOPICS
-        MyTopicsFragment fragment = new MyTopicsFragment();
+    public static MyTopicFragment newInstance(String later) {
+        MyTopicFragment fragment = new MyTopicFragment();
         Bundle args = new Bundle();
         args.putString(LATER_USE, later);
         fragment.setArguments(args);
@@ -123,11 +123,13 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void showLoading() {
+        Log.d(TAG, "showLoading: ");
         mHint.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
+        Log.d(TAG, "hideLoading: ");
         mHint.setVisibility(View.GONE);
     }
 
@@ -145,15 +147,16 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
 
     @Override
     public void renderMyTopics(List<Topic> topics) {
+        Log.d(TAG, "renderMyTopics: " + topics);
         hideLoading();
-        mAdapter = new MyTopicsPagerAdapter(getChildFragmentManager(), topics);
+        mAdapter = new MyTopicAdapter(getChildFragmentManager(), topics);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onMyTopicsEmpty() {
+    public void onMyTopicsIsEmpty() {
         showLoading();
     }
 
@@ -161,6 +164,4 @@ public class MyTopicsFragment extends BaseFragment implements MyTopicsContract.V
     public void refreshMyTopics() {
         mPresenter.retrieveMyTopics();
     }
-
-
 }

@@ -38,4 +38,13 @@ public final class Headline extends News {
     public void setRelatedNews(List<News> relatedNews) {
         this.relatedNews = relatedNews;
     }
+
+    @Override
+    public String toString() {
+        return "Headline{" +
+                "summary='" + summary + '\'' +
+                ", thumb='" + thumb + '\'' +
+                ", relatedNews=" + relatedNews +
+                '}';
+    }
 }

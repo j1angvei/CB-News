@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.contract.ShowCmtContract;
+import cn.j1angvei.cbnews.contract.CommentContract;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.data.remote.response.BaseResponse;
 import cn.j1angvei.cbnews.data.repository.Repository;
@@ -25,11 +25,11 @@ import rx.schedulers.Schedulers;
  * presenter in mvp
  */
 @PerFragment
-public class ShowCmtPresenter implements ShowCmtContract.Presenter {
+public class ShowCmtPresenter implements CommentContract.Presenter {
     private static final String TAG = "ShowCmtPresenter";
     private final Repository<Comments> mRepository;
     private final Repository<Content> mContentRepository;
-    private ShowCmtContract.View mView;
+    private CommentContract.View mView;
     private CBApiWrapper mApiWrapper;
 
     @Inject
@@ -40,14 +40,14 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
     }
 
     @Override
-    public void setView(ShowCmtContract.View view) {
+    public void setView(CommentContract.View view) {
         mView = view;
     }
 
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getDataFromDB(0, sid, null)
+        mContentRepository.getData(0, sid, null)
                 .map(new Func1<Content, String>() {
                     @Override
                     public String call(Content content) {
@@ -57,7 +57,7 @@ public class ShowCmtPresenter implements ShowCmtContract.Presenter {
                 .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(String sn) {
-                        return mRepository.getDataFromDB(0, sid, sn);
+                        return mRepository.getData(0, sid, sn);
                     }
                 })
                 .subscribeOn(Schedulers.io())

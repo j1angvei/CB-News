@@ -1,6 +1,6 @@
 package cn.j1angvei.cbnews.di.component;
 
-import cn.j1angvei.cbnews.activity.CommentsActivity;
+import cn.j1angvei.cbnews.activity.CommentActivity;
 import cn.j1angvei.cbnews.activity.ContentActivity;
 import cn.j1angvei.cbnews.activity.NewsActivity;
 import cn.j1angvei.cbnews.activity.TopicNewsActivity;
@@ -25,7 +25,7 @@ public interface ActivityComponent {
 
     void inject(ContentActivity activity);
 
-    void inject(CommentsActivity activity);
+    void inject(CommentActivity activity);
 
     void inject(TopicNewsActivity activity);
 

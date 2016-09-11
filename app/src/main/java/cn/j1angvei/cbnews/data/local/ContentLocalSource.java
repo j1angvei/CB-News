@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.data.local.helper.DbHelper;
+import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import rx.Observable;
@@ -29,13 +30,8 @@ public class ContentLocalSource extends LocalSource<Content> {
     }
 
     @Override
-    public void create(Content item) {
-        mDbHelper.create(item);
-    }
-
-    @Override
-    public Observable<Content> read(@NonNull Integer page, @NonNull String id, String sourceType) {
-        if (page > 1) {
+    public Observable<Content> read(int page, @NonNull String id, String extra) {
+        if (page > PAGE_MORE) {
             return Observable.error(new NoMoreItemException());
         }
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +

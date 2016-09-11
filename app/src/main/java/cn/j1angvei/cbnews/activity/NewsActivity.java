@@ -25,17 +25,17 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
-import cn.j1angvei.cbnews.bean.Source;
+import cn.j1angvei.cbnews.bean.Type;
 import cn.j1angvei.cbnews.contract.BaseView;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
 import cn.j1angvei.cbnews.di.component.DaggerActivityComponent;
 import cn.j1angvei.cbnews.di.module.ActivityModule;
-import cn.j1angvei.cbnews.fragment.AllTopicsFragment;
-import cn.j1angvei.cbnews.fragment.ArticlesFragment;
+import cn.j1angvei.cbnews.fragment.ArticleFragment;
 import cn.j1angvei.cbnews.fragment.BookmarkFragment;
 import cn.j1angvei.cbnews.fragment.HeadlineFragment;
-import cn.j1angvei.cbnews.fragment.MyTopicsFragment;
+import cn.j1angvei.cbnews.fragment.MyTopicFragment;
 import cn.j1angvei.cbnews.fragment.ReviewFragment;
+import cn.j1angvei.cbnews.fragment.TopicFragment;
 import cn.j1angvei.cbnews.util.ApiUtil;
 import cn.j1angvei.cbnews.util.AppUtil;
 import cn.j1angvei.cbnews.util.MessageUtil;
@@ -45,16 +45,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static cn.j1angvei.cbnews.bean.Source.ALL;
-import static cn.j1angvei.cbnews.bean.Source.ALL_TOPICS;
-import static cn.j1angvei.cbnews.bean.Source.BOOKMARK;
-import static cn.j1angvei.cbnews.bean.Source.EDITORCOMMEND;
-import static cn.j1angvei.cbnews.bean.Source.JHCOMMENT;
-import static cn.j1angvei.cbnews.bean.Source.MY_TOPICS;
-
 /**
  * Created by Wayne on 2016/7/4.
- * control child fragment to display different {@link Source} news
  */
 public class NewsActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, BaseView {
     private static final String TAG = "NewsActivity";
@@ -102,7 +94,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(this);
         String title = getResources().getString(R.string.nav_latest_news);
-        checkToken(ALL, title);
+        checkToken(Type.LATEST_NEWS, title);
     }
 
     @Override
@@ -160,25 +152,25 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
-        Source source;
+        String type;
         switch (item.getItemId()) {
             case R.id.nav_latest_news:
-                source = ALL;
+                type = Type.LATEST_NEWS;
                 break;
             case R.id.nav_hot_news_comment:
-                source = JHCOMMENT;
+                type = Type.REVIEW;
                 break;
             case R.id.nav_past_headlines:
-                source = EDITORCOMMEND;
-                break;
-            case R.id.nav_my_topics:
-                source = MY_TOPICS;
+                type = Type.HEADLINE;
                 break;
             case R.id.nav_all_topic:
-                source = ALL_TOPICS;
+                type = Type.TOPIC;
+                break;
+            case R.id.nav_my_topics:
+                type = Type.MY_TOPIC;
                 break;
             case R.id.nav_bookmarks:
-                source = BOOKMARK;
+                type = Type.BOOKMARK;
                 break;
             case R.id.nav_download:
                 Navigator.toOfflineDownload(this);
@@ -188,44 +180,48 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
             case R.id.nav_switch_theme:
                 mAppUtil.switchCurrentTheme();
-                recreate();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recreate();
+                    }
+                }, 500);
                 return true;
             default:
                 return true;
         }
-        checkToken(source, item.getTitle());
+        checkToken(type, item.getTitle());
         return true;
     }
 
-    private void loadNewsFragment(Source source, CharSequence title) {
-        String sourceType = "" + source;
-        Fragment fragment = mFragmentManager.findFragmentByTag(sourceType);
+    private void loadNewsFragment(String type, CharSequence title) {
+        Fragment fragment = mFragmentManager.findFragmentByTag(type);
         if (fragment == null) {
-            switch (source) {
-                case ALL:
-                    fragment = ArticlesFragment.newInstance(sourceType);
+            switch (type) {
+                case Type.LATEST_NEWS:
+                    fragment = ArticleFragment.newInstance(type);
                     break;
-                case JHCOMMENT:
-                    fragment = ReviewFragment.newInstance(sourceType);
+                case Type.REVIEW:
+                    fragment = ReviewFragment.newInstance(type);
                     break;
-                case EDITORCOMMEND:
-                    fragment = HeadlineFragment.newInstance(sourceType);
+                case Type.HEADLINE:
+                    fragment = HeadlineFragment.newInstance(type);
                     break;
-                case ALL_TOPICS:
-                    fragment = AllTopicsFragment.newInstance(1);
+                case Type.TOPIC:
+                    fragment = TopicFragment.newInstance(1);
                     break;
-                case MY_TOPICS:
-                    fragment = MyTopicsFragment.newInstance(sourceType);
+                case Type.MY_TOPIC:
+                    fragment = MyTopicFragment.newInstance(type);
                     break;
-                case BOOKMARK:
-                    fragment = BookmarkFragment.newInstance(sourceType);
+                case Type.BOOKMARK:
+                    fragment = BookmarkFragment.newInstance(type);
                     break;
             }
         }
         setTitle(title);
         mFragmentManager.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.fl_container, fragment, sourceType)
+                .replace(R.id.fl_container, fragment, type)
                 .addToBackStack(null)
                 .commit();
     }
@@ -233,10 +229,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * Load specific fragment only if csrf_token is valid
      *
-     * @param source represents news source
+     * @param source represents news sourceType
      * @param title  after fragment is loaded, change the toolbar title
      */
-    private void checkToken(final Source source, final CharSequence title) {
+    private void checkToken(final String source, final CharSequence title) {
         //check if token already stored
         if (mIsTokenValid) {
             loadNewsFragment(source, title);
@@ -266,10 +262,10 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private class CsrfTokenSubscriber extends Subscriber<ResponseBody> {
-        private final Source source;
+        private final String source;
         private final CharSequence title;
 
-        CsrfTokenSubscriber(Source source, CharSequence title) {
+        CsrfTokenSubscriber(String source, CharSequence title) {
             this.source = source;
             this.title = title;
         }

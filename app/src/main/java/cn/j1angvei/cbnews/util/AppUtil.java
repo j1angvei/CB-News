@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,12 +79,16 @@ public class AppUtil {
             String[] array = idString.split(" ");
             ids = new ArrayList<>(Arrays.asList(array));
         }
+        Log.d(TAG, "getMyTopicIds: " + ids);
         return ids;
     }
 
     public void setMyTopics(List<String> ids) {
-        String idString = TextUtils.join(" ", ids);
+        List<String> originIds = getMyTopicIds();
+        originIds.addAll(ids);
+        String idString = TextUtils.join(" ", originIds);
         mPrefsUtil.writeString(PrefsUtil.MY_TOPIC_IDS, idString);
+        Log.d(TAG, "setMyTopics: " + originIds);
     }
 
 }

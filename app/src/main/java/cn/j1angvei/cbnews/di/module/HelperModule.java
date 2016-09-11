@@ -9,7 +9,7 @@ import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.data.local.helper.ArticleDbHelper;
 import cn.j1angvei.cbnews.data.local.helper.BookmarkDbHelper;
-import cn.j1angvei.cbnews.data.local.helper.CmtDbHelper;
+import cn.j1angvei.cbnews.data.local.helper.CommentDbHelper;
 import cn.j1angvei.cbnews.data.local.helper.ContentDbHelper;
 import cn.j1angvei.cbnews.data.local.helper.DbHelper;
 import cn.j1angvei.cbnews.data.local.helper.HeadlineDbHelper;
@@ -45,7 +45,7 @@ public abstract class HelperModule {
 
     @Binds
     @QCmt
-    abstract DbHelper<Comments> bindsMDbHelper(CmtDbHelper helper);
+    abstract DbHelper<Comments> bindsMDbHelper(CommentDbHelper helper);
 
     @Binds
     @QContent

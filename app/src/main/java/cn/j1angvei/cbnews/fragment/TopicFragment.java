@@ -21,21 +21,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.activity.BaseActivity;
-import cn.j1angvei.cbnews.adapter.AllTopicsRvAdapter;
+import cn.j1angvei.cbnews.adapter.TopicRvAdapter;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AllTopicsContract;
+import cn.j1angvei.cbnews.contract.TopicContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.dialog.PickLetterDialog;
-import cn.j1angvei.cbnews.presenter.AllTopicsPresenter;
+import cn.j1angvei.cbnews.presenter.TopicPresenter;
 
 /**
  * Created by Wayne on 2016/7/13.
  */
-public class AllTopicsFragment extends BaseFragment implements AllTopicsContract.View {
-    private static final String TAG = "AllTopicsFragment";
-    private static final String PAGE = "AllTopicsFragment.page";
-    private static final String DIALOG_PICK_LETTER = "AllTopicsFragment.dialog_pick_letter";
+public class TopicFragment extends BaseFragment implements TopicContract.View {
+    private static final String TAG = "TopicFragment";
+    private static final String PAGE = "TopicFragment.page";
+    private static final String DIALOG_PICK_LETTER = "TopicFragment.dialog_pick_letter";
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_view)
@@ -43,14 +43,14 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
     @Inject
     GridLayoutManager mGridLayoutManager;
     @Inject
-    AllTopicsRvAdapter mAdapter;
+    TopicRvAdapter mAdapter;
     @Inject
-    AllTopicsPresenter mPresenter;
-    private int mPage;
+    TopicPresenter mPresenter;
     FloatingActionButton mFab;
+    private int mPage;
 
-    public static AllTopicsFragment newInstance(int page) {
-        AllTopicsFragment fragment = new AllTopicsFragment();
+    public static TopicFragment newInstance(int page) {
+        TopicFragment fragment = new TopicFragment();
         Bundle args = new Bundle();
         args.putInt(PAGE, page);
         fragment.setArguments(args);
@@ -99,7 +99,7 @@ public class AllTopicsFragment extends BaseFragment implements AllTopicsContract
             @Override
             public void onRefresh() {
                 clearTopics();
-                mPresenter.retrieveTopics(mPage);
+                mPresenter.retrieveTopics(-1);
             }
         });
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);

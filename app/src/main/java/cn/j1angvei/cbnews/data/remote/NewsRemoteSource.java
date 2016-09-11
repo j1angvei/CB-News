@@ -1,6 +1,5 @@
 package cn.j1angvei.cbnews.data.remote;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -8,8 +7,8 @@ import java.io.IOException;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.converter.NewsConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
-import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -29,11 +28,10 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
     }
 
     @Override
-    public Observable<T> fetchData(@NonNull Integer page, @NonNull String... args) {
-        final String sourceType = args[0];
-        boolean isTopicMews = TextUtils.isDigitsOnly(sourceType);
+    public Observable<T> fetchData(int page, String id, final String extra) {
+        boolean isTopicMews = TextUtils.isDigitsOnly(extra);
         return hasConnection() ?
-                (isTopicMews ? mApiWrapper.getTopicNews(sourceType, page) : mApiWrapper.getNews(sourceType, page))
+                (isTopicMews ? mApiWrapper.getTopicNews(extra, page) : mApiWrapper.getNews(extra, page))
                         .flatMap(new Func1<ResponseBody, Observable<T>>() {
                             @Override
                             public Observable<T> call(ResponseBody responseBody) {
@@ -47,11 +45,9 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
                         .doOnNext(new Action1<T>() {
                             @Override
                             public void call(T t) {
-                                t.setSourceType(sourceType);
+                                t.setType(extra);
                             }
-                        })
-                        .retry(1) :
-                Observable.<T>error(new ServerItemNotFoundException());
-
+                        }) :
+                Observable.<T>error(new WEBItemNotFoundException());
     }
 }

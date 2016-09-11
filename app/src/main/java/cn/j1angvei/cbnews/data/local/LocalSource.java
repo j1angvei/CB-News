@@ -8,15 +8,18 @@ import rx.Observable;
  * retrieve data from sqLiteDatabase
  */
 public abstract class LocalSource<T> {
+    public static final int PAGE_MORE = 1;
     DbHelper<T> mDbHelper;
 
     public LocalSource(DbHelper<T> dbHelper) {
         mDbHelper = dbHelper;
     }
 
-    public abstract void create(T item);
+    public void create(T item) {
+        mDbHelper.create(item);
+    }
 
-    public abstract Observable<T> read(Integer page, String id, String sourceType);
+    public abstract Observable<T> read(int page, String id, String extra);
 
     public abstract void update(T item);
 

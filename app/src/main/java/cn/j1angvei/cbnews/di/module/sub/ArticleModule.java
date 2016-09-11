@@ -8,13 +8,14 @@ import cn.j1angvei.cbnews.bean.Article;
 import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.fragment.ArticleFragment;
 import cn.j1angvei.cbnews.presenter.NewsPresenter;
 import dagger.Module;
 import dagger.Provides;
 
 /**
  * Created by Wayne on 2016/7/22.
- * article specific for {@link cn.j1angvei.cbnews.fragment.ArticlesFragment}
+ * article specific for {@link ArticleFragment}
  */
 @Module
 public class ArticleModule {

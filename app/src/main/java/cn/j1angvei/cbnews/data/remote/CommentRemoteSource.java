@@ -1,7 +1,5 @@
 package cn.j1angvei.cbnews.data.remote;
 
-import android.support.annotation.NonNull;
-
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -10,8 +8,8 @@ import javax.inject.Singleton;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.converter.CommentsConverter;
 import cn.j1angvei.cbnews.data.remote.api.CBApiWrapper;
-import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
+import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -21,19 +19,18 @@ import rx.functions.Func1;
  * Created by Wayne on 2016/7/23.
  */
 @Singleton
-public class CmtRemoteSource extends RemoteSource<Comments> {
+public class CommentRemoteSource extends RemoteSource<Comments> {
     private CommentsConverter mConverter;
 
     @Inject
-    public CmtRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
+    public CommentRemoteSource(CBApiWrapper wrapper, CommentsConverter converter, NetworkUtil networkUtil) {
         super(wrapper, networkUtil);
         mConverter = converter;
     }
 
     @Override
-    public Observable<Comments> fetchData(Integer page, @NonNull String... args) {
-        String sid = args[0], sn = args[1];
-        return hasConnection() ? mApiWrapper.getComments(sid, sn)
+    public Observable<Comments> fetchData(int page, String id, String extra) {
+        return hasConnection() ? mApiWrapper.getComments(id, extra)
                 .flatMap(new Func1<ResponseBody, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(ResponseBody responseBody) {
@@ -43,8 +40,7 @@ public class CmtRemoteSource extends RemoteSource<Comments> {
                             return Observable.error(new ResponseParseException());
                         }
                     }
-                })
-                .retry(1) :
-                Observable.<Comments>error(new ServerItemNotFoundException());
+                }) :
+                Observable.<Comments>error(new WEBItemNotFoundException());
     }
 }

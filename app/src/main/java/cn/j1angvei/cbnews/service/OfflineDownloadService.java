@@ -15,7 +15,7 @@ import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Review;
-import cn.j1angvei.cbnews.bean.Source;
+import cn.j1angvei.cbnews.bean.Type;
 import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;
@@ -104,9 +104,9 @@ public class OfflineDownloadService extends BaseService {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
                         return Observable.concat(
-                                mArticleRepository.getDataFromDB(integer, null, Source.ALL.toString()),
-                                mHeadlineRepository.getDataFromDB(integer, null, Source.EDITORCOMMEND.toString()),
-                                mReviewRepository.getDataFromDB(integer, null, Source.JHCOMMENT.toString())
+                                mArticleRepository.getData(integer, null, Type.LATEST_NEWS),
+                                mHeadlineRepository.getData(integer, null, Type.HEADLINE),
+                                mReviewRepository.getData(integer, null, Type.REVIEW)
                         );
                     }
                 })
@@ -114,14 +114,14 @@ public class OfflineDownloadService extends BaseService {
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
-                        return mContentRepository.getDataFromDB(0, news.getSid(), null);
+                        return mContentRepository.getData(0, news.getSid(), null);
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCmtRepository.getDataFromDB(0, content.getSid(), content.getSn());
+                        return mCmtRepository.getData(0, content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())

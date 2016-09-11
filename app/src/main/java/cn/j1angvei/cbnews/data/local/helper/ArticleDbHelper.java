@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Article;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
 
@@ -25,6 +25,7 @@ import rx.Observable;
  */
 @Singleton
 public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
+    private static final String TAG = "ArticleDbHelper";
     private static final String DB_NAME = "article.db";
     private static final int DB_VERSION = 6;
     private static final String TABLE_NAME = "article";
@@ -76,7 +77,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_VIEWER_NUM, item.getViewerNum());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             values.put(COL_SOURCE, item.getSource());
-            values.put(COL_SOURCE_TYPE, item.getSourceType());
+            values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_THUMB, item.getThumb());
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
@@ -88,10 +89,9 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
     @Override
     public Observable<Article> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Article> articles = null;
+        List<Article> articles = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                articles = new ArrayList<>();
                 do {
                     Article article = new Article();
                     article.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
@@ -106,7 +106,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
                         article.setTime(new Date());
                     }
                     article.setSource(cursor.getString(cursor.getColumnIndex(COL_SOURCE)));
-                    article.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
+                    article.setType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     article.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
                     articles.add(article);
                 } while (cursor.moveToNext());
@@ -115,8 +115,9 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return (articles == null || articles.isEmpty()) ?
-                Observable.<Article>error(new LocalItemNotFoundException()) : Observable.from(articles);
+
+        Log.d(TAG, "read: " + articles);
+        return Observable.from(articles);
     }
 
     @Override

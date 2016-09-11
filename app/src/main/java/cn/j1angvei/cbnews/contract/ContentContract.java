@@ -13,6 +13,6 @@ public interface ContentContract {
     }
 
     interface Presenter extends BasePresenter<ContentContract.View> {
-        void retrieveContent(String sid);
+        void retrieveContent(int page, String sid);
     }
 }

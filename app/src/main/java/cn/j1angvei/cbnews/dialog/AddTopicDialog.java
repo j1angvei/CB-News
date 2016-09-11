@@ -25,7 +25,7 @@ import cn.j1angvei.cbnews.activity.BaseActivity;
 import cn.j1angvei.cbnews.adapter.AddTopicAdapter;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.contract.AddTopicContract;
-import cn.j1angvei.cbnews.contract.MyTopicsContract;
+import cn.j1angvei.cbnews.contract.MyTopicContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.presenter.AddTopicPresenter;
@@ -131,7 +131,7 @@ public class AddTopicDialog extends DialogFragment implements BaseDialog, AddTop
     public void onAddMyTopicsSuccess() {
         dismiss();
         MessageUtil.toast(R.string.info_add_my_topic_success, mContext);
-        ((MyTopicsContract.View) getTargetFragment()).refreshMyTopics();
+        ((MyTopicContract.View) getTargetFragment()).refreshMyTopics();
     }
 
     @Override

@@ -9,7 +9,7 @@ import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.data.local.CmtLocalSource;
+import cn.j1angvei.cbnews.data.local.CommentLocalSource;
 import cn.j1angvei.cbnews.data.local.ContentLocalSource;
 import cn.j1angvei.cbnews.data.local.LocalSource;
 import cn.j1angvei.cbnews.data.local.NewsLocalSource;
@@ -37,7 +37,7 @@ public abstract class LocalModule {
 
     @Binds
     @QCmt
-    abstract LocalSource<Comments> bindsML(CmtLocalSource source);
+    abstract LocalSource<Comments> bindsML(CommentLocalSource source);
 
     @Binds
     @QTopic

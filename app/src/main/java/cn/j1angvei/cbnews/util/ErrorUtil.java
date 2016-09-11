@@ -4,11 +4,11 @@ import android.util.Log;
 
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.exception.JsonParseException;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
+import cn.j1angvei.cbnews.exception.SQLItemNotFoundException;
 import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import cn.j1angvei.cbnews.exception.RAMItemNotFoundException;
 import cn.j1angvei.cbnews.exception.ResponseParseException;
-import cn.j1angvei.cbnews.exception.ServerItemNotFoundException;
+import cn.j1angvei.cbnews.exception.WEBItemNotFoundException;
 
 /**
  * Created by Wayne on 2016/8/24.
@@ -20,9 +20,9 @@ public class ErrorUtil {
 
     public static int getErrorInfo(Throwable e) {
         Log.e(TAG, "getErrorInfo: ", e);
-        if (e instanceof LocalItemNotFoundException) {
+        if (e instanceof SQLItemNotFoundException) {
             return R.string.error_no_local_item;
-        } else if (e instanceof ServerItemNotFoundException) {
+        } else if (e instanceof WEBItemNotFoundException) {
             return R.string.error_no_network;
         } else if (e instanceof RAMItemNotFoundException) {
             return R.string.error_no_item_in_ram;

@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Review;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import rx.Observable;
 
 /**
@@ -63,7 +62,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_TID, item.getTid());
             values.put(COL_COMMENT, item.getComment());
-            values.put(COL_SOURCE_TYPE, item.getSourceType());
+            values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_LOCATION, item.getLocation());
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
@@ -75,17 +74,16 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
     @Override
     public Observable<Review> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Review> reviews = null;
+        List<Review> reviews = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                reviews = new ArrayList<>();
                 do {
                     Review review = new Review();
                     review.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     review.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     review.setTid(cursor.getString(cursor.getColumnIndex(COL_TID)));
                     review.setComment(cursor.getString(cursor.getColumnIndex(COL_COMMENT)));
-                    review.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
+                    review.setType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     review.setLocation(cursor.getString(cursor.getColumnIndex(COL_LOCATION)));
                     reviews.add(review);
                 } while (cursor.moveToNext());
@@ -94,8 +92,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return reviews == null || reviews.isEmpty() ?
-                Observable.<Review>error(new LocalItemNotFoundException()) : Observable.from(reviews);
+        return Observable.from(reviews);
     }
 
     @Override

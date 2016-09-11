@@ -6,7 +6,7 @@ import cn.j1angvei.cbnews.bean.Comments;
 /**
  * Created by Wayne on 2016/8/9.
  */
-public interface ShowCmtContract {
+public interface CommentContract {
     interface View extends BaseView {
         void refreshComments();
 

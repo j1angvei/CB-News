@@ -11,9 +11,11 @@ import cn.j1angvei.cbnews.contract.AddTopicContract;
 import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.util.AppUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -23,19 +25,19 @@ import rx.schedulers.Schedulers;
 public class AddTopicPresenter implements AddTopicContract.Presenter {
     private static final String TAG = "AddTopicPresenter";
     private AddTopicContract.View mView;
-    private final Repository<Topic> mTopicRepository;
-    //    private final MyTopicsRepository mRepository;
+    private final Repository<Topic> mRepository;
+    private final AppUtil mAppUtil;
 
     @Inject
-    public AddTopicPresenter(@QTopic Repository<Topic> topicRepository) {
-        mTopicRepository = topicRepository;
-//        mRepository = repository;
+    public AddTopicPresenter(@QTopic Repository<Topic> repository, AppUtil appUtil) {
+        mRepository = repository;
+        mAppUtil = appUtil;
     }
 
     @Override
     public void retrieveTopics(final int page) {
         mView.showLoading();
-        mTopicRepository.getDataFromDB(page, null, null)
+        mRepository.getData(page, null, null)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -60,7 +62,14 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
     @Override
     public void addToMyTopics(List<Topic> topics) {
         Observable.from(topics)
-                .subscribe(new Subscriber<Topic>() {
+                .map(new Func1<Topic, String>() {
+                    @Override
+                    public String call(Topic topic) {
+                        return topic.getId();
+                    }
+                })
+                .toList()
+                .subscribe(new Subscriber<List<String>>() {
                     @Override
                     public void onCompleted() {
                         mView.onAddMyTopicsSuccess();
@@ -72,10 +81,11 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Topic myTopic) {
-//                        mRepository.storeToDisk(myTopic);
+                    public void onNext(List<String> strings) {
+                        mAppUtil.setMyTopics(strings);
                     }
                 });
+
 
     }
 

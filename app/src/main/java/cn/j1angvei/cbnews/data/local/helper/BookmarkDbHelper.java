@@ -16,7 +16,6 @@ import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Bookmark;
 import cn.j1angvei.cbnews.di.qualifier.QBookmark;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
 
@@ -63,7 +62,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             ContentValues values = new ContentValues();
             values.put(COL_SID, item.getSid());
             values.put(COL_TITLE, item.getTitle());
-            values.put(COL_SOURCE_TYPE, item.getSourceType());
+            values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
@@ -75,15 +74,14 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
     @Override
     public Observable<Bookmark> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Bookmark> bookmarks = null;
+        List<Bookmark> bookmarks = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                bookmarks = new ArrayList<>();
                 do {
                     Bookmark bookmark = new Bookmark();
                     bookmark.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     bookmark.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
-                    bookmark.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
+                    bookmark.setType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     try {
                         bookmark.setTime(DateUtil.parseDefault(cursor.getString(cursor.getColumnIndex(COL_TIME))));
                     } catch (ParseException e) {
@@ -96,8 +94,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return bookmarks == null || bookmarks.isEmpty() ?
-                Observable.<Bookmark>error(new LocalItemNotFoundException()) : Observable.from(bookmarks);
+        return Observable.from(bookmarks);
     }
 
     @Override

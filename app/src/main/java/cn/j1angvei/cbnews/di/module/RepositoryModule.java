@@ -11,7 +11,7 @@ import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.data.local.LocalSource;
 import cn.j1angvei.cbnews.data.remote.RemoteSource;
-import cn.j1angvei.cbnews.data.repository.CmtRepository;
+import cn.j1angvei.cbnews.data.repository.CommentRepository;
 import cn.j1angvei.cbnews.data.repository.ContentRepository;
 import cn.j1angvei.cbnews.data.repository.NewsRepository;
 import cn.j1angvei.cbnews.data.repository.Repository;
@@ -62,7 +62,7 @@ public abstract class RepositoryModule {
 
     @Binds
     @QCmt
-    abstract Repository<Comments> bindsCmtRepo(CmtRepository repository);
+    abstract Repository<Comments> bindsCmtRepo(CommentRepository repository);
 
     @Binds
     @QContent

@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
+import cn.j1angvei.cbnews.exception.SQLItemNotFoundException;
 import cn.j1angvei.cbnews.util.DateUtil;
 import rx.Observable;
 
@@ -84,10 +84,9 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
     @Override
     public Observable<Content> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Content> contents = null;
+        List<Content> contents = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                contents = new ArrayList<>();
                 do {
                     Content content = new Content();
                     content.setSid(cursor.getString(cursor.getColumnIndex(_ID)));
@@ -109,8 +108,7 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return contents == null || contents.isEmpty() ?
-                Observable.<Content>error(new LocalItemNotFoundException()) : Observable.from(contents);
+        return Observable.from(contents);
     }
 
     @Override

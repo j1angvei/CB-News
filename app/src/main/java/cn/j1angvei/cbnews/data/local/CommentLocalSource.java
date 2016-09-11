@@ -22,19 +22,15 @@ import static cn.j1angvei.cbnews.data.local.helper.DbHelper.WHERE;
  * Created by Wayne on 2016/7/28.
  */
 @Singleton
-public class CmtLocalSource extends LocalSource<Comments> {
+public class CommentLocalSource extends LocalSource<Comments> {
     @Inject
-    public CmtLocalSource(@QCmt DbHelper<Comments> dbHelper) {
+    public CommentLocalSource(@QCmt DbHelper<Comments> dbHelper) {
         super(dbHelper);
     }
 
-    public void create(Comments item) {
-        mDbHelper.create(item);
-    }
-
     @Override
-    public Observable<Comments> read(@NonNull Integer page, @NonNull String id, String sourceType) {
-        if (page > 1) {
+    public Observable<Comments> read(int page, @NonNull String id, String extra) {
+        if (page > PAGE_MORE) {
             return Observable.error(new NoMoreItemException());
         }
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +

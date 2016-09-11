@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.j1angvei.cbnews.bean.Headline;
-import cn.j1angvei.cbnews.exception.LocalItemNotFoundException;
 import cn.j1angvei.cbnews.util.DbUtil;
 import rx.Observable;
 
@@ -66,7 +65,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_SUMMARY, item.getSummary());
             values.put(COL_THUMB, item.getThumb());
-            values.put(COL_SOURCE_TYPE, item.getSourceType());
+            values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_RELATED_NEWS, mDbUtil.convertNewsList(item.getRelatedNews()));
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
@@ -78,17 +77,16 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
     @Override
     public Observable<Headline> read(String query) {
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
-        List<Headline> headlines = null;
+        List<Headline> headlines = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
-                headlines = new ArrayList<>();
                 do {
                     Headline headline = new Headline();
                     headline.setSid(cursor.getString(cursor.getColumnIndex(COL_SID)));
                     headline.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     headline.setSummary(cursor.getString(cursor.getColumnIndex(COL_SUMMARY)));
                     headline.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
-                    headline.setSourceType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
+                    headline.setType(cursor.getString(cursor.getColumnIndex(COL_SOURCE_TYPE)));
                     headline.setRelatedNews(mDbUtil.parseNewsList(cursor.getString(cursor.getColumnIndex(COL_RELATED_NEWS))));
                     headlines.add(headline);
                 } while (cursor.moveToNext());
@@ -97,8 +95,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
         }
-        return headlines == null || headlines.isEmpty() ?
-                Observable.<Headline>error(new LocalItemNotFoundException()) : Observable.from(headlines);
+        return Observable.from(headlines);
     }
 
     @Override

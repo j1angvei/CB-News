@@ -6,7 +6,7 @@ import android.util.Log;
 import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.contract.AllTopicsContract;
+import cn.j1angvei.cbnews.contract.TopicContract;
 import cn.j1angvei.cbnews.data.repository.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
@@ -18,20 +18,20 @@ import rx.schedulers.Schedulers;
  * Created by Wayne on 2016/7/15.
  */
 @PerFragment
-public class AllTopicsPresenter implements AllTopicsContract.Presenter {
-    private static final String TAG = "AllTopicsPresenter";
+public class TopicPresenter implements TopicContract.Presenter {
+    private static final String TAG = "TopicPresenter";
     private final Repository<Topic> mRepository;
-    private AllTopicsContract.View mView;
+    private TopicContract.View mView;
 
     @Inject
-    public AllTopicsPresenter(@QTopic Repository<Topic> repository) {
+    public TopicPresenter(@QTopic Repository<Topic> repository) {
         mRepository = repository;
     }
 
     @Override
     public void retrieveTopics(int page) {
         mView.showLoading();
-        mRepository.getDataFromDB(page, null, null)
+        mRepository.getData(page, null, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Topic>() {
@@ -54,7 +54,7 @@ public class AllTopicsPresenter implements AllTopicsContract.Presenter {
     }
 
     @Override
-    public void setView(AllTopicsContract.View view) {
+    public void setView(TopicContract.View view) {
         mView = view;
     }
 }
