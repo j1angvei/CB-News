@@ -10,9 +10,9 @@ import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
-import cn.j1angvei.cbnews.data.remote.api.AddHeaderInterceptor;
-import cn.j1angvei.cbnews.data.remote.api.CnBetaCookieJar;
-import cn.j1angvei.cbnews.data.remote.api.CnbetaApi;
+import cn.j1angvei.cbnews.web.AddHeaderInterceptor;
+import cn.j1angvei.cbnews.web.CnBetaCookieJar;
+import cn.j1angvei.cbnews.web.CnbetaApi;
 import cn.j1angvei.cbnews.util.ApiUtil;
 import cn.j1angvei.cbnews.util.DateUtil;
 import dagger.Module;

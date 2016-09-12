@@ -3,7 +3,7 @@ package cn.j1angvei.cbnews.di.component;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.di.module.sub.HeadlineModule;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
-import cn.j1angvei.cbnews.fragment.HeadlineFragment;
+import cn.j1angvei.cbnews.pastheadline.HeadlineFragment;
 import dagger.Subcomponent;
 
 /**

@@ -2,12 +2,12 @@ package cn.j1angvei.cbnews.di.component;
 
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
-import cn.j1angvei.cbnews.dialog.AddTopicDialog;
-import cn.j1angvei.cbnews.dialog.PublishCmtDialog;
-import cn.j1angvei.cbnews.fragment.CommentFragment;
-import cn.j1angvei.cbnews.fragment.TopicFragment;
-import cn.j1angvei.cbnews.fragment.ContentFragment;
-import cn.j1angvei.cbnews.fragment.MyTopicFragment;
+import cn.j1angvei.cbnews.addtopic.AddTopicDialog;
+import cn.j1angvei.cbnews.addcomment.PublishCmtDialog;
+import cn.j1angvei.cbnews.newscomments.CommentFragment;
+import cn.j1angvei.cbnews.alltopic.TopicFragment;
+import cn.j1angvei.cbnews.newscontent.ContentFragment;
+import cn.j1angvei.cbnews.mytopic.MyTopicFragment;
 import dagger.Subcomponent;
 
 /**

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.NewsActivity">
+    tools:context=".newslist.NewsActivity">
 
     <include layout="@layout/include_news_list_content"/>
 

@@ -13,7 +13,7 @@
         android:theme="@style/CBTheme">
         <!--activities-->
         <activity
-            android:name="cn.j1angvei.cbnews.activity.SplashActivity"
+            android:name="cn.j1angvei.cbnews.splash.SplashActivity"
             android:theme="@style/CBTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,14 +21,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.j1angvei.cbnews.activity.NewsActivity"
+            android:name="cn.j1angvei.cbnews.newslist.NewsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar">
 
         </activity>
         <activity
-            android:name="cn.j1angvei.cbnews.activity.ContentActivity"
+            android:name="cn.j1angvei.cbnews.newscontent.ContentActivity"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -45,10 +45,10 @@
         </activity>
 
         <activity
-            android:name="cn.j1angvei.cbnews.activity.CommentActivity"
+            android:name="cn.j1angvei.cbnews.newscomments.CommentActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="cn.j1angvei.cbnews.activity.SettingsActivity"
+            android:name="cn.j1angvei.cbnews.settings.SettingsActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
@@ -57,10 +57,10 @@
         </activity>
 
         <activity
-            android:name="cn.j1angvei.cbnews.activity.TopicNewsActivity"
+            android:name="cn.j1angvei.cbnews.topicnews.TopicNewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar"/>
-        <activity android:name="cn.j1angvei.cbnews.activity.ImageActivity"/>
+        <activity android:name="cn.j1angvei.cbnews.imageviewer.ImageActivity"/>
         <!--services-->
         <service
             android:name="cn.j1angvei.cbnews.service.OfflineDownloadService"

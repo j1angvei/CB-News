@@ -1,7 +1,7 @@
 package cn.j1angvei.cbnews.util;
 
-import cn.j1angvei.cbnews.data.remote.api.AddHeaderInterceptor;
-import cn.j1angvei.cbnews.data.remote.api.CnbetaApi;
+import cn.j1angvei.cbnews.web.AddHeaderInterceptor;
+import cn.j1angvei.cbnews.web.CnbetaApi;
 
 /**
  * Created by Wayne on 2016/8/9.

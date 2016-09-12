@@ -13,7 +13,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cbnews.fragment.SettingsFragment;
+import cn.j1angvei.cbnews.settings.SettingsFragment;
 
 /**
  * Created by Wayne on 2016/9/3.

@@ -2,13 +2,13 @@ package cn.j1angvei.cbnews.di.module.sub;
 
 import android.support.v4.app.Fragment;
 
-import cn.j1angvei.cbnews.adapter.BookmarkRvAdapter;
-import cn.j1angvei.cbnews.adapter.NewsAdapter;
+import cn.j1angvei.cbnews.mybookmark.BookmarkRvAdapter;
+import cn.j1angvei.cbnews.newslist.NewsAdapter;
 import cn.j1angvei.cbnews.bean.Bookmark;
-import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QBookmark;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
-import cn.j1angvei.cbnews.presenter.NewsPresenter;
+import cn.j1angvei.cbnews.newslist.NewsPresenter;
 import dagger.Module;
 import dagger.Provides;
 

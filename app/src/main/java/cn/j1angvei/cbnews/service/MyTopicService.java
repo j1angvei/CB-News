@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cn.j1angvei.cbnews.base.BaseService;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;

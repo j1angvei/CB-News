@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.R;
+import cn.j1angvei.cbnews.base.BaseService;
 import cn.j1angvei.cbnews.bean.Article;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
@@ -16,7 +17,7 @@ import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Type;
-import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;

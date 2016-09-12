@@ -6,12 +6,12 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-import cn.j1angvei.cbnews.activity.CommentActivity;
-import cn.j1angvei.cbnews.activity.ContentActivity;
-import cn.j1angvei.cbnews.activity.ImageActivity;
-import cn.j1angvei.cbnews.activity.NewsActivity;
-import cn.j1angvei.cbnews.activity.SettingsActivity;
-import cn.j1angvei.cbnews.activity.TopicNewsActivity;
+import cn.j1angvei.cbnews.newscomments.CommentActivity;
+import cn.j1angvei.cbnews.newscontent.ContentActivity;
+import cn.j1angvei.cbnews.imageviewer.ImageActivity;
+import cn.j1angvei.cbnews.newslist.NewsActivity;
+import cn.j1angvei.cbnews.settings.SettingsActivity;
+import cn.j1angvei.cbnews.topicnews.TopicNewsActivity;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.service.OfflineDownloadService;

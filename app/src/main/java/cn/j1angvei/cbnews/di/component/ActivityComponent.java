@@ -1,9 +1,9 @@
 package cn.j1angvei.cbnews.di.component;
 
-import cn.j1angvei.cbnews.activity.CommentActivity;
-import cn.j1angvei.cbnews.activity.ContentActivity;
-import cn.j1angvei.cbnews.activity.NewsActivity;
-import cn.j1angvei.cbnews.activity.TopicNewsActivity;
+import cn.j1angvei.cbnews.newscomments.CommentActivity;
+import cn.j1angvei.cbnews.newscontent.ContentActivity;
+import cn.j1angvei.cbnews.newslist.NewsActivity;
+import cn.j1angvei.cbnews.topicnews.TopicNewsActivity;
 import cn.j1angvei.cbnews.di.module.ActivityModule;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.di.module.sub.ArticleModule;

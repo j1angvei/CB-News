@@ -2,13 +2,13 @@ package cn.j1angvei.cbnews.di.module.sub;
 
 import android.support.v4.app.Fragment;
 
-import cn.j1angvei.cbnews.adapter.HeadlineRvAdapter;
-import cn.j1angvei.cbnews.adapter.NewsAdapter;
+import cn.j1angvei.cbnews.pastheadline.HeadlineRvAdapter;
+import cn.j1angvei.cbnews.newslist.NewsAdapter;
 import cn.j1angvei.cbnews.bean.Headline;
-import cn.j1angvei.cbnews.data.repository.Repository;
+import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QHeadline;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
-import cn.j1angvei.cbnews.presenter.NewsPresenter;
+import cn.j1angvei.cbnews.newslist.NewsPresenter;
 import dagger.Module;
 import dagger.Provides;
 
