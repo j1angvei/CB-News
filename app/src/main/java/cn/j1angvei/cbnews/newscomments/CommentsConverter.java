@@ -90,10 +90,9 @@ public class CommentsConverter implements Converter<Comments> {
     @Override
     public Observable<Comments> toObservable(String json) {
         Comments comments = to(json);
-        if (comments == null) {
-            return Observable.empty();
-        }
-        return Observable.just(comments);
+        return comments == null?
+                Observable.<Comments>empty() :
+        Observable.just(comments);
     }
 
     private List<String> getCommentIds(JSONArray array) throws JSONException {

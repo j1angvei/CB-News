@@ -74,6 +74,7 @@
     <string name="error_no_captcha">No captcha input!</string>
     <string name="error_wrong_captcha">Wrong captcha!</string>
     <string name="error_no_more_data">No more data!</string>
+    <string name="error_no_data">No data found!</string>
     <string name="error_no_item_in_ram">No item in memory!</string>
     <!--hint-->
     <string name="hint_input_comment">Input comment</string>

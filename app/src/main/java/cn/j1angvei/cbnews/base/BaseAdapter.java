@@ -8,4 +8,5 @@ public interface BaseAdapter<T> {
     void clear();
 
     void add(T item);
+
 }

@@ -48,12 +48,12 @@ public class HeaderUtil {
     public static final String HEADER_ACCEPT_IMG = KEY_ACCEPT + ":" + VALUE_ACCEPT_IMG;
     private static final String KEY_CACHE = "Cache-Control";
     private static final String VALUE_CACHE_MAX = "max-age=0";
-    //maximum cache,such as in all topics
+    //maximum cachedData,such as in all topics
     public static final String HEADER_CACHE_MAX = KEY_CACHE + ":" + VALUE_CACHE_MAX;
-    private static final String VALUE_CACHE_NO = "no-cache";
+    private static final String VALUE_CACHE_NO = "no-cachedData";
     public static final String HEADER_CACHE_NO = KEY_CACHE + ":" + VALUE_CACHE_NO;
     private static final String KEY_PRAGMA = "Pragma";
-    private static final String VALUE_PRAGMA = "no-cache";
+    private static final String VALUE_PRAGMA = "no-cachedData";
     public static final String HEADER_PRAGMA = KEY_PRAGMA + ":" + VALUE_PRAGMA;
 
     /**

@@ -1,6 +1,6 @@
 package cn.j1angvei.cbnews.base;
 
-import cn.j1angvei.cbnews.base.Converter;
+import cn.j1angvei.cbnews.exception.NoNetworkException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import rx.Observable;
@@ -20,7 +20,9 @@ public abstract class RemoteSource<T> {
     }
 
 
-    public abstract Observable<T> fetchData(int page, String id, String extra);
+    public Observable<T> fetch(int page, String id, String extra) {
+        return Observable.error(new NoNetworkException());//default
+    }
 
     protected boolean hasConnection() {
         return mNetworkUtil.isNetworkOn();

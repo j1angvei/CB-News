@@ -5,11 +5,10 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.base.DbHelper;
 import cn.j1angvei.cbnews.base.LocalSource;
+import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
-import cn.j1angvei.cbnews.exception.NoMoreItemException;
 import rx.Observable;
 
 import static android.provider.BaseColumns._ID;
@@ -31,9 +30,6 @@ public class ContentLocalSource extends LocalSource<Content> {
 
     @Override
     public Observable<Content> read(int page, @NonNull String id, String extra) {
-        if (page > PAGE_MORE) {
-            return Observable.error(new NoMoreItemException());
-        }
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + id + QUOTE;

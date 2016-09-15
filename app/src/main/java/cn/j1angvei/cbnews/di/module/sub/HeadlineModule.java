@@ -2,7 +2,7 @@ package cn.j1angvei.cbnews.di.module.sub;
 
 import android.support.v4.app.Fragment;
 
-import cn.j1angvei.cbnews.pastheadline.HeadlineRvAdapter;
+import cn.j1angvei.cbnews.newslist.headline.HeadlineRvAdapter;
 import cn.j1angvei.cbnews.newslist.NewsAdapter;
 import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.base.Repository;

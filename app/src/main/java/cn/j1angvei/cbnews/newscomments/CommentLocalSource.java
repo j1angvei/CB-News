@@ -31,9 +31,6 @@ public class CommentLocalSource extends LocalSource<Comments> {
 
     @Override
     public Observable<Comments> read(int page, @NonNull String id, String extra) {
-        if (page > PAGE_MORE) {
-            return Observable.error(new NoMoreItemException());
-        }
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
                 QUOTE + id + QUOTE;

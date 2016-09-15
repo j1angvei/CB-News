@@ -94,9 +94,8 @@ public class ContentConverter implements Converter<Content> {
     @Override
     public Observable<Content> toObservable(String json) {
         Content content = to(json);
-        if (content == null) {
-            return Observable.empty();
-        }
-        return Observable.just(content);
+        return content == null?
+                Observable.<Content>empty():
+                Observable.just(content);
     }
 }

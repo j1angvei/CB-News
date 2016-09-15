@@ -14,7 +14,7 @@ import cn.j1angvei.cbnews.newscomments.CommentRemoteSource;
 import cn.j1angvei.cbnews.newscontent.ContentRemoteSource;
 import cn.j1angvei.cbnews.newslist.NewsRemoteSource;
 import cn.j1angvei.cbnews.base.RemoteSource;
-import cn.j1angvei.cbnews.alltopic.TopicRemoteSource;
+import cn.j1angvei.cbnews.topic.TopicRemoteSource;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;
 import cn.j1angvei.cbnews.di.qualifier.QBookmark;

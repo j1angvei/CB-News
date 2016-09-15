@@ -15,7 +15,7 @@ import cn.j1angvei.cbnews.newscomments.CommentRepository;
 import cn.j1angvei.cbnews.newscontent.ContentRepository;
 import cn.j1angvei.cbnews.newslist.NewsRepository;
 import cn.j1angvei.cbnews.base.Repository;
-import cn.j1angvei.cbnews.alltopic.TopicRepository;
+import cn.j1angvei.cbnews.topic.TopicRepository;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;
 import cn.j1angvei.cbnews.di.qualifier.QBookmark;
 import cn.j1angvei.cbnews.di.qualifier.QCmt;

@@ -3,7 +3,7 @@ package cn.j1angvei.cbnews.di.component;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.di.module.sub.BookmarkModule;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
-import cn.j1angvei.cbnews.mybookmark.BookmarkFragment;
+import cn.j1angvei.cbnews.newslist.bookmark.BookmarkFragment;
 import dagger.Subcomponent;
 
 /**

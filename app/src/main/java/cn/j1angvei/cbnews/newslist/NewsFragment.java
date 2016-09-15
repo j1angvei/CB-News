@@ -1,6 +1,5 @@
 package cn.j1angvei.cbnews.newslist;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,9 +8,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,8 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.BaseActivity;
-import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.base.BaseFragment;
+import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.util.MessageUtil;
 
 /**
@@ -43,7 +45,6 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     CoordinatorLayout mCoordinatorLayout;
     private FloatingActionButton mFab;
     private String mType;
-    private int mPage = 1;
     private boolean isTopicNews;
 
     protected void setBundle(String type) {
@@ -72,14 +73,14 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                mPresenter.retrieveNews(mType, mPage++);
+                mPresenter.loadMore();
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
-                clearNewses();
-                mPresenter.retrieveNews(mType, mPage++);
+                mPresenter.loadRefresh();
             }
         });
         if (!isTopicNews) {
@@ -100,8 +101,15 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.setView(this);
-        mPresenter.retrieveNews(mType, mPage++);
+        if (savedInstanceState == null) {
+            mPresenter.setView(this);
+            mPresenter.loadCache();
+        }
+    }
+
+    @Override
+    public String getType() {
+        return mType;
     }
 
     @Override
@@ -117,33 +125,28 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
     }
 
     @Override
-    public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
+    public void renderNews(List<T> news) {
+        mAdapter.add(news);
     }
 
     @Override
-    public void hideLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void renderNews(T item) {
-        mAdapter.add(item);
-    }
-
-    @Override
-    public void clearNewses() {
-        mPage = 1;
+    public void clearNews() {
         mAdapter.clear();
     }
 
     @Override
-    public Context getViewContext() {
-        return getContext();
+    public void showProgress() {
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void onGetNewsFail(int message) {
-        MessageUtil.snack(mCoordinatorLayout, message);
+    public void hideProgress() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
+
+    @Override
+    public void showInfo(int infoId) {
+        MessageUtil.toast(infoId, getActivity());
+    }
+
 }

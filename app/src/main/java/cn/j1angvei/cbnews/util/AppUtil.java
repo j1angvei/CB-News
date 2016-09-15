@@ -88,7 +88,6 @@ public class AppUtil {
                 originIds.add(id);
             }
         }
-        originIds.addAll(ids);
         String idString = TextUtils.join(" ", originIds);
         mPrefsUtil.writeString(PrefsUtil.MY_TOPIC_IDS, idString);
     }

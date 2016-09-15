@@ -1,6 +1,5 @@
 package cn.j1angvei.cbnews.base;
 
-import cn.j1angvei.cbnews.base.DbHelper;
 import rx.Observable;
 
 /**
@@ -8,7 +7,6 @@ import rx.Observable;
  * retrieve data from sqLiteDatabase
  */
 public abstract class LocalSource<T> {
-    public static final int PAGE_MORE = 1;
     protected DbHelper<T> mDbHelper;
 
     public LocalSource(DbHelper<T> dbHelper) {

@@ -7,12 +7,12 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cbnews.addcomment.PublishCmtContract;
-import cn.j1angvei.cbnews.web.CBApiWrapper;
-import cn.j1angvei.cbnews.web.PublishCmtResponse;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.exception.CaptchaFailException;
 import cn.j1angvei.cbnews.util.ApiUtil;
 import cn.j1angvei.cbnews.util.HeaderUtil;
+import cn.j1angvei.cbnews.web.CBApiWrapper;
+import cn.j1angvei.cbnews.web.PublishCmtResponse;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
@@ -51,7 +51,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        return null;
+                        return Observable.error(new CaptchaFailException());
                     }
                 })
                 .map(new Func1<ResponseBody, Bitmap>() {

@@ -5,9 +5,9 @@ import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.addtopic.AddTopicDialog;
 import cn.j1angvei.cbnews.addcomment.PublishCmtDialog;
 import cn.j1angvei.cbnews.newscomments.CommentFragment;
-import cn.j1angvei.cbnews.alltopic.TopicFragment;
+import cn.j1angvei.cbnews.topic.TopicFragment;
 import cn.j1angvei.cbnews.newscontent.ContentFragment;
-import cn.j1angvei.cbnews.mytopic.MyTopicFragment;
+import cn.j1angvei.cbnews.newslist.mytopic.MyTopicFragment;
 import dagger.Subcomponent;
 
 /**

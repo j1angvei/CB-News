@@ -11,7 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
-    // before loading more.
+    // before loading moreData.
     private int visibleThreshold = 5;
     // The current offset index of data you have loaded
     private int currentPage = 0;
@@ -52,7 +52,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     }
 
     // This happens many times a second during a scroll, so be wary of the code you place here.
-    // We are given a few useful parameters to help us work out if we need to load some more data,
+    // We are given a few useful parameters to help us work out if we need to load some moreData data,
     // but first we check if we are waiting for the previous load to finish.
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
@@ -87,8 +87,8 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         }
 
         // If it isn’t currently loading, we check to see if we have breached
-        // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+        // the visibleThreshold and need to reload moreData data.
+        // If we do need to reload some moreData data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
@@ -97,7 +97,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         }
     }
 
-    // Defines the process for actually loading more data based on page
+    // Defines the process for actually loading moreData data based on page
     public abstract void onLoadMore(int page, int totalItemsCount);
 
 }

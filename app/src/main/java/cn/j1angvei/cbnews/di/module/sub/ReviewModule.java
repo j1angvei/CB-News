@@ -3,7 +3,7 @@ package cn.j1angvei.cbnews.di.module.sub;
 import android.support.v4.app.Fragment;
 
 import cn.j1angvei.cbnews.newslist.NewsAdapter;
-import cn.j1angvei.cbnews.hotcoment.ReviewRvAdapter;
+import cn.j1angvei.cbnews.newslist.review.ReviewRvAdapter;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QReview;

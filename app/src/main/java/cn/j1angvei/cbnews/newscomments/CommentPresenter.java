@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.newscomments.CommentContract;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import cn.j1angvei.cbnews.web.BaseResponse;
 import cn.j1angvei.cbnews.base.Repository;
@@ -47,7 +46,7 @@ public class CommentPresenter implements CommentContract.Presenter {
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getData(0, sid, null)
+        mContentRepository.getData(0, sid, null,null)
                 .map(new Func1<Content, String>() {
                     @Override
                     public String call(Content content) {
@@ -57,7 +56,7 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(String sn) {
-                        return mRepository.getData(0, sid, sn);
+                        return mRepository.getData(0, sid, sn,null);
                     }
                 })
                 .subscribeOn(Schedulers.io())

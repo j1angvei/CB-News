@@ -57,10 +57,10 @@
         </activity>
 
         <activity
-            android:name="cn.j1angvei.cbnews.topicnews.TopicNewsActivity"
+            android:name=".topic.topicnews.TopicNewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CBTheme.TransparentStatusBar"/>
-        <activity android:name="cn.j1angvei.cbnews.imageviewer.ImageActivity"/>
+        <activity android:name=".newscontent.imageviewer.ImageActivity"/>
         <!--services-->
         <service
             android:name="cn.j1angvei.cbnews.service.OfflineDownloadService"

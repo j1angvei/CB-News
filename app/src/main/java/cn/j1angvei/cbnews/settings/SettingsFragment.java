@@ -15,6 +15,7 @@ import cn.j1angvei.cbnews.util.Navigator;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREF_NIGHT_MODE = "pref_night_mode";
     public static final String PREF_DATA_SAVE_MODE = "pref_data_save_mode";
+    public static final String PREF_AUTO_REFRESH = "pref_auto_refresh";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

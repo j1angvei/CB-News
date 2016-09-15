@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import cn.j1angvei.cbnews.newscomments.CommentActivity;
 import cn.j1angvei.cbnews.newscontent.ContentActivity;
-import cn.j1angvei.cbnews.imageviewer.ImageActivity;
+import cn.j1angvei.cbnews.newscontent.imageviewer.ImageActivity;
 import cn.j1angvei.cbnews.newslist.NewsActivity;
 import cn.j1angvei.cbnews.settings.SettingsActivity;
-import cn.j1angvei.cbnews.topicnews.TopicNewsActivity;
+import cn.j1angvei.cbnews.topic.topicnews.TopicNewsActivity;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.service.OfflineDownloadService;

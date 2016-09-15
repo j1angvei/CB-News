@@ -24,7 +24,7 @@ import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.BaseActivity;
 import cn.j1angvei.cbnews.base.BaseDialog;
 import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.mytopic.MyTopicContract;
+import cn.j1angvei.cbnews.newslist.mytopic.MyTopicContract;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.util.MessageUtil;

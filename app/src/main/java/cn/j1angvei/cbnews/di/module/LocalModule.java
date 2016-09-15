@@ -13,7 +13,7 @@ import cn.j1angvei.cbnews.newscomments.CommentLocalSource;
 import cn.j1angvei.cbnews.newscontent.ContentLocalSource;
 import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.newslist.NewsLocalSource;
-import cn.j1angvei.cbnews.alltopic.TopicLocalSource;
+import cn.j1angvei.cbnews.topic.TopicLocalSource;
 import cn.j1angvei.cbnews.base.DbHelper;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;
 import cn.j1angvei.cbnews.di.qualifier.QBookmark;
