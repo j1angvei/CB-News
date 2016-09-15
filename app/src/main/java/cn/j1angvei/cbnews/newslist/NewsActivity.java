@@ -26,9 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.BaseActivity;
-import cn.j1angvei.cbnews.bean.Type;
 import cn.j1angvei.cbnews.base.BaseView;
-import cn.j1angvei.cbnews.web.CBApiWrapper;
+import cn.j1angvei.cbnews.bean.Type;
 import cn.j1angvei.cbnews.di.component.DaggerActivityComponent;
 import cn.j1angvei.cbnews.di.module.ActivityModule;
 import cn.j1angvei.cbnews.newslist.article.ArticleFragment;
@@ -41,6 +40,7 @@ import cn.j1angvei.cbnews.util.ApiUtil;
 import cn.j1angvei.cbnews.util.AppUtil;
 import cn.j1angvei.cbnews.util.MessageUtil;
 import cn.j1angvei.cbnews.util.Navigator;
+import cn.j1angvei.cbnews.web.CBApiWrapper;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -134,6 +134,7 @@ public class NewsActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
             }
             if (mIsExit) {
+                Navigator.toSaveCache(this);
                 this.finish();
             } else {
                 MessageUtil.toast(R.string.info_press_to_exit, this);

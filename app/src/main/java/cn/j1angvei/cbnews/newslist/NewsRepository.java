@@ -10,7 +10,7 @@ import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.base.RemoteSource;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.News;
-import cn.j1angvei.cbnews.exception.data.LoadCacheFailException;
+import cn.j1angvei.cbnews.exception.NoCacheException;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -59,7 +59,7 @@ public class NewsRepository<N extends News> extends Repository<N> {
                             }
                         })
                         .switchIfEmpty(mLocalSource.read(type))
-                        .switchIfEmpty(Observable.<N>error(new LoadCacheFailException()));
+                        .switchIfEmpty(Observable.<N>error(new NoCacheException()));
                 break;
             case LoadMode.LOAD_REFRESH:
                 final List<N> newCache = new ArrayList<>();

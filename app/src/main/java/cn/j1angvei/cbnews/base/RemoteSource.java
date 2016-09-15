@@ -1,9 +1,9 @@
 package cn.j1angvei.cbnews.base;
 
-import cn.j1angvei.cbnews.exception.temp.GetCommentFailException;
-import cn.j1angvei.cbnews.exception.temp.GetContentFailException;
-import cn.j1angvei.cbnews.exception.temp.GetNewsFailException;
-import cn.j1angvei.cbnews.exception.temp.GetTopicFailException;
+import cn.j1angvei.cbnews.exception.GetCommentFailException;
+import cn.j1angvei.cbnews.exception.GetContentFailException;
+import cn.j1angvei.cbnews.exception.GetNewsFailException;
+import cn.j1angvei.cbnews.exception.GetTopicFailException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import rx.Observable;

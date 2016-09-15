@@ -63,10 +63,13 @@
         <activity android:name=".newscontent.imageviewer.ImageActivity"/>
         <!--services-->
         <service
-            android:name="cn.j1angvei.cbnews.service.OfflineDownloadService"
+            android:name="cn.j1angvei.cbnews.offlinedownload.OfflineDownloadService"
             android:exported="false"/>
         <service
-            android:name="cn.j1angvei.cbnews.service.MyTopicService"
+            android:name="cn.j1angvei.cbnews.offlinedownload.MyTopicService"
+            android:exported="false"/>
+        <service
+            android:name=".offlinedownload.SaveCacheService"
             android:exported="false"/>
     </application>
 </manifest>

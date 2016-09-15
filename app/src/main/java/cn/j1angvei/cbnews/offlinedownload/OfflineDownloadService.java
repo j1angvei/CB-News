@@ -1,4 +1,4 @@
-package cn.j1angvei.cbnews.service;
+package cn.j1angvei.cbnews.offlinedownload;
 
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -9,23 +9,13 @@ import android.support.v4.app.NotificationCompat;
 import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.R;
-import cn.j1angvei.cbnews.base.BaseService;
 import cn.j1angvei.cbnews.base.LoadMode;
-import cn.j1angvei.cbnews.base.Repository;
-import cn.j1angvei.cbnews.bean.Article;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.News;
-import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Type;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;
-import cn.j1angvei.cbnews.di.qualifier.QArticle;
-import cn.j1angvei.cbnews.di.qualifier.QCmt;
-import cn.j1angvei.cbnews.di.qualifier.QContent;
-import cn.j1angvei.cbnews.di.qualifier.QHeadline;
-import cn.j1angvei.cbnews.di.qualifier.QReview;
 import cn.j1angvei.cbnews.util.ErrorUtil;
 import cn.j1angvei.cbnews.util.MessageUtil;
 import cn.j1angvei.cbnews.util.NetworkUtil;
@@ -41,28 +31,13 @@ import rx.functions.Func1;
  * download all news
  */
 
-public class OfflineDownloadService extends BaseService {
+public class OfflineDownloadService extends RepositoryService {
     static final String TAG = "OfflineDownloadService";
-    @Inject
-    @QArticle
-    Repository<Article> mArticleRepository;
-    @Inject
-    @QHeadline
-    Repository<Headline> mHeadlineRepository;
-    @Inject
-    @QReview
-    Repository<Review> mReviewRepository;
-    @Inject
-    @QContent
-    Repository<Content> mContentRepository;
-    @Inject
-    @QCmt
-    Repository<Comments> mCmtRepository;
+
     @Inject
     PrefsUtil mPrefsUtil;
     @Inject
     NetworkUtil mNetworkUtil;
-    private boolean isCanceled;
 
     private NotificationManager MANAGER;
     private NotificationCompat.Builder BUILDER;
@@ -70,7 +45,6 @@ public class OfflineDownloadService extends BaseService {
     private int CUR_PROCESS = 0;
 
     public OfflineDownloadService() {
-        super(TAG);
     }
 
     @Override

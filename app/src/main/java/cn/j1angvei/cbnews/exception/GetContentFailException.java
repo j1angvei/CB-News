@@ -1,4 +1,4 @@
-package cn.j1angvei.cbnews.exception.temp;
+package cn.j1angvei.cbnews.exception;
 
 /**
  * Created by Wayne on 2016/9/15.

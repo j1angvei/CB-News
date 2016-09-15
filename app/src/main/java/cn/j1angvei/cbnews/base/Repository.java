@@ -36,6 +36,12 @@ public abstract class Repository<T> {
         mLocalSource.create(item);
     }
 
+    public void saveCache() {
+        for (T item : mCache) {
+            mLocalSource.create(item);
+        }
+    }
+
     public Observable<T> getNews(int mode, String type) {
         return Observable.error(new IllegalArgumentsException());
     }

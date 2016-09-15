@@ -6,15 +6,16 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
+import cn.j1angvei.cbnews.bean.News;
+import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.newscomments.CommentActivity;
 import cn.j1angvei.cbnews.newscontent.ContentActivity;
 import cn.j1angvei.cbnews.newscontent.imageviewer.ImageActivity;
 import cn.j1angvei.cbnews.newslist.NewsActivity;
+import cn.j1angvei.cbnews.offlinedownload.OfflineDownloadService;
+import cn.j1angvei.cbnews.offlinedownload.SaveCacheService;
 import cn.j1angvei.cbnews.settings.SettingsActivity;
 import cn.j1angvei.cbnews.topic.topicnews.TopicNewsActivity;
-import cn.j1angvei.cbnews.bean.News;
-import cn.j1angvei.cbnews.bean.Topic;
-import cn.j1angvei.cbnews.service.OfflineDownloadService;
 
 /**
  * Created by Wayne on 2016/6/13.
@@ -95,6 +96,12 @@ public final class Navigator {
             Intent intent = new Intent(context, OfflineDownloadService.class);
             context.startService(intent);
         }
+    }
 
+    public static void toSaveCache(Context context) {
+        if (context != null) {
+            Intent intent = new Intent(context, SaveCacheService.class);
+            context.startService(intent);
+        }
     }
 }
