@@ -35,6 +35,7 @@ public interface DbHelper<T> extends BaseColumns {
     //from topic
     String COL_TITLE = "title";
     String COL_THUMB = "thumb";
+    String COL_LETTER = "letter";
     //from article
     String COL_TOPIC = "topic";
     String COL_SUMMARY = "summary";

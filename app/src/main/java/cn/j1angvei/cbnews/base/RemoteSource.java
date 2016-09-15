@@ -1,6 +1,9 @@
 package cn.j1angvei.cbnews.base;
 
-import cn.j1angvei.cbnews.exception.NoNetworkException;
+import cn.j1angvei.cbnews.exception.temp.GetCommentFailException;
+import cn.j1angvei.cbnews.exception.temp.GetContentFailException;
+import cn.j1angvei.cbnews.exception.temp.GetNewsFailException;
+import cn.j1angvei.cbnews.exception.temp.GetTopicFailException;
 import cn.j1angvei.cbnews.util.NetworkUtil;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import rx.Observable;
@@ -19,9 +22,20 @@ public abstract class RemoteSource<T> {
         mNetworkUtil = networkUtil;
     }
 
+    public Observable<T> getNews(int page, String type) {
+        return Observable.error(new GetNewsFailException());
+    }
 
-    public Observable<T> fetch(int page, String id, String extra) {
-        return Observable.error(new NoNetworkException());//default
+    public Observable<T> getContent(String sid) {
+        return Observable.error(new GetContentFailException());
+    }
+
+    public Observable<T> getComment(String sid, String sn) {
+        return Observable.error(new GetCommentFailException());
+    }
+
+    public Observable<T> getTopics(String letter) {
+        return Observable.error(new GetTopicFailException());
     }
 
     protected boolean hasConnection() {

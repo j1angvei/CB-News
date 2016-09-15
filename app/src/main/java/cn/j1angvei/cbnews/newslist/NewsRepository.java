@@ -58,12 +58,12 @@ public class NewsRepository<N extends News> extends Repository<N> {
                                 return type.equals(n.getType());
                             }
                         })
-                        .switchIfEmpty(mLocalSource.read(page, null, type))
+                        .switchIfEmpty(mLocalSource.read(type))
                         .switchIfEmpty(Observable.<N>error(new LoadCacheFailException()));
                 break;
             case LoadMode.LOAD_REFRESH:
                 final List<N> newCache = new ArrayList<>();
-                observable = mRemoteSource.fetch(page, null, type)
+                observable = mRemoteSource.getNews(page, type)
                         .doOnNext(new Action1<N>() {
                             @Override
                             public void call(N n) {
@@ -78,7 +78,7 @@ public class NewsRepository<N extends News> extends Repository<N> {
                         });
                 break;
             case LoadMode.LOAD_MORE:
-                observable = mRemoteSource.fetch(page, null, type)
+                observable = mRemoteSource.getNews(page, type)
                         .doOnNext(new Action1<N>() {
                             @Override
                             public void call(N n) {

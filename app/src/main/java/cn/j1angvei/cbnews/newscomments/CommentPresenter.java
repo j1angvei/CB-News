@@ -5,14 +5,15 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import cn.j1angvei.cbnews.base.LoadMode;
+import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
-import cn.j1angvei.cbnews.web.CBApiWrapper;
-import cn.j1angvei.cbnews.web.BaseResponse;
-import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.web.BaseResponse;
+import cn.j1angvei.cbnews.web.CBApiWrapper;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +47,7 @@ public class CommentPresenter implements CommentContract.Presenter {
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getData(0, sid, null,null)
+        mContentRepository.getContent(LoadMode.LOAD_CACHE, sid)
                 .map(new Func1<Content, String>() {
                     @Override
                     public String call(Content content) {
@@ -56,7 +57,7 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(String sn) {
-                        return mRepository.getData(0, sid, sn,null);
+                        return mRepository.getComments(LoadMode.LOAD_REFRESH, sid, sn);
                     }
                 })
                 .subscribeOn(Schedulers.io())

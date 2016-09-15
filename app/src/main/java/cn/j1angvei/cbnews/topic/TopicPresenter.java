@@ -30,7 +30,7 @@ public class TopicPresenter implements TopicContract.Presenter {
     @Override
     public void retrieveTopics(int page) {
         mView.showLoading();
-        mRepository.getData(page, null, null, null)
+        mRepository.getTopics(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Topic>() {

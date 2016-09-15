@@ -11,8 +11,8 @@ public class Topic implements Parcelable {
     private String id;
     private String title;
     private String thumb;
-    private boolean isAdded;
     private int page;
+    private String letter;
 
     public String getId() {
         return id;
@@ -46,12 +46,12 @@ public class Topic implements Parcelable {
         this.page = page;
     }
 
-    public boolean isAdded() {
-        return isAdded;
+    public String getLetter() {
+        return letter;
     }
 
-    public void setAdded(boolean added) {
-        isAdded = added;
+    public void setLetter(String letter) {
+        this.letter = letter;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class Topic implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.title);
         dest.writeString(this.thumb);
-        dest.writeByte(this.isAdded ? (byte) 1 : (byte) 0);
         dest.writeInt(this.page);
+        dest.writeString(this.letter);
     }
 
     public Topic() {
@@ -75,8 +75,8 @@ public class Topic implements Parcelable {
         this.id = in.readString();
         this.title = in.readString();
         this.thumb = in.readString();
-        this.isAdded = in.readByte() != 0;
         this.page = in.readInt();
+        this.letter = in.readString();
     }
 
     public static final Creator<Topic> CREATOR = new Creator<Topic>() {
@@ -98,7 +98,6 @@ public class Topic implements Parcelable {
 
         Topic topic = (Topic) o;
 
-        if (isAdded != topic.isAdded) return false;
         if (page != topic.page) return false;
         if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
         if (title != null ? !title.equals(topic.title) : topic.title != null) return false;
@@ -111,7 +110,6 @@ public class Topic implements Parcelable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (thumb != null ? thumb.hashCode() : 0);
-        result = 31 * result + (isAdded ? 1 : 0);
         result = 31 * result + page;
         return result;
     }

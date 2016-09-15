@@ -23,12 +23,13 @@ import rx.Observable;
 public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String TABLE_NAME = "topic";
     private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
             LEFT_BRACKET +
             _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
             COL_PAGE + BLANK + TYPE_INTEGER + COMMA +
+            COL_LETTER + BLANK + TYPE_TEXT + COMMA +
             COL_TITLE + BLANK + TYPE_TEXT + COMMA +
             COL_THUMB + BLANK + TYPE_TEXT +
             RIGHT_BRACKET;
@@ -60,6 +61,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
             ContentValues values = new ContentValues();
             values.put(_ID, item.getId());
             values.put(COL_PAGE, item.getPage());
+            values.put(COL_LETTER, item.getLetter());
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_THUMB, item.getThumb());
             db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
@@ -79,6 +81,7 @@ public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
                     Topic topic = new Topic();
                     topic.setId(cursor.getString(cursor.getColumnIndex(_ID)));
                     topic.setPage(cursor.getInt(cursor.getColumnIndex(COL_PAGE)));
+                    topic.setLetter(cursor.getString(cursor.getColumnIndex(COL_LETTER)));
                     topic.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
                     topic.setThumb(cursor.getString(cursor.getColumnIndex(COL_THUMB)));
                     topics.add(topic);

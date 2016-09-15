@@ -1,7 +1,5 @@
 package cn.j1angvei.cbnews.newscontent;
 
-import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -29,16 +27,11 @@ public class ContentLocalSource extends LocalSource<Content> {
     }
 
     @Override
-    public Observable<Content> read(int page, @NonNull String id, String extra) {
+    public Observable<Content> read(String sid) {
         String query = SELECT_FROM + BLANK + mDbHelper.getTableName() + BLANK +
                 WHERE + BLANK + _ID + BLANK + LIKE + BLANK +
-                QUOTE + id + QUOTE;
+                QUOTE + sid + QUOTE;
         return mDbHelper.read(query);
-    }
-
-    @Override
-    public void update(Content item) {
-
     }
 
     @Override

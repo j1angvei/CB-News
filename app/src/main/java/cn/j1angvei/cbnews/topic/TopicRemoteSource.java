@@ -29,9 +29,9 @@ public class TopicRemoteSource extends RemoteSource<Topic> {
     }
 
     @Override
-    public Observable<Topic> fetch(final int page, String id, String extra) {
+    public Observable<Topic> getTopics(final String letter) {
         return hasConnection() ?
-                mApiWrapper.getTopics(page)
+                mApiWrapper.getTopics(letter)
                         .flatMap(new Func1<ResponseBody, Observable<Topic>>() {
                             @Override
                             public Observable<Topic> call(ResponseBody responseBody) {
@@ -45,9 +45,9 @@ public class TopicRemoteSource extends RemoteSource<Topic> {
                         .doOnNext(new Action1<Topic>() {
                             @Override
                             public void call(Topic topic) {
-                                topic.setPage(page);
+                                topic.setLetter(letter);
                             }
                         }) :
-                super.fetch(page, id, extra);
+                super.getTopics(letter);
     }
 }

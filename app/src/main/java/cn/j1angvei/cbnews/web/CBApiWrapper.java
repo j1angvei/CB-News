@@ -110,8 +110,7 @@ public class CBApiWrapper {
         return mCnbetaApi.getArticleContent(sid);
     }
 
-    public Observable<ResponseBody> getTopics(int page) {
-        String letter = ApiUtil.pageToLetter(page);
+    public Observable<ResponseBody> getTopics(String letter) {
         return mCnbetaApi.getTopics(letter);
     }
 

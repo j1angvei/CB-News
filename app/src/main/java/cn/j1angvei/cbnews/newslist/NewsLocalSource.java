@@ -1,7 +1,5 @@
 package cn.j1angvei.cbnews.newslist;
 
-import android.support.annotation.NonNull;
-
 import cn.j1angvei.cbnews.base.DbHelper;
 import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.bean.News;
@@ -51,16 +49,11 @@ public class NewsLocalSource<T extends News> extends LocalSource<T> {
     }
 
     @Override
-    public Observable<T> read(int page, String id, @NonNull String extra) {
+    public Observable<T> read(String type) {
         String query = (SELECT_FROM + BLANK) + mDbHelper.getTableName() + BLANK +
-                WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + extra + QUOTE + BLANK +
+                WHERE + BLANK + COL_SOURCE_TYPE + BLANK + LIKE + BLANK + QUOTE + type + QUOTE + BLANK +
                 ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;
         return mDbHelper.read(query);
-    }
-
-    @Override
-    public void update(T item) {
-
     }
 
     @Override

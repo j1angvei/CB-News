@@ -1,7 +1,6 @@
 package cn.j1angvei.cbnews.newslist;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -28,10 +27,10 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
     }
 
     @Override
-    public Observable<T> fetch(int page, String id, final String extra) {
-        boolean isTopicMews = TextUtils.isDigitsOnly(extra);
+    public Observable<T> getNews(int page, final String type) {
+        boolean isTopicMews = TextUtils.isDigitsOnly(type);
         return hasConnection() ?
-                (isTopicMews ? mApiWrapper.getTopicNews(extra, page) : mApiWrapper.getNews(extra, page))
+                (isTopicMews ? mApiWrapper.getTopicNews(type, page) : mApiWrapper.getNews(type, page))
                         .flatMap(new Func1<ResponseBody, Observable<T>>() {
                             @Override
                             public Observable<T> call(ResponseBody responseBody) {
@@ -45,9 +44,9 @@ public class NewsRemoteSource<T extends News> extends RemoteSource<T> {
                         .doOnNext(new Action1<T>() {
                             @Override
                             public void call(T t) {
-                                t.setType(extra);
+                                t.setType(type);
                             }
                         }) :
-                super.fetch(page, id, extra);
+                super.getNews(page, type);
     }
 }

@@ -29,8 +29,8 @@ public class ContentRemoteSource extends RemoteSource<Content> {
     }
 
     @Override
-    public Observable<Content> fetch(int page, String id, String extra) {
-        return hasConnection() ? mApiWrapper.getContent(id)
+    public Observable<Content> getContent(String sid) {
+        return hasConnection() ? mApiWrapper.getContent(sid)
                 .flatMap(new Func1<ResponseBody, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(ResponseBody responseBody) {
@@ -42,6 +42,7 @@ public class ContentRemoteSource extends RemoteSource<Content> {
                         }
                     }
                 }) :
-                super.fetch(page, id, extra);
+                super.getContent(sid);
     }
 }
+ 

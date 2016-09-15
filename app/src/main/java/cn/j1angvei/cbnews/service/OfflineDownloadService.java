@@ -10,6 +10,8 @@ import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.BaseService;
+import cn.j1angvei.cbnews.base.LoadMode;
+import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Article;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
@@ -17,7 +19,6 @@ import cn.j1angvei.cbnews.bean.Headline;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Review;
 import cn.j1angvei.cbnews.bean.Type;
-import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.di.component.DaggerServiceComponent;
 import cn.j1angvei.cbnews.di.module.ServiceModule;
 import cn.j1angvei.cbnews.di.qualifier.QArticle;
@@ -105,9 +106,9 @@ public class OfflineDownloadService extends BaseService {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
                         return Observable.concat(
-                                mArticleRepository.getData(integer, null, Type.LATEST_NEWS,null),
-                                mHeadlineRepository.getData(integer, null, Type.HEADLINE,null),
-                                mReviewRepository.getData(integer, null, Type.REVIEW,null)
+                                mArticleRepository.getNews(LoadMode.LOAD_REFRESH, Type.LATEST_NEWS),
+                                mHeadlineRepository.getNews(LoadMode.LOAD_REFRESH, Type.HEADLINE),
+                                mReviewRepository.getNews(LoadMode.LOAD_REFRESH, Type.REVIEW)
                         );
                     }
                 })
@@ -115,14 +116,14 @@ public class OfflineDownloadService extends BaseService {
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
-                        return mContentRepository.getData(0, news.getSid(), null,null);
+                        return mContentRepository.getContent(LoadMode.LOAD_REFRESH, news.getSid());
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCmtRepository.getData(0, content.getSid(), content.getSn(),null);
+                        return mCmtRepository.getComments(LoadMode.LOAD_REFRESH, content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())

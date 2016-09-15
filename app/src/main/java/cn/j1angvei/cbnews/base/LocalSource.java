@@ -17,9 +17,11 @@ public abstract class LocalSource<T> {
         mDbHelper.create(item);
     }
 
-    public abstract Observable<T> read(int page, String id, String extra);
+    public abstract Observable<T> read(String param);//id or type
 
-    public abstract void update(T item);
+    public void update(T item) {
+        mDbHelper.update(item);
+    }
 
     public abstract void delete(T item);
 

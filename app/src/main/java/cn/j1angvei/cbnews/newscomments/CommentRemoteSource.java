@@ -28,8 +28,8 @@ public class CommentRemoteSource extends RemoteSource<Comments> {
     }
 
     @Override
-    public Observable<Comments> fetch(int page, String id, String extra) {
-        return hasConnection() ? mApiWrapper.getComments(id, extra)
+    public Observable<Comments> getComment(String sid, String sn) {
+        return hasConnection() ? mApiWrapper.getComments(sid, sn)
                 .flatMap(new Func1<ResponseBody, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(ResponseBody responseBody) {
@@ -40,6 +40,6 @@ public class CommentRemoteSource extends RemoteSource<Comments> {
                         }
                     }
                 }) :
-                super.fetch(page, id, extra);
+                super.getComment(sid, sn);
     }
 }
