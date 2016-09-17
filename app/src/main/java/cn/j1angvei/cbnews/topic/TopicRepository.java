@@ -1,5 +1,7 @@
 package cn.j1angvei.cbnews.topic;
 
+import android.text.TextUtils;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -11,6 +13,8 @@ import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.exception.ItemNotFoundException;
 import cn.j1angvei.cbnews.util.ApiUtil;
 import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by Wayne on 2016/7/24.
@@ -27,27 +31,36 @@ public class TopicRepository extends Repository<Topic> {
     }
 
     @Override
-    public Observable<Topic> getTopic(String id) {
-        return mLocalSource.read(id)
-                .switchIfEmpty(Observable.<Topic>error(new ItemNotFoundException()));
+    public Observable<Topic> getCache(String IdOrLetter) {
+        return (TextUtils.isDigitsOnly(IdOrLetter) ?
+                filterCache(IdOrLetter).switchIfEmpty(mLocalSource.read(IdOrLetter)) :
+                mLocalSource.read(IdOrLetter))
+                .switchIfEmpty(super.getCache(IdOrLetter));
     }
 
     @Override
-    public Observable<Topic> getTopics(int page) {
-        String letter = ApiUtil.pageToLetter(page);
-        return mLocalSource.read(letter)
-                .switchIfEmpty(mRemoteSource.getTopics(letter));
+    public Observable<Topic> getLatest(String letter) {
+        return mRemoteSource.getTopics(letter)
+                .doOnNext(new Action1<Topic>() {
+                    @Override
+                    public void call(Topic topic) {
+                        if (!mCache.contains(topic)) {
+                            mCache.add(topic);
+                        }
+                        mLocalSource.create(topic);
+                    }
+                });
     }
 
-
     @Override
-    public Observable<Topic> loadCache(int page) {
-        return super.loadCache(page);
-    }
-
-    @Override
-    protected Observable<Topic> filterCache(String type) {
-        return null;
+    protected Observable<Topic> filterCache(final String sid) {
+        return Observable.from(mCache)
+                .filter(new Func1<Topic, Boolean>() {
+                    @Override
+                    public Boolean call(Topic topic) {
+                        return sid.equals(topic.getId());
+                    }
+                });
     }
 
 }

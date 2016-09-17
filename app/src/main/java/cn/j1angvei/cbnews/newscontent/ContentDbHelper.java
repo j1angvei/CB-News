@@ -117,8 +117,14 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
     }
 
     @Override
-    public void delete(Content item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

@@ -141,5 +141,18 @@ public final class Comments implements Parcelable {
         parcel.writeStringList(allIds);
         parcel.writeMap(commentMap);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comments comments = (Comments) o;
+        return sid.equals(comments.sid);
+    }
+
+    @Override
+    public int hashCode() {
+        return sid.hashCode();
+    }
 }
 

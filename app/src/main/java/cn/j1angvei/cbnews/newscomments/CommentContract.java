@@ -18,7 +18,7 @@ public interface CommentContract {
 
         void onJudgeSuccess();
 
-        void onJudgeFail();
+        void onJudgeFail(int resId);
 
         void replyCmt(CommentItem item);
 
@@ -26,6 +26,10 @@ public interface CommentContract {
 
     interface Presenter extends BasePresenter<View> {
         void retrieveComments(String sid);
+
+        void cache(String sid);
+
+        void refresh(String sid, String sn);
 
         void judgeComment(String action, String sid, String tid);
     }

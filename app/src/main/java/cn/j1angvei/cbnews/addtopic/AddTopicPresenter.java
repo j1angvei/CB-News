@@ -10,6 +10,7 @@ import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.util.ApiUtil;
 import cn.j1angvei.cbnews.util.AppUtil;
 import rx.Observable;
 import rx.Subscriber;
@@ -36,7 +37,8 @@ public class AddTopicPresenter implements AddTopicContract.Presenter {
     @Override
     public void retrieveTopics(final int page) {
         mView.showLoading();
-        mRepository.getTopics(page)
+        String letter = ApiUtil.pageToLetter(page);
+        mRepository.getLatest(letter)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

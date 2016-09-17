@@ -11,6 +11,8 @@ import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.exception.IllegalArgumentsException;
 import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -25,26 +27,48 @@ public class CommentRepository extends Repository<Comments> {
     }
 
     @Override
-    public Observable<Comments> getComments(int mode, final String sid, String sn) {
-        switch (mode) {
-            case LoadMode.LOAD_CACHE:
-                return Observable.from(mCache)
-                        .filter(new Func1<Comments, Boolean>() {
-                            @Override
-                            public Boolean call(Comments comments) {
-                                return sid.equals(comments.getSid());
-                            }
-                        })
-                        .switchIfEmpty(mLocalSource.read(sid));
-            case LoadMode.LOAD_REFRESH:
-                return mRemoteSource.getComment(sid, sn);
-            default:
-                return Observable.error(new IllegalArgumentsException());
-        }
+    public Observable<Comments> getCache(String sid) {
+        return filterCache(sid)
+                .switchIfEmpty(mLocalSource.read(sid))
+                .switchIfEmpty(super.getCache(sid));
     }
 
     @Override
-    protected Observable<Comments> filterCache(String type) {
-        return null;
+    public Observable<Comments> getLatest(String sid, String sn) {
+        return mRemoteSource.getComment(sid, sn)
+                .doOnNext(new Action1<Comments>() {
+                    @Override
+                    public void call(Comments comments) {
+                        refreshCache(comments);
+                    }
+                });
+    }
+
+    @Override
+    protected Observable<Comments> filterCache(final String sid) {
+        return Observable.from(mCache)
+                .filter(new Func1<Comments, Boolean>() {
+                    @Override
+                    public Boolean call(Comments comments) {
+                        return sid.equals(comments.getSid());
+                    }
+                });
+    }
+
+    private void refreshCache(final Comments comments) {
+        filterCache(comments.getSid())
+                .doOnNext(new Action1<Comments>() {
+                    @Override
+                    public void call(Comments comments) {
+                        mCache.remove(comments);
+                    }
+                })
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        mCache.add(comments);
+                    }
+                })
+                .subscribe();
     }
 }

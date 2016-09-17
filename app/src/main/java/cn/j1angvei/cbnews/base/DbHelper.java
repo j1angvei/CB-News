@@ -19,6 +19,7 @@ public interface DbHelper<T> extends BaseColumns {
     String CREATE_TABLE = "CREATE TABLE";
     String DROP_TABLE = "DROP TABLE IF EXISTS";
     String SELECT_FROM = "SELECT * FROM";
+    String DELETE_FROM = "DELETE FROM";
     String WHERE = "WHERE";
     String LIKE = "LIKE";
     String OR = "OR";
@@ -70,7 +71,7 @@ public interface DbHelper<T> extends BaseColumns {
 
     void update(T item);
 
-    void delete(T item);
+    void delete(String query);
 
     String getTableName();
 

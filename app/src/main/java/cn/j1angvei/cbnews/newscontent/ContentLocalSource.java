@@ -11,6 +11,7 @@ import rx.Observable;
 
 import static android.provider.BaseColumns._ID;
 import static cn.j1angvei.cbnews.base.DbHelper.BLANK;
+import static cn.j1angvei.cbnews.base.DbHelper.DELETE_FROM;
 import static cn.j1angvei.cbnews.base.DbHelper.LIKE;
 import static cn.j1angvei.cbnews.base.DbHelper.QUOTE;
 import static cn.j1angvei.cbnews.base.DbHelper.SELECT_FROM;
@@ -33,10 +34,5 @@ public class ContentLocalSource extends LocalSource<Content> {
                 QUOTE + sid + QUOTE;
         return mDbHelper.read(query);
     }
-
-    @Override
-    public void delete(Content item) {
-
-    }
-
+    
 }

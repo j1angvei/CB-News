@@ -34,8 +34,4 @@ public class CommentLocalSource extends LocalSource<Comments> {
         return mDbHelper.read(query);
     }
 
-    @Override
-    public void delete(Comments item) {
-
-    }
 }

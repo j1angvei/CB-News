@@ -124,8 +124,14 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
     }
 
     @Override
-    public void delete(Article item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

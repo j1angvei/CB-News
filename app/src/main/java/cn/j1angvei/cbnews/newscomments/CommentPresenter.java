@@ -5,13 +5,14 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cbnews.base.LoadMode;
+import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.qualifier.QCmt;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
+import cn.j1angvei.cbnews.util.ErrorUtil;
 import cn.j1angvei.cbnews.web.BaseResponse;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import rx.Observable;
@@ -47,7 +48,7 @@ public class CommentPresenter implements CommentContract.Presenter {
     @Override
     public void retrieveComments(final String sid) {
         mView.showLoading();
-        mContentRepository.getContent(LoadMode.LOAD_CACHE, sid)
+        mContentRepository.getCache(sid)
                 .map(new Func1<Content, String>() {
                     @Override
                     public String call(Content content) {
@@ -57,7 +58,7 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .flatMap(new Func1<String, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(String sn) {
-                        return mRepository.getComments(LoadMode.LOAD_REFRESH, sid, sn);
+                        return mRepository.getLatest(sid, sn);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -81,6 +82,40 @@ public class CommentPresenter implements CommentContract.Presenter {
     }
 
     @Override
+    public void cache(String sid) {
+        subscribe(mRepository.getCache(sid));
+    }
+
+    @Override
+    public void refresh(String sid, String sn) {
+        subscribe(mRepository.getLatest(sid, sn));
+    }
+
+    private void subscribe(Observable<Comments> observable) {
+        mView.showLoading();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Comments>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideLoading();
+                        mView.onJudgeFail(ErrorUtil.getErrorInfo(e));
+                    }
+
+                    @Override
+                    public void onNext(Comments comments) {
+                        mView.renderComments(comments);
+                    }
+                });
+
+    }
+
+    @Override
     public void judgeComment(final String action, String sid, final String tid) {
         mApiWrapper.judgeComment(action, sid, tid)
                 .subscribeOn(Schedulers.io())
@@ -93,17 +128,15 @@ public class CommentPresenter implements CommentContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.onJudgeFail();
-                        Log.e(TAG, "onError: ", e);
+                        mView.onJudgeFail(ErrorUtil.getErrorInfo(e));
                     }
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        Log.d(TAG, "onNext: " + baseResponse);
                         if (TextUtils.equals(baseResponse.getState(), "success")) {
                             mView.onJudgeSuccess();
                         } else {
-                            mView.onJudgeFail();
+                            mView.onJudgeFail(R.string.error_no_comment);
                         }
                     }
                 });

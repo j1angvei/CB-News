@@ -114,8 +114,14 @@ public class CommentDbHelper extends SQLiteOpenHelper implements DbHelper<Commen
     }
 
     @Override
-    public void delete(Comments item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

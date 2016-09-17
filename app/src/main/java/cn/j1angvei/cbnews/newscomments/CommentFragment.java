@@ -154,8 +154,8 @@ public class CommentFragment extends BaseFragment implements CommentContract.Vie
     }
 
     @Override
-    public void onJudgeFail() {
-        MessageUtil.snack(mCoordinatorLayout, R.string.info_cmt_fail);
+    public void onJudgeFail(int resId) {
+        MessageUtil.toast(resId, getActivity());
     }
 
     @Override

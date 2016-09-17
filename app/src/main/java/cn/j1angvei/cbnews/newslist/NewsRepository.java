@@ -67,12 +67,12 @@ public class NewsRepository<N extends News> extends Repository<N> {
     }
 
     @Override
-    protected Observable<N> filterCache(final String type) {
+    protected Observable<N> filterCache(final String sid) {
         return Observable.from(mCache)
                 .filter(new Func1<N, Boolean>() {
                     @Override
                     public Boolean call(N n) {
-                        return type.equals(n.getType());
+                        return sid.equals(n.getType());
                     }
                 });
     }
@@ -89,16 +89,27 @@ public class NewsRepository<N extends News> extends Repository<N> {
                 });
     }
 
-    private void removeCache(String type) {
+    private void refreshCache(String type, List<N> ns) {
         for (N n : mCache) {
             if (type.equals(n.getType())) {
                 mCache.remove(n);
             }
         }
+        mCache.addAll(ns);
     }
 
-    private void refreshCache(String type, List<N> ns) {
-        removeCache(type);
-        mCache.addAll(ns);
+    @Override
+    public void updateLocal() {
+        List<String> deletedTypes = new ArrayList<>();
+        for (N n : mCache) {
+            String type = n.getType();
+            if (deletedTypes.contains(type))
+                continue;
+            mLocalSource.delete(type);
+            deletedTypes.add(type);
+        }
+        for (N n : mCache) {
+            mLocalSource.create(n);
+        }
     }
 }

@@ -102,8 +102,14 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
     }
 
     @Override
-    public void delete(Review item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

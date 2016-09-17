@@ -105,8 +105,14 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
     }
 
     @Override
-    public void delete(Headline item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

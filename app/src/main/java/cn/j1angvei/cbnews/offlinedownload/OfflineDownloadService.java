@@ -9,7 +9,6 @@ import android.support.v4.app.NotificationCompat;
 import javax.inject.Inject;
 
 import cn.j1angvei.cbnews.R;
-import cn.j1angvei.cbnews.base.LoadMode;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.bean.News;
@@ -80,9 +79,9 @@ public class OfflineDownloadService extends RepositoryService {
                     @Override
                     public Observable<? extends News> call(Integer integer) {
                         return Observable.concat(
-                                mArticleRepository.getNews(LoadMode.LOAD_REFRESH, Type.LATEST_NEWS),
-                                mHeadlineRepository.getNews(LoadMode.LOAD_REFRESH, Type.HEADLINE),
-                                mReviewRepository.getNews(LoadMode.LOAD_REFRESH, Type.REVIEW)
+                                mArticleRepository.getLatest(Type.LATEST_NEWS),
+                                mHeadlineRepository.getLatest(Type.HEADLINE),
+                                mReviewRepository.getLatest(Type.REVIEW)
                         );
                     }
                 })
@@ -90,14 +89,14 @@ public class OfflineDownloadService extends RepositoryService {
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
-                        return mContentRepository.getContent(LoadMode.LOAD_REFRESH, news.getSid());
+                        return mContentRepository.getLatest(news.getSid());
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCmtRepository.getComments(LoadMode.LOAD_REFRESH, content.getSid(), content.getSn());
+                        return mCmtRepository.getLatest(content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())

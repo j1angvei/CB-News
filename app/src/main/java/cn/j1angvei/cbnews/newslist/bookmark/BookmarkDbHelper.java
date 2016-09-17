@@ -105,8 +105,14 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
     }
 
     @Override
-    public void delete(Bookmark item) {
-
+    public void delete(String query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(query);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

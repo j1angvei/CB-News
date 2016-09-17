@@ -55,9 +55,5 @@ public class NewsLocalSource<T extends News> extends LocalSource<T> {
                 ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;
         return mDbHelper.read(query);
     }
-
-    @Override
-    public void delete(T item) {
-
-    }
+    
 }

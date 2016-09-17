@@ -40,8 +40,4 @@ public class TopicLocalSource extends LocalSource<Topic> {
         return mDbHelper.read(query);
     }
 
-    @Override
-    public void delete(Topic item) {
-
-    }
 }

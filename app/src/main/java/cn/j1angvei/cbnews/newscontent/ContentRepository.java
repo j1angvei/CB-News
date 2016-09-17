@@ -3,14 +3,13 @@ package cn.j1angvei.cbnews.newscontent;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cbnews.base.LoadMode;
 import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.base.RemoteSource;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
-import cn.j1angvei.cbnews.exception.IllegalArgumentsException;
 import rx.Observable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -26,33 +25,48 @@ public class ContentRepository extends Repository<Content> {
     }
 
     @Override
-    public Observable<Content> getContent(int mode, final String sid) {
-        switch (mode) {
-            case LoadMode.LOAD_CACHE:
-                return Observable.from(mCache)
-                        .filter(new Func1<Content, Boolean>() {
-                            @Override
-                            public Boolean call(Content content) {
-                                return sid.equals(content.getSid());
-                            }
-                        })
-                        .switchIfEmpty(mLocalSource.read(sid));
-            case LoadMode.LOAD_REFRESH:
-                return mRemoteSource.getContent(sid)
-                        .doOnNext(new Action1<Content>() {
-                            @Override
-                            public void call(Content content) {
-                                toCache(content);
-                            }
-                        });
-            default:
-                return Observable.error(new IllegalArgumentsException());
-
-        }
+    public Observable<Content> getCache(String sid) {
+        return filterCache(sid)
+                .switchIfEmpty(mLocalSource.read(sid))
+                .switchIfEmpty(super.getCache(sid));
     }
 
     @Override
-    protected Observable<Content> filterCache(String type) {
-        return null;
+    public Observable<Content> getLatest(String sid) {
+        return mRemoteSource.getContent(sid)
+                .doOnNext(new Action1<Content>() {
+                    @Override
+                    public void call(Content content) {
+                        refreshCache(content);
+                    }
+                });
+    }
+
+    @Override
+    protected Observable<Content> filterCache(final String sid) {
+        return Observable.from(mCache)
+                .filter(new Func1<Content, Boolean>() {
+                    @Override
+                    public Boolean call(Content content) {
+                        return sid.equals(content.getSid());
+                    }
+                });
+    }
+
+    private void refreshCache(final Content content) {
+        filterCache(content.getSid())
+                .doOnNext(new Action1<Content>() {
+                    @Override
+                    public void call(Content content) {
+                        mCache.remove(content);
+                    }
+                })
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        mCache.add(content);
+                    }
+                })
+                .subscribe();
     }
 }

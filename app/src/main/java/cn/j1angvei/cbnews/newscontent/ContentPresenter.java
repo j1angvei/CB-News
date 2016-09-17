@@ -3,7 +3,6 @@ package cn.j1angvei.cbnews.newscontent;
 
 import javax.inject.Inject;
 
-import cn.j1angvei.cbnews.base.LoadMode;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
@@ -35,7 +34,7 @@ public class ContentPresenter implements ContentContract.Presenter {
     @Override
     public void retrieveContent(int page, String sid) {
         mView.showLoading();
-        mRepository.getContent(LoadMode.LOAD_REFRESH, sid)
+        mRepository.getLatest(sid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Content>() {

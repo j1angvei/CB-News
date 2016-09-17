@@ -44,7 +44,7 @@ public class MyTopicPresenter implements MyTopicContract.Presenter {
                     @Override
                     public Observable<Topic> call(String id) {
                         Log.d(TAG, "call: " + id);
-                        return mRepository.getTopic(id);
+                        return mRepository.getCache(id);
                     }
                 })
                 .toList()

@@ -12,15 +12,15 @@ public class SaveCacheService extends RepositoryService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mArticleRepository.saveCache();
+        mArticleRepository.updateLocal();
         Log.d(TAG, "onHandleIntent: save article finished");
-        mHeadlineRepository.saveCache();
+        mHeadlineRepository.updateLocal();
         Log.d(TAG, "onHandleIntent: save content finished");
-        mReviewRepository.saveCache();
+        mReviewRepository.updateLocal();
         Log.d(TAG, "onHandleIntent: save review finished");
-        mContentRepository.saveCache();
+        mContentRepository.updateLocal();
         Log.d(TAG, "onHandleIntent: save content finished");
-        mCmtRepository.saveCache();
+        mCmtRepository.updateLocal();
         Log.d(TAG, "onHandleIntent: save cmt finished");
     }
 }
