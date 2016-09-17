@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.j1angvei.cbnews.exception.IllegalArgumentsException;
+import cn.j1angvei.cbnews.exception.NoCacheException;
 import rx.Observable;
 
 /**
@@ -42,24 +43,47 @@ public abstract class Repository<T> {
         }
     }
 
+    @Deprecated
     public Observable<T> getNews(int mode, String type) {
         return Observable.error(new IllegalArgumentsException());
     }
 
+    @Deprecated
     public Observable<T> getContent(int mode, String sid) {
         return Observable.error(new IllegalArgumentsException());
     }
 
+    @Deprecated
     public Observable<T> getComments(int mode, String sid, String sn) {
         return Observable.error(new IllegalArgumentsException());
     }
 
+    @Deprecated
     public Observable<T> getTopic(String id) {
         return Observable.error(new IllegalArgumentsException());
     }
 
+    @Deprecated
     public Observable<T> getTopics(int page) {
         return Observable.error(new IllegalArgumentsException());
     }
 
+    @Deprecated
+    public Observable<T> loadCache(int page) {
+        return null;
+    }
+
+    public Observable<T> getCache(String type) {
+        return Observable.error(new NoCacheException());
+    }
+
+    public Observable<T> getLatest(String type) {
+        return null;
+    }
+
+    public Observable<T> getMore(String type) {
+        return null;
+    }
+
+    protected abstract Observable<T> filterCache(String type);
 }

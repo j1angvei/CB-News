@@ -12,21 +12,17 @@ public interface NewsContract {
     interface View<T> extends LoadView {
         void renderNews(List<T> news);
 
-        String getType();
-
         void clearNews();
 
         void showInfo(int infoId);
     }
 
     interface Presenter<T> extends BasePresenter<View<T>> {
-        void loadCache();
+        void cache(String type);
 
-        void loadRefresh();
+        void refresh(String type);
 
-        void loadMore();
-
-        void getNews(int loadMode, String type);
+        void more(String type);
 
     }
 }

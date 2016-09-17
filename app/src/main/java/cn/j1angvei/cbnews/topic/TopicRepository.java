@@ -38,4 +38,16 @@ public class TopicRepository extends Repository<Topic> {
         return mLocalSource.read(letter)
                 .switchIfEmpty(mRemoteSource.getTopics(letter));
     }
+
+
+    @Override
+    public Observable<Topic> loadCache(int page) {
+        return super.loadCache(page);
+    }
+
+    @Override
+    protected Observable<Topic> filterCache(String type) {
+        return null;
+    }
+
 }

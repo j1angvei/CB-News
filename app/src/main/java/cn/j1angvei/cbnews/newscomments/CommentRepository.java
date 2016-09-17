@@ -42,4 +42,9 @@ public class CommentRepository extends Repository<Comments> {
                 return Observable.error(new IllegalArgumentsException());
         }
     }
+
+    @Override
+    protected Observable<Comments> filterCache(String type) {
+        return null;
+    }
 }

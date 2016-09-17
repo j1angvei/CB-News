@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,14 +72,14 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                mPresenter.loadMore();
+                mPresenter.more(mType);
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
-                mPresenter.loadRefresh();
+                mPresenter.refresh(mType);
             }
         });
         if (!isTopicNews) {
@@ -103,13 +102,8 @@ public abstract class NewsFragment<T extends News, VH extends RecyclerView.ViewH
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState == null) {
             mPresenter.setView(this);
-            mPresenter.loadCache();
+            mPresenter.cache(mType);
         }
-    }
-
-    @Override
-    public String getType() {
-        return mType;
     }
 
     @Override

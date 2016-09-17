@@ -50,4 +50,9 @@ public class ContentRepository extends Repository<Content> {
 
         }
     }
+
+    @Override
+    protected Observable<Content> filterCache(String type) {
+        return null;
+    }
 }
