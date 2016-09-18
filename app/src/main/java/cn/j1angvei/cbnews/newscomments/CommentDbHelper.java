@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,42 +20,28 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class CommentDbHelper extends SQLiteOpenHelper implements DbHelper<Comments> {
+public class CommentDbHelper extends DbHelper<Comments> {
     private static final String DB_NAME = "comments.db";
     private static final int DB_VERSION = 1;
-    private static final String TABLE_NAME = "comments";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
-            COL_TOKEN + BLANK + TYPE_TEXT + COMMA +
-            COL_IS_OPEN + BLANK + TYPE_INTEGER + COMMA +
-            COL_JOIN_NUM + BLANK + TYPE_TEXT + COMMA +
-            COL_COMMENT_NUM + BLANK + TYPE_TEXT + COMMA +
-            COL_PAGE + BLANK + TYPE_TEXT + COMMA +
-            COL_HOT_TID + BLANK + TYPE_TEXT + COMMA +
-            COL_ALL_TID + BLANK + TYPE_TEXT + COMMA +
-            COL_COMMENT_MAP + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
     private final DbUtil mDbUtil;
 
     @Inject
     public CommentDbHelper(Application context, DbUtil dbUtil) {
         super(context, DB_NAME, null, DB_VERSION);
         mDbUtil = dbUtil;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
+        mTableName = "comments";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+                COL_TOKEN + BLANK + TYPE_TEXT + COMMA +
+                COL_IS_OPEN + BLANK + TYPE_INTEGER + COMMA +
+                COL_JOIN_NUM + BLANK + TYPE_TEXT + COMMA +
+                COL_COMMENT_NUM + BLANK + TYPE_TEXT + COMMA +
+                COL_PAGE + BLANK + TYPE_TEXT + COMMA +
+                COL_HOT_TID + BLANK + TYPE_TEXT + COMMA +
+                COL_ALL_TID + BLANK + TYPE_TEXT + COMMA +
+                COL_COMMENT_MAP + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
 
     @Override
@@ -74,7 +59,7 @@ public class CommentDbHelper extends SQLiteOpenHelper implements DbHelper<Commen
             values.put(COL_ALL_TID, mDbUtil.convertStringList(item.getAllIds()));
             values.put(COL_HOT_TID, mDbUtil.convertStringList(item.getHotIds()));
             values.put(COL_COMMENT_MAP, mDbUtil.convertCommentMap(item.getCommentMap()));
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -106,26 +91,5 @@ public class CommentDbHelper extends SQLiteOpenHelper implements DbHelper<Commen
                 cursor.close();
         }
         return Observable.from(commentsList);
-    }
-
-    @Override
-    public void update(Comments item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

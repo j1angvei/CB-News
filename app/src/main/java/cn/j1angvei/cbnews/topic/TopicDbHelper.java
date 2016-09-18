@@ -20,7 +20,7 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class TopicDbHelper extends SQLiteOpenHelper implements DbHelper<Topic> {
+public class TopicDbHelper extends DbHelper<Topic> {
     private static final String TAG = "TopicDbHelper";
     private static final String DB_NAME = "topic.db";
     private static final int DB_VERSION = 5;

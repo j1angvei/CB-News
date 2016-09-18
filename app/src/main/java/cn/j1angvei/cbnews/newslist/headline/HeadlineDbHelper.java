@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,39 +20,25 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headline> {
+public class HeadlineDbHelper extends DbHelper<Headline> {
     private static final String DB_NAME = "headline.db";
     private static final int DB_VERSION = 6;
-    private static final String TABLE_NAME = "headline";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
-            COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
-            COL_THUMB + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
-            COL_RELATED_NEWS + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
     private final DbUtil mDbUtil;
 
     @Inject
     public HeadlineDbHelper(Application context, DbUtil dbUtil) {
         super(context, DB_NAME, null, DB_VERSION);
         mDbUtil = dbUtil;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
+        mTableName = "headline";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
+                COL_TITLE + BLANK + TYPE_TEXT + COMMA +
+                COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
+                COL_THUMB + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
+                COL_RELATED_NEWS + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
 
     @Override
@@ -68,7 +53,7 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
             values.put(COL_THUMB, item.getThumb());
             values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_RELATED_NEWS, mDbUtil.convertNewsList(item.getRelatedNews()));
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -97,26 +82,5 @@ public class HeadlineDbHelper extends SQLiteOpenHelper implements DbHelper<Headl
                 cursor.close();
         }
         return Observable.from(headlines);
-    }
-
-    @Override
-    public void update(Headline item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

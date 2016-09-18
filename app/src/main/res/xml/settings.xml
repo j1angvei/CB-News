@@ -20,6 +20,7 @@
             android:title="@string/set_auto_load"/>
         <EditTextPreference
             android:defaultValue="@string/set_default_tail"
+            android:key="pref_cmt_tail"
             android:summary="@string/set_default_tail"
             android:title="@string/set_custom_cmt_tail"/>
     </PreferenceCategory>

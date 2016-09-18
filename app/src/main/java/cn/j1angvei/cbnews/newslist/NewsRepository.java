@@ -112,4 +112,9 @@ public class NewsRepository<N extends News> extends Repository<N> {
             mLocalSource.create(n);
         }
     }
+
+    @Override
+    public void storeToDb(N item) {
+        mLocalSource.create(item);
+    }
 }

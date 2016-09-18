@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import cn.j1angvei.cbnews.settings.SettingsFragment;
+
 /**
  * Created by Wayne on 2016/8/10.
  * read and write sharedPreferences
@@ -67,5 +69,9 @@ public class PrefsUtil {
     public void writeInt(String key, int value) {
         prefs.edit().putInt(key, value).apply();
 
+    }
+
+    public String readCmtTail() {
+        return prefs.getString(SettingsFragment.PREF_CMT_TAIL, "---发送自[西贝新闻]");
     }
 }

@@ -3,13 +3,11 @@ package cn.j1angvei.cbnews.newscomments;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cn.j1angvei.cbnews.base.LoadMode;
 import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.base.RemoteSource;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Comments;
 import cn.j1angvei.cbnews.di.qualifier.QCmt;
-import cn.j1angvei.cbnews.exception.IllegalArgumentsException;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;

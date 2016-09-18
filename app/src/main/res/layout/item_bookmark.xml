@@ -7,16 +7,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/card_margin">
 
         <TextView
             android:id="@+id/tv_bookmark_title"
+            style="@style/CBTheme.Text.Title.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bookmark news title"/>
 
         <TextView
             android:id="@+id/tv_bookmark_time"
+            style="@style/CBTheme.Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_bookmark_title"

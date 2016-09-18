@@ -83,7 +83,7 @@
     <string name="set_cmt_tail">评论小尾巴</string>
     <string name="set_current_version">当前版本</string>
     <string name="set_custom_cmt_tail">自定义评论小尾巴</string>
-    <string name="set_default_tail">发送自 cnBeta新闻</string>
+    <string name="set_default_tail">---发送自[西贝新闻]</string>
     <string name="set_disclaimer">声明</string>
     <string name="set_enable_auto_switch">开启自动切换主题</string>
     <string name="set_enable_cmt_tail">开启评论小尾巴</string>
@@ -108,5 +108,6 @@
     <string name="error_no_more_data">没有更多数据了</string>
     <string name="error_no_item_in_ram">内存内容为空！</string>
     <string name="error_no_data">数据为空！</string>
+    <string name="info_add_to_bookmark_success">收藏成功！</string>
     <!--settings-->
 </resources>

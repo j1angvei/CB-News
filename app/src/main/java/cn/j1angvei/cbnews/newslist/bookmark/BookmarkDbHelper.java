@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -25,35 +24,21 @@ import rx.Observable;
  */
 @Singleton
 @QBookmark
-public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookmark> {
+public class BookmarkDbHelper extends DbHelper<Bookmark> {
     private static final String DB_NAME = "bookmark.db";
     private static final int DB_VERSION = 4;
-    private static final String TABLE_NAME = "bookmark";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
-            COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_TIME + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE_TYPE + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public BookmarkDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
+        mTableName = "bookmark";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                COL_SID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + BLANK + COMMA +
+                COL_TITLE + BLANK + TYPE_TEXT + COMMA +
+                COL_TIME + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE_TYPE + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
 
     @Override
@@ -66,7 +51,7 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
             values.put(COL_TITLE, item.getTitle());
             values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_TIME, DateUtil.convertDefault(item.getTime()));
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -97,26 +82,5 @@ public class BookmarkDbHelper extends SQLiteOpenHelper implements DbHelper<Bookm
                 cursor.close();
         }
         return Observable.from(bookmarks);
-    }
-
-    @Override
-    public void update(Bookmark item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

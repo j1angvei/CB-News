@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -24,41 +23,26 @@ import rx.Observable;
  * store all content in {@link SQLiteDatabase}
  */
 @Singleton
-public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Content> {
+public class ContentDbHelper extends DbHelper<Content> {
     private static final String DB_NAME = "content.db";
     private static final int DB_VERSION = 1;
-    private static final String TABLE_NAME = "content";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
-            COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE + BLANK + TYPE_TEXT + COMMA +
-            COL_TIME + BLANK + TYPE_TEXT + COMMA +
-            COL_DETAIL + BLANK + TYPE_TEXT + COMMA +
-            COL_SN + BLANK + TYPE_TEXT + COMMA +
-            COL_THUMB + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + OR;
 
     @Inject
     public ContentDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
+        mTableName = "content";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                _ID + BLANK + TYPE_TEXT + BLANK + PRIMARY_KEY + COMMA +
+                COL_TITLE + BLANK + TYPE_TEXT + COMMA +
+                COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE + BLANK + TYPE_TEXT + COMMA +
+                COL_TIME + BLANK + TYPE_TEXT + COMMA +
+                COL_DETAIL + BLANK + TYPE_TEXT + COMMA +
+                COL_SN + BLANK + TYPE_TEXT + COMMA +
+                COL_THUMB + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
-    }
-
 
     @Override
     public void create(Content item) {
@@ -74,7 +58,7 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
             values.put(COL_DETAIL, item.getDetail());
             values.put(COL_SN, item.getSn());
             values.put(COL_THUMB, item.getThumb());
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -109,26 +93,5 @@ public class ContentDbHelper extends SQLiteOpenHelper implements DbHelper<Conten
                 cursor.close();
         }
         return Observable.from(contents);
-    }
-
-    @Override
-    public void update(Content item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

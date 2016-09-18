@@ -27,8 +27,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.base.BaseActivity;
-import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.base.BaseFragment;
+import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.component.ActivityComponent;
 import cn.j1angvei.cbnews.di.module.FragmentModule;
 import cn.j1angvei.cbnews.util.ApiUtil;
@@ -142,7 +142,7 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
                 MessageUtil.toast("share", getActivity());
                 return true;
             case R.id.menu_content_bookmark:
-                MessageUtil.toast("bookmark", getActivity());
+                mPresenter.toBookmark(mContent);
                 return true;
             case R.id.menu_content_open_mobile:
                 Navigator.toBrowser(mContent.getSid(), true, getActivity());
@@ -197,6 +197,11 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     @Override
     public void onLoadFail(int infoId) {
         MessageUtil.toast(infoId, getContext());
+    }
+
+    @Override
+    public void showInfo(int resId) {
+        MessageUtil.toast(resId, getActivity());
     }
 
 }

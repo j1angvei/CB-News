@@ -52,6 +52,7 @@
     <string name="info_cmt_fail">Judge comment fail!</string>
     <string name="info_my_topics_empty">No myTopics added!</string>
     <string name="info_add_my_topic_success">Add to my topics success!</string>
+    <string name="info_add_to_bookmark_success">Add to bookmark success!</string>
     <string name="info_add_my_topic_fail">Add to my topics fail!</string>
     <string name="info_press_to_exit">Press again to exit</string>
     <string name="info_comment_closed">Comment function closed!</string>

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,37 +19,23 @@ import rx.Observable;
  * Created by Wayne on 2016/8/20.
  */
 @Singleton
-public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review> {
+public class ReviewDbHelper extends DbHelper<Review> {
     private static final String DB_NAME = "review.db";
     private static final int DB_VERSION = 4;
-    private static final String TABLE_NAME = "review";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + BLANK + PRIMARY_KEY + COMMA +
-            COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_TID + BLANK + TYPE_TEXT + COMMA +
-            COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
-            COL_LOCATION + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public ReviewDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
+        mTableName = "review";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                COL_SID + BLANK + TYPE_TEXT + BLANK + BLANK + PRIMARY_KEY + COMMA +
+                COL_TITLE + BLANK + TYPE_TEXT + COMMA +
+                COL_TID + BLANK + TYPE_TEXT + COMMA +
+                COL_COMMENT + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
+                COL_LOCATION + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
 
     @Override
@@ -65,7 +50,7 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
             values.put(COL_COMMENT, item.getComment());
             values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_LOCATION, item.getLocation());
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -94,26 +79,5 @@ public class ReviewDbHelper extends SQLiteOpenHelper implements DbHelper<Review>
                 cursor.close();
         }
         return Observable.from(reviews);
-    }
-
-    @Override
-    public void update(Review item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

@@ -12,9 +12,13 @@ public interface ContentContract {
         void renderContent(Content content);
 
         void onLoadFail(int infoId);
+
+        void showInfo(int resId);
     }
 
     interface Presenter extends BasePresenter<View> {
         void retrieveContent(int page, String sid);
+
+        void toBookmark(Content content);
     }
 }

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -24,43 +23,28 @@ import rx.Observable;
  * Store all articles from latest articles or topic articles
  */
 @Singleton
-public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Article> {
-    private static final String TAG = "ArticleDbHelper";
+public class ArticleDbHelper extends DbHelper<Article> {
     private static final String DB_NAME = "article.db";
     private static final int DB_VERSION = 6;
-    private static final String TABLE_NAME = "article";
-    private static final String SQL_CREATE = CREATE_TABLE + BLANK + TABLE_NAME + BLANK +
-            LEFT_BRACKET +
-            _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
-            COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
-            COL_TITLE + BLANK + TYPE_TEXT + COMMA +
-            COL_TOPIC + BLANK + TYPE_TEXT + COMMA +
-            COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
-            COL_COMMENT_NUM + BLANK + TYPE_TEXT + COMMA +
-            COL_VIEWER_NUM + BLANK + TYPE_TEXT + COMMA +
-            COL_TIME + BLANK + TYPE_TEXT + COMMA +
-            COL_THUMB + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
-            COL_SOURCE + BLANK + TYPE_TEXT +
-            RIGHT_BRACKET;
-    private static final String SQL_DROP = DROP_TABLE + BLANK + TABLE_NAME;
 
     @Inject
     public ArticleDbHelper(Application context) {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL(SQL_DROP);
-            onCreate(sqLiteDatabase);
-        }
+        mTableName = "article";
+        mTableCreate = CREATE_TABLE + BLANK + mTableName + BLANK +
+                LEFT_BRACKET +
+                _ID + BLANK + TYPE_INTEGER + BLANK + PRIMARY_KEY + BLANK + AUTO_INCREMENT + COMMA +
+                COL_SID + BLANK + TYPE_TEXT + BLANK + COMMA +
+                COL_TITLE + BLANK + TYPE_TEXT + COMMA +
+                COL_TOPIC + BLANK + TYPE_TEXT + COMMA +
+                COL_SUMMARY + BLANK + TYPE_TEXT + COMMA +
+                COL_COMMENT_NUM + BLANK + TYPE_TEXT + COMMA +
+                COL_VIEWER_NUM + BLANK + TYPE_TEXT + COMMA +
+                COL_TIME + BLANK + TYPE_TEXT + COMMA +
+                COL_THUMB + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE_TYPE + BLANK + TYPE_TEXT + COMMA +
+                COL_SOURCE + BLANK + TYPE_TEXT +
+                RIGHT_BRACKET;
     }
 
     @Override
@@ -79,7 +63,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
             values.put(COL_SOURCE, item.getSource());
             values.put(COL_SOURCE_TYPE, item.getType());
             values.put(COL_THUMB, item.getThumb());
-            db.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            db.insertWithOnConflict(mTableName, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -116,26 +100,5 @@ public class ArticleDbHelper extends SQLiteOpenHelper implements DbHelper<Articl
                 cursor.close();
         }
         return Observable.from(articles);
-    }
-
-    @Override
-    public void update(Article item) {
-
-    }
-
-    @Override
-    public void delete(String query) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL(query);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
     }
 }

@@ -32,6 +32,10 @@ public abstract class Repository<T> {
         }
     }
 
+    public void storeToDb(T item) {
+    
+    }
+
     public Observable<T> getCache(String id) {
         return Observable.error(new NoCacheException());
     }
