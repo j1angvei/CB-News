@@ -14,7 +14,8 @@
             android:summaryOn="@string/set_load_img_wifi"
             android:title="@string/set_save_data_mode"/>
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
+            android:key="pref_auto_refresh"
             android:summaryOff="@string/set_load_news_manually"
             android:summaryOn="@string/set_load_news_start"
             android:title="@string/set_auto_load"/>
@@ -33,15 +34,16 @@
             android:summary="@string/set_choose_download_source"
             android:title="@string/set_offline_download"/>
         <EditTextPreference
-            android:summary="default: 2"
-            android:title="Download pages"/>
+            android:key="pref_dl_page"
+            android:summary="@string/set_download_default_page"
+            android:title="@string/set_download_page"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_category_about"
         android:title="@string/set_version_about">
         android:title="Open source"/>
         <Preference
-            android:summary="v0.8-alpha"
+            android:summary="v0.9-alpha"
             android:title="@string/set_current_version"/>
         <PreferenceScreen
             android:key="pref_about_author"

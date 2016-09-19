@@ -1,6 +1,9 @@
 package cn.j1angvei.cbnews.newslist;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.j1angvei.cbnews.base.LocalSource;
@@ -27,7 +30,13 @@ public class NewsRepository<N extends News> extends Repository<N> {
     @Override
     public Observable<N> getCache(String type) {
         return filterCache(type)
-                .switchIfEmpty(mLocalSource.read(type))
+                .switchIfEmpty(mLocalSource.read(type)
+                        .doOnNext(new Action1<N>() {
+                            @Override
+                            public void call(N n) {
+                                mCache.add(n);
+                            }
+                        }))
                 .switchIfEmpty(super.getCache(type));
     }
 
@@ -90,9 +99,11 @@ public class NewsRepository<N extends News> extends Repository<N> {
     }
 
     private void refreshCache(String type, List<N> ns) {
-        for (N n : mCache) {
+        Iterator<N> iterator = mCache.iterator();
+        while (iterator.hasNext()) {
+            N n = iterator.next();
             if (type.equals(n.getType())) {
-                mCache.remove(n);
+                iterator.remove();
             }
         }
         mCache.addAll(ns);
@@ -100,6 +111,7 @@ public class NewsRepository<N extends News> extends Repository<N> {
 
     @Override
     public void updateLocal() {
+        Log.d(TAG, "updateLocal: ");
         List<String> deletedTypes = new ArrayList<>();
         for (N n : mCache) {
             String type = n.getType();
@@ -111,10 +123,23 @@ public class NewsRepository<N extends News> extends Repository<N> {
         for (N n : mCache) {
             mLocalSource.create(n);
         }
+        Log.d(TAG, "updateLocal: " + deletedTypes);
     }
 
     @Override
     public void storeToDb(N item) {
         mLocalSource.create(item);
+    }
+
+    @Override
+    public Observable<N> download(String type, int page) {
+        return mRemoteSource.getNews(page, type)
+                .doOnNext(new Action1<N>() {
+                    @Override
+                    public void call(N n) {
+                        mLocalSource.create(n);
+                    }
+                })
+                .onErrorResumeNext(super.download(type, page));
     }
 }

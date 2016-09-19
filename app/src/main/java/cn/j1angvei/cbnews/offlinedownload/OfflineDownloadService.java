@@ -38,10 +38,10 @@ public class OfflineDownloadService extends RepositoryService {
     @Inject
     NetworkUtil mNetworkUtil;
 
-    private NotificationManager MANAGER;
-    private NotificationCompat.Builder BUILDER;
-    private int MAX_PROCESS = 360;
-    private int CUR_PROCESS = 0;
+    private NotificationManager mManager;
+    private NotificationCompat.Builder mBuilder;
+    private int mMaxProcess = 360;
+    private int mCurProcess = 0;
 
     public OfflineDownloadService() {
     }
@@ -66,22 +66,21 @@ public class OfflineDownloadService extends RepositoryService {
             });
             return;
         }
-        int pages = mPrefsUtil.readIntDefault1(PrefsUtil.DOWNLOAD_PAGES);
-
-        MAX_PROCESS = 180 * pages;
-        MANAGER = getNotificationMgr();
-        BUILDER = new NotificationCompat.Builder(this)
+        int pages = 2;
+        mMaxProcess = 180 * pages;
+        mManager = getNotificationMgr();
+        mBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.title_cache_news))
                 .setContentText(getString(R.string.ph_download_progress))
                 .setSmallIcon(R.drawable.ic_stat_logo);
         Observable<Integer> download = Observable.range(1, pages)
                 .concatMap(new Func1<Integer, Observable<? extends News>>() {
                     @Override
-                    public Observable<? extends News> call(Integer integer) {
+                    public Observable<? extends News> call(Integer page) {
                         return Observable.concat(
-                                mArticleRepository.getLatest(Type.LATEST_NEWS),
-                                mHeadlineRepository.getLatest(Type.HEADLINE),
-                                mReviewRepository.getLatest(Type.REVIEW)
+                                mArticleRepository.download(Type.LATEST_NEWS, page),
+                                mHeadlineRepository.download(Type.HEADLINE, page),
+                                mReviewRepository.download(Type.REVIEW, page)
                         );
                     }
                 })
@@ -89,14 +88,14 @@ public class OfflineDownloadService extends RepositoryService {
                 .concatMap(new Func1<News, Observable<Content>>() {
                     @Override
                     public Observable<Content> call(News news) {
-                        return mContentRepository.getLatest(news.getSid());
+                        return mContentRepository.download(news.getSid());
                     }
                 })
                 .doOnNext(new UpdateAction<Content>())
                 .concatMap(new Func1<Content, Observable<Comments>>() {
                     @Override
                     public Observable<Comments> call(Content content) {
-                        return mCmtRepository.getLatest(content.getSid(), content.getSn());
+                        return mCmtRepository.download(content.getSid(), content.getSn());
                     }
                 })
                 .doOnNext(new UpdateAction<Comments>())
@@ -107,23 +106,23 @@ public class OfflineDownloadService extends RepositoryService {
             @Override
             public void onCompleted() {
                 MessageUtil.toast(getString(R.string.info_download_complete), getApplicationContext());
-                BUILDER.setProgress(0, 0, false)
+                mBuilder.setProgress(0, 0, false)
                         .setContentTitle(getString(R.string.title_cache_complete))
                         .setContentText(getString(R.string.info_all_data_cached));
-                MANAGER.notify(2, BUILDER.build());
+                mManager.notify(2, mBuilder.build());
             }
 
             @Override
             public void onError(Throwable e) {
-                BUILDER.setContentTitle(getString(R.string.error_cache_fail));
-                MANAGER.notify(2, BUILDER.build());
+                mBuilder.setContentTitle(getString(R.string.error_cache_fail));
+                mManager.notify(2, mBuilder.build());
                 MessageUtil.toast(ErrorUtil.getErrorInfo(e), getApplicationContext());
             }
 
             @Override
             public void onNext(Integer integer) {
-                BUILDER.setProgress(integer, integer, false);
-                MANAGER.notify(2, BUILDER.build());
+                mBuilder.setProgress(integer, integer, false);
+                mManager.notify(2, mBuilder.build());
             }
         });
     }
@@ -132,10 +131,10 @@ public class OfflineDownloadService extends RepositoryService {
 
         @Override
         public void call(Object o) {
-            String text = String.format(getResources().getString(R.string.ph_download_progress), "" + CUR_PROCESS, "" + MAX_PROCESS);
-            BUILDER.setContentText(text);
-            BUILDER.setProgress(MAX_PROCESS, ++CUR_PROCESS, false);
-            MANAGER.notify(2, BUILDER.build());
+            String text = String.format(getResources().getString(R.string.ph_download_progress), "" + mCurProcess, "" + mMaxProcess);
+            mBuilder.setContentText(text);
+            mBuilder.setProgress(mMaxProcess, ++mCurProcess, false);
+            mManager.notify(2, mBuilder.build());
         }
     }
 

@@ -78,6 +78,14 @@ public final class Article extends News implements Parcelable {
         this.source = source;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }
 

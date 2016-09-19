@@ -1,5 +1,9 @@
 package cn.j1angvei.cbnews.newslist;
 
+import android.util.Log;
+
+import java.util.Arrays;
+
 import cn.j1angvei.cbnews.base.DbHelper;
 import cn.j1angvei.cbnews.base.LocalSource;
 import cn.j1angvei.cbnews.bean.News;
@@ -55,5 +59,17 @@ public class NewsLocalSource<T extends News> extends LocalSource<T> {
                 ORDER_BY + BLANK + COL_SID + BLANK + DESCEND;
         return mDbHelper.read(query);
     }
-    
+
+    @Override
+    public void delete(String type) {
+        if (type.equals("*")) {
+            Log.d(TAG, "delete: *" + type);
+            super.delete(type);
+        } else {
+            String selection = COL_SOURCE_TYPE + BLANK + LIKE + BLANK + "?";
+            String[] args = {type};
+            Log.d(TAG, "delete: " + selection + " " + Arrays.toString(args));
+            mDbHelper.delete(selection, args);
+        }
+    }
 }

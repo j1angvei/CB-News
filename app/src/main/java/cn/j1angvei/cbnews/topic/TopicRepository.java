@@ -10,8 +10,6 @@ import cn.j1angvei.cbnews.base.RemoteSource;
 import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.di.qualifier.QTopic;
-import cn.j1angvei.cbnews.exception.ItemNotFoundException;
-import cn.j1angvei.cbnews.util.ApiUtil;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -31,11 +29,32 @@ public class TopicRepository extends Repository<Topic> {
     }
 
     @Override
-    public Observable<Topic> getCache(String IdOrLetter) {
-        return (TextUtils.isDigitsOnly(IdOrLetter) ?
-                filterCache(IdOrLetter).switchIfEmpty(mLocalSource.read(IdOrLetter)) :
-                mLocalSource.read(IdOrLetter))
-                .switchIfEmpty(super.getCache(IdOrLetter));
+    public Observable<Topic> getCache(final String idOrLetter) {
+        return Observable.just(TextUtils.isDigitsOnly(idOrLetter))
+                .flatMap(new Func1<Boolean, Observable<Topic>>() {
+                    @Override
+                    public Observable<Topic> call(Boolean isId) {
+                        if (isId) {
+                            return filterCache(idOrLetter)
+                                    .switchIfEmpty(mLocalSource.read(idOrLetter)
+                                            .doOnNext(new Action1<Topic>() {
+                                                @Override
+                                                public void call(Topic topic) {
+                                                    mCache.add(topic);
+                                                }
+                                            }));
+                        } else {
+                            return mLocalSource.read(idOrLetter)
+                                    .doOnNext(new Action1<Topic>() {
+                                        @Override
+                                        public void call(Topic topic) {
+                                            mCache.add(topic);
+                                        }
+                                    });
+                        }
+                    }
+                })
+                .switchIfEmpty(super.getCache(idOrLetter));
     }
 
     @Override

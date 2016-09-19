@@ -4,9 +4,11 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import rx.Observable;
  */
 @Singleton
 public class ArticleDbHelper extends DbHelper<Article> {
+    private static final String TAG = "ArticleDbHelper";
     private static final String DB_NAME = "article.db";
     private static final int DB_VERSION = 6;
 
@@ -100,5 +103,11 @@ public class ArticleDbHelper extends DbHelper<Article> {
                 cursor.close();
         }
         return Observable.from(articles);
+    }
+
+    @Override
+    public void delete(String selection, String[] args) {
+        getWritableDatabase().delete(mTableName, selection, args);
+        Log.d(TAG, "delete: " + selection + " " + Arrays.toString(args));
     }
 }

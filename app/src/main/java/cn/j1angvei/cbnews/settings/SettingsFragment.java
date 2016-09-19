@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String PREF_DATA_SAVE_MODE = "pref_data_save_mode";
     public static final String PREF_AUTO_REFRESH = "pref_auto_refresh";
     public static final String PREF_CMT_TAIL = "pref_cmt_tail";
+    public static final String PREF_DOWNLOAD_PAGE = "pref_dl_page";
 
     EditTextPreference mCmtTail;
 
@@ -30,7 +32,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCmtTail = (EditTextPreference) getPreferenceManager().findPreference(PREF_CMT_TAIL);
+        PreferenceManager manager = getPreferenceManager();
+        mCmtTail = (EditTextPreference) manager.findPreference(PREF_CMT_TAIL);
+        mCmtTail.setSummary(manager.getSharedPreferences().getString(PREF_CMT_TAIL, "发送自[西贝新闻]"));
     }
 
     @Override

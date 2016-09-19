@@ -124,4 +124,20 @@ public final class Content implements Parcelable {
         parcel.writeString(sn);
         parcel.writeString(thumb);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Content content = (Content) o;
+
+        return sid != null ? sid.equals(content.sid) : content.sid == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return sid != null ? sid.hashCode() : 0;
+    }
 }

@@ -1,10 +1,11 @@
 package cn.j1angvei.cbnews.base;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import cn.j1angvei.cbnews.exception.NoCacheException;
 import cn.j1angvei.cbnews.exception.NoNetworkException;
+import cn.j1angvei.cbnews.exception.OfflineDownloadException;
 import rx.Observable;
 
 /**
@@ -15,12 +16,12 @@ public abstract class Repository<T> {
     private static final String TAG = "Repository";
     protected LocalSource<T> mLocalSource;
     protected RemoteSource<T> mRemoteSource;
-    protected List<T> mCache;
+    protected Set<T> mCache;
 
     public Repository(LocalSource<T> localSource, RemoteSource<T> remoteSource) {
         mLocalSource = localSource;
         mRemoteSource = remoteSource;
-        mCache = new ArrayList<>();
+        mCache = new HashSet<>();
     }
 
     public void updateLocal() {
@@ -33,7 +34,7 @@ public abstract class Repository<T> {
     }
 
     public void storeToDb(T item) {
-    
+
     }
 
     public Observable<T> getCache(String id) {
@@ -50,6 +51,19 @@ public abstract class Repository<T> {
 
     public Observable<T> getMore(String type) {
         return Observable.error(new NoNetworkException());
+    }
+
+    public Observable<T> download(String type, int page) {
+        return Observable.error(new OfflineDownloadException());
+    }
+
+    public Observable<T> download(String sid, String sn) {
+        return Observable.error(new OfflineDownloadException());
+    }
+
+    public Observable<T> download(String sid) {
+
+        return Observable.error(new OfflineDownloadException());
     }
 
     protected abstract Observable<T> filterCache(String sid);

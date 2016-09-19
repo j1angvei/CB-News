@@ -68,7 +68,7 @@
     <!--error-->
     <string name="error_generic">Unknown error happened!</string>
     <string name="error_no_network">No network connection!</string>
-    <string name="error_no_local_item">No local item found!</string>
+    <string name="error_no_cache_found">No local item found, swipe to refresh!</string>
     <string name="error_json_parse_fail">Json response parse error!</string>
     <string name="error_response_parse_fail">Response body parse string error!</string>
     <string name="error_no_comment">No comment input!</string>
@@ -120,7 +120,7 @@
     <string name="set_auto_switch_theme">Auto switch theme</string>
     <string name="set_enable_auto_switch">Enable auto switch</string>
     <string name="set_enable_cmt_tail">Enable comment tail</string>
-    <string name="set_default_tail">"Send from cnBeta News "</string>
+    <string name="set_default_tail">\"Send from CB News \"</string>
     <string name="set_custom_cmt_tail">Customize comment tail</string>
     <string name="set_cmt_tail">Comment tail</string>
     <string name="set_load_news_manually">Load latest news manually</string>
@@ -145,4 +145,6 @@
     <string name="title_cache_complete">Cache complete</string>
     <string name="info_all_data_cached">all data are cached locally</string>
     <string name="error_cache_fail">Download failure!</string>
+    <string name="set_download_page">Download pages</string>
+    <string name="set_download_default_page">default: 2</string>
 </resources>

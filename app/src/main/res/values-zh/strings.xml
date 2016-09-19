@@ -55,7 +55,7 @@
     <string name="info_get_captcha_fail">获取验证码失败！</string>
     <string name="error_no_comment">评论内容为空</string>
     <string name="error_no_captcha">验证码为空</string>
-    <string name="error_no_local_item">缓存为空</string>
+    <string name="error_no_cache_found">缓存为空,下拉刷新！</string>
     <string name="error_no_network">没有网络连接</string>
     <string name="error_response_parse_fail">返回内容格式错误</string>
     <string name="error_wrong_captcha">输入验证码不正确</string>
@@ -83,7 +83,7 @@
     <string name="set_cmt_tail">评论小尾巴</string>
     <string name="set_current_version">当前版本</string>
     <string name="set_custom_cmt_tail">自定义评论小尾巴</string>
-    <string name="set_default_tail">---发送自[西贝新闻]</string>
+    <string name="set_default_tail">发送自[西贝新闻]</string>
     <string name="set_disclaimer">声明</string>
     <string name="set_enable_auto_switch">开启自动切换主题</string>
     <string name="set_enable_cmt_tail">开启评论小尾巴</string>
@@ -97,7 +97,7 @@
     <string name="set_version_about">版本与关于</string>
     <string name="set_offline_download">离线下载</string>
     <string name="set_cache_size">缓存大小</string>
-    <string name="set_disclaimer_info">本App为第三方cnbeta客户端，请勿混淆。\n程序获取到的所有数据均提取自网站www.cnbeta.com，版权声明详见cnbeta网站。</string>
+    <string name="set_disclaimer_info">本App为第三方cnBeta新闻客户端，不掺杂任何广告。\n程序获取到的所有数据均提取自cnBeta官网，版权声明详见网站声明。</string>
     <string name="error_cache_fail">下载失败</string>
     <string name="info_all_data_cached">所有新闻已经缓存到本地</string>
     <string name="info_download_complete">下载成功！</string>
@@ -109,5 +109,7 @@
     <string name="error_no_item_in_ram">内存内容为空！</string>
     <string name="error_no_data">数据为空！</string>
     <string name="info_add_to_bookmark_success">收藏成功！</string>
+    <string name="set_download_page">下载页数</string>
+    <string name="set_download_default_page">默认：2</string>
     <!--settings-->
 </resources>

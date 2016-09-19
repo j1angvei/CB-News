@@ -9,7 +9,6 @@ import cn.j1angvei.cbnews.base.Repository;
 import cn.j1angvei.cbnews.bean.Content;
 import cn.j1angvei.cbnews.di.qualifier.QContent;
 import rx.Observable;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -27,7 +26,13 @@ public class ContentRepository extends Repository<Content> {
     @Override
     public Observable<Content> getCache(String sid) {
         return filterCache(sid)
-                .switchIfEmpty(mLocalSource.read(sid))
+                .switchIfEmpty(mLocalSource.read(sid)
+                        .doOnNext(new Action1<Content>() {
+                            @Override
+                            public void call(Content content) {
+                                mCache.add(content);
+                            }
+                        }))
                 .switchIfEmpty(super.getCache(sid));
     }
 
@@ -54,19 +59,21 @@ public class ContentRepository extends Repository<Content> {
     }
 
     private void refreshCache(final Content content) {
-        filterCache(content.getSid())
+        if (mCache.contains(content)) {
+            mCache.remove(content);
+        }
+        mCache.add(content);
+    }
+
+    @Override
+    public Observable<Content> download(String sid) {
+        return mRemoteSource.getContent(sid)
                 .doOnNext(new Action1<Content>() {
                     @Override
                     public void call(Content content) {
-                        mCache.remove(content);
+                        mLocalSource.create(content);
                     }
                 })
-                .doOnCompleted(new Action0() {
-                    @Override
-                    public void call() {
-                        mCache.add(content);
-                    }
-                })
-                .subscribe();
+                .onErrorResumeNext(super.download(sid));
     }
 }

@@ -20,7 +20,7 @@ public class ErrorUtil {
             return R.string.error_no_data;
         } else if (e instanceof NoCacheException) {
 
-            return R.string.error_no_local_item;
+            return R.string.error_no_cache_found;
         } else {
             return R.string.error_generic;
         }

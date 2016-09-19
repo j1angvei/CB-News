@@ -98,19 +98,12 @@ public class Topic implements Parcelable {
 
         Topic topic = (Topic) o;
 
-        if (page != topic.page) return false;
-        if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
-        if (title != null ? !title.equals(topic.title) : topic.title != null) return false;
-        return thumb != null ? thumb.equals(topic.thumb) : topic.thumb == null;
+        return id != null ? id.equals(topic.id) : topic.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (thumb != null ? thumb.hashCode() : 0);
-        result = 31 * result + page;
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 }

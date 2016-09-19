@@ -77,15 +77,16 @@ public class News implements Parcelable {
 
         News news = (News) o;
 
-        if (!sid.equals(news.sid)) return false;
+        if (sid != null ? !sid.equals(news.sid) : news.sid != null) return false;
         return type != null ? type.equals(news.type) : news.type == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = sid.hashCode();
+        int result = sid != null ? sid.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
+
 }

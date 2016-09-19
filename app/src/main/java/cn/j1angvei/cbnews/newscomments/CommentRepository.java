@@ -27,7 +27,13 @@ public class CommentRepository extends Repository<Comments> {
     @Override
     public Observable<Comments> getCache(String sid) {
         return filterCache(sid)
-                .switchIfEmpty(mLocalSource.read(sid))
+                .switchIfEmpty(mLocalSource.read(sid)
+                        .doOnNext(new Action1<Comments>() {
+                            @Override
+                            public void call(Comments comments) {
+                                mCache.add(comments);
+                            }
+                        }))
                 .switchIfEmpty(super.getCache(sid));
     }
 
@@ -68,5 +74,18 @@ public class CommentRepository extends Repository<Comments> {
                     }
                 })
                 .subscribe();
+    }
+
+    @Override
+    public Observable<Comments> download(String sid, String sn) {
+        return mRemoteSource.getComment(sid, sn)
+                .doOnNext(new Action1<Comments>() {
+                    @Override
+                    public void call(Comments comments) {
+                        mLocalSource.create(comments);
+                    }
+                })
+                .onErrorResumeNext(super.download(sid, sn));
+
     }
 }

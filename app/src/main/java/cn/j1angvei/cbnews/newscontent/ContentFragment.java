@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +17,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -56,8 +56,8 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     ImageView ivThumb;
     @BindView(R.id.wv_content_detail)
     WebView wvDetail;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Inject
     ContentPresenter mPresenter;
     @Inject
@@ -99,6 +99,13 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
         if (savedInstanceState == null) {
             mPresenter.retrieveContent(1, mSid);
         }
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.retrieveContent(1, mSid);
+            }
+        });
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -161,12 +168,12 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
 
     @Override
     public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
