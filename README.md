@@ -12,8 +12,8 @@ CB News Supported features are as follows:
 6. Support fully night mode;  
 7. Support search article, post articles(In future).  
 ## Video
-Youtube.com:   [https://youtu.be/qFIldokYdx4](https://youtu.be/qFIldokYdx4)  
-Youku.com:   [http://v.youku.com/v_show/id_XMTczMDYwNTkyOA==.html?from=y1.7-2#paction](http://v.youku.com/v_show/id_XMTczMDYwNTkyOA==.html?from=y1.7-2#paction)  
+[No Ad] youtube:   [https://youtu.be/qFIldokYdx4](https://youtu.be/qFIldokYdx4)  
+[30s Ad] youku:   [http://v.youku.com/v_show/id_XMTczMDYwNTkyOA==.html?from=y1.7-2#paction](http://v.youku.com/v_show/id_XMTczMDYwNTkyOA==.html?from=y1.7-2#paction)  
 ## Gallery
 <img src="./raw/splash.png" width="720" />
 <img src="./raw/nav.png" width="360" />
