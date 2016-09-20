@@ -147,4 +147,6 @@
     <string name="error_cache_fail">Download failure!</string>
     <string name="set_download_page">Download pages</string>
     <string name="set_download_default_page">default: 2</string>
+    <!--share-->
+    <string name="title_share_news_to">Share news to …</string>
 </resources>

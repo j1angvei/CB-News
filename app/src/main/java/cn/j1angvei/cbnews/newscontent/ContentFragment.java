@@ -146,7 +146,7 @@ public class ContentFragment extends BaseFragment implements ContentContract.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_content_share:
-                MessageUtil.toast("share", getActivity());
+                Navigator.shareContent(mContent.getTitle(), mContent.getSid(), getActivity());
                 return true;
             case R.id.menu_content_bookmark:
                 mPresenter.toBookmark(mContent);

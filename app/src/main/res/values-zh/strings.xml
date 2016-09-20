@@ -111,5 +111,6 @@
     <string name="info_add_to_bookmark_success">收藏成功！</string>
     <string name="set_download_page">下载页数</string>
     <string name="set_download_default_page">默认：2</string>
+    <string name="title_share_news_to">分享新闻到...</string>
     <!--settings-->
 </resources>

@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
+import cn.j1angvei.cbnews.R;
 import cn.j1angvei.cbnews.bean.News;
 import cn.j1angvei.cbnews.bean.Topic;
 import cn.j1angvei.cbnews.newscomments.CommentActivity;
@@ -22,6 +23,9 @@ import cn.j1angvei.cbnews.topic.topicnews.TopicNewsActivity;
  * navigate between components
  */
 public final class Navigator {
+    private static final String URL_TEMPLATE_PC = "http://www.cnbeta.com/articles/SID.htm";
+    private static final String URL_TEMPLATE_MOBILE = "http://www.cnbeta.com/articles/SID.htm";
+    private static final String PLACEHOLDER_SID = "SID";
 
     public static void toSettings(Context context) {
         if (context != null) {
@@ -65,9 +69,7 @@ public final class Navigator {
 
     public static void toBrowser(String sid, boolean mobileFirst, Context context) {
         if (context != null) {
-            String pc = "http://www.cnbeta.com/articles/SID.htm";
-            String mobile = "http://m.cnbeta.com/view/SID.htm";
-            String url = mobileFirst ? mobile.replace("SID", sid) : pc.replace("SID", sid);
+            String url = mobileFirst ? URL_TEMPLATE_MOBILE.replace("SID", sid) : URL_TEMPLATE_PC.replace("SID", sid);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             context.startActivity(intent);
@@ -102,6 +104,16 @@ public final class Navigator {
         if (context != null) {
             Intent intent = new Intent(context, SaveCacheService.class);
             context.startService(intent);
+        }
+    }
+
+    public static void shareContent(String title, String sid, Context context) {
+        if (context != null) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, title + "\n" + URL_TEMPLATE_PC.replace(PLACEHOLDER_SID, sid));
+            intent.setType("text/plain");
+            context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.title_share_news_to)));
         }
     }
 }
