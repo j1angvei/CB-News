@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Wayne on 2016/7/11.
  * bean represent a Topic in CB
  */
-public class Topic implements Parcelable {
+public final class Topic implements Parcelable {
     private String id;
     private String title;
     private String thumb;

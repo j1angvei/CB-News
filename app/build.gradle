@@ -20,15 +20,15 @@ android {
         applicationId "cn.j1angvei.cbnews"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 3
-        versionName "0.9.160919"
+        versionCode 4
+        versionName "1.0.160927"
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            versionNameSuffix '-alpha'
+            versionNameSuffix '-beta'
         }
     }
     dexOptions {

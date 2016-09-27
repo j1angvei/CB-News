@@ -20,7 +20,7 @@
 -keepclassmembers class cn.j1angvei.cbnews.bean.*{
 private <fields>;
 }
--keepclassmembers class cn.j1angvei.cbnews.data.remote.response.*{
+-keepclassmembers class cn.j1angvei.cbnews.web.*{
 private <fields>;
 }
 ##---------------Begin: proguard configuration for Gson  ----------

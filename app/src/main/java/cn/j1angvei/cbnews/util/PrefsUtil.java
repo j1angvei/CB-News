@@ -23,9 +23,6 @@ public class PrefsUtil {
     public static final String COOKIE_SESSION = "cookie_session";
     //my_topics
     public static final String MY_TOPIC_IDS = "my_topic_ids";
-    //download
-    public static final String DOWNLOAD_PAGES = "download_pages";
-
 
     private final SharedPreferences prefs;
 

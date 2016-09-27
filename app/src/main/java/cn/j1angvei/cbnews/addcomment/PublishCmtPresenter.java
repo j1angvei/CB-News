@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import cn.j1angvei.cbnews.di.scope.PerFragment;
 import cn.j1angvei.cbnews.exception.CaptchaFailException;
 import cn.j1angvei.cbnews.util.ApiUtil;
-import cn.j1angvei.cbnews.util.HeaderUtil;
 import cn.j1angvei.cbnews.web.CBApiWrapper;
 import cn.j1angvei.cbnews.web.PublishCmtResponse;
 import okhttp3.ResponseBody;
@@ -82,8 +81,7 @@ public class PublishCmtPresenter implements PublishCmtContract.Presenter {
 
     @Override
     public void sendComment(String content, String captcha, String sid, final String pid) {
-        String refer = HeaderUtil.assembleRefererValue(sid);
-        mApiWrapper.publishComment(refer, captcha, sid, pid)
+        mApiWrapper.publishComment(content, captcha, sid, pid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PublishCmtResponse>() {

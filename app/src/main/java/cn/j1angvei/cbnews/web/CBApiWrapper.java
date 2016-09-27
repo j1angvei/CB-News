@@ -87,7 +87,7 @@ public class CBApiWrapper {
         //action always to be publish
         String action = "publish";
         map.put(KEY_OP, action);
-        map.put(KEY_CONTENT, content + mPrefsUtil.readCmtTail());
+        map.put(KEY_CONTENT, content + "\n" + mPrefsUtil.readCmtTail());
         map.put(KEY_CAPTCHA, captcha);
         map.put(KEY_SID, sid);
         map.put(KEY_PID, pid);
