@@ -6,5 +6,5 @@
 .DS_Store
 /build
 /captures
-keystore.properties
+/keystore.properties
 app/app-release.apk
